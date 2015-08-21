@@ -12,7 +12,8 @@
                 {"name": "port","value": "3306"},
                 {"name": "dbname","value": "db_welfare"},
                 {"name": "user","value": "root"},
-                {"name": "password","value": "1234"}
+                {"name": "password","value": "dd1234"},
+                {"name":"charset","value":"utf8"}
             ]
         }
     ],
