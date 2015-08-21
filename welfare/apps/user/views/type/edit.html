@@ -1,0 +1,84 @@
+<!-- Page Content -->
+
+<div class="page-content"> 
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
+            <li class="active">{{#i18n}}listuserType{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb --> 
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1> {{#i18n}}adduserType{{/i18n}} </h1>
+        </div>
+        <!--Header Buttons--> 
+
+        <!--Header Buttons End--> 
+    </div>
+    <!-- /Page Header --> 
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}adduserType{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div  class="form-horizontal">
+                            <div class="form-title"> {{#i18n}}adduserType{{/i18n}} </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}userTypeName{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    {{#data}}
+                                    <input type="text" class="form-control" name="userTypeName" id="userTypeName" placeholder="{{#i18n}}userTypeName{{/i18n}}"
+                                           
+                                           value="{{userTypeName}}"
+                                           />
+                                   {{/data}}
+                                </div>
+                            </div>
+                          
+                            
+                            <div class="form-group">
+                                <div class="col-lg-offset-4 col-lg-8">
+                                    <button type="submit" id="btn_submit" class="btn btn-primary">{{#i18n}}button.submit{{/i18n}}</button>
+                                    <input type="reset" id="bnreset" name="bnreset" value="ล้างข้อมูล" class="btn">                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body --> 
+</div>
+<!-- /Page Content --> 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btn_submit").click(function () {
+            var data = {};
+            data['userTypeId'] ={{#data}}{{userTypeId}}{{/data}};
+            data['userTypeName'] = $("#userTypeName").val();
+
+            var jdata = {};
+            jdata['data'] = data;
+
+//                alert(typeNameEn);
+            $.ajax({
+                url: '{{_context_path}}/api/user/type/update',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                    //alert(result.save);
+                    //alert(result.message);
+                    getHTML('content-body','{{_context_path}}/api/user/view/type/lists',null);
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,106 @@
+<!-- Page Content -->
+
+<div class="page-content"> 
+  <!-- Page Breadcrumb -->
+  <div class="page-breadcrumbs">
+    <ul class="breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="#">Home</a> </li>
+      <li class="active">Dashboard</li>
+    </ul>
+  </div>
+  <!-- /Page Breadcrumb --> 
+  <!-- Page Header -->
+  <div class="page-header position-relative">
+    <div class="header-title">
+      <h1> Dashboard </h1>
+    </div>
+    <!--Header Buttons--> 
+    
+    <!--Header Buttons End--> 
+  </div>
+  <!-- /Page Header --> 
+  <!-- Page Body -->
+  <div class="page-body">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget radius-bordered">
+          <div class="widget-header"> <span class="widget-caption">จัดการข้อมูลสาขา/หน่วยงาน</span> </div>
+          <div class="widget-body">
+           <div  class="form-horizontal">
+              <div class="form-title"> กรุณาระบุข้อมูล </div>
+              {{#department}}
+              <div class="form-group">
+                  
+                <label class="col-lg-4 control-label"> {{#i18n}}department{{/i18n}} </label>
+                <div class="col-lg-8">
+                    <input type="hidden"  class="form-control" name="departmentId" id="departmentId" value="{{departmentId}}"/>
+                  <input type="text"  class="form-control" name="DepartmentCode" id="departmentCode" placeholder="{{#i18n}}department{{/i18n}}"
+                         value="{{departmentCode}}"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-4 control-label">{{#i18n}}departmentName{{/i18n}}</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" name="DepartmentName" id="departmentNameTh" placeholder="{{#i18n}}departmentName{{/i18n}}"
+                         value="{{departmentNameTh}}"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-4 control-label">{{#i18n}}departmentNameEn{{/i18n}}</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" name="DepartmentNameEn" id="departmentNameEn" placeholder="{{#i18n}}departmentNameEn{{/i18n}}"
+                         value="{{departmentNameEn}}"/>
+                </div>
+              </div>
+              {{/department}}
+              <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-8">
+                  <button type="submit" id="btn_submit" class="btn btn-primary"> บันทึกข้อมูล </button>
+                  <input type="reset" id="bnreset" name="bnreset" value="ล้างข้อมูล" class="btn">
+                </div>
+              </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Body --> 
+</div>
+<!-- /Page Content --> 
+
+<script type="text/javascript">
+        
+        $(document).ready(function () {
+
+            $("#btn_submit").click(function () {
+                
+                 var data ={};
+                
+                data['facultyId'] = {{#department}}{{facultyId}}{{/department}};
+                data['departmentId'] = $("#departmentId").val();
+                data['departmentCode'] = $("#departmentCode").val();
+                data['departmentNameTh'] = $("#departmentNameTh").val();
+                data['departmentNameEn'] = $("#departmentNameEn").val();
+                
+                var jdata = {};
+                jdata['data'] = data;
+                $.ajax({
+                url: '{{_context_path}}/api/ManagementBasics/department/update',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                     alert(result.save);
+                     //alert(result.message);
+                     getBody('{{_context_path}}/api/ManagementBasics/department/list/department/{{#department}}{{facultyId}}{{/department}}');
+                    }
+                });
+//                var FacultyID = $("#FacultyID").val();
+//                var DepartmentCode = $("#DepartmentCode").val();
+//                var DepartmentName = $("#DepartmentName").val();
+//                var DepartmentNameEn = $("#DepartmentNameEn").val();
+
+                
+            });
+        });
+    </script>

@@ -1,0 +1,101 @@
+<!-- Page Content -->
+
+<div class="page-content"> 
+  <!-- Page Breadcrumb -->
+  <div class="page-breadcrumbs">
+    <ul class="breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
+      <li class="active">{{#i18n}}adddepartment{{/i18n}}</li>
+    </ul>
+  </div>
+  <!-- /Page Breadcrumb --> 
+  <!-- Page Header -->
+  <div class="page-header position-relative">
+    <div class="header-title">
+      
+    </div>
+    <!--Header Buttons--> 
+    
+    <!--Header Buttons End--> 
+  </div>
+  <!-- /Page Header --> 
+  <!-- Page Body -->
+  <div class="page-body">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget radius-bordered">
+          <div class="widget-header"> <span class="widget-caption">{{#i18n}}managementdepartment{{/i18n}}</span> </div>
+          <div class="widget-body">
+           <div  class="form-horizontal">
+              <div class="form-title">  </div>
+              
+              <div class="form-group">
+                <label class="col-lg-4 control-label"> {{#i18n}}iddepartment{{/i18n}} </label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" name="DepartmentCode" id="departmentCode" placeholder="{{#i18n}}iddepartment{{/i18n}}"
+                                           data-bv-notempty="true"  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-4 control-label">{{#i18n}}departmentName{{/i18n}}</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" name="DepartmentName" id="departmentNameTh" placeholder="{{#i18n}}departmentName{{/i18n}}"
+                                           data-bv-notempty="true" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-4 control-label">{{#i18n}}departmentNameEn{{/i18n}}</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" name="DepartmentNameEn" id="departmentNameEn" placeholder="{{#i18n}}departmentNameEn{{/i18n}}"
+                                           data-bv-notempty="true"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-8">
+                  <button type="submit" id="btn_submit" class="btn btn-primary">{{#i18n}}button.submit{{/i18n}}</button>
+                  <input type="reset" id="bnreset" name="bnreset" value="{{#i18n}}button.cancel{{/i18n}}" class="btn">
+                </div>
+              </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Body --> 
+</div>
+<!-- /Page Content --> 
+
+<script type="text/javascript">
+        
+        $(document).ready(function () {
+
+            $("#btn_submit").click(function () {
+                
+                var data = {};
+                data['facultyId'] = {{faculty}};
+                data['departmentCode'] = $("#departmentCode").val();
+                data['departmentNameTh'] = $("#departmentNameTh").val();
+                data['departmentNameEn'] = $("#departmentNameEn").val();
+               
+//                var FacultyID = $("#FacultyID").val();
+//                var DepartmentCode = $("#DepartmentCode").val();
+//                var DepartmentName = $("#DepartmentName").val();
+//                var DepartmentNameEn = $("#DepartmentNameEn").val();
+
+                var jdata = {};
+                jdata['data'] = data;
+                console.log(data);
+                $.ajax({
+                url: '{{_context_path}}/api/ManagementBasics/department/save',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                     //alert(result.save);
+                     alert(result.message);
+                     getBody('{{_context_path}}/api/ManagementBasics/department/list/department/{{faculty}}');
+                    }
+            });
+            });
+        });
+    </script>

@@ -1,0 +1,116 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}addtitlename{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}addtitlename{{/i18n}}</span>
+                    </div>
+                    <div class="widget-body">
+                        <form  class="form-horizontal">
+                            <div class="form-title">
+                                กรุณาระบุข้อมูล
+                            </div>
+                            {{#edit}}
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}titlename{{/i18n}}</label>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}pleaseinput{{/i18n}}"
+                                           data-bv-notempty="true" id="titleNameTh" value="{{titleNameTh}}"
+                                           data-bv-notempty-message="{{#i18n}}pleaseinput{{/i18n}}" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}titlenameEn{{/i18n}}</label>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}pleaseinput{{/i18n}}"
+                                           data-bv-notempty="true" id="titleNameEn" value="{{titleNameEn}}"
+                                           data-bv-notempty-message="{{#i18n}}pleaseinput{{/i18n}}" />
+                                </div>
+
+                            </div>
+                            {{/edit}}
+
+                            
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-4 col-lg-8">
+                                     <input class="btn btn-primary" type="submit"  id="btn_submit" value="{{#i18n}}button.submit{{/i18n}}"/>
+
+                                    <input class="btn btn-default" type="submit"  id="btn_cancel" value="{{#i18n}}button.cancel{{/i18n}}"/>
+                                </div>
+                            </div> 
+                        </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btn_submit").click(function () {
+            
+            var data = {};
+            data['titleNameId'] = {{#edit}}"{{titleNameId}}"{{/edit}}
+            data['titleNameTh'] = $("#titleNameTh").val();
+            data['titleNameEn'] = $("#titleNameEn").val();
+
+            var jdata = {};
+            jdata['data'] = data;
+            $.ajax({
+                url: '{{_context_path}}/api/ManagementBasics/title/name/update',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                     //alert(result.save);
+                     //alert(result.message);
+                     getBody('{{_context_path}}/api/ManagementBasics/title/name/list/title');
+                    }
+            });
+//            var campusId = $("#campusId").val();
+//            
+            return false;
+        });
+
+    });
+</script>

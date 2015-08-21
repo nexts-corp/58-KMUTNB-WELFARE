@@ -1,0 +1,121 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}policy{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}policy{{/i18n}}</span>
+                    </div>
+                    <div class="widget-body">
+                        <form  class="form-horizontal">
+                            <div class="form-title">
+                                {{#i18n}}pleaseinput{{/i18n}}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}name{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}name{{/i18n}}"
+                                           data-bv-notempty="true" id="policyname"
+                                           data-bv-notempty-message="{{#i18n}}name{{/i18n}}" />
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}detail{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}detail{{/i18n}}"
+                                           data-bv-notempty="true" id="policydetail"
+                                           data-bv-notempty-message="{{#i18n}}detail{{/i18n}}" />
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                
+                                    <div class="col-lg-offset-6 col-lg-8">
+                                        <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                                        <input class="btn btn-default" type="submit" value="{{#i18n}}button.cancel{{/i18n}}" />
+                                    </div>
+                                
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<!-- /Page Content -->
+
+
+<!--Bootstrap Date Picker-->
+    <script src="assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <!--Bootstrap Time Picker-->
+<!--    <script src="assets/js/datetime/bootstrap-timepicker.js"></script>-->
+
+    <!--Bootstrap Date Range Picker-->
+<!--    <script src="assets/js/datetime/moment.js"></script>-->
+<!--    <script src="assets/js/datetime/daterangepicker.js"></script>-->
+    
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btn_submit").click(function () {
+            var data = {};
+            data['policyname'] = $("#policyname").val();
+            data['policydetail'] = $("#policydetail").val();
+           
+
+            var jdata = {};
+            jdata['data'] = data;
+            $.ajax({
+                url: '{{_context_path}}/api/ManagementFund/policy/save',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                    alert(result.save);
+                    //alert(result.message);
+                    getBody('{{_context_path}}/api/ManagementFund/policy/list');
+                }
+            });
+            return false;
+        });
+        
+
+    });
+    
+     $('.date-picker').datepicker();
+</script>

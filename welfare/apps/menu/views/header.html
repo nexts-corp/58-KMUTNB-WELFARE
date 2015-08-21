@@ -1,0 +1,99 @@
+<div class="navbar-inner">
+    <div class="navbar-container">
+        <!-- Navbar Barnd -->
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <h4>ระบบสวัสดิการ</h4>
+                </small>
+            </a>
+        </div>
+        <!-- /Navbar Barnd -->
+        <!-- Sidebar Collapse -->
+        <div class="sidebar-collapse" id="sidebar-collapse">
+            <i class="collapse-icon fa fa-bars"></i>
+        </div>
+        <!-- /Sidebar Collapse -->
+
+        <!-- Account Area and Settings --->
+
+
+        <!--Login Area Dropdown-->
+        <div class="navbar-header pull-right">
+            <div class="navbar-account">
+                <ul class="account-area">
+
+                    <li>
+                        <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                            <div class="avatar" title="View your public profile">
+                                <img src="{{_context_path}}/assets/img/avatars/adam-jansen.jpg">
+                            </div>
+                            <section>
+                                <h2><span class="profile"><span>David Stevenson</span></span></h2>
+                            </section>
+                        </a>
+                        <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                            <li class="username"><a>David Stevenson</a></li>
+                            <li class="email"><a>David.Stevenson@live.com</a></li>
+                            <!--Avatar Area-->
+                            <li>
+                                <div class="avatar-area">
+                                    <img src="{{_context_path}}/assets/img/avatars/adam-jansen.jpg" class="avatar">
+                                    <span class="caption">Change Photo</span>
+                                </div>
+                            </li>
+                            <!--Avatar Area-->
+                            <li class="edit">
+                                <a href="#" id="profile" class="pull-left">Profile</a>
+                                <a href="#" class="pull-right">Setting</a>
+                            </li>
+                            <!--Theme Selector Area-->
+
+                            <!--/Theme Selector Area-->
+                            <li class="dropdown-footer">
+                                <a href="{{_context_path}}/api/root/view/logout" id="logout">
+                                    Sign out
+
+                                </a>
+                            </li>
+                        </ul>
+                        <!--/Login Area Dropdown-->
+                    </li>
+                    <!-- /Account Area -->
+
+                    <!-- Settings -->
+                </ul>
+
+                <!-- Settings -->
+            </div>
+        </div>
+        <!-- /Account Area and Settings -->
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+        //  $("#logout").click(function () {                 
+        /* localStorage.removeItem('userId');
+         localStorage.removeItem('userName');
+         localStorage.removeItem('registerId');
+         localStorage.removeItem('SuperAdminId');
+         localStorage.removeItem('departmentId');
+         localStorage.removeItem('userTypeId');*/
+        //$.cookie.remove("token");
+        // $.cookie.remove("userinfo");
+        // $.removeCookie('token', { path: '/' });
+        //  $.removeCookie('userinfo', { path: '/' });
+
+        // window.location.assign("index.html");
+
+
+
+        //});
+
+    });
+</script>

@@ -1,0 +1,111 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listregister{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                {{#i18n}}listregister{{/i18n}}
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--/Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}taxonomy{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-primary" 
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/taxonomy/view/type/add"
+                                    data-data="null"
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่</button> </div>
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>{{#i18n}}code{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}value{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}edit{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}delete{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#lists}}  
+                                    <tr class="selectable">
+
+                                        <td>{{code}}</td>
+                                        <td>{{value}}</td>
+
+                                        <td class="center">
+                                            <button class="btn btn-info btn-xs" 
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/taxonomy/view/type/edit/{{code}}"
+                                                    data-data="null"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
+                                        </td>
+
+                                        <td class="center">
+                                            <button class='btn btn-info btn-xs delete' value='{{code}}'>
+                                                <i class="fa fa-edit"></i>
+                                                {{#i18n}}delete{{/i18n}}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {{/lists}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".delete").click(function () {
+            var data = {};
+            data['code'] = $(this).val();
+            var jdata = {};
+            jdata['taxonomy'] = data;
+            if (confirm("คุณต้องการลบ?")) {
+                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEncode(jdata));
+                if (result.delete == true) {
+                    alert("ลบเรียบร้อย");
+                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/type/lists', null);
+                } else {
+                    alert("ลบไม่สำเร็จ");
+                }
+            }
+        });
+    });
+</script>

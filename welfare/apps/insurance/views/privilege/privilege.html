@@ -1,0 +1,105 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listprivilege{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listprivilege{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="pull-right">
+                            <button class="btn btn-primary"
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/insurance/view/privilege/add/{{register}}"
+                                    data-param="null"
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                            </button>
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;{{#i18n}}registerName{{/i18n}}</th>
+                                        
+                                        <th>&nbsp;{{#i18n}}rerationship{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}ratio{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}status{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#famaily}}
+                                    <tr class="selectable">
+
+                                        <td>&nbsp;{{academicPositionsNameTh}} {{rankNameTh}} {{titleNameTh}}{{familyName}} {{familyLastName}}</td>
+                                        
+                                        <td>&nbsp;{{familyStatusReraTion}}</td>
+                                        <td>&nbsp;{{ratio}}</td>
+                                        <td>&nbsp;<a href="#" id="status[0]" name="status[0]"><span class="label label-success">เปิดการใช้งาน</span></a></td>
+                                        <td class="center">
+                                            <button class="btn btn-info btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/insurance/view/privilege/edit/{{register}}"
+                                                    data-param="null"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {{/famaily}}
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+
+<script>
+            $('.btn-del').click(function(){
+    var id = $(this).attr('row-index');
+            var data = {"departmentId":id};
+            var msg = sendData('api/ManagementBasics/department/delete', data);
+            if (msg.deleteDepartment == true){
+            
+    getBody('{{_context_path}}/api/ManagementInsurance/privilege/delete/{{register}}');
+    }
+    });
+    
+    
+    
+    
+
+</script>

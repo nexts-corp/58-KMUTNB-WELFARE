@@ -1,0 +1,312 @@
+
+<div class="page-content"> 
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
+            <li class="active">{{#i18n}}addregister{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb --> 
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1> {{#i18n}}addregister{{/i18n}} </h1>
+        </div>
+        <!--Header Buttons--> 
+
+        <!--Header Buttons End--> 
+    </div>
+    <!-- /Page Header --> 
+    <!-- Page Body -->
+    <div class="page-body">
+        {{#datas}}
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div  class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}registerIdCard{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="registerIdCard" name="registerIdCard" placeholder="{{#i18n}}registerIdCard{{/i18n}}"
+                                               data-bv-notempty="true" value="{{registerIdCard}}"
+                                               data-bv-notempty-message="{{#i18n}}registerIdCard{{/i18n}}" />
+                                    </div>
+                                </div>
+                                <label for="reservation" class="col-lg-2 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
+
+                                <div class="col-lg-4">
+
+                                    <div class="controls col-lg-12">
+                                        <div class="input-group">
+                                            <input class="form-control date-picker" value="{{registerDateofBirth}}" id="registerDateOfBirth" type="text" data-date-format="dd-mm-yyyy">
+                                            <span class="input-group-addon"> 
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}registerName{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="registerNameTh" name="registerNameTh" placeholder="{{#i18n}}registerName{{/i18n}}"
+                                               data-bv-notempty="true" value="{{registerNameTh}}"
+                                               data-bv-notempty-message="{{#i18n}}registerName{{/i18n}}" />
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="registerLastNameTh" name="registerLastNameTh" placeholder="{{#i18n}}registerLastName{{/i18n}}"
+                                               data-bv-notempty="true" value="{{registerLastNameTh}}"
+                                               data-bv-notempty-message="{{#i18n}}registerLastName{{/i18n}}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}registerNameEn{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="registerNameEn" name="registerNameEn" placeholder="{{#i18n}}registerNameEn{{/i18n}}"
+                                               data-bv-notempty="true" value="{{registerNameEn}}"
+                                               data-bv-notempty-message="{{#i18n}}registerNameEn{{/i18n}}" />
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}registerLastNameEn{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="registerLastNameEn" name="registerLastNameEn" placeholder="{{#i18n}}registerLastNameEn{{/i18n}}"
+                                               data-bv-notempty="true" value="{{registerLastNameEn}}"
+                                               data-bv-notempty-message="{{#i18n}}registerLastNameEn{{/i18n}}" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                            <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" id="registerStaffCode" name="registerStaffCode" placeholder="{{#i18n}}registerStaffCode{{/i18n}}"
+                                           data-bv-notempty="true" value="{{registerStaffCode}}"
+                                           data-bv-notempty-message=" {{#i18n}}registerStaffCode{{/i18n}}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="positionsTypeId" name="positionsTypeId" data-bv-field="country">
+                                        <option value="">ระบุประเภทพนักงาน</option>
+                                        {{#positionsType}}
+                                        <option value="{{positionsTypeId}}">{{positionsTypeNameTh}} ({{positionsTypeNameEn}})</option>
+                                        {{/positionsType}}
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="positionsWorkId" name="positionsWorkId" data-bv-field="country">
+                                        <option value="">ระบุตำแหน่งงาน</option>
+                                        {{#positionsWork}}
+                                        <option value="{{positionsWorkId}}">{{positionsWorkNameTh}} ({{positionsWorkNameEn}})</option>
+                                        {{/positionsWork}}
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country">
+                                        <option value="">ระบุคำนำหน้า</option>
+                                        {{#faculty}}
+                                        <option value="{{facultyId}}">{{facultyNameTh}} ({{facultyNameEn}})</option>
+                                        {{/faculty}}
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
+                                        <option value="">เลือกภาควิชา</option>
+                                        {{#department}}
+                                        <option value="{{departmentId}}">{{departmentNameTh}} ({{departmentNameEn}})</option>
+                                        {{/department}}
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
+                                <div class="col-lg-9 control-group ">
+                                    <div class="radio col-lg-6">
+                                        <label>
+                                            <input name="form-field-radio" id="statusOperation" type="radio"  checked="checked">
+                                            <span class="text">{{#i18n}}academicSupport{{/i18n}} </span> </label>
+                                    </div>
+                                    <div class="radio col-lg-6">
+                                        <label>
+                                            <input name="form-field-radio" id="statusOperation" type="radio" class="inverted">
+                                            <span class="text">{{#i18n}}academics{{/i18n}}</span> </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
+                                <div class="controls col-lg-9">
+                                    <div class="input-group"> <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span>
+                                        <input type="text" id="registerDateAdded" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                            <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
+                                        {{#userType}}
+                                        <option value="{{userTypeId}}">{{userTypeName}}</option>
+                                        {{/userType}}
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">เลือกเป็นผู้ดูแลคณะ</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="facultyId1" name="facultyId1" data-bv-field="country">
+                                        <option value="">เลือกเป็นผู้ดูแลคณะ</option>
+                                        {{#faculty}}
+                                        <option id="facultyId1" value="{{facultyId}}">{{facultyNameTh}} ({{facultyNameEn}})</option>
+                                        {{/faculty}}
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+                            <p id="xxx"></p>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">เลือกเป็นผู้ดูแลภาควิชา</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="departmentId1" name="departmentId1" data-bv-field="country">
+                                        <option value="">เลือกภาควิชา</option>
+                                        {{#department}}
+                                        <option id="departmentId1" value="{{departmentId}}">{{departmentNameTh}} {{departmentNameEn}}</option>
+                                        {{/department}}
+
+                                    </select>
+                                    <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-6 col-lg-8">
+
+                                    <button id="btn_submit" name="bn" class="btn btn-primary" type="button"> {{#i18n}}button.submit{{/i18n}}</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/datas}}
+    </div>
+    <script src="{{_context_path}}/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <!--        <script type="text/javascript">
+        
+            $(document).ready(function () {
+        
+                $("#facultyId1").change(function () {
+                    $("#departmentId1").empty();
+                    var id = $("#facultyId1").val();
+                    var data = {"facultyId": id};
+                    getDepartment1('{{_context_path}}/api/user/user/register/get/datas/department', data);
+                });
+                $("#facultyId").change(function () {
+                    $("#departmentId").empty();
+                    var id = $("#facultyId").val();
+                    var data = {"facultyId": id};
+                    getDepartment('{{_context_path}}/api/user/user/register/get/department', data);
+                });
+        
+            </script>-->
+    <script type="text/javascript">
+
+$(document).ready(function () {
+
+    $("#btn_submit").click(function () {
+//alert(555555555555);
+        var data = {};
+        data['registerId'] = "{{#datas}}{{registerId}}{{/datas}}";
+        data['registerNameTh'] = $("#registerNameTh").val();
+        data['registerLastNameTh'] = $("#registerLastNameTh").val();
+        data['registerNameEn'] = $("#registerNameEn").val();
+        data['registerLastNameEn'] = $("#registerLastNameEn").val();
+        data['registerIdCard'] = $("#registerIdCard").val();
+        //data['registerDateOfBirth'] = $("#registerDateOfBirth").val();
+        data['registerStaffCode'] = $("#registerStaffCode").val();
+        data['registerPositionId'] = $("#registerPositionId").val();
+        data['departmentId'] = $("#departmentId").val();
+        data['facultyId'] = $("#facultyId").val();
+        //data['registerDateAdded'] = $("#registerDateAdded").val();
+        data['statusOperation'] = $("#statusOperation").val();
+        data['positionsTypeId'] = $("#positionsTypeId").val();
+        data['positionsWorkId'] = $("#positionsWorkId").val();
+        data['departmentId1'] = $("#departmentId1").val();
+        data['facultyId1'] = $("#facultyId1").val();
+        var jdata = {};
+        jdata['data'] = data;
+        $.ajax({
+            url: '{{_context_path}}/api/user/member/update',
+            data: jsonEncode(jdata),
+            type: 'post', // 'or get'
+            success: function (result) {
+                alert(result.save);
+                alert(result.message);
+                getHTML('content-body','{{_context_path}}/api/user/view/member/lists',null);
+            }
+        });
+    });
+});
+$('.date-picker').datepicker();
+    </script>

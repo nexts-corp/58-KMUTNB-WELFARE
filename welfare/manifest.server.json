@@ -1,0 +1,29 @@
+{
+    "context_path":"/welfare",
+    "welcome_page":"/welfare/api/root/view/index",
+    "locale":"th-TH",
+    "context": [
+        {
+            "contextName": "default",
+            "contextType": "data",
+            "propertys": [
+                {"name": "driver","value": "pdo_mysql"},
+                {"name": "host","value": "127.0.0.1"},
+                {"name": "port","value": "3306"},
+                {"name": "dbname","value": "db_welfare"},
+                {"name": "user","value": "root"},
+                {"name": "password","value": "1234"}
+            ]
+        }
+    ],
+    "oauth":{
+        "provider":"\\apps\\common\\AuthClient",
+        "propertys": [
+                {"name": "OAUTH2_CLIENT_ID","value": "123456"},
+                {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
+                {"name": "OAUTH2_ACCESS_KEY","value": "code"},
+                {"name": "OAUTH2_AUTH_URL","value": "http://localhost/welfare/api/oauth/authen/authorization"},
+                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost/welfare/api/oauth/authen/authenticate"}
+       ] 
+    }
+}

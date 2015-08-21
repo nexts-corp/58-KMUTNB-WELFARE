@@ -1,0 +1,111 @@
+<script>
+    $(function() {
+    var availableTags = [
+    {{#list}}"{{registerNameTh}}",
+            "{{registerLastNameTh}}",
+            "{{registerNameEn}}",
+            "{{registerLastNameEn}}",
+    {{/list}}
+    ];
+            $("#SearchName").autocomplete({
+    source: availableTags
+    });
+    });</script>
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listregister{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                {{#i18n}}listregister{{/i18n}}
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listregister{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
+                            <p id="demo" style="color:#d14"></p>
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>{{#i18n}}button.search{{/i18n}}</button>
+                        </div>
+                        <div class="pull-right">
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;{{#i18n}}code{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}registerIdCard{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}registerName{{/i18n}} - {{#i18n}}registerLastName{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}departmentuse{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}facultyname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#list}}  
+                                    <tr class="selectable">
+
+                                        <td>&nbsp;{{registerId}}</td>
+                                        <td>{{registerIdCard}}</td>
+                                        <td>&nbsp;{{rankNameTh}} {{academicPositionsNameTh}} {{titleNameTh}} {{registerNameTh}}         {{registerLastNameTh}}</td>
+                                        <td>&nbsp;{{departmentNameTh}}</td>
+                                        <td>&nbsp;{{facultyNameTh}}</td>
+                                        <td class="center">
+                                            <a class="btn-del btn btn-xs btn-palegreen" onclick="getHTML('content-body','{{_context_path}}/api/member/view/family/lists/{{registerId}}',null)" >{{#i18n}}insertfamaily{{/i18n}}</a>
+                                        </td>
+
+                                    </tr>
+                                    {{/list}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+<script>
+    $("#btnsearch").click(function () {
+        var SearchName = $("#SearchName").val();
+        if(SearchName==""){
+            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+        }else{
+        
+        var data = {"SearchName":SearchName};
+//       
+        
+        getHTML("content-body",'{{_context_path}}/api/member/member/search',data);
+        }
+    });
+    
+ </script>

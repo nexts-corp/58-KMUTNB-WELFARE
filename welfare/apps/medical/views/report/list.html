@@ -1,0 +1,112 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}reportmedical{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}reportmedical{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="pull-right">
+                            <a href="type_member.html"><button id="bn" name="bn" class="btn btn-primary"  type="button"> <i class="fa fa-plus">{{#i18n}}insertbutton{{/i18n}}</i></button></a>
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed" id="show">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;รายชื่อ</th>
+                                        <th>&nbsp;จำนวนเงิน</th>
+                                        
+                                        <th>&nbsp;สถานะ</th>
+                                        <th class="center">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--<tr class="selectable">-->
+                                <!---->
+                                <!--<td>&nbsp;นาย ไพรัตน์ แผงดี</td>-->
+                                <!--<td>&nbsp;5000</td>-->
+                                <!---->
+                                <!--<td>&nbsp;<a href="#" id="status[0]" name="status[0]" onClick="javascript:setTimeout('__doPostBack2_ShowModule(\'frmActionStatus\',\'0\')', 0)"><span class="label label-success">เปิดการใช้งาน</span></a></td>-->
+                                <!--<td class="center"><a class="btn btn-info btn-xs edit" href="rank.html" onClick="  javascript:setTimeout('__doPostBack2_ShowModule(\'Grid1_Editing\',\'' + 0 + '\')', 0);"><i class="fa fa-edit"></i>Edit</a> <a class="btn btn-danger btn-xs delete" href="#" onClick="  if (ConfirmDel()) {-->
+                                            <!--javascript:setTimeout('__doPostBack2_ShowModule(\'Grid1_Deleting\',\'' + 0 + '\')', 0);-->
+                                        <!--}"><i class="fa fa-trash-o"></i>Delete</a></td>-->
+                                <!--</tr>-->
+
+                                <!--</tbody>-->
+                                <!--<input type="hidden" name="Grid1_currentpage" value="10,1">-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $.ajax({
+            url: '/sdg/api/ManagementMedicalFee/medicalfee/report',
+            data: {},
+            type: 'post', // 'or get'
+            async: true,
+            success: function (result) {
+
+                var $html = '';
+                for(var i = 0; i < result.management.length ; i++){
+                    var data = result.management[i];
+                    $html += '<tr class="selectable">';
+                    $html += '<td>'+data.fullname+'</td>';
+                    $html += '<td>'+data.amount+'</td>';
+                    $html += '<td>&nbsp;<a href="#" id="status[0]" name="status[0]" ><span class="label label-success">เปิดการใช้งาน</span></a></td>'+
+                    '<td class="center">'+
+                    '<a class="btn btn-info btn-xs edit" data-table="'+data.medicalFeeId+'" href="rank.html" ><i class="fa fa-edit"></i>Edit</a>'+
+                    '<a class="btn btn-danger btn-xs delete" data-table="'+data.medicalFeeId+'" href="#"><i class="fa fa-trash-o"></i>Delete</a>'+
+                    '</td>';
+                    $html += '</tr>';
+                }
+                $("table#show tbody").html($html);
+
+            }
+        });
+
+
+
+
+    });
+</script>

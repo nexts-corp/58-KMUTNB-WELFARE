@@ -1,0 +1,93 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listuserType{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+                {{#i18n}}listuserType{{/i18n}}
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listuserType{{/i18n}} </span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" onclick="getHTML('content-body','{{_context_path}}/api/user/view/type/add',null)">
+                                <button id="bn" name="bn" class="btn btn-primary"  type="button">
+                                    <i class="fa fa-plus"></i>{{#i18n}}insertbutton{{/i18n}}</button></a>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;{{#i18n}}userTypeName{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#cuss}}
+                                    <tr class="selectable">
+                                        <td>{{userTypeName}}</td>
+
+
+                                        <td class="center">
+                                            <a  href="#" onclick="getHTML('content-body','{{_context_path}}/api/user/view/type/edit/{{userTypeId}}',null)" class="btn btn-info btn-xs edit" ><i class="fa fa-edit"></i>Edit</a> 
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{userTypeId}}" ><i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}</button>    
+                                        </td>
+                                    </tr>
+                                    {{/cuss}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+ <script>
+                $('.btn-del').click(function(){
+        var id = $(this).attr('row-index');
+                var data = {"userTypeId":id};
+                var msg = sendData('{{_context_path}}/api/user/type/delete', data);
+                getHTML('content-body','{{_context_path}}/api/user/view/type/lists');
+                
+        });
+
+
+    </script>

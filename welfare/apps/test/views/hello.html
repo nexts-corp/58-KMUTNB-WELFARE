@@ -1,0 +1,23 @@
+{{>header}}
+<table  style="width:  100%">
+    <tr>
+        <td>
+            {{#widget}}apps\test\widget\NavWidget{{/widget}}
+        </td>
+
+        <td>
+            <form action="{{_context_path}}/api/test/hello/hello">
+                <table>
+                    <tr>
+                        <td>What is your name?</td>
+                        <td><input name="name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="send"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+</table>

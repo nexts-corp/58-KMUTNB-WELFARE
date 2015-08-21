@@ -1,0 +1,29 @@
+{{>header}}
+<table  style="width:  100%">
+    <tr>
+        <td>
+            {{#widget}}apps\test\widget\NavWidget{{/widget}}
+        </td>
+    
+        <td>
+            <table>
+                <tr>
+                    <td>{{#i18n}}id{{/i18n}}</td>
+                    <td>{{#i18n}}name{{/i18n}}</td>
+                    <td>{{#i18n}}address{{/i18n}}</td>
+                    <td></td>
+                     <td></td>
+                </tr>
+                {{#cuss}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{address}}</td>
+                    <td><a href="{{_context_path}}/api/test/hello/view/edit/{{id}}" >Edit</td>
+                     <td><a href="{{_context_path}}/api/test/hello/cus/del/{{id}}" >Del</td>
+                </tr>
+                {{/cuss}}
+            </table>
+        </td>
+    </tr>
+</table>

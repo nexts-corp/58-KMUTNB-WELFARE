@@ -1,0 +1,248 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}familySetting{{/i18n}}</li>
+        </ul>
+    </div>
+   
+    <div class="page-body">
+
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}familyAdd{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div  class="form-horizontal">
+                            <div class="form-title"> {{#i18n}}familyAdd{{/i18n}} </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+
+                                        <select class="form-control" id="academicPositionsId" name="academicPositionsId" data-bv-field="country">
+                                            <option value="">ระบุคำนำหน้า</option>
+                                            {{#academicPositions}}
+                                            <option value="{{academicPositionsId}}">{{academicPositionsNameTh}} ({{academicPositionsNameEn}})</option>
+                                            {{/academicPositions}}
+                                        </select>
+                                        <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}rankId{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+
+                                        <select class="form-control" id="rankId" name="rankId" data-bv-field="country">
+                                            <option value="">เลือกตำแหน่งทางสังคม</option>
+                                            {{#rank}}
+                                            <option value="{{rankId}}">{{rankNameTh}} ({{rankNameEn}})</option>
+                                            {{/rank}}
+                                        </select>
+                                        <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}idCard{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="idCard" name="idCard" placeholder="{{#i18n}}idCard{{/i18n}}"
+                                               data-bv-notempty="true"
+                                               data-bv-notempty-message="{{#i18n}}idCard{{/i18n}}" />
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <select class="form-control" id="titleNameId" name="titleNameId" data-bv-field="country">
+                                            <option value="">ระบุคำนำหน้า</option>
+                                            {{#titleName}}
+                                            <option value="{{titleNameId}}">{{titleNameTh}} ({{titleNameEn}})</option>
+                                            {{/titleName}}
+                                        </select>
+                                        <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}familyName{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="familyName" name="familyName" placeholder="ระบุชื่อ"
+                                               data-bv-notempty="true"
+                                               data-bv-notempty-message="ระบุชื่อ" />
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}familyLastName{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="familyLastName" name="familyLastName" placeholder="{{#i18n}}familyLastName{{/i18n}}"
+                                               data-bv-notempty="true"
+                                               data-bv-notempty-message="{{#i18n}}familyLastName{{/i18n}}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}familyAdd{{/i18n}}</span> </div>
+                    <div class="widget-body">
+
+
+
+                        <div  class="form-horizontal">
+                            <div class="form-title"> {{#i18n}}familyAdd{{/i18n}} </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}familyBirthday{{/i18n}}</label>
+                                <div class="controls col-lg-9">
+                                    <div class="input-group"> <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span>
+                                        <input type="text" id="familyBirthday" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">สถานะ</label>
+                                <div class="col-lg-9 control-group ">
+                                    <div class="radio col-lg-2">
+                                        <label>
+                                            <input name="familyStatusReraTion" type="radio"  id="familyStatusReraTion" value="บิดา">
+                                            <span class="text">บิดา </span>
+                                        </label>
+                                    </div>
+                                        <div class="radio col-lg-2">
+                                        <label>
+                                            <input name="familyStatusReraTion" type="radio" id="familyStatusReraTion" value="มารดา" >
+                                            <span class="text">มารดา </span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-2">
+                                        <label>
+                                            <input name="familyStatusReraTion" type="radio" id="familyStatusReraTion" value="คู่สมรส" class="inverted">
+                                            <span class="text">คู่สมรส</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-2">
+                                        <label>
+                                            <input name="familyStatusReraTion" type="radio" id="familyStatusReraTion" value="บุตร/ธิดา" class="inverted">
+                                            <span class="text">บุตร/ธิดา</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-2">
+                                        <label>
+                                            <input name="familyStatusReraTion" type="radio" id="familyStatusReraTion" value="พี่/น้อง" class="inverted">
+                                            <span class="text">พี่/น้อง</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="familyContactPhone" id="familyContactPhone" placeholder="0819999999"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="{{#i18n}}familyContactPhone{{/i18n}}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="familyEmail" id="familyEmail" placeholder="{{#i18n}}familyEmail{{/i18n}}"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="{{#i18n}}familyEmail{{/i18n}}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="familyMobile" id="familyMobile" placeholder="0819999999"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="{{#i18n}}familyMobile{{/i18n}}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}familyAddress{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <textarea rows="4" cols="50" class="form-control" id="familyAddress" ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-6 col-lg-8">
+
+                                    <button id="btn_submit" name="bn" class="btn btn-primary" type="button"> {{#i18n}}button.submit{{/i18n}}</button>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btn_submit").click(function () {
+            var data = {};
+            
+                data['registerId'] = {{register}};
+                data['familyName'] = $("#familyName").val();
+                data['familyLastName'] = $("#familyLastName").val();
+                data['idCard'] = $("#idCard").val();
+                data['familyAddress'] = $("#familyAddress").val();
+                data['familyTelephone'] = $("#familyTelephone").val();
+                data['familyBirthday'] = $("#familyBirthday").val();
+                data['familyStatusReraTion'] = $('input[name=familyStatusReraTion]:checked').val(); 
+                data['rankId'] = $("#rankId").val();
+                data['titleNameId'] = $("#titleNameId").val();
+                data['academicPositionsId'] = $("#academicPositionsId").val();
+                data['familyContactPhone'] = $("#familyContactPhone").val();
+                data['familyEmail'] = $("#familyEmail").val();
+                data['familyMobile'] = $("#familyMobile").val();
+             
+            var jdata = {};
+            jdata['data'] = data;
+
+//                alert(typeNameEn);
+            $.ajax({
+                url: '{{_context_path}}/api/member/family/save',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                    //alert(result.save);
+                    //alert(result.message);
+                //getHTML('content-body','{{_context_path}}/api/member/view/family/lists/{{register}}',null);
+                }
+            });
+        });
+    });
+</script>

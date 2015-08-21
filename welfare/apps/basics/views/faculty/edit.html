@@ -1,0 +1,186 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}addfaculty{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                {{#i18n}}managementfaculty{{/i18n}}
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}managementfaculty{{/i18n}}</span>
+                    </div>
+                    {{#edit}}
+                    <div class="widget-body">
+                        <div  class="form-horizontal">
+                            <div class="form-title">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}campus{{/i18n}}</label>
+                                <div class="col-lg-9">
+
+                                    <select class="form-control" id="campusId" name="CampusId" data-bv-field="country">
+                                        <option value="">{{#i18n}}campusname{{/i18n}}</option>
+                                        <option value="1">{{#i18n}}campusname1{{/i18n}}</option>
+                                        <option value="2">{{#i18n}}campusname2{{/i18n}}</option>
+                                        <option value="3">{{#i18n}}campusname3{{/i18n}}</option>
+
+                                    </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                
+
+                                <div class="col-lg-9">
+                                    <input type="hidden"  class="form-control" name="FacultyID" 
+                                           id="facultyId"
+                                           value="{{facultyId}}"
+                                           />
+                                </div>
+                                
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}idfaculty{{/i18n}}</label>
+
+                                <div class="col-lg-9">
+                                    <input type="text"  class="form-control" name="FacultyCode" 
+                                           id="facultyCode"
+                                           value="{{facultyCode}}"
+                                           placeholder="{{#i18n}}idfaculty{{/i18n}}"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="กรุณากรอกรหัสคณะ/ Faculty ID" />
+                                </div>
+                                
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}facultyname{{/i18n}}</label>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="facultyName" 
+                                           id="facultyNameTh"
+                                           value="{{facultyNameTh}}"
+                                           placeholder="{{#i18n}}pleaseinputfacultyname{{/i18n}}"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="กรุณากรอกชื่อคณะ" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}facultynameEng{{/i18n}}</label>
+
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="FacultyNameEn" 
+                                           id="facultyNameEn"
+                                           value="{{facultyNameEn}}"
+                                           placeholder="{{#i18n}}facultynameEng{{/i18n}}"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="กรุณากรอกกรุณากรอกชื่อคณะ" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-4 col-lg-8">
+                                    <input class="btn btn-primary" type="submit"  id="btn_submit" value="{{#i18n}}button.submit{{/i18n}}"/>
+                                
+                                    <input class="btn btn-default" type="submit"  id="btn_cancel" value="{{#i18n}}button.cancel{{/i18n}}"/>
+                                </div>
+                            </div>
+                             
+
+                        </div>
+                    </div>
+                    {{/edit}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<script type="text/javascript">
+        
+        $(document).ready(function () {
+            
+            $("#btn_submit").click(function() {
+                
+                var data ={};
+                
+                data['facultyId'] = $("#facultyId").val();
+                data['campusId'] = $("#campusId").val();
+                data['facultyCode'] = $("#facultyCode").val();
+                data['facultyNameTh'] = $("#facultyNameTh").val();
+                data['facultyNameEn'] = $("#facultyNameEn").val();
+                
+                var jdata = {};
+                jdata['data'] = data;
+                $.ajax({
+                url: '{{_context_path}}/api/ManagementBasics/faculty/update',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                     alert(result.save);
+                     alert(result.message);
+                     getBody('{{_context_path}}/api/ManagementBasics/faculty/listFaculty');
+                    }
+                });
+//                var facultyId = $("#facultyId").val();
+//                var campusId = $("#campusId").val();
+//                var facultyCode = $("#facultyCode").val();
+//                var facultyName = $("#facultyName").val();
+//                var facultyNameEn = $("#facultyNameEn").val();
+                
+//                $.ajax({
+//                    url: '/{{_context_path}}/api/ManagementBasics/faculty/update',
+//                    data: {facultyId:facultyId, campusId:campusId,facultyCode:facultyCode, facultyName:facultyName, facultyNameEn:facultyNameEn},
+//                    type: 'post', // 'or get'
+//                    success: function (result) {
+//                        var msg = result.editfacultysave;
+//                       
+//                //alert(msg["name"]);
+//                        if (msg == "no") {
+//                            alert("{{#i18n}}alertinsertNocomplete{{/i18n}}");
+//                            //window.location="api/sdg/basedata/listfaculty";
+//                       } else {
+//                           alert("{{#i18n}}alertinsertcomplete{{/i18n}}");
+//                            //window.location="bbbbb.html";
+//                           
+//                        }
+//                    }
+//                });
+                //alert();
+            });
+            
+        });
+    </script>

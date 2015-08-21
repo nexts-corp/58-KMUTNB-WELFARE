@@ -1,0 +1,97 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listpositiontype{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+                {{#i18n}}listpositiontype{{/i18n}}
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listpositiontype{{/i18n}} </span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                            <label class="col-lg-5 control-label">
+                                <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                            </label>
+
+                            <div class="col-lg-3">
+                                <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            </div>
+
+                        <div class="pull-right">
+                            <a href="#" class="btn btn-primary" onclick="getBody('api/ManagementBasics/type/positions/view/add')">
+                                
+                                    <i class="fa fa-plus"></i>{{#i18n}}insertbutton{{/i18n}}</a>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;{{#i18n}}positionsTypeNameTh{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}positionsTypeNameEn{{/i18n}}</th>
+                                        <th class="center">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#cuss}}
+                                    <tr class="selectable">
+                                        <td>{{positionsTypeNameTh}}</td>
+                                        <td>{{positionsTypeNameEn}}</td>
+
+                                      
+                                        <td class="center">
+                                            <a  href="#" onclick="getBody('api/ManagementBasics/type/positions/view/edit/{{positionsTypeId}}')" class="btn btn-info btn-xs edit" ><i class="fa fa-edit"></i>Edit</a> 
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{positionsTypeId}}" ><i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}</button>    
+                                        </td>
+                                    </tr>
+                                    {{/cuss}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<script>
+                $('.btn-del').click(function(){
+        var id = $(this).attr('row-index');
+                var data = {"positionsTypeId":id};
+                var msg = sendData('api/ManagementBasics/type/positions/delete', data);
+                getBody('{{_context_path}}/api/ManagementBasics/type/positions/view/list');
+                
+        });
+
+
+    </script>

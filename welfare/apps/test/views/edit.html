@@ -1,0 +1,32 @@
+{{>header}}
+<table  style="width:  100%">
+    <tr>
+        <td>
+            {{#widget}}apps\test\widget\NavWidget{{/widget}}
+        </td>
+
+        <td>
+            <form action="{{_context_path}}/api/test/hello/cus/update">
+                  {{#cus}}
+                <input type="hidden" name="id" value="{{id}}" />
+                <table>
+                  
+                    <tr>
+                        <td>{{#i18n}}name{{/i18n}}</td>
+                        <td><input name="name" value="{{name}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{#i18n}}address{{/i18n}}</td>
+                        <td><input name="address" value="{{address}}" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="save"></td>
+                    </tr>
+                   
+                </table>
+                 {{/cus}}
+            </form>
+        </td>
+    </tr>
+</table>
