@@ -4,14 +4,14 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}taxonomy.add{{/i18n}}</li>
+            <li class="active">{{#i18n}}taxonomy.edit{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
     <!-- Page Header -->
     <div class="page-header position-relative">
         <div class="header-title">
-            <h1>{{#i18n}}taxonomy.add{{/i18n}}</h1>
+            <h1>{{#i18n}}taxonomy.edit{{/i18n}}</h1>
         </div>
         <!--Header Buttons--> 
 
@@ -23,10 +23,10 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}editData{{/i18n}}</span> </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
-
+                            {{#lists}}
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{#i18n}}taxonomy.code{{/i18n}}</label>
                                 <div class="col-lg-10">
@@ -43,6 +43,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{/lists}}
                             <div class="form-group">
                                 <div class="col-lg-offset-6 col-lg-8">
 
@@ -63,18 +64,18 @@
     $(document).ready(function () {
         $("#btn_submit").click(function () {
             var data = {};
-            data['code'] = $("#code").val();
-            data['parentCode'] = '0';
+            data['code'] = "{{#lists}}{{code}}{{/lists}}";
+            data['childCode'] = '0';
             data['value'] = $('#value').val();
             var jdata = {};
             jdata['taxonomy'] = data;
             if (data['value'] != "") {
-                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/save', jsonEncode(jdata));
-                if (result.save == true) {
-                    alert("บันทึกเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/type/lists', null);
+                var result = sendData('{{_context_path}}/api/taxonomy/child/update', jsonEncode(jdata));
+                if (result.update == true) {
+                    alert("แก้ไขเรียบร้อย");
+                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/child/lists', null);
                 } else {
-                    alert("บันทึกไม่สำเร็จ");
+                    alert("แก้ไขไม่สำเร็จ");
                 }
             } else {
                 alert("กรุณาใส่ Value");

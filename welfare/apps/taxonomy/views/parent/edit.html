@@ -70,10 +70,10 @@
             var jdata = {};
             jdata['taxonomy'] = data;
             if (data['value'] != "") {
-                var result = sendData('{{_context_path}}/api/taxonomy/main/update', jsonEncode(jdata));
+                var result = sendData('{{_context_path}}/api/taxonomy/parent/update', jsonEncode(jdata));
                 if (result.update == true) {
                     alert("แก้ไขเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/main/lists', null);
+                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/parent/lists', null);
                 } else {
                     alert("แก้ไขไม่สำเร็จ");
                 }

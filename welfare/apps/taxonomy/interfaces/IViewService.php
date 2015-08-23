@@ -11,29 +11,60 @@ interface IViewService {
 
     /**
      * @name lists
-     * @uri /main/lists
+     * @uri /parent/lists
      * @return html view
      * @description view
      * @authen true
      */
-    public function mainLists();
+    public function parentLists();
 
     /**
      * @name add
-     * @uri /main/add
+     * @uri /parent/add
      * @return html view
      * @description view
      * @authen true
      */
-    public function mainAdd();
+    public function parentAdd();
 
     /**
      * @name edit
-     * @uri /main/edit
+     * @uri /parent/edit
      * @param string code
      * @return html view
      * @description view
      * @authen true
      */
-    public function mainEdit($code);
+    public function parentEdit($code);
+    
+       /**
+     * @name lists
+     * @uri /child/lists
+     * @return html view
+     * @description view
+     * @authen true
+     */
+    public function childLists();
+    
+     
+
+    /**
+     * @name add
+     * @uri /child/add
+     * @return html view
+     * @description view
+     * @authen true
+     */
+    public function childAdd();
+
+    /**
+     * @name edit
+     * @uri /child/edit
+     * @param string code
+     * @return html view
+     * @description view
+     * @authen true
+     */
+    public function childEdit($code);
+
 }

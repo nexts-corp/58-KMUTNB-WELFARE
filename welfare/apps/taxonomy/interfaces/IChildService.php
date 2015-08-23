@@ -3,11 +3,11 @@
 namespace apps\taxonomy\interfaces;
 
 /**
- * @name main
- * @uri /main
+ * @name child
+ * @uri /child
  * @description ไรวะเนี่ย
  */
-interface IMainService {
+interface IChildService {
 
     /**
      * @name save

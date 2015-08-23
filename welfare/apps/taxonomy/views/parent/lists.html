@@ -41,7 +41,7 @@
                         <div class="pull-right">
                             <button class="btn btn-primary" 
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/taxonomy/view/main/add"
+                                    data-api="{{_context_path}}/api/taxonomy/view/parent/add"
                                     data-data="null"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่</button> 
@@ -66,7 +66,7 @@
                                         <td class="center">
                                             <button class="btn btn-info btn-xs" 
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/taxonomy/view/main/edit/{{code}}"
+                                                    data-api="{{_context_path}}/api/taxonomy/view/parent/edit/{{code}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
@@ -99,10 +99,10 @@
             var jdata = {};
             jdata['taxonomy'] = data;
             if (confirm("คุณต้องการลบ?")) {
-                var result = sendData('{{_context_path}}/api/taxonomy/main/delete', jsonEncode(jdata));
+                var result = sendData('{{_context_path}}/api/taxonomy/parent/delete', jsonEncode(jdata));
                 if (result.delete == true) {
                     alert("ลบเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/main/lists', null);
+                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/parent/lists', null);
                 } else {
                     alert("ลบไม่สำเร็จ");
                 }

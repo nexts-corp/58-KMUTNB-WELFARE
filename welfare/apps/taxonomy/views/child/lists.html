@@ -31,21 +31,23 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
-                        </label>
-
-                        <div class="col-lg-3">
-                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        <div class="col-md-5">
+                            <select id="selectParent" class="form-control">
+                                <option value="0">Chose Parent</option>
+                                {{#parent}}
+                                <option value="{{code}}">{{value}}</option>
+                                {{/parent}}
+                            </select>
                         </div>
                         <div class="pull-right">
                             <button class="btn btn-primary" 
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/taxonomy/view/type/add"
+                                    data-api="{{_context_path}}/api/taxonomy/view/child/add"
                                     data-data="null"
                                     onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่</button> </div>
-                        <div class="flip-scroll">
+                                <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่ {{test}}</button> 
+                        </div>
+                        <div class="flip-scroll rows">
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
@@ -56,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#lists}}  
+                                    {{#child}}  
                                     <tr class="selectable">
 
                                         <td>{{code}}</td>
@@ -65,8 +67,8 @@
                                         <td class="center">
                                             <button class="btn btn-info btn-xs" 
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/taxonomy/view/type/edit/{{code}}"
-                                                    data-data="null"
+                                                    data-api="{{_context_path}}/api/taxonomy/view/child/edit/{{code}}"
+                                                    data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
                                         </td>
@@ -78,7 +80,7 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    {{/lists}}
+                                    {{/child}}
 
                                 </tbody>
                             </table>
@@ -92,16 +94,21 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#selectParent").change(function(e){
+           var code = $(this).val();
+           getHTML('content-body', '{{_context_path}}/api/taxonomy/view/child/lists', {parentCode:code});
+           $(this).val(code);
+        });
         $(".delete").click(function () {
             var data = {};
             data['code'] = $(this).val();
             var jdata = {};
             jdata['taxonomy'] = data;
             if (confirm("คุณต้องการลบ?")) {
-                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEncode(jdata));
+                var result = sendData('{{_context_path}}/api/taxonomy/child/delete', jsonEncode(jdata));
                 if (result.delete == true) {
                     alert("ลบเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/type/lists', null);
+                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/child/lists', null);
                 } else {
                     alert("ลบไม่สำเร็จ");
                 }

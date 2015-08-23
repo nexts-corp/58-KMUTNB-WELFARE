@@ -4,9 +4,9 @@ namespace apps\taxonomy\service;
 
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
-use apps\taxonomy\interfaces\IMainService;
+use apps\taxonomy\interfaces\IParentService;
 
-class MainService extends CServiceBase implements IMainService {
+class ParentService extends CServiceBase implements IParentService {
 
     public $datacontext;
 
