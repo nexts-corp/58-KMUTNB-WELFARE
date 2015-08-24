@@ -1,6 +1,8 @@
 
 
 //edit by somchit
+//test test
+//somchit
 
 function getHTML(id, link, data) {
     //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
