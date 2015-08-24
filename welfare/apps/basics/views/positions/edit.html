@@ -29,25 +29,25 @@
             <div  class="form-horizontal">
               <div class="form-title"> {{#i18n}}addpositiontypeView{{/i18n}} </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
+                <label class="col-lg-3 control-label">{{#i18n}}positionsNameTh{{/i18n}}</label>
                 
-                {{#data}}
+                {{#datas}}
 
                 <div class="col-lg-9">
-                  <input type="text" class="form-control" name="positionsTypeNameTh" id="positionsTypeNameTh" placeholder="{{#i18n}}positionsTypeNameTh{{/i18n}}"
+                  <input type="text" class="form-control" name="positionsNameTh" id="positionsNameTh" placeholder="{{#i18n}}positionsNameTh{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}positionsTypeNameTh{{/i18n}}" value="{{positionsTypeNameTh}}" />
+                                           data-bv-notempty-message="{{#i18n}}positionsNameTh{{/i18n}}" value="{{positionsNameTh}}" />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameEn{{/i18n}}</label>
+                <label class="col-lg-3 control-label">{{#i18n}}positionsNameEn{{/i18n}}</label>
                 <div class="col-lg-9">
-                  <input type="text" class="form-control" name="{{#i18n}}positionsTypeNameEn{{/i18n}}" id="positionsTypeNameEn" placeholder="{{#i18n}}positionsTypeNameEn{{/i18n}}"
+                  <input type="text" class="form-control" name="{{#i18n}}positionsNameEn{{/i18n}}" id="positionsNameEn" placeholder="{{#i18n}}positionsNameEn{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}positionsTypeNameEn{{/i18n}}" value="{{positionsTypeNameEn}}" />
+                                           data-bv-notempty-message="{{#i18n}}positionsNameEn{{/i18n}}" value="{{positionsNameEn}}" />
                 </div>
               </div>
-               {{/data}}
+               {{/datas}}
               
               <div class="form-group">
                 <div class="col-lg-offset-4 col-lg-8">
@@ -70,24 +70,20 @@
 
         $("#btn_submit").click(function () {
             var data = {};
-            data['positionsTypeId'] ={{#data}} "{{positionsTypeId}}"{{/data}};
-            data['positionsTypeNameTh'] = $("#positionsTypeNameTh").val();
-            data['positionsTypeNameEn'] = $("#positionsTypeNameEn").val();
+            data['positionsId'] ={{#datas}} "{{positionsId}}"{{/datas}};
+            data['positionsNameTh'] = $("#positionsNameTh").val();
+            data['positionsNameEn'] = $("#positionsNameEn").val();
 
             var jdata = {};
             jdata['data'] = data;
-
-//                alert(positionsNameEN);
-            $.ajax({
-                url: '{{_context_path}}/api/ManagementBasics/type/positions/update',
-                data: jsonEncode(jdata),
-                type: 'post', // 'or get'
-                success: function (result) {
-                    //alert(result.save);
-                    //alert(result.message);
-                  getBody('{{_context_path}}/api/ManagementBasics/type/positions/view/list');
+            var result = sendData('{{_context_path}}/api/basics/positions/update', jsonEncode(jdata));
+            
+                if (result.update == true) {
+                getHTML('content-body', '{{_context_path}}/api/basics/view/positions/lists',null);
+                Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                }else{
+                Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                 }
-            });
         });
     });
 </script>

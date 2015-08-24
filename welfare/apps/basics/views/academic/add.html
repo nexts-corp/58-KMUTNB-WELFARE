@@ -1,18 +1,17 @@
-<!-- Page Content -->
 
 <div class="page-content"> 
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
-            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}listpositionAcademic{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}addpositionAcademic{{/i18n}}</li>
+            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}academicLists{{/i18n}}</a> </li>
+            <li class="active">{{#i18n}}academicAdd{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
     <!-- Page Header -->
-    <div class="page-header position-relative">
+    <div class="page-header Type-relative">
         <div class="header-title">
-            <h1> {{#i18n}}addpositionAcademic{{/i18n}} </h1>
+            <h1> {{#i18n}}academicAdd{{/i18n}} </h1>
         </div>
         <!--Header Buttons--> 
 
@@ -24,24 +23,24 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}listpositionAcademic{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}academicLists{{/i18n}}</span> </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
-                            <div class="form-title"> {{#i18n}}addpositionAcademic{{/i18n}} </div>
+                            <div class="form-title"> {{#i18n}}academicAdd{{/i18n}} </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}academicPositionsNameTh{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}academicTypeTh{{/i18n}}</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="academicPositionsNameTh" id="academicPositionsNameTh" placeholder="{{#i18n}}academicPositionsNameTh{{/i18n}}"
+                                    <input type="text" class="form-control" name="academicTypeTh" id="academicTypeTh" placeholder="{{#i18n}}academicTypeTh{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}academicPositionsNameTh{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}academicTypeTh{{/i18n}}" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}academicPositionsNameEn{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}academicTypeEn{{/i18n}}</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="academicPositionsNameEn" id="academicPositionsNameEn" placeholder="{{#i18n}}academicPositionsNameEn{{/i18n}}"
+                                    <input type="text" class="form-control" name="academicTypeEn" id="academicTypeEn" placeholder="{{#i18n}}academicTypeEn{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}academicPositionsNameEn{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}academicTypeEn{{/i18n}}" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -85,28 +84,26 @@
 
         $("#btn_submit").click(function () {
             var data = {};
-            data['academicPositionsNameTh'] = $("#academicPositionsNameTh").val();
-            data['academicPositionsNameEn'] = $("#academicPositionsNameEn").val();
+            data['academicTypeTh'] = $("#academicTypeTh").val();
+            data['academicTypeEn'] = $("#academicTypeEn").val();
             data['abbreviationTh'] = $("#abbreviationTh").val();
             data['abbreviationEn'] = $("#abbreviationEn").val();
-
+            
+            
+            
             var jdata = {};
             jdata['data'] = data;
+            
+             var result=sendData('{{_context_path}}/api/basics/academic/save', jsonEncode(jdata));
+             
+             if(result.save==true){
+             getHTML('content-body','{{_context_path}}/api/basics/view/academic/lists',data);
+             Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true); 
+            }else{
+             Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
 
+            }
 
-            var msg = sendData('{{_context_path}}/api/ManagementBasics/academic/position/save', jsonEncode(jdata));
-           getBody('{{_context_path}}/api/ManagementBasics/academic/position/view/list');
-
-//                alert(academicPositionsName);
-//                $.ajax({
-//                    url: '/{{_context_path}}/api/ManagementBasics/academic/position/save',
-//                    data: jsonEncode(jdata),
-//                    type: 'post', // 'or get'
-//                    success: function (result) {
-//                     alert(result.save);
-//                     alert(result.message);
-//                    }
-//                });
         });
     });
 </script>

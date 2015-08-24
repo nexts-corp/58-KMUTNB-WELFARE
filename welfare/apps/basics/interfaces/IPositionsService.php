@@ -30,10 +30,10 @@ interface IPositionsService {
     /**
      * @name delete
      * @uri /delete
-     * @param integer id Description
-     * @return string deletePosition Description
+     * @param integer Id Description
+     * @return string delete Description
      * @description ลบตำแหน่งงาน
      */
-    public function delete($id);
+    public function delete($Id);
     
 }

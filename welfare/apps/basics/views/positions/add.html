@@ -29,27 +29,26 @@
             <div  class="form-horizontal">
               <div class="form-title"> {{#i18n}}addpositiontypeView{{/i18n}} </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
+                <label class="col-lg-3 control-label">{{#i18n}}positionsNameTh{{/i18n}}</label>
                 <div class="col-lg-9">
-                  <input type="text" class="form-control" name="positionsTypeNameTh" id="positionsTypeNameTh" placeholder="{{#i18n}}positionsTypeNameTh{{/i18n}}"
+                  <input type="text" class="form-control" name="positionsNameTh" id="positionsNameTh" placeholder="{{#i18n}}positionsNameTh{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}positionsTypeNameTh{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}positionsNameTh{{/i18n}}" />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameEn{{/i18n}}</label>
+                <label class="col-lg-3 control-label">{{#i18n}}positionsNameEn{{/i18n}}</label>
                 <div class="col-lg-9">
-                  <input type="text" class="form-control" name="{{#i18n}}positionsTypeNameEn{{/i18n}}" id="positionsTypeNameEn" placeholder="{{#i18n}}positionsTypeNameEn{{/i18n}}"
+                  <input type="text" class="form-control" name="{{#i18n}}positionsNameEn{{/i18n}}" id="positionsNameEn" placeholder="{{#i18n}}positionsNameEn{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}positionsTypeNameEn{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}positionsNameEn{{/i18n}}" />
                 </div>
               </div>
               
               
               <div class="form-group">
                 <div class="col-lg-offset-4 col-lg-8">
-                  <button type="submit" id="btn_submit" class="btn btn-primary">{{#i18n}}button.submit{{/i18n}}</button>
-                  <input type="reset" id="bnreset" name="bnreset" value="ล้างข้อมูล" class="btn">                
+                   <button type="submit" id="btn_submit" class="btn btn-primary"> บันทึกข้อมูล </button>
                 </div>
               </div>
             </div>
@@ -62,29 +61,27 @@
 </div>
 <!-- /Page Content --> 
 <script type="text/javascript">
-        
+       
         $(document).ready(function () {
 
             $("#btn_submit").click(function () {
                 var data = {};
-                data['positionsTypeNameTh'] = $("#positionsTypeNameTh").val();
-                data['positionsTypeNameEn'] = $("#positionsTypeNameEn").val();
+                data['positionsNameTh'] = $("#positionsNameTh").val();
+                data['positionsNameEn'] = $("#positionsNameEn").val();
                 
-                var jdata = {};
-                jdata['data'] = data;
-                
-//                alert(positionsTypeNameEn);
-                $.ajax({
-                    url: '{{_context_path}}/api/ManagementBasics/type/positions/save',
-                    data: jsonEncode(jdata),
-                    type: 'post', // 'or get'
-                    success: function (result) {
-//                     alert(result.save);
-//                     alert(result.message);
-                  getBody('{{_context_path}}/api/ManagementBasics/type/positions/view/list');
+              var jdata = {};
+            jdata['data'] = data;
+            
+             var result=sendData('{{_context_path}}/api/basics/positions/save', jsonEncode(jdata));
+             
+             if(result.save==true){
+             getHTML('content-body','{{_context_path}}/api/basics/view/positions/lists',data);
+             Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true); 
+            }else{
+             Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
 
-                    }
-                });
+           }
+ 
             });
         });
     </script>

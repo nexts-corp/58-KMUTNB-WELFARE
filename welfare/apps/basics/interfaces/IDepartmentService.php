@@ -31,11 +31,11 @@ interface IDepartmentService {
     /**
      * @name delete
      * @uri /delete
-     * @param String departmentId Description
-     * @return string deleteDepartment Description
+     * @param integer id Description
+     * @return boolean delete [return ture or false if don't ]
      * @description ลบภาควิชาหรือสำนักงาน
      */
-    public function delete($departmentId);
+    public function delete($id);
     
 
 }

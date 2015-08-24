@@ -46,18 +46,9 @@ class FacultyService extends CServiceBase implements IFacultyService {
     public function delete($id) {
         $daoFaculty = new Faculty();
         $daoFaculty->setFacultyId($id);
-        return $this->datacontext->removeObject($daoFaculty);
+        $this->datacontext->removeObject($daoFaculty);
+        return true;
     }
 
-//    public function viewSearch($data) {
-//        $view = new CJView("faculty/list", CJViewType::HTML_VIEW_ENGINE);
-//
-//        $sql="select fac from \\apps\\common\\entity\\Faculty fac "
-//                . " where fac.facultyNameTh LIKE :name or fac.facultyNameEn LIKE :name or fac.facultyCode LIKE :name";
-//       
-//        $view->list = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
-//        //print_r($view->datas);
-//        return $view;
-//    }
 
 }

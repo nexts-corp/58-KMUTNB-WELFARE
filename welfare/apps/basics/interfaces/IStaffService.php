@@ -20,8 +20,8 @@ interface IStaffService {
     /**
      * @name editStaff
      * @uri /update
-     * @param apps\common\entity\Staffs data Description
-     * @return boolean update Description
+     * @param apps\common\entity\Staff data Description
+     * @return boolean update [return ture or false if don't ]
      * @description แก้ไขข้อมูลประเภทพนักงาน
      */
     public function update($data);
@@ -29,10 +29,10 @@ interface IStaffService {
     /**
      * @name delete
      * @uri /delete
-     * @param String positionsId Description
-     * @return string deleteStaff Description
+     * @param integer Id Description
+     * @return boolean delete [return ture or false if don't ]
      * @description ลบข้อมูลประเภทพนักงาน
      */
-    public function delete($positionsId);
+    public function delete($Id);
     
 }

@@ -41,20 +41,16 @@ class PositionsService extends CServiceBase implements IPositionsService {
 
     public function delete($Id) {
 
-        $delete = new Positions();
-        $delete->setPositionsId($Id);
-        return $this->datacontext->removeObject($delete);
+        $daoPositions = new Positions();
+        $daoPositions->setPositionsId($Id);
+        
+        if($this->datacontext->removeObject($daoPositions)){
+        return true;
+        }else{
+        return false;
+        }
     }
 
-    public function viewSearch($data) {
-        $view = new CJView("position/work/list", CJViewType::HTML_VIEW_ENGINE);
-
-        $sql = "select piw from \\apps\\common\\entity\\positionswork piw "
-                . " where piw.positionsNameTh LIKE :name or piw.positionsNameEn LIKE :name";
-
-        $view->cuss = $this->datacontext->getObject($sql, array("name" => "%" . $data . "%"));
-        print_r($view->datas);
-        return $view;
-    }
+   
 
 }

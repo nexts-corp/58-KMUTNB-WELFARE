@@ -11,9 +11,7 @@
   <!-- /Page Breadcrumb --> 
   <!-- Page Header -->
   <div class="page-header position-relative">
-    <div class="header-title">
-      
-    </div>
+    <div class="header-title"> </div>
     <!--Header Buttons--> 
     
     <!--Header Buttons End--> 
@@ -26,9 +24,8 @@
         <div class="widget radius-bordered">
           <div class="widget-header"> <span class="widget-caption">{{#i18n}}managementdepartment{{/i18n}}</span> </div>
           <div class="widget-body">
-           <div  class="form-horizontal">
-              <div class="form-title">  </div>
-              
+            <div  class="form-horizontal">
+              <div class="form-title"> </div>
               <div class="form-group">
                 <label class="col-lg-4 control-label"> {{#i18n}}iddepartment{{/i18n}} </label>
                 <div class="col-lg-8">
@@ -56,7 +53,7 @@
                   <input type="reset" id="bnreset" name="bnreset" value="{{#i18n}}button.cancel{{/i18n}}" class="btn">
                 </div>
               </div>
-           </div>
+            </div>
           </div>
         </div>
       </div>
@@ -78,24 +75,18 @@
                 data['departmentNameTh'] = $("#departmentNameTh").val();
                 data['departmentNameEn'] = $("#departmentNameEn").val();
                
-//                var FacultyID = $("#FacultyID").val();
-//                var DepartmentCode = $("#DepartmentCode").val();
-//                var DepartmentName = $("#DepartmentName").val();
-//                var DepartmentNameEn = $("#DepartmentNameEn").val();
-
                 var jdata = {};
                 jdata['data'] = data;
-                console.log(data);
-                $.ajax({
-                url: '{{_context_path}}/api/ManagementBasics/department/save',
-                    data: jsonEncode(jdata),
-                    type: 'post', // 'or get'
-                    success: function (result) {
-                     //alert(result.save);
-                     alert(result.message);
-                     getBody('{{_context_path}}/api/ManagementBasics/department/list/department/{{faculty}}');
-                    }
-            });
+                var result=sendData('{{_context_path}}/api/basics/department/save', jsonEncode(jdata));
+
+             if(result.save==true){
+             getHTML('content-body','{{_context_path}}/api/basics/view/department/lists/{{faculty}}',null);
+             Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true); 
+            }else{
+             Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+            }
+                
+               
             });
         });
     </script>

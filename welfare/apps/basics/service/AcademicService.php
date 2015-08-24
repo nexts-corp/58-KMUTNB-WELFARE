@@ -7,7 +7,7 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\basics\interfaces\IAcademicService;
-use apps\common\entity\AcademicsType;
+use apps\common\entity\AcademicType;
 
 class AcademicService extends CServiceBase implements IAcademicService {
 
@@ -18,7 +18,6 @@ class AcademicService extends CServiceBase implements IAcademicService {
     }
 
     public function save($data) {
-
 
         if ($this->datacontext->saveObject($data)) {
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
@@ -40,13 +39,15 @@ class AcademicService extends CServiceBase implements IAcademicService {
     }
 
     public function delete($data) {
-        if ($this->datacontext->removeObject($data)) {
-            $this->getResponse()->add("message", "ลบข้อมูลสำเร็จ");
-            return true;
-        } else {
-            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
-            return false;
-        }
+              
+            $daoAcademic = new AcademicType();
+            $daoAcademic->setAcademicTypeId($data);     
+             if($this->datacontext->removeObject($daoAcademic)){
+                return true;
+                }else{
+                return false;
+                }
+       
     }
 
 }

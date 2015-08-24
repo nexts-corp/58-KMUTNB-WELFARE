@@ -29,19 +29,19 @@
                         <div  class="form-horizontal">
                             <div class="form-title"> {{#i18n}}addpositionworkView{{/i18n}} </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}staffNameTh{{/i18n}}</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="positionsWorkNameTh" id="positionsWorkNameTh" placeholder="{{#i18n}}positionsWorkNameTh{{/i18n}}"
+                                    <input type="text" class="form-control" name="staffNameTh" id="staffNameTh" placeholder="{{#i18n}}staffNameTh{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}positionsWorkNameTh{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}staffNameTh{{/i18n}}" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameEn{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}staffNameEn{{/i18n}}</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="{{#i18n}}positionsWorkNameEn{{/i18n}}" id="positionsWorkNameEn" placeholder="{{#i18n}}positionsWorkNameEn{{/i18n}}"
+                                    <input type="text" class="form-control" name="{{#i18n}}staffNameEn{{/i18n}}" id="staffNameEn" placeholder="{{#i18n}}staffNameEn{{/i18n}}"
                                            data-bv-notempty="true"
-                                           data-bv-notempty-message="{{#i18n}}positionsWorkNameEn{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}staffNameEn{{/i18n}}" />
                                 </div>
                             </div>
 
@@ -62,28 +62,27 @@
 </div>
 <!-- /Page Content --> 
 <script type="text/javascript">
+       
+        $(document).ready(function () {
 
-    $(document).ready(function () {
-
-        $("#btn_submit").click(function () {
-            var data = {};
-            data['positionsWorkNameTh'] = $("#positionsWorkNameTh").val();
-            data['positionsWorkNameEn'] = $("#positionsWorkNameEn").val();
-
-            var jdata = {};
+            $("#btn_submit").click(function () {
+                var data = {};
+                data['staffNameTh'] = $("#staffNameTh").val();
+                data['staffNameEn'] = $("#staffNameEn").val();
+                
+              var jdata = {};
             jdata['data'] = data;
+            
+             var result=sendData('{{_context_path}}/api/basics/staff/save', jsonEncode(jdata));
+             
+             if(result.save==true){
+             getHTML('content-body','{{_context_path}}/api/basics/view/staff/lists',data);
+             Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true); 
+            }else{
+             Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
 
-//                alert(positionsNameEn);
-            $.ajax({
-                url: '{{_context_path}}/api/ManagementBasics/work/positions/save',
-                data: jsonEncode(jdata),
-                type: 'post', // 'or get'
-                success: function (result) {
-                    //alert(result.save);
-                    //alert(result.message);
-                    getBody('{{_context_path}}/api/ManagementBasics/work/positions/view/list');
-                }
+           }
+ 
             });
         });
-    });
-</script>
+    </script>

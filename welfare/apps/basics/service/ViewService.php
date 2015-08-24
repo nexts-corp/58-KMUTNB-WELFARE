@@ -8,6 +8,10 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use \apps\basics\interfaces\IViewService;
 use apps\common\entity\Faculty;
+use apps\common\entity\AcademicType;
+use apps\common\entity\Department;
+use apps\common\entity\Positions;
+use apps\common\entity\Staff;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -31,17 +35,28 @@ class ViewService extends CServiceBase implements IViewService {
         $daoAcademic = new AcademicType();
         $daoAcademic->setAcademicTypeId($id);
         $getObj = $this->datacontext->getObject($daoAcademic);
-        $view->data = $getObj;
+        $view->datas = $getObj;
         return $view;
     }
 
     public function academicLists() {
 
-        $view = new CJView("academic/lists", CJViewType::HTML_VIEW_ENGINE);
-//        $daoAcademic = new AcademicType();
-//        $getObj = $this->datacontext->getObject($daoAcademic);
-//        $view->datas = $getObj;
-        return $view;
+       $data = $this->getRequest()->SearchName;
+     
+        if (!empty($data)) {
+            $view = new CJView("academic/lists", CJViewType::HTML_VIEW_ENGINE);
+            $sql="select acd from \\apps\\common\\entity\\AcademicType acd "
+                ." where acd.academicTypeTh LIKE :name or acd.academicTypeEn LIKE :name or acd.abbreviationTh LIKE :name or acd.abbreviationEn LIKE :name";
+       
+            $view->datas = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
+            return $view;
+        }else{
+            $view = new CJView("academic/lists", CJViewType::HTML_VIEW_ENGINE);
+            $daoAcademic = new AcademicType();
+            $getObj = $this->datacontext->getObject($daoAcademic);
+            $view->datas = $getObj;
+            return $view;
+        }
     }
 
     //end service view academic
@@ -65,20 +80,29 @@ class ViewService extends CServiceBase implements IViewService {
         $daoDepartment = new Department();
         $daoDepartment->setDepartmentId($id);
         $getObj = $this->datacontext->getObject($daoDepartment);
-        $view->department = $getObj;
+        $view->datas = $getObj;
         return $view;
     }
 
     public function departmentLists($id) {
-
+        
+        $data = $this->getRequest()->SearchName;
+          
+          if (!empty($data)) {
         $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
-        $daoDepartment = new Department;
-        $daoDepartment->setFacultyId($id);
-        $getObj = $this->datacontext->getObject($daoDepartment);
-        $view->faculty = $id;
-        $view->depart = $getObj;
-
-        return $view;
+        $sql="select dep from \\apps\\common\\entity\\Department dep "
+                . " where dep.departmentNameTh LIKE :name or dep.departmentNameEn LIKE :name";           
+           $view->datasDepart = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
+            return $view;
+        }else{
+            $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
+            $daoDepartment = new Department;
+            $daoDepartment->setFacultyId($id);
+            $getObj = $this->datacontext->getObject($daoDepartment);
+            $view->faculty = $id;
+            $view->datasDepart = $getObj;
+            return $view;
+        }
     }
 
     // end serviec view department
@@ -103,12 +127,22 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function facultyLists() {
 
-        $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
-        $daoFaculty = new Faculty;
-        $getObj = $this->datacontext->getObject($daoFaculty);
-        $view->datas = $getObj;
-
+          $data = $this->getRequest()->SearchName;
+          
+          if (!empty($data)) {
+            $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
+            $sql="select fac from \\apps\\common\\entity\\Faculty fac "
+                . " where fac.facultyNameTh LIKE :name or fac.facultyNameEn LIKE :name or fac.facultyCode LIKE :name";
+           $view->datas = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
+            return $view;
+        }else{
+            $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
+            $daoFaculty = new Faculty;
+            $getObj = $this->datacontext->getObject($daoFaculty);
+            $view->datas = $getObj;
+        
         return $view;
+        }
     }
 
     // end serviec view faculty
@@ -132,11 +166,21 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function positionsLists() {
 
+         $data = $this->getRequest()->SearchName;
+
+         if (!empty($data)) {
         $view = new CJView("positions/lists", CJViewType::HTML_VIEW_ENGINE);
-//        $daoPositions = new Positions();
-//        $getObj = $this->datacontext->getObject($daoPositions);
-//        $view->datas = $getObj;
+            $sql="select ps from \\apps\\common\\entity\\Positions ps "
+                ." where ps.positionsNameTh LIKE :name or ps.positionsNameEn LIKE :name";
+            $view->datasPositions =$this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
+            return $view;
+        }else{
+        $view = new CJView("positions/lists", CJViewType::HTML_VIEW_ENGINE);
+        $daoPositions = new Positions();
+        $getObj = $this->datacontext->getObject($daoPositions);
+        $view->datasPositions = $getObj;
         return $view;
+        }
     }
 
     // end serviec view positions
@@ -159,38 +203,25 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function staffLists() {
 
-        $view = new CJView("staff/lists", CJViewType::HTML_VIEW_ENGINE);
-//        $daoStaff = new PositionsType();
-//        $getObj = $this->datacontext->getObject($daoStaff);
-//        $view->datas = $getObj;
-        return $view;
+         $data = $this->getRequest()->SearchName;
+
+         if (!empty($data)) {
+            $view = new CJView("staff/lists", CJViewType::HTML_VIEW_ENGINE);
+            $sql="select st from \\apps\\common\\entity\\Staff st "
+                ." where st.staffNameTh LIKE :name or st.staffNameEn LIKE :name";
+            $view->datas =$this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
+            return $view;
+        }else{
+            $view = new CJView("staff/lists", CJViewType::HTML_VIEW_ENGINE);
+            $daoStaff = new Staff();
+            $getObj = $this->datacontext->getObject($daoStaff);
+            $view->datas = $getObj;
+            return $view;
+        }
     }
 
     // end serviec view staff
     // start serviec view titleName
 
-    public function titleNameAdd() {
-        $view = new CJView("titlename/add", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
 
-    public function titleNameEdit($id) {
-        $view = new CJView("titlename/edit", CJViewType::HTML_VIEW_ENGINE);
-        $daoTitleName = new TitleName();
-        $daoTitleName->setTitleNameId($id);
-        $getObj = $this->datacontext->getObject($daoTitleName);
-        $view->datas = $getObj;
-        return $view;
-    }
-
-    public function titleNameLists() {
-        $view = new CJView("titlename/lists", CJViewType::HTML_VIEW_ENGINE);
-//        $daoTitleName = new TitleName();
-//        $getObj = $this->datacontext->getObject($daoTitleName);
-//        $view->datas = $getObj;
-        
-        return $view;
-    }
-
-    // end serviec view titleName
 }

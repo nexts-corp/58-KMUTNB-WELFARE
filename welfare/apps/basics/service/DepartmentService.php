@@ -41,12 +41,15 @@ use th\co\bpg\cde\core\CServiceBase;
         }
     }
 
-    public function delete($departmentId) {
-        $deletedepart = new Department();
-        $deletedepart->setDepartmentId($departmentId);
-        //$depart = $this->datacontext->getObject($deletedepart)[0];
+    public function delete($id) {
+        $daoDepartment = new Department();
+        $daoDepartment->setDepartmentId($id);
         
-        return $this->datacontext->removeObject($deletedepart);
+        if($this->datacontext->removeObject($daoDepartment)){
+        return true;
+        }else{
+        return false;
+        }
     }
 
     

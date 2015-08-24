@@ -8,7 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 
 use apps\basics\interfaces\IStaffService;
-use apps\common\entity\PositionsType;
+use apps\common\entity\Staff;
 
 class StaffService extends CServiceBase implements IStaffService {
 
@@ -41,24 +41,16 @@ class StaffService extends CServiceBase implements IStaffService {
         }
     }
 
-    
  
-
-    public function viewSearch($data) {
-        $view = new CJView("position/type/list", CJViewType::HTML_VIEW_ENGINE);
-
-        $sql="select pit from \\apps\\common\\entity\\PositionsType pit "
-                . " where pit.positionsTypeNameTh LIKE :name ";
-       
-        $view->cuss = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
-//        print_r($view->cuss);
-        return $view;
-    }
-
-    public function delete($id) {
-         $deleteType = new PositionsType();
-        $deleteType->setPositionsTypeId($Id);
-        return $this->datacontext->removeObject($deleteType);
+    public function delete($Id) {
+         $daoStaff = new Staff();
+        $daoStaff->setStaffId($Id);
+        
+        if($this->datacontext->removeObject($daoStaff)){
+        return true;
+        }else{
+        return false;
+        }
    
     }
 

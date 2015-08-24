@@ -146,32 +146,6 @@ interface IViewService {
     
     //end view staff 
     
-    /**
-     * @name titleNameLists
-     * @uri /titleName/lists
-     * @return html view
-     * @description รายการคำนำหน้า
-     */
-    public function titleNameLists();
-
-    /**
-     * @name titleNameAdd
-     * @uri /titleName/add
-     * @return html view
-     * @description view เพิ่มคำนำหน้า
-     */
-    public function titleNameAdd();
-
-    /**
-     * @name titleNameEdit
-     * @uri /titleName/edit
-     * @param integer id
-     * @return html view
-     * @description view แก้ไขคำนำหน้า 
-     */
-    public function titleNameEdit($id);
-    
-    //end view titleName 
-
+  
 
 }

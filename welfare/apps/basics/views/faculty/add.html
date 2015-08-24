@@ -124,36 +124,18 @@
             
             var jdata = {};
             jdata['data'] = data;
-            $.ajax({
-                url: '{{_context_path}}/api/ManagementBasics/faculty/save',
-                    data: jsonEncode(jdata),
-                    type: 'post', // 'or get'
-                    success: function (result) {
-                     alert(result.save);
-                     //alert(result.message);
-                     getBody('{{_context_path}}/api/ManagementBasics/faculty/listFaculty');
-                    }
-            });
-//            var campusId = $("#campusId").val();
-//            var facultyCode = $("#facultyCode").val();
-//            var facultyName = $("#facultyName").val();
-//            var facultyNameEn = $("#facultyNameEn").val();
+            
+             var result=sendData('{{_context_path}}/api/basics/faculty/save', jsonEncode(jdata));
+             
+             if(result.save==true){
+             getHTML('content-body','{{_context_path}}/api/basics/view/faculty/lists',null);
+             Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true); 
+            }else{
+             Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
 
-//            $.ajax({
-//                url: '/{{_context_path}}/api/ManagementBasics/faculty/addFaculty',
-//                data: {campusId:campusId, facultyCode:facultyCode, facultyName:facultyName, facultyNameEn:facultyNameEn},
-//                type: 'post', // 'or get'
-//                success: function (result) {
-//                    var msg = result.addFaculty;
-//
-//                    //alert(msg["name"]);
-//                    if (msg == true) {
-//                        //alert("{{#i18n}}alertinsertNocomplete{{/i18n}}");
-//                        getBody('api/ManagementBasics/faculty/listFaculty');
-//                    } 
-//                }
-//            });
-            //alert();
+            }
+
+
         });
 
     });

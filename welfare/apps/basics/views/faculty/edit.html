@@ -32,7 +32,7 @@
                     <div class="widget-header">
                         <span class="widget-caption">{{#i18n}}managementfaculty{{/i18n}}</span>
                     </div>
-                    {{#edit}}
+                    {{#datas}}
                     <div class="widget-body">
                         <div  class="form-horizontal">
                             <div class="form-title">
@@ -120,7 +120,7 @@
 
                         </div>
                     </div>
-                    {{/edit}}
+                    {{/datas}}
                 </div>
             </div>
         </div>
@@ -143,43 +143,17 @@
                 data['facultyNameTh'] = $("#facultyNameTh").val();
                 data['facultyNameEn'] = $("#facultyNameEn").val();
                 
-                var jdata = {};
-                jdata['data'] = data;
-                $.ajax({
-                url: '{{_context_path}}/api/ManagementBasics/faculty/update',
-                    data: jsonEncode(jdata),
-                    type: 'post', // 'or get'
-                    success: function (result) {
-                     alert(result.save);
-                     alert(result.message);
-                     getBody('{{_context_path}}/api/ManagementBasics/faculty/listFaculty');
-                    }
-                });
-//                var facultyId = $("#facultyId").val();
-//                var campusId = $("#campusId").val();
-//                var facultyCode = $("#facultyCode").val();
-//                var facultyName = $("#facultyName").val();
-//                var facultyNameEn = $("#facultyNameEn").val();
+             var jdata = {};
+            jdata['data'] = data;
+            var result = sendData('{{_context_path}}/api/basics/faculty/update', jsonEncode(jdata));
+            
+                if (result.update == true) {
+                getHTML('content-body', '{{_context_path}}/api/basics/view/faculty/lists',null);
+                Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                }else{
+                Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                }
                 
-//                $.ajax({
-//                    url: '/{{_context_path}}/api/ManagementBasics/faculty/update',
-//                    data: {facultyId:facultyId, campusId:campusId,facultyCode:facultyCode, facultyName:facultyName, facultyNameEn:facultyNameEn},
-//                    type: 'post', // 'or get'
-//                    success: function (result) {
-//                        var msg = result.editfacultysave;
-//                       
-//                //alert(msg["name"]);
-//                        if (msg == "no") {
-//                            alert("{{#i18n}}alertinsertNocomplete{{/i18n}}");
-//                            //window.location="api/sdg/basedata/listfaculty";
-//                       } else {
-//                           alert("{{#i18n}}alertinsertcomplete{{/i18n}}");
-//                            //window.location="bbbbb.html";
-//                           
-//                        }
-//                    }
-//                });
-                //alert();
             });
             
         });

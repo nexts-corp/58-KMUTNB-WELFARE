@@ -22,7 +22,7 @@ interface IFacultyService {
      * @name update
      * @uri /update
      * @param apps\common\entity\Faculty data []
-     * @return boolean save [return ture or false if don't ]
+     * @return boolean update [return ture or false if don't ]
      * @description แก้ไขข้อมูลคณะหรือสำนักงาน
      */
     public function update($data);

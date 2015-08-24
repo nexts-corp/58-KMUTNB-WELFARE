@@ -1,111 +1,94 @@
-
 <!-- Page Content -->
-<div class="page-content">
-    <!-- Page Breadcrumb -->
-    <div class="page-breadcrumbs">
-        <ul class="breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>
-                <a href="#">{{#i18n}}home{{/i18n}}</a>
-            </li>
-            <li class="active">{{#i18n}}listpositionAcademic{{/i18n}}</li>
-        </ul>
+
+<div class="page-content"> 
+  <!-- Page Breadcrumb -->
+  <div class="page-breadcrumbs">
+    <ul class="breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
+      <li class="active">{{#i18n}}listpositionAcademic{{/i18n}}</li>
+    </ul>
+  </div>
+  <!-- /Page Breadcrumb --> 
+  <!-- Page Header -->
+  <div class="page-header position-relative">
+    <div class="header-title">
+      <h1> {{#i18n}}listpositionAcademic{{/i18n}} </h1>
     </div>
-    <!-- /Page Breadcrumb -->
-    <!-- Page Header -->
-    <div class="page-header position-relative">
-        <div class="header-title">
-            <h1>
-
-                {{#i18n}}listpositionAcademic{{/i18n}}
-
-            </h1>
-        </div>
-        <!--Header Buttons-->
-
-        <!--Header Buttons End-->
-    </div>
-    <!-- /Page Header -->
-    <!-- Page Body -->
-    <div class="page-body">
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listpositionAcademic{{/i18n}} </span>
-                        <div class="widget-buttons"> </div>
-                    </div>
-                    <div class="widget-body">
-                        <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-
-                        </label>
-                            <p id="demo" style="color:#d14"></p>
-
-                        <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                        </div>
-                        <div class="pull-right">
-
-                            <button class="btn btn-primary"
+    <!--Header Buttons--> 
+    
+    <!--Header Buttons End--> 
+  </div>
+  <!-- /Page Header --> 
+  <!-- Page Body -->
+  <div class="page-body">
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="widget">
+          <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listpositionAcademic{{/i18n}} </span>
+            <div class="widget-buttons"> </div>
+          </div>
+          <div class="widget-body">
+            <div class="col-lg-5 control-label"  >
+              <input type="text" class="form-control" name="Search" id="SearchName" placeholder="ค้นหา"  >
+              <p id="demo" style="color:#d14"></p>
+            </div>
+            <div class="col-lg-3">
+              <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+            </div>
+            <div class="pull-right">
+              <button class="btn btn-primary"
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/basics/view/academic/add"
                                     data-param="null"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}
-
-                            </button>
-                        </div>
-                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                        <div class="flip-scroll">
-
-                            <table class="table table-hover table-striped table-bordered table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th>&nbsp;{{#i18n}}academicPositionsNameTh{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}academicPositionsNameEn{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}abbreviationTh{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}abbreviationEn{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#datas}}
-                                    <tr class="selectable">
-                                        <td>{{academicPositionsNameTh}}</td>
-                                        <td>{{academicPositionsNameEn}}</td>
-                                        <td>{{abbreviationTh}}</td>
-                                        <td>{{abbreviationEn}}</td>
-
-
-                                        <td class="center">
-                                            <button class="btn btn-info btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/basics/view/academic/edit"
-                                                    data-param="{{academicPositionsId}}"
-                                                    onclick="btnHTML(this)">
-                                        <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}}
-                                            </button>
-                                            
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{academicPositionsId}}" >
-                                                <i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}</button>    
-                                        </td>
-                                    </tr>
-                                    {{/datas}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                    onclick="btnHTML(this)"> <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} </button>
             </div>
+            <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+            <div class="flip-scroll">
+              <table class="table table-hover table-striped table-bordered table-condensed">
+                <thead>
+                  <tr>
+                    <th>&nbsp;{{#i18n}}academicTypeTh{{/i18n}}</th>
+                    <th>&nbsp;{{#i18n}}academicTypeEn{{/i18n}}</th>
+                    <th>&nbsp;{{#i18n}}{{/i18n}}ตัวย่อ</th>
+                    <th>&nbsp;{{#i18n}}{{/i18n}}ตัวย่อ</th>
+                    <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                {{#datas}}
+                <tr class="selectable">
+                  <td>{{academicTypeTh}}</td>
+                  <td>{{academicTypeEn}}</td>
+                  <td>{{abbreviationTh}}</td>
+                  <td>{{abbreviationEn}}</td>
+                  <td class="center">
+                      <button class="btn btn-info btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/basics/view/academic/edit/{{academicTypeId}}"
+                                                    data-param="null"
+                                                    onclick="btnHTML(this)"> <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
+                      </button>
+                    <button class="btn-del btn btn-xs btn-danger" row-index="{{academicTypeId}}" > <i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}</button></td>
+                </tr>
+                {{/datas}}
+                  </tbody>
+                
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-
-    <!-- /Page Body -->
+  </div>
+  
+  <!-- /Page Body --> 
 </div>
-<!-- /Page Content -->
+<!-- /Page Content --> 
 <script>
+    
     $(function() {
-    var availableTags = [
+        var availableTags = [
     {{#datas}}"{{academicPositionsNameTh}}",
             "{{academicPositionsNameEn}}",
             "{{abbreviationTh}}",
@@ -116,27 +99,34 @@
     source: availableTags
     });
     });  
-</script>
+</script> 
 <script>
-            $('.btn-del').click(function(){
-    var id = $(this).attr('row-index');
-            var data = {"academicPositionsId":id};
-            var msg = sendData('{{_context_path}}/api/basics/academic/position/delete', data);
-            getBody('{{_context_path}}/api/basics/view/academic/view/list');
-    }); </script>
-<script>
-            $("#btnsearch").click(function () {
-    var SearchName = $("#SearchName").val();
+           $("#btnsearch").click(function () {
+            var SearchName = $("#SearchName").val();
+
             if (SearchName == ""){
-    document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-    } else{
-
-    var data = {"SearchName":SearchName};
-//        sendData('{{_context_path}}/api/basics/academic/position/view/search',data);
-
-            getBodyDiv('{{_context_path}}/api/basics/academic/position/view/search', data);
-    }
-    });
-
-</script>
-
+            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+            } else{
+            
+                    getHTML('content-body', '{{_context_path}}/api/basics/view/academic/lists', {SearchName:SearchName});
+            }
+            });
+</script> 
+<script>
+             $('.btn-del').click(function(){
+            var Id = $(this).attr('row-index');
+ 
+                if (confirm("คุณต้องการลบ?")) { 
+                     var data = {"Id":Id};
+                     var result = sendData('{{_context_path}}/api/basics/academic/delete', data);
+                
+                if (result.delete == true) {
+                    getHTML('content-body', '{{_context_path}}/api/basics/view/academic/lists', null);
+                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                }else{
+                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                 }
+            }
+                   
+            });
+</script> 
