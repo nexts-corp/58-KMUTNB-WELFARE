@@ -8,7 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 
 use apps\basics\interfaces\IStaffService;
-use apps\common\entity\Staff;
+use apps\basics\entity\Staff;
 
 class StaffService extends CServiceBase implements IStaffService {
 

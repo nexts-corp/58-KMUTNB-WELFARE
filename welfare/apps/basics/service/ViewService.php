@@ -7,11 +7,11 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use \apps\basics\interfaces\IViewService;
-use apps\common\entity\Faculty;
-use apps\common\entity\AcademicType;
-use apps\common\entity\Department;
-use apps\common\entity\Positions;
-use apps\common\entity\Staff;
+use apps\basics\entity\Faculty;
+use apps\basics\entity\AcademicType;
+use apps\basics\entity\Department;
+use apps\basics\entity\Positions;
+use apps\basics\entity\Staff;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -45,7 +45,7 @@ class ViewService extends CServiceBase implements IViewService {
      
         if (!empty($data)) {
             $view = new CJView("academic/lists", CJViewType::HTML_VIEW_ENGINE);
-            $sql="select acd from \\apps\\common\\entity\\AcademicType acd "
+            $sql="select acd from \\apps\\basics\\entity\\AcademicType acd "
                 ." where acd.academicTypeTh LIKE :name or acd.academicTypeEn LIKE :name or acd.abbreviationTh LIKE :name or acd.abbreviationEn LIKE :name";
        
             $view->datas = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
@@ -90,7 +90,7 @@ class ViewService extends CServiceBase implements IViewService {
           
           if (!empty($data)) {
         $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
-        $sql="select dep from \\apps\\common\\entity\\Department dep "
+        $sql="select dep from \\apps\\basics\\entity\\Department dep "
                 . " where dep.departmentNameTh LIKE :name or dep.departmentNameEn LIKE :name";           
            $view->datasDepart = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
             return $view;
@@ -131,7 +131,7 @@ class ViewService extends CServiceBase implements IViewService {
           
           if (!empty($data)) {
             $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
-            $sql="select fac from \\apps\\common\\entity\\Faculty fac "
+            $sql="select fac from \\apps\\basics\\entity\\Faculty fac "
                 . " where fac.facultyNameTh LIKE :name or fac.facultyNameEn LIKE :name or fac.facultyCode LIKE :name";
            $view->datas = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
             return $view;
@@ -170,15 +170,15 @@ class ViewService extends CServiceBase implements IViewService {
 
          if (!empty($data)) {
         $view = new CJView("positions/lists", CJViewType::HTML_VIEW_ENGINE);
-            $sql="select ps from \\apps\\common\\entity\\Positions ps "
+            $sql="select ps from \\apps\\basics\\entity\\Positions ps "
                 ." where ps.positionsNameTh LIKE :name or ps.positionsNameEn LIKE :name";
-            $view->datasPositions =$this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
+            $view->datas =$this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
             return $view;
         }else{
         $view = new CJView("positions/lists", CJViewType::HTML_VIEW_ENGINE);
         $daoPositions = new Positions();
         $getObj = $this->datacontext->getObject($daoPositions);
-        $view->datasPositions = $getObj;
+        $view->datas = $getObj;
         return $view;
         }
     }
@@ -207,7 +207,7 @@ class ViewService extends CServiceBase implements IViewService {
 
          if (!empty($data)) {
             $view = new CJView("staff/lists", CJViewType::HTML_VIEW_ENGINE);
-            $sql="select st from \\apps\\common\\entity\\Staff st "
+            $sql="select st from \\apps\\basics\\entity\\Staff st "
                 ." where st.staffNameTh LIKE :name or st.staffNameEn LIKE :name";
             $view->datas =$this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
             return $view;

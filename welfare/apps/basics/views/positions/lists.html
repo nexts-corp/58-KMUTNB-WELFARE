@@ -55,7 +55,7 @@
                 </thead>
                 <tbody>
                 
-                {{#datasPositions}}
+                {{#datas}}
                 <tr class="selectable">
                    
                   <td>{{positionsNameTh}}</td>
@@ -67,7 +67,7 @@
                                         onclick="btnHTML(this)"> <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} </button>
                     <button class="btn-del btn btn-xs btn-danger" row-index="{{positionsId}}" ><i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}</button></td>
                 </tr>
-                {{/datasPositions}}
+                {{/datas}}
                   </tbody>
                 
               </table>
@@ -81,13 +81,14 @@
   <!-- /Page Body --> 
 </div>
 <!-- /Page Content --> 
-<script>
+ <script>
     
     $(function() {
         var availableTags = [
-    {{#datasPositions}}"{{positionsNameTh}}",
-            "{{positionsNameEn}}",       
-    {{/datasPositions}}
+    {{#datas}}
+            "{{positionsNameTh}}",
+            "{{positionsNameEn}}",
+    {{/datas}}
     ];
             $("#SearchName").autocomplete({
     source: availableTags

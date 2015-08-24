@@ -7,7 +7,7 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\basics\interfaces\IPositionsService;
-use apps\common\entity\Positions;
+use apps\basics\entity\Positions;
 
 class PositionsService extends CServiceBase implements IPositionsService {
 

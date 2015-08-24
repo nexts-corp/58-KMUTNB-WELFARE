@@ -1,7 +1,7 @@
 <?php
 namespace apps\basics\service;
 
-use apps\common\entity\Department;
+use apps\basics\entity\Department;
 use apps\basics\interfaces\IDepartmentService;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
