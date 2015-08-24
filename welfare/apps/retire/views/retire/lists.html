@@ -1,0 +1,109 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}retirelist{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}retirelist{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>{{#i18n}}button.search{{/i18n}}</button>
+                        </div>
+                        
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>{{#i18n}}listmember{{/i18n}}</th>
+                                        <th>{{#i18n}}facultyname{{/i18n}}</th>
+                                        <th>{{#i18n}}amountmoney{{/i18n}}</th>
+                                        <th>{{#i18n}}yearretrie{{/i18n}}</th>
+                                       
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr class="selectable">
+                                        
+                                        <td></td>
+                                        <td>กองกิจการนักศึกษา</td>
+                                        <td>200000</td>
+                                        <td>2563</td>
+                                        
+                                    </tr>
+                                    
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+
+
+<!--        <script type="text/javascript">
+            $(function(){
+
+                $.ajax({
+                    url: '{{_context_path}}/api/ManagementRetire/retire/show',
+                    data: {},
+                    type: 'post', // 'or get'
+                    async: true,
+                    success: function (result) {
+
+                        var $html = '';
+                        for(var i = 0; i < result.management.length ; i++){
+                            var data = result.management[i];
+                            $html += '<tr class="selectable">';
+                            $html += '<td>'+data.fullname+'</td>';
+                            $html += '<td>'+data.departmentNameTh+'</td>';
+                            $html += '<td>'+data.amount+'</td>';
+                            $html += '<td>'+data.dateOut+'</td>';
+                            $html += '<td class="center">&nbsp;<a href="#" id="status[0]" name="status[0]" ><span class="label label-success">เปิดการใช้งาน</span></a></td>';
+                            $html += '</tr>';
+                        }
+                        $("table#show tbody").html($html);
+
+                    }
+                });
+
+            });
+        </script>-->
