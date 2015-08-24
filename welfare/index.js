@@ -1,4 +1,5 @@
 //test confict file by somchit
+//somchit
 
 function getHTML(id, link, data) {
     //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
