@@ -406,7 +406,7 @@
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementMedicalFee/medicalfee/list"
+                       data-api="{{_context_path}}/api/medical/view/medicalFee/lists"
                        data-param="null"
                        onclick="btnHTML(this)">
                         <span class="menu-text">การเบิกค่ารักษาพยาบาล</span>
@@ -416,7 +416,7 @@
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementMedicalFee/medicalfee/report/list"
+                       data-api="{{_context_path}}/api/medical/view/report/lists"
                        data-param="null"
                        onclick="btnHTML(this)">
                         <span class="menu-text">สรุปการเบิกค่ารักษาพยาบาล</span>
@@ -425,7 +425,7 @@
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementMedicalFee/default/medicalfee/add/default"
+                       data-api="{{_context_path}}/api/medical/view/medicalDefault/add"
                        data-param="null"
                        onclick="btnHTML(this)">
                         <span class="menu-text">ตั้งค่าเงินค่ารักษาพยาบาล</span>
@@ -443,10 +443,19 @@
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/taxonomy/view/lists"
+                       data-api="{{_context_path}}/api/taxonomy/view/parent/lists"
                        data-param="null"
                        onclick="btnHTML(this)">
                         <span class="menu-text">Parent</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/taxonomy/view/child/lists"
+                       data-param="null"
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">Child</span>
                     </a>
                 </li>
             </ul>
