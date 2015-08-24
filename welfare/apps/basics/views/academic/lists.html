@@ -1,16 +1,4 @@
-<script>
-    $(function() {
-    var availableTags = [
-    {{#datas}}"{{academicPositionsNameTh}}",
-            "{{academicPositionsNameEn}}",
-            "{{abbreviationTh}}",
-            "{{abbreviationEn}}",
-    {{/datas}}
-    ];
-            $("#SearchName").autocomplete({
-    source: availableTags
-    });
-    });  </script>
+
 <!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
@@ -49,9 +37,9 @@
                     <div class="widget-body">
                         <label class="col-lg-5 control-label">
                             <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-                            <p id="demo" style="color:#d14"></p>
 
                         </label>
+                            <p id="demo" style="color:#d14"></p>
 
                         <div class="col-lg-3">
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
@@ -115,6 +103,20 @@
     <!-- /Page Body -->
 </div>
 <!-- /Page Content -->
+<script>
+    $(function() {
+    var availableTags = [
+    {{#datas}}"{{academicPositionsNameTh}}",
+            "{{academicPositionsNameEn}}",
+            "{{abbreviationTh}}",
+            "{{abbreviationEn}}",
+    {{/datas}}
+    ];
+            $("#SearchName").autocomplete({
+    source: availableTags
+    });
+    });  
+</script>
 <script>
             $('.btn-del').click(function(){
     var id = $(this).attr('row-index');
