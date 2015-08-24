@@ -2,6 +2,6 @@
     header("Location: /welfare/api/root/view/index");
     exit();
 
-    //xxxxx
+    //xxxxxxxxxaaaaaaa
 ?>
 
