@@ -1,0 +1,122 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listclaimswelfare{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listclaimswelfare{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="col-lg-12">
+                                    <div >
+                                        <select class="form-control" name="country" data-bv-field="country">
+                                            <option value="" disabled="" selected="">ค้นหาโดยสวัสดิการ</option>
+                                            {{#welfareClaims}}
+                                            <option value="FR">{{welfareName}}</option>
+                                           
+                                            {{/welfareClaims}}
+
+                                        </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed" id="show">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;{{#i18n}}listmember{{/i18n}}</th>
+                                        <th>&nbsp;หน่วยงานที่สังกัด</th>
+                                        <th>&nbsp;สำนัก/คณะที่สังกัด</th>
+                                        <th>&nbsp;สถานะ</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--<tr class="selectable">-->
+                                <!---->
+                                <!--<td>&nbsp;นาย ปัญญา น้อยเปรม</td>-->
+                                <!--<td></td>-->
+                                <!--<td>&nbsp;รับแล้ว</td>-->
+                                <!--<td></td>-->
+                                <!--<td class="center">-->
+                                    <!--<a class="btn btn-info btn-xs edit" href="#"onclick="getBody('api/ManagementWelfare/welfareclaims/view/add/claims')"><i class="fa fa-edit"></i>จัดการการขอรับสวัสดิการ</a> -->
+                                    <!--<a class="btn btn-danger btn-xs delete" href="#" ><i class="fa fa-trash-o"></i>Delete</a>-->
+                                <!--</td>-->
+                                <!--</tr>-->
+
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+
+
+<script type="text/javascript">
+    $(function(){
+
+        $.ajax({
+            url: '/sdg/api/ManagementWelfare/welfareclaims/show',
+            data: {},
+            type: 'post', // 'or get'
+            async: true,
+            success: function (result) {
+
+                var $html = '';
+                for(var i = 0; i < result.show.length ; i++){
+                    var data = result.show[i];
+                    $html += '<tr class="selectable">';
+                    $html += '<td>'+data.fullname+'</td>';
+                    $html += '<td>'+data.departmentNameTh+'</td>';
+                    $html += '<td>'+data.facultyNameTh+'</td>';
+                    $html += '<td></td>';
+                    $html += '<td class="center"><a class="btn btn-info btn-xs edit" href="#"onclick="getBody(\'{{_context_path}}/api/ManagementWelfare/welfareclaims/list/welfare/'+data.registerId+'\')"><i class="fa fa-edit"></i>จัดการการขอรับสวัสดิการ</a></td>';
+                    $html += '</tr>';
+                }
+                $("table#show tbody").html($html);
+
+            }
+        });
+
+    });
+</script>
