@@ -35,9 +35,9 @@ class ViewService extends CServiceBase implements IViewService{
                 . "LEFT join  " . $path . "department de with de.departmentId = reg.departmentId "
                 . "INNER join  " . $path . "Insurance ins with ins.registerIdCard = reg.registerIdCard "
                 . "ORDER BY reg.registerId DESC";
-
-
         $member = $this->datacontext->getObject($sql);
+        if($member!=null){
+        
         $datestart = $member[0]['datestart']->format('d-m-Y');
         $dateend = $member[0]['dateend']->format('d-m-Y');
         //print_r($member);
@@ -45,6 +45,14 @@ class ViewService extends CServiceBase implements IViewService{
         $view->dateends = $dateend;
         $view->member = $member;
         return $view;
+            
+        }  else {
+            $view->member = $member;
+            return $view;
+        }
+            
+            
+        
         
     }
 

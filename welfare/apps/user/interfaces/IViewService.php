@@ -38,7 +38,7 @@ interface IViewService {
      * @name memberLists
      * @uri /member/lists
      * @return html view
-     * @description รายการประเภทผู้ใช้งาน
+     * @description รายการผู้ใช้งาน
      */
     public function memberLists();
 
@@ -46,7 +46,7 @@ interface IViewService {
      * @name memberAdd
      * @uri /member/add
      * @return html view
-     * @description view เพิ่มประเภทผู้ใช้งาน   
+     * @description view เพิ่มผู้ใช้งาน   
      */
     public function memberAdd();
 
@@ -55,7 +55,7 @@ interface IViewService {
      * @uri /member/edit
      * @param integer id
      * @return html view
-     * @description view แก้ไขประเภทผู้ใช้งาน   
+     * @description view แก้ไขผู้ใช้งาน   
      */
     public function memberEdit($id);
     
