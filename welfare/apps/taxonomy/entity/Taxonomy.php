@@ -13,34 +13,36 @@ namespace apps\taxonomy\entity;
  * @Table(name="Taxonomy")
  */
 class Taxonomy {
+
     /**
      * @Id
-     * @Column(type="string" , length=10, name="code") */
+     * @Column(type="string" , length=10, name="id") 
+     */
+    public $id;
+
+    /**
+     * @Column(type="string", length=10, name="parentId") 
+     */
+    public $parentId;
+
+    /**
+     * @Column(type="string", length=255, name="code",nullable=true) 
+     */
     public $code;
-    
+
     /**
-     * @Column(type="string", length=10, name="parentCode") 
+     * @Column(type="string", length=255, name="value1",nullable=true) 
      */
-    public $parentCode;
-    
+    public $value1;
+
     /**
-     * @Column(type="string", length=255, name="value") 
+     * @Column(type="string", length=255, name="value2",nullable=true) 
      */
-    public $value;
-    
+    public $value2;
+
     /**
-     * @Column(type="string", length=255, name="option1",nullable=true) 
+     * @Column(type="string", length=255, name="optional",nullable=true) 
      */
-    public $option1;
-    
-    /**
-     * @Column(type="string", length=255, name="option2",nullable=true) 
-     */
-    public $option2;
-    
-    /**
-     * @Column(type="string", length=255, name="option3",nullable=true) 
-     */
-    public $option3;
+    public $optional;
 
 }
