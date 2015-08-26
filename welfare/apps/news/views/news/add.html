@@ -1,0 +1,201 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">จัดการประกาศและข่าวสาร</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">จัดการประกาศและข่าวสาร</span>
+                    </div>
+                    <div class="widget-body">
+                        <form id="registrationForm" method="post" class="form-horizontal">
+                            <div class="form-title">
+                                จัดการประกาศและข่าวสาร
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-lg-4 control-label">หัวข้อประกาศ</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="firstName" placeholder="หัวข้อประกาศ"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="กรุณาระบุหัวข้อประกาศ" />
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">กลุ่มผู้รับประกาศ</label>
+                                <div class="col-lg-6 control-group ">
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" checked="checked">
+                                            <span class="text">ข้าราชการ</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" class="inverted">
+                                            <span class="text">พนักงานมหาวิทยาลัย</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" class="inverted">
+                                            <span class="text">ลูกจ้างประจำ</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" class="inverted">
+                                            <span class="text">พนักงานราชการ</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" class="inverted">
+                                            <span class="text">พนักงานพิเศษ</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" class="inverted">
+                                            <span class="text">บุคลากรจ้างหลังเกษียน</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio col-lg-4">
+                                        <label>
+                                            <input name="form-field-radio" type="checkbox" class="inverted">
+                                            <span class="text">ลูกจ้างชั่วคราว</span>
+                                        </label>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+
+                                <label class="col-lg-4 control-label">อัพโหลดไฟล์ประกาศ</label>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <input type="file" class="form-control" name="firstName" placeholder="อัพโหลดไฟล์ประกาศ"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="กรุณาอัพโหลดไฟล์ประกาศ" />
+                                </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-7 control-label">
+                                        <button id="bn" name="bn" class="btn btn-primary" type="button">บันทึกข้อมูล</button>
+                                        <input type="reset" id="bnreset" name="bnreset" value="ล้างข้อมูล" class="btn">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="row">
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+            </div>
+        </div>
+
+        <div class="row">
+
+
+
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<!-- /Page Content -->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btn_submit").click(function () {
+            var data = {};
+            data['campusId'] = $("#campusId").val();
+            data['facultyCode'] = $("#facultyCode").val();
+            data['facultyName'] = $("#facultyName").val();
+            data['facultyNameEn'] = $("#facultyNameEn").val();
+
+            var jdata = {};
+            jdata['data'] = data;
+            $.ajax({
+                url: '/{{_context_path}}/api/ManagementBasics/faculty/save',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                    alert(result.save);
+                    //alert(result.message);
+                    getBody('api/ManagementBasics/faculty/listFaculty');
+                }
+            });
+//            var campusId = $("#campusId").val();
+//            var facultyCode = $("#facultyCode").val();
+//            var facultyName = $("#facultyName").val();
+//            var facultyNameEn = $("#facultyNameEn").val();
+
+//            $.ajax({
+//                url: '/{{_context_path}}/api/ManagementBasics/faculty/addFaculty',
+//                data: {campusId:campusId, facultyCode:facultyCode, facultyName:facultyName, facultyNameEn:facultyNameEn},
+//                type: 'post', // 'or get'
+//                success: function (result) {
+//                    var msg = result.addFaculty;
+//
+//                    //alert(msg["name"]);
+//                    if (msg == true) {
+//                        //alert("{{#i18n}}alertinsertNocomplete{{/i18n}}");
+//                        getBody('api/ManagementBasics/faculty/listFaculty');
+//                    } 
+//                }
+//            });
+            //alert();
+        });
+
+    });
+</script>
