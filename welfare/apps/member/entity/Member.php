@@ -1,256 +1,233 @@
 <?php
+
 namespace apps\member\entity;
+
 /**
-     * @Entity
-     * @Table(name="Member")
-     */
+ * @Entity
+ * @Table(name="Member")
+ */
 class Member {
-    /** 
-        * @Id
-        * @GeneratedValue
-        * @Column(type="integer" , length=11, name="memberId") */
-       public $memberId;
-       
-       /**
-        *@Column(type="string", length=13, name="idCard",nullable=true) 
-        */
-       public $idCard;
-       
-       /**
-        *@Column(type="string", length=255, name="fNameTh",nullable=true) 
-        */
-       public $fNameTh;
-       
-       /**
-        *@Column(type="string", length=255, name="lNameTh",nullable=true) 
-        */
-       public $lNameTh;
-       
-       /**
-        *@Column(type="string", length=255, name="fNameEn",nullable=true) 
-        */
-       public $fNameEn;
-       
-       /**
-        *@Column(type="string", length=255, name="lNameEn",nullable=true) 
-        */
-       public $lNameEn;
-       
-       /**
-        *@Column(type="date", name="dob") 
-        */
-       public $dob;
-       
-       /**
-        *@Column(type="integer", length=11, name="employeeId",nullable=true) 
-        */
-       public $employeeId;
-       
-       /**
-        *@Column(type="string", length=11, name="divisionId",nullable=true) 
-        */
-       public $divisionId;
-       
-       /**
-        *@Column(type="string", length=11, name="departmentId",nullable=true) 
-        */
-       public $departmentId;
-       
-       /**
-        *@Column(type="string", length=255, name="internalphone",nullable=true) 
-        */
-       public $internalphone;
-       
-       /**
-        *@Column(type="string", length=255, name="phone",nullable=true) 
-        */
-       public $phone;
-       
-       /**
-        *@Column(type="string", length=255, name="mobile",nullable=true) 
-        */
-       public $mobile;
-       
-       /**
-        *@Column(type="string", length=255, name="employeeCode",nullable=true) 
-        */
-       public $employeeCode;
-       
-       /**
-        *@Column(type="integer", length=11, name="positionbId",nullable=true) 
-        */
-       public $positionbId;
-       
-       /**
-        *@Column(type="integer", length=11, name="titleId",nullable=true) 
-        */
-       public $titleId;
-       
-        /**
-        *@Column(type="integer", length=11, name="lineId",nullable=true) 
-        */
-       public $lineId;
-       
-       /**
-        *@Column(type="date",  name="workStartDate") 
-        */
-       public $workStartDate;
-       
-       /**
-        *@Column(type="integer", length=11, name="academicId",nullable=true) 
-        */
-       public $academicId;
-       
-       function getMemberId() {
-           return $this->memberId;
-       }
 
-       function getIdCard() {
-           return $this->idCard;
-       }
+    /**
+     * @Id
+     * @GeneratedValue
+     * @Column(type="integer" , length=11, name="memberId") */
+    public $memberId;
 
-       function getFNameTh() {
-           return $this->fNameTh;
-       }
+    /**
+     * @Column(type="string", length=13, name="idCard",nullable=true) 
+     */
+    public $idCard;
 
-       function getLNameTh() {
-           return $this->lNameTh;
-       }
+    /**
+     * @Column(type="string", length=255, name="fname",nullable=true) 
+     */
+    public $fname;
 
-       function getFNameEn() {
-           return $this->fNameEn;
-       }
+    /**
+     * @Column(type="string", length=255, name="lname",nullable=true) 
+     */
+    public $lname;
 
-       function getLNameEn() {
-           return $this->lNameEn;
-       }
+    /**
+     * @Column(type="date", name="dob") 
+     */
+    public $dob;
 
-       function getDob() {
-           return $this->dob;
-       }
+    /**
+     * @Column(type="string", length=10, name="employeeId",nullable=true) 
+     */
+    public $employeeId;
 
-       function getEmployeeId() {
-           return $this->employeeId;
-       }
+    /**
+     * @Column(type="string", length=10, name="divisionId",nullable=true) 
+     */
+    public $divisionId;
 
-       function getDivisionId() {
-           return $this->divisionId;
-       }
+    /**
+     * @Column(type="string", length=10, name="departmentId",nullable=true) 
+     */
+    public $departmentId;
 
-       function getInternalphone() {
-           return $this->internalphone;
-       }
+    /**
+     * @Column(type="string", length=255, name="internalPhone",nullable=true) 
+     */
+    public $internalPhone;
 
-       function getPhone() {
-           return $this->phone;
-       }
+    /**
+     * @Column(type="string", length=255, name="phone",nullable=true) 
+     */
+    public $phone;
 
-       function getMobile() {
-           return $this->mobile;
-       }
+    /**
+     * @Column(type="string", length=255, name="mobile",nullable=true) 
+     */
+    public $mobile;
 
-       function getEmployeeCode() {
-           return $this->employeeCode;
-       }
+    /**
+     * @Column(type="string", length=13, name="employeeCode",nullable=true) 
+     */
+    public $employeeCode;
 
-       function getPositionbId() {
-           return $this->positionbId;
-       }
+    /**
+     * @Column(type="string", length=10, name="positionId",nullable=true) 
+     */
+    public $positionId;
 
-       function getTitleId() {
-           return $this->titleId;
-       }
+    /**
+     * @Column(type="string", length=10, name="titleId",nullable=true) 
+     */
+    public $titleId;
 
-       function getLineId() {
-           return $this->lineId;
-       }
+    /**
+     * @Column(type="string", length=10, name="lineId",nullable=true) 
+     */
+    public $lineId;
 
-       function getWorkStartDate() {
-           return $this->workStartDate;
-       }
+    /**
+     * @Column(type="date",  name="workStartDate") 
+     */
+    public $workStartDate;
 
-       function getAcademicId() {
-           return $this->academicId;
-       }
+    /**
+     * @Column(type="string", length=10, name="academicId",nullable=true) 
+     */
+    public $academicId;
 
-       function setMemberId($memberId) {
-           $this->memberId = $memberId;
-       }
+    function getMemberId() {
+        return $this->memberId;
+    }
 
-       function setIdCard($idCard) {
-           $this->idCard = $idCard;
-       }
+    function getIdCard() {
+        return $this->idCard;
+    }
 
-       function setFNameTh($fNameTh) {
-           $this->fNameTh = $fNameTh;
-       }
+    function getFname() {
+        return $this->fname;
+    }
 
-       function setLNameTh($lNameTh) {
-           $this->lNameTh = $lNameTh;
-       }
+    function getLname() {
+        return $this->lname;
+    }
 
-       function setFNameEn($fNameEn) {
-           $this->fNameEn = $fNameEn;
-       }
+    function getDob() {
+        return $this->dob;
+    }
 
-       function setLNameEn($lNameEn) {
-           $this->lNameEn = $lNameEn;
-       }
+    function getEmployeeId() {
+        return $this->employeeId;
+    }
 
-       function setDob($dob) {
-           $this->dob = $dob;
-       }
+    function getDivisionId() {
+        return $this->divisionId;
+    }
 
-       function setEmployeeId($employeeId) {
-           $this->employeeId = $employeeId;
-       }
+    function getDepartmentId() {
+        return $this->departmentId;
+    }
 
-       function setDivisionId($divisionId) {
-           $this->divisionId = $divisionId;
-       }
+    function getInternalPhone() {
+        return $this->internalPhone;
+    }
 
-       function setInternalphone($internalphone) {
-           $this->internalphone = $internalphone;
-       }
+    function getPhone() {
+        return $this->phone;
+    }
 
-       function setPhone($phone) {
-           $this->phone = $phone;
-       }
+    function getMobile() {
+        return $this->mobile;
+    }
 
-       function setMobile($mobile) {
-           $this->mobile = $mobile;
-       }
+    function getEmployeeCode() {
+        return $this->employeeCode;
+    }
 
-       function setEmployeeCode($employeeCode) {
-           $this->employeeCode = $employeeCode;
-       }
+    function getPositionId() {
+        return $this->positionId;
+    }
 
-       function setPositionbId($positionbId) {
-           $this->positionbId = $positionbId;
-       }
+    function getTitleId() {
+        return $this->titleId;
+    }
 
-       function setTitleId($titleId) {
-           $this->titleId = $titleId;
-       }
+    function getLineId() {
+        return $this->lineId;
+    }
 
-       function setLineId($lineId) {
-           $this->lineId = $lineId;
-       }
+    function getWorkStartDate() {
+        return $this->workStartDate;
+    }
 
-       function setWorkStartDate($workStartDate) {
-           $this->workStartDate = $workStartDate;
-       }
+    function getAcademicId() {
+        return $this->academicId;
+    }
 
-       function setAcademicId($academicId) {
-           $this->academicId = $academicId;
-       }
+    function setMemberId($memberId) {
+        $this->memberId = $memberId;
+    }
 
+    function setIdCard($idCard) {
+        $this->idCard = $idCard;
+    }
 
-       
+    function setFname($fname) {
+        $this->fname = $fname;
+    }
 
+    function setLname($lname) {
+        $this->lname = $lname;
+    }
 
-       
-       
-       
-       
+    function setDob($dob) {
+        $this->dob = $dob;
+    }
+
+    function setEmployeeId($employeeId) {
+        $this->employeeId = $employeeId;
+    }
+
+    function setDivisionId($divisionId) {
+        $this->divisionId = $divisionId;
+    }
+
+    function setDepartmentId($departmentId) {
+        $this->departmentId = $departmentId;
+    }
+
+    function setInternalPhone($internalPhone) {
+        $this->internalPhone = $internalPhone;
+    }
+
+    function setPhone($phone) {
+        $this->phone = $phone;
+    }
+
+    function setMobile($mobile) {
+        $this->mobile = $mobile;
+    }
+
+    function setEmployeeCode($employeeCode) {
+        $this->employeeCode = $employeeCode;
+    }
+
+    function setPositionId($positionId) {
+        $this->positionId = $positionId;
+    }
+
+    function setTitleId($titleId) {
+        $this->titleId = $titleId;
+    }
+
+    function setLineId($lineId) {
+        $this->lineId = $lineId;
+    }
+
+    function setWorkStartDate($workStartDate) {
+        $this->workStartDate = $workStartDate;
+    }
+
+    function setAcademicId($academicId) {
+        $this->academicId = $academicId;
+    }
+
 }
