@@ -7,6 +7,7 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use \apps\user\interfaces\IViewService;
+use apps\taxonomy\entity\Taxonomy;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -18,14 +19,30 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberAdd() {
         $view = new CJView("member/add", CJViewType::HTML_VIEW_ENGINE);
-        $view->academicPositions = $this->datacontext->getObject(new \apps\basics\entity\AcademicType());
-        //$view->rank = $this->datacontext->getObject(new \apps\common\entity\Rank());
-        $view->titleName = $this->datacontext->getObject(new \apps\common\entity\TitleName());
-//        $view->positionsType = $this->datacontext->getObject(new \apps\common\entity\PositionsType());
-        //$view->positionsWork = $this->datacontext->getObject(new \apps\common\entity\PositionsWork());
-//        $view->faculty = $this->datacontext->getObject(new \apps\common\entity\Faculty());
-//        $view->register = $this->datacontext->getObject(new \apps\common\entity\Department());
-//        $view->userType = $this->datacontext->getObject(new \apps\common\entity\UserType());
+        $academic = new Taxonomy();
+        $academic->pCode = "academic";
+        $view->academic = $this->datacontext->getObject($academic);
+        
+        $titleName = new Taxonomy();
+        $titleName->pCode = "titleName";
+        $view->titleName = $this->datacontext->getObject($titleName);
+        
+        $employeeType = new Taxonomy();
+        $employeeType->pCode = "employeeType";
+        $view->employeeType = $this->datacontext->getObject($employeeType);
+        
+        $position = new Taxonomy();
+        $position->pCode = "position";
+        $view->position = $this->datacontext->getObject($position);
+        
+        $department = new Taxonomy();
+        $department->pCode = "department";
+        $view->department = $this->datacontext->getObject($department);
+        
+        $division = new Taxonomy();
+        $division->pCode = "division";
+        $view->division = $this->datacontext->getObject($division);
+        
         return $view;
     }
 
