@@ -63,7 +63,7 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}taxonomy.parentId{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <select id="parentId" name="parentId" class="form-control">
+                                        <select id="parentId" name="parentId" class="form-control" value="{{parentId}}">
                                             <option value="0">Create New</option>
                                             {{#parent}}
                                             <option value="{{id}}">[{{pCode}}] {{value1}} , {{value2}} [{{code}}]</option>
@@ -76,7 +76,7 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}taxonomy.parent{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <select class="form-control" id="parent" name="parent">
+                                        <select class="form-control" id="parent" name="parent" value="{{parent}}">
                                             <option value="Y">{{#i18n}}Parent{{/i18n}}</option>
                                             <option value="N">{{#i18n}}Child{{/i18n}}</option>
                                         </select>

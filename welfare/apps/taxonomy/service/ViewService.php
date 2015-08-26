@@ -49,6 +49,11 @@ class ViewService extends CServiceBase implements IViewService {
         $tax->id = $id;
         $view = new CJView("edit", CJViewType::HTML_VIEW_ENGINE);
         $view->lists = $this->datacontext->getObject($tax)[0];
+        
+        $parent = new \apps\taxonomy\entity\Taxonomy();
+        $parent->parent = 'Y';
+        $view->parent = $this->datacontext->getObject($parent);
+        
         return $view;
     }
 
@@ -62,7 +67,7 @@ class ViewService extends CServiceBase implements IViewService {
             $view->child = $this->datacontext->getObject($child);
         } else {
             $sql = "select t from apps\\taxonomy\\entity\\Taxonomy t";
-                  //  . " where t.parentId != '0'";
+            //  . " where t.parentId != '0'";
             $view->child = $this->datacontext->getObject($sql);
         }
         $parent = new \apps\taxonomy\entity\Taxonomy();

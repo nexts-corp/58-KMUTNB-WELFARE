@@ -114,7 +114,7 @@
             var jdata = {};
             jdata['taxonomy'] = data;
             if (confirm("คุณต้องการลบ?")) {
-                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEnpCode(jdata));
+                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEncode(jdata));
                 if (result.delete == true) {
                     alert("ลบเรียบร้อย");
                     getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
