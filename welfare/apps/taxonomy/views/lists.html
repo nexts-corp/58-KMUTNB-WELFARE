@@ -31,56 +31,67 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
-                        </label>
-
-                        <div class="col-lg-3">
-                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        <div class="col-md-5">
+                            <select id="selectParent" class="form-control">
+                                <option value="0">Chose Parent</option>
+                                {{#parent}}
+                                <option value="{{id}}">[{{pCode}}] {{value1}},{{value2}} [{{code}}]</option>
+                                {{/parent}}
+                            </select>
                         </div>
                         <div class="pull-right">
                             <button class="btn btn-primary" 
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/taxonomy/view/parent/add"
+                                    data-api="{{_context_path}}/api/taxonomy/view/add"
                                     data-data="null"
                                     onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่</button> 
+                                <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่ {{test}}</button> 
                         </div>
-                        <div class="flip-scroll">
+                        <div class="flip-scroll rows">
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>{{#i18n}}code{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}value{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}id{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}parentId{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}parent{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}pCode{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}code{{/i18n}}</th>
+                                         <th class="center">{{#i18n}}value1{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}value2{{/i18n}}</th>
+                                         <th class="center">{{#i18n}}optional{{/i18n}}</th>
+                                         
                                         <th class="center">{{#i18n}}edit{{/i18n}}</th>
                                         <th class="center">{{#i18n}}delete{{/i18n}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#lists}}  
+                                    {{#child}}  
                                     <tr class="selectable">
-
+                                        <td>{{id}}</td>
+                                        <td>{{parentId}}</td>
+                                        <td>{{parent}}</td>
+                                        <td>{{pCode}}</td>
                                         <td>{{code}}</td>
-                                        <td>{{value}}</td>
-
+                                        <td>{{value1}}</td>
+                                        <td>{{value2}}</td>
+                                        <td>{{optional}}</td>
                                         <td class="center">
                                             <button class="btn btn-info btn-xs" 
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/taxonomy/view/parent/edit/{{code}}"
+                                                    data-api="{{_context_path}}/api/taxonomy/view/edit/{{id}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
                                         </td>
 
                                         <td class="center">
-                                            <button class='btn btn-info btn-xs delete' value='{{code}}'>
+                                            <button class='btn btn-info btn-xs delete' value='{{id}}'>
                                                 <i class="fa fa-edit"></i>
                                                 {{#i18n}}delete{{/i18n}}
                                             </button>
                                         </td>
                                     </tr>
-                                    {{/lists}}
-
+                                    {{/child}}
                                 </tbody>
                             </table>
                         </div>
@@ -93,16 +104,20 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#selectParent").click(function(e){
+           var id = $(this).val();
+           getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', {parentId:id});
+        });
         $(".delete").click(function () {
             var data = {};
-            data['code'] = $(this).val();
+            data['id'] = $(this).val();
             var jdata = {};
             jdata['taxonomy'] = data;
             if (confirm("คุณต้องการลบ?")) {
-                var result = sendData('{{_context_path}}/api/taxonomy/parent/delete', jsonEncode(jdata));
+                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEnpCode(jdata));
                 if (result.delete == true) {
                     alert("ลบเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/parent/lists', null);
+                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
                 } else {
                     alert("ลบไม่สำเร็จ");
                 }

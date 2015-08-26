@@ -26,6 +26,16 @@ class Taxonomy {
     public $parentId;
 
     /**
+     * @Column(type="string", length=1, name="parent",nullable=true) 
+     */
+    public $parent;
+
+    /**
+     * @Column(type="string", length=255, name="pCode",nullable=true) 
+     */
+    public $pCode;
+    
+      /**
      * @Column(type="string", length=255, name="code",nullable=true) 
      */
     public $code;
@@ -44,5 +54,6 @@ class Taxonomy {
      * @Column(type="string", length=255, name="optional",nullable=true) 
      */
     public $optional;
+
 
 }

@@ -9,62 +9,35 @@ namespace apps\taxonomy\interfaces;
  */
 interface IViewService {
 
-    /**
-     * @name lists
-     * @uri /parent/lists
-     * @return html view
-     * @description view
-     * @authen true
-     */
-    public function parentLists();
-
-    /**
-     * @name add
-     * @uri /parent/add
-     * @return html view
-     * @description view
-     * @authen true
-     */
-    public function parentAdd();
-
-    /**
-     * @name edit
-     * @uri /parent/edit
-     * @param string code
-     * @return html view
-     * @description view
-     * @authen true
-     */
-    public function parentEdit($code);
     
        /**
      * @name lists
-     * @uri /child/lists
+     * @uri /lists
      * @return html view
      * @description view
      * @authen true
      */
-    public function childLists();
+    public function lists();
     
      
 
     /**
      * @name add
-     * @uri /child/add
+     * @uri /add
      * @return html view
      * @description view
      * @authen true
      */
-    public function childAdd();
+    public function add();
 
     /**
      * @name edit
-     * @uri /child/edit
-     * @param string code
+     * @uri /edit
+     * @param string id
      * @return html view
      * @description view
      * @authen true
      */
-    public function childEdit($code);
+    public function edit($id);
 
 }

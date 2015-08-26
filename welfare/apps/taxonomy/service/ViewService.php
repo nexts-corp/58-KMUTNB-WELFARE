@@ -20,72 +20,53 @@ class ViewService extends CServiceBase implements IViewService {
         $tax = new \apps\taxonomy\entity\Taxonomy();
         $data = $this->datacontext->getObject($tax);
         if (count($data) == 0) {
-            $code = "000001";
+            $id = "000001";
         } else {
-            $code = intval($data[count($data) - 1]->code) + 1;
-            $code2 = "";
-            for ($i = 0; $i < (6 - strlen($code)); $i++) {
-                $code2 .= "0";
+            $id = intval($data[count($data) - 1]->id) + 1;
+            $id2 = "";
+            for ($i = 0; $i < (6 - strlen($id)); $i++) {
+                $id2 .= "0";
             }
-            $code = $code2 . $code;
+            $id = $id2 . $id;
         }
-        return $code;
+        return $id;
     }
 
-    public function parentLists() {
-        $tax = new \apps\taxonomy\entity\Taxonomy();
-        $tax->parentCode = 0;
-        $data = $this->datacontext->getObject($tax);
-        $view = new CJView("parent/lists", CJViewType::HTML_VIEW_ENGINE);
-        $view->lists = $data;
-        return $view;
-    }
-
-    public function parentAdd() {
-
-        $view = new CJView("parent/add", CJViewType::HTML_VIEW_ENGINE);
-        $view->code = $this->getNewCode();
-        return $view;
-    }
-
-    public function parentEdit($code) {
-        $tax = new \apps\taxonomy\entity\Taxonomy();
-        $tax->code = $code;
-        $view = new CJView("parent/edit", CJViewType::HTML_VIEW_ENGINE);
-        $view->lists = $this->datacontext->getObject($tax)[0];
-        return $view;
-    }
-
-    public function childAdd() {
-        $view = new CJView("child/add", CJViewType::HTML_VIEW_ENGINE);
-        $view->code = $this->getNewCode();
+    public function add() {
+        $view = new CJView("add", CJViewType::HTML_VIEW_ENGINE);
+        $view->id = $this->getNewCode();
 
         $tax = new \apps\taxonomy\entity\Taxonomy();
-        $tax->parentCode = "0";
+        $tax->parent = "Y";
         $parent = $this->datacontext->getObject($tax);
 
         $view->parent = $parent;
         return $view;
     }
 
-    public function childEdit($code) {
-        
+    public function edit($id) {
+        $tax = new \apps\taxonomy\entity\Taxonomy();
+        $tax->id = $id;
+        $view = new CJView("edit", CJViewType::HTML_VIEW_ENGINE);
+        $view->lists = $this->datacontext->getObject($tax)[0];
+        return $view;
     }
 
-    public function childLists() {
-        $view = new CJView("child/lists", CJViewType::HTML_VIEW_ENGINE);
-        $parentCode = $this->getRequest()->parentCode;
-        if ($parentCode != "" && $parentCode != "0") {
+    public function lists() {
+        $view = new CJView("lists", CJViewType::HTML_VIEW_ENGINE);
+        $parentId = $this->getRequest()->parentId;
+        if ($parentId != "" && $parentId != "0") {
             $child = new \apps\taxonomy\entity\Taxonomy();
-            $child->parentCode = $parentCode;
+            $child->parentId = $parentId;
+
             $view->child = $this->datacontext->getObject($child);
         } else {
-            $sql = "select t from apps\\taxonomy\\entity\\Taxonomy t"
-                    . " where t.parentCode != '0'";
+            $sql = "select t from apps\\taxonomy\\entity\\Taxonomy t";
+                  //  . " where t.parentId != '0'";
             $view->child = $this->datacontext->getObject($sql);
         }
         $parent = new \apps\taxonomy\entity\Taxonomy();
-        $parent->parentCode = "0";
+        $parent->parent = 'Y';
         $view->parent = $this->datacontext->getObject($parent);
 
         return $view;

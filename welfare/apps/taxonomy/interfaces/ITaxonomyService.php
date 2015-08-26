@@ -3,11 +3,11 @@
 namespace apps\taxonomy\interfaces;
 
 /**
- * @name parent
- * @uri /parent
- * @description parent
+ * @name taxonomy
+ * @uri /taxonomy
+ * @description ไรวะเนี่ย
  */
-interface IParentService {
+interface ITaxonomyService {
 
     /**
      * @name save
