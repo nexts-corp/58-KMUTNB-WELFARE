@@ -12,7 +12,7 @@ class Member {
        public $memberId;
        
        /**
-        *@Column(type="integer", length=13, name="idCard",nullable=true) 
+        *@Column(type="string", length=13, name="idCard",nullable=true) 
         */
        public $idCard;
        
@@ -47,9 +47,14 @@ class Member {
        public $employeeId;
        
        /**
-        *@Column(type="integer", length=11, name="divisionId",nullable=true) 
+        *@Column(type="string", length=11, name="divisionId",nullable=true) 
         */
        public $divisionId;
+       
+       /**
+        *@Column(type="string", length=11, name="departmentId",nullable=true) 
+        */
+       public $departmentId;
        
        /**
         *@Column(type="string", length=255, name="internalphone",nullable=true) 
@@ -76,6 +81,11 @@ class Member {
         */
        public $positionbId;
        
+       /**
+        *@Column(type="integer", length=11, name="titleId",nullable=true) 
+        */
+       public $titleId;
+       
         /**
         *@Column(type="integer", length=11, name="lineId",nullable=true) 
         */
@@ -90,7 +100,6 @@ class Member {
         *@Column(type="integer", length=11, name="academicId",nullable=true) 
         */
        public $academicId;
-       
        
        function getMemberId() {
            return $this->memberId;
@@ -146,6 +155,10 @@ class Member {
 
        function getPositionbId() {
            return $this->positionbId;
+       }
+
+       function getTitleId() {
+           return $this->titleId;
        }
 
        function getLineId() {
@@ -216,6 +229,10 @@ class Member {
            $this->positionbId = $positionbId;
        }
 
+       function setTitleId($titleId) {
+           $this->titleId = $titleId;
+       }
+
        function setLineId($lineId) {
            $this->lineId = $lineId;
        }
@@ -227,6 +244,9 @@ class Member {
        function setAcademicId($academicId) {
            $this->academicId = $academicId;
        }
+
+
+       
 
 
        

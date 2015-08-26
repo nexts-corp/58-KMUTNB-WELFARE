@@ -13,7 +13,7 @@ interface IMemberService {
     /**
      * @name save
      * @uri /save
-     * @param apps\common\entity\Register data []
+     * @param apps\member\entity\Member data []
      * @return boolean save [return ture or false if don't ]
      * @description save data to database
      */
@@ -22,7 +22,7 @@ interface IMemberService {
     /**
      * @name update
      * @uri /update
-     * @param apps\common\entity\Register data Description
+     * @param apps\member\entity\Member data Description
      * @return boolean update Description
      * @description view list new
      */

@@ -31,8 +31,8 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberEdit($id) {
         $view = new CJView("member/edit", CJViewType::HTML_VIEW_ENGINE);
-        $filter = new \apps\common\entity\Register();
-        $filter->setRegisterId($id);
+        $filter = new \apps\member\entity\Member();
+        $filter->setMemberId($id);
         $dao_register = $this->datacontext->getObject($filter);
         $view->datas = $dao_register;
         //print_r($view);
@@ -41,7 +41,8 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberLists() {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-        $listregister = new \apps\common\entity\Register();
+        //$listregister = new \apps\common\entity\Register();
+        $listregister = new \apps\member\entity\Member();
         $listreg = $this->datacontext->getObject($listregister);
         $view->list = $listreg;
         return $view;

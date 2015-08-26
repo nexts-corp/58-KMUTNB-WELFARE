@@ -8,7 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use \apps\user\interfaces\IMemberService;
 use \apps\common\entity\Register;
-use \apps\common\entity\User;
+use apps\user\entity\User;
 use \apps\common\entity\Department;
 
 class MemberService extends CServiceBase implements IMemberService {
@@ -21,27 +21,32 @@ class MemberService extends CServiceBase implements IMemberService {
 
     public function save($data) {
 
-        $data->registerDateOfBirth = new \DateTime($data->registerDateOfBirth);
-        $data->registerDateAdded = new \DateTime($data->registerDateAdded);
+        $data->dob = new \DateTime($data->dob);
+        $data->workStartDate = new \DateTime($data->workStartDate);
 
         if ($this->datacontext->saveObject($data)) {
 
             $user = new User();
-            $user->setRegisterId($data->registerId);
-            $user->setUserName($data->registerIdCard);
-            $user->setUserTypeId($data->userTypeId);
-
-            $aa = $data->registerDateOfBirth->format('d-m-Y');
+//            $user->setRegisterId($data->memberId);
+//            $user->setUserName($data->registerIdCard);
+//            $user->setUserTypeId($data->userTypeId);
+//            $aa = $data->registerDateOfBirth->format('d-m-Y');
+//            $user->setPassword(md5($aa));
+            
+            $user->setMemberId($data->memberId);
+            $user->setUserName($data->idCard);
+            //$user->setUserTypeId($data->userTypeId);
+            $aa = $data->dob->format('d-m-Y');
             $user->setPassword(md5($aa));
 
-            if ($data->checkUser == "1") {
-                $user->setSuperAdminId($data->SuperAdminId);
-            } elseif ($data->checkUser == "2") {
-                $user->setFacultyId($data->facultyId);
-            } elseif ($data->checkUser == "3") {
-                $user->setFacultyId($data->facultyId);
-                $user->setDepartmentId($data->departmentId);
-            }
+//            if ($data->checkUser == "1") {
+//                $user->setSuperAdminId($data->SuperAdminId);
+//            } elseif ($data->checkUser == "2") {
+//                $user->setFacultyId($data->facultyId);
+//            } elseif ($data->checkUser == "3") {
+//                $user->setFacultyId($data->facultyId);
+//                $user->setDepartmentId($data->departmentId);
+//            }
             if ($this->datacontext->saveObject($user)) {
                 $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
 

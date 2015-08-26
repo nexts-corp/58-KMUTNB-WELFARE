@@ -46,7 +46,7 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>&nbsp;{{#i18n}}registerIdCard{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}IdCard{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}registerName{{/i18n}} - {{#i18n}}registerLastName{{/i18n}}</th>
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
@@ -55,12 +55,19 @@
                                     {{#list}}  
                                     <tr class="selectable">
 
-                                        <td>&nbsp;{{registerIdCard}}</td>
-                                        <td>&nbsp;{{registerNameTh}}      {{registerLastNameTh}} </td>
+                                        <td>&nbsp;{{idCard}}</td>
+                                        <td>&nbsp;{{fNameTh}}      {{lNameTh}} </td>
 
                                         <td class="center">
-                                            <a id="edit" href="#" onclick="getHTML('content-body','{{_context_path}}/api/user/view/member/edit/{{registerId}}',null)" class="btn btn-info btn-xs edit" ><i class="fa fa-edit"></i>Edit</a>
-
+                                            
+                                            <button class="btn btn-info btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/user/view/member/edit/{{memberId}}"
+                                                    data-param="null"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
+                                            </button>
+                                            
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{registerId}}" >Delete</button> 
                                         </td>
                                     </tr>
