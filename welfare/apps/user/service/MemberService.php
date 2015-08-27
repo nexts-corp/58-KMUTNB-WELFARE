@@ -34,7 +34,7 @@ class MemberService extends CServiceBase implements IMemberService {
 //            $user->setPassword(md5($aa));
             
             $user->setMemberId($data->memberId);
-            $user->setUserName($data->idCard);
+            $user->setUsername($data->idCard);
             //$user->setUserTypeId($data->userTypeId);
             $aa = $data->dob->format('d-m-Y');
             $user->setPassword(md5($aa));

@@ -12,9 +12,9 @@ class User {
     public $userId;
 
     /**
-     * @Column(type="string", length=255, name="userName") 
+     * @Column(type="string", length=255, name="username") 
      */
-    public $userName;
+    public $username;
 
     /**
      * @Column(type="string", length=255, name="password",nullable=true) 
@@ -27,7 +27,7 @@ class User {
     public $memberId;
     
      /**
-     * @Column(type="string", length=11, name="userTypeId",nullable=true) 
+     * @Column(type="string", length=10, name="userTypeId",nullable=true) 
      */
     public $userTypeId;
     
@@ -35,8 +35,8 @@ class User {
         return $this->userId;
     }
 
-    function getUserName() {
-        return $this->userName;
+    function getUsername() {
+        return $this->username;
     }
 
     function getPassword() {
@@ -55,8 +55,8 @@ class User {
         $this->userId = $userId;
     }
 
-    function setUserName($userName) {
-        $this->userName = $userName;
+    function setUsername($username) {
+        $this->username = $username;
     }
 
     function setPassword($password) {
@@ -70,6 +70,8 @@ class User {
     function setUserTypeId($userTypeId) {
         $this->userTypeId = $userTypeId;
     }
+
+
 
 
 }

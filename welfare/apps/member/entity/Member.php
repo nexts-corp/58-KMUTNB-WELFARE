@@ -39,15 +39,17 @@ class Member {
      */
     public $employeeId;
 
-    /**
-     * @Column(type="string", length=10, name="divisionId",nullable=true) 
+   /**
+     * @Column(type="string", length=10, name="facultyId",nullable=true) 
      */
-    public $divisionId;
+    public $facultyId;
 
     /**
      * @Column(type="string", length=10, name="departmentId",nullable=true) 
      */
     public $departmentId;
+    
+     
 
     /**
      * @Column(type="string", length=255, name="internalPhone",nullable=true) 
@@ -118,12 +120,12 @@ class Member {
         return $this->employeeId;
     }
 
-    function getDivisionId() {
-        return $this->divisionId;
-    }
-
     function getDepartmentId() {
         return $this->departmentId;
+    }
+
+    function getFacultyId() {
+        return $this->facultyId;
     }
 
     function getInternalPhone() {
@@ -186,12 +188,12 @@ class Member {
         $this->employeeId = $employeeId;
     }
 
-    function setDivisionId($divisionId) {
-        $this->divisionId = $divisionId;
-    }
-
     function setDepartmentId($departmentId) {
         $this->departmentId = $departmentId;
+    }
+
+    function setFacultyId($facultyId) {
+        $this->facultyId = $facultyId;
     }
 
     function setInternalPhone($internalPhone) {
@@ -229,5 +231,6 @@ class Member {
     function setAcademicId($academicId) {
         $this->academicId = $academicId;
     }
+
 
 }

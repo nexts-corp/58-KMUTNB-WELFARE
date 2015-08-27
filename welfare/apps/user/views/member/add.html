@@ -116,6 +116,17 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
                                         <div class="col-lg-9">
+                                            <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country">
+                                                <option value="">เลือกภาควิชา</option>
+                                               {{#faculty}}
+                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/faculty}}
+                                            </select>
+                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
+                                        <div class="col-lg-9">
                                             <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
                                                 <option value="">สังกัด</option>
                                                 {{#department}}
@@ -124,17 +135,7 @@
                                             </select>
                                             <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}divisionId{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="divisionId" name="divisionId" data-bv-field="country">
-                                                <option value="">เลือกภาควิชา</option>
-                                               {{#division}}
-                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/division}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
                                         <div class="col-lg-9 control-group ">
@@ -273,19 +274,18 @@
 
                             $("#btn_submit").click(function () {
                                 var data = {};
-                                data['fNameTh'] = $("#fNameTh").val();
-                                data['lNameTh'] = $("#lNameTh").val();
-                                data['fNameEn'] = $("#fNameEn").val();
-                                data['lNameEn'] = $("#lNameEn").val();
+                                data['fname'] = $("#fNameTh").val();
+                                data['lname'] = $("#lNameTh").val();
+                                
                                 data['idCard'] = $("#idCard").val();
                                 data['dob'] = $("#dob").val();
                                 data['employeeCode'] = $("#employeeCode").val();
-                                data['positionbId'] = $("#positionbId").val();
+                                data['employeeTypeId'] = $("#employeeTypeId").val();
                                 data['departmentId'] = $("#departmentId").val();
-                                data['divisionId'] = $("#divisionId").val();
+                                data['facultyId'] = $("#facultyId").val();
                                 data['workStartDate'] = $("#workStartDate").val();
                                 data['lineId'] = $("#lineId").val();
-                                data['positionbId'] = $("#positionbId").val();
+                                data['positionId'] = $("#positionId").val();
                                 data['userTypeId'] = $("#userTypeId").val();
                                 //data['SuperAdminId'] = "1";
 
