@@ -27,6 +27,10 @@ class ViewService extends CServiceBase implements IViewService {
         $titleName->pCode = "titleName";
         $view->titleName = $this->datacontext->getObject($titleName);
         
+        $gender = new Taxonomy();
+        $gender->pCode = "gender";
+        $view->gender = $this->datacontext->getObject($gender);
+        
         $employeeType = new Taxonomy();
         $employeeType->pCode = "employeeType";
         $view->employeeType = $this->datacontext->getObject($employeeType);
@@ -39,9 +43,11 @@ class ViewService extends CServiceBase implements IViewService {
         $department->pCode = "department";
         $view->department = $this->datacontext->getObject($department);
         
-        $division = new Taxonomy();
-        $division->pCode = "division";
-        $view->division = $this->datacontext->getObject($division);
+        $faculty = new Taxonomy();
+        $faculty->pCode = "faculty";
+        $view->faculty = $this->datacontext->getObject($faculty);
+        
+        
         
         return $view;
     }
@@ -51,6 +57,10 @@ class ViewService extends CServiceBase implements IViewService {
         $filter = new \apps\member\entity\Member();
         $filter->setMemberId($id);
         $dao_register = $this->datacontext->getObject($filter);
+        //print_r($dao_register[0]->dob);
+        $datebrith = $dao_register[0]->dob->format('d-m-Y');
+        //print_r($datebrith);
+        $view->dob = $datebrith;
         $view->datas = $dao_register;
         //print_r($view);
         return $view;

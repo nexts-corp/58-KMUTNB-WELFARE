@@ -12,51 +12,143 @@ class Welfare {
        public $welfareId;
        
         /**
-        *@Column(type="string", name="welfareName") 
+        *@Column(type="string", name="name") 
         */
-       public $welfareName;
-       
-        /**
-        *@Column(type="string", name="welfareStart") 
-        */
-       public $welfareStart;
+       public $name;
        
        /**
-        *@Column(type="string", name="welfareEnd") 
+        *@Column(type="string", name="description") 
         */
-       public $welfareEnd;
+       public $description;
+       
+       /**
+        *@Column(type="date", name="dateCreate") 
+        */
+       public $dateCreate;
+       
+       /**
+        *@Column(type="date", name="dateUpdate") 
+        */
+       public $dateUpdate;
+       
+       /**
+        *@Column(type="date", name="dateCande") 
+        */
+       public $dateCande;
+       
+        /**
+        *@Column(type="date", name="dateStart") 
+        */
+       public $dateStart;
+       
+       /**
+        *@Column(type="date", name="dateEnd") 
+        */
+       public $dateEnd;
+       
+       /**
+        *@Column(type="string", name="free") 
+        */
+       public $free;
+       
+       /**
+        *@Column(type="string", name="willing") 
+        */
+       public $willing;
+       /**
+        *@Column(type="string", name="retire") 
+        */
+       public $retire;
        
        function getWelfareId() {
            return $this->welfareId;
        }
 
-       function getWelfareName() {
-           return $this->welfareName;
+       function getName() {
+           return $this->name;
        }
 
-       function getWelfareStart() {
-           return $this->welfareStart;
+       function getDescription() {
+           return $this->description;
        }
 
-       function getWelfareEnd() {
-           return $this->welfareEnd;
+       function getDateCreate() {
+           return $this->dateCreate;
+       }
+
+       function getDateUpdate() {
+           return $this->dateUpdate;
+       }
+
+       function getDateCande() {
+           return $this->dateCande;
+       }
+
+       function getDateStart() {
+           return $this->dateStart;
+       }
+
+       function getDateEnd() {
+           return $this->dateEnd;
+       }
+
+       function getFree() {
+           return $this->free;
+       }
+
+       function getWilling() {
+           return $this->willing;
+       }
+
+       function getRetire() {
+           return $this->retire;
        }
 
        function setWelfareId($welfareId) {
            $this->welfareId = $welfareId;
        }
 
-       function setWelfareName($welfareName) {
-           $this->welfareName = $welfareName;
+       function setName($name) {
+           $this->name = $name;
        }
 
-       function setWelfareStart($welfareStart) {
-           $this->welfareStart = $welfareStart;
+       function setDescription($description) {
+           $this->description = $description;
        }
 
-       function setWelfareEnd($welfareEnd) {
-           $this->welfareEnd = $welfareEnd;
+       function setDateCreate($dateCreate) {
+           $this->dateCreate = $dateCreate;
        }
+
+       function setDateUpdate($dateUpdate) {
+           $this->dateUpdate = $dateUpdate;
+       }
+
+       function setDateCande($dateCande) {
+           $this->dateCande = $dateCande;
+       }
+
+       function setDateStart($dateStart) {
+           $this->dateStart = $dateStart;
+       }
+
+       function setDateEnd($dateEnd) {
+           $this->dateEnd = $dateEnd;
+       }
+
+       function setFree($free) {
+           $this->free = $free;
+       }
+
+       function setWilling($willing) {
+           $this->willing = $willing;
+       }
+
+       function setRetire($retire) {
+           $this->retire = $retire;
+       }
+
+
 
 
 }

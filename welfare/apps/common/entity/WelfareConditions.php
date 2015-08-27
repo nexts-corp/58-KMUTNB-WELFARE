@@ -8,24 +8,24 @@ class WelfareConditions {
     /** 
         * @Id
         * @GeneratedValue
-        * @Column(type="integer" , length=11, name="welfareConditionsId") */
-       public $welfareConditionsId;
+        * @Column(type="integer" , length=11, name="conditionsId") */
+       public $conditionsId;
        
         /**
-        *@Column(type="string", name="welfareSubId") 
+        *@Column(type="string", name="welfareId") 
         */
-       public $welfareSubId;
+       public $welfareId;
        
         /**
-        *@Column(type="string", name="positionsTypeId") 
+        *@Column(type="string", name="description") 
         */
-       public $positionsTypeId;
+       public $description;
        
        
        /**
-        *@Column(type="date", name="dateStartWorking") 
+        *@Column(type="date", name="dateStartWork") 
         */
-       public $dateStartWorking;
+       public $dateStartWork;
        
        /**
         *@Column(type="date", name="dateEndWork") 
@@ -33,214 +33,175 @@ class WelfareConditions {
        public $dateEndWork;
        
        /**
-        *@Column(type="integer", length=3, name="ageWorkLess") 
+        *@Column(type="integer", length=3, name="ageWorkStart") 
         */
-       public $ageWorkLess;
+       public $ageWorkStart;
        
        /**
-        *@Column(type="integer", length=3, name="ageWorkMore") 
+        *@Column(type="integer", length=3, name="ageWorkEnd") 
         */
-       public $ageWorkMore;
+       public $ageWorkEnd;
+       
+       
        
        /**
-        *@Column(type="integer", length=3, name="ageWorkAs") 
+        *@Column(type="integer", length=3, name="ageStart") 
         */
-       public $ageWorkAs;
+       public $ageStart;
        
        /**
-        *@Column(type="integer", length=3, name="ageWorkSince") 
+        *@Column(type="integer", length=3, name="ageEnd") 
         */
-       public $ageWorkSince;
+       public $ageEnd;
+       
+       
        
        /**
-        *@Column(type="integer", length=3, name="ageWorkTo") 
+        *@Column(type="string",length=1, name="employeeTypeId") 
         */
-       public $ageWorkTo;
-       
-       /**
-        *@Column(type="integer", length=3, name="ageLess") 
-        */
-       public $ageLess;
-       
-       /**
-        *@Column(type="integer", length=3, name="ageMore") 
-        */
-       public $ageMore;
-       
-       /**
-        *@Column(type="integer", length=3, name="ageAs") 
-        */
-       public $ageAs;
-       
-       /**
-        *@Column(type="integer", length=3, name="ageSince") 
-        */
-       public $ageSince;
-       
-       /**
-        *@Column(type="integer", length=3, name="ageTo") 
-        */
-       public $ageTo;
-       
-       /**
-        *@Column(type="string",length=1, name="statusVoluntary") 
-        */
-       public $statusVoluntary;
+       public $employeeTypeId;
        
         /**
-        *@Column(type="string", length=1, name="statusRetired" ) 
+        *@Column(type="string", length=1, name="amount" ) 
         */
-       public $statusRetired;
+       public $amount;
        
-       function getWelfareConditionsId() {
-           return $this->welfareConditionsId;
+       /**
+        *@Column(type="string", length=1, name="returnType" ) 
+        */
+       public $returnType;
+       
+       /**
+        *@Column(type="date", name="resetTime" ) 
+        */
+       public $resetTime;
+       
+       function getConditionsId() {
+           return $this->conditionsId;
        }
 
-       function getWelfareSubId() {
-           return $this->welfareSubId;
+       function getWelfareId() {
+           return $this->welfareId;
        }
 
-       function getDateStartWorking() {
-           return $this->dateStartWorking;
+       function getDescription() {
+           return $this->description;
+       }
+
+       function getDateStartWork() {
+           return $this->dateStartWork;
        }
 
        function getDateEndWork() {
            return $this->dateEndWork;
        }
 
-       function getAgeWorkLess() {
-           return $this->ageWorkLess;
+       function getAgeWorkStart() {
+           return $this->ageWorkStart;
        }
 
-       function getAgeWorkMore() {
-           return $this->ageWorkMore;
+       function getAgeWorkEnd() {
+           return $this->ageWorkEnd;
        }
 
-       function getAgeWorkAs() {
-           return $this->ageWorkAs;
+       function getAgeStart() {
+           return $this->ageStart;
        }
 
-       function getAgeWorkSince() {
-           return $this->ageWorkSince;
+       function getAgeEnd() {
+           return $this->ageEnd;
        }
 
-       function getAgeWorkTo() {
-           return $this->ageWorkTo;
+       function getEmployeeTypeId() {
+           return $this->employeeTypeId;
        }
 
-       function getAgeLess() {
-           return $this->ageLess;
+       function getAmount() {
+           return $this->amount;
        }
 
-       function getAgeMore() {
-           return $this->ageMore;
+       function getReturnType() {
+           return $this->returnType;
        }
 
-       function getAgeAs() {
-           return $this->ageAs;
+       function getResetTime() {
+           return $this->resetTime;
        }
 
-       function getAgeSince() {
-           return $this->ageSince;
+       function setConditionsId($conditionsId) {
+           $this->conditionsId = $conditionsId;
        }
 
-       function getAgeTo() {
-           return $this->ageTo;
+       function setWelfareId($welfareId) {
+           $this->welfareId = $welfareId;
        }
 
-       function getStatusVoluntary() {
-           return $this->statusVoluntary;
+       function setDescription($description) {
+           $this->description = $description;
        }
 
-       function getStatusRetired() {
-           return $this->statusRetired;
-       }
-
-       function setWelfareConditionsId($welfareConditionsId) {
-           $this->welfareConditionsId = $welfareConditionsId;
-       }
-
-       function setWelfareSubId($welfareSubId) {
-           $this->welfareSubId = $welfareSubId;
-       }
-
-       function setDateStartWorking($dateStartWorking) {
-           $this->dateStartWorking = $dateStartWorking;
+       function setDateStartWork($dateStartWork) {
+           $this->dateStartWork = $dateStartWork;
        }
 
        function setDateEndWork($dateEndWork) {
            $this->dateEndWork = $dateEndWork;
        }
 
-       function setAgeWorkLess($ageWorkLess) {
-           $this->ageWorkLess = $ageWorkLess;
+       function setAgeWorkStart($ageWorkStart) {
+           $this->ageWorkStart = $ageWorkStart;
        }
 
-       function setAgeWorkMore($ageWorkMore) {
-           $this->ageWorkMore = $ageWorkMore;
+       function setAgeWorkEnd($ageWorkEnd) {
+           $this->ageWorkEnd = $ageWorkEnd;
        }
 
-       function setAgeWorkAs($ageWorkAs) {
-           $this->ageWorkAs = $ageWorkAs;
+       function setAgeStart($ageStart) {
+           $this->ageStart = $ageStart;
        }
 
-       function setAgeWorkSince($ageWorkSince) {
-           $this->ageWorkSince = $ageWorkSince;
+       function setAgeEnd($ageEnd) {
+           $this->ageEnd = $ageEnd;
        }
 
-       function setAgeWorkTo($ageWorkTo) {
-           $this->ageWorkTo = $ageWorkTo;
+       function setEmployeeTypeId($employeeTypeId) {
+           $this->employeeTypeId = $employeeTypeId;
        }
 
-       function setAgeLess($ageLess) {
-           $this->ageLess = $ageLess;
+       function setAmount($amount) {
+           $this->amount = $amount;
        }
 
-       function setAgeMore($ageMore) {
-           $this->ageMore = $ageMore;
+       function setReturnType($returnType) {
+           $this->returnType = $returnType;
        }
 
-       function setAgeAs($ageAs) {
-           $this->ageAs = $ageAs;
-       }
-
-       function setAgeSince($ageSince) {
-           $this->ageSince = $ageSince;
-       }
-
-       function setAgeTo($ageTo) {
-           $this->ageTo = $ageTo;
-       }
-
-       function setStatusVoluntary($statusVoluntary) {
-           $this->statusVoluntary = $statusVoluntary;
-       }
-
-       function setStatusRetired($statusRetired) {
-           $this->statusRetired = $statusRetired;
+       function setResetTime($resetTime) {
+           $this->resetTime = $resetTime;
        }
 
        
-
-       function isStatusVoluntary(){
-      
-           if($this->statusVoluntary=="Y"){
-               return "checked";
-           }
-           else{
-               return "";
-           }
-       }
        
-       function isStatusRetired(){
-      
-           if($this->statusRetired=="Y"){
-               return "checked";
-           }
-           else{
-               return "";
-           }
-       }
+
+//       function isStatusVoluntary(){
+//      
+//           if($this->statusVoluntary=="Y"){
+//               return "checked";
+//           }
+//           else{
+//               return "";
+//           }
+//       }
+//       
+//       function isStatusRetired(){
+//      
+//           if($this->statusRetired=="Y"){
+//               return "checked";
+//           }
+//           else{
+//               return "";
+//           }
+//       }
 
 
        
