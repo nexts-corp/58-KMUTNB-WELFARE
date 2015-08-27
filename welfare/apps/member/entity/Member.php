@@ -20,6 +20,16 @@ class Member {
     public $idCard;
 
     /**
+     * @Column(type="string", length=10, name="titleId",nullable=true) 
+     */
+    public $titleId;
+
+    /**
+     * @Column(type="string", length=10, name="academicId",nullable=true) 
+     */
+    public $academicId;
+
+    /**
      * @Column(type="string", length=255, name="fname",nullable=true) 
      */
     public $fname;
@@ -35,11 +45,16 @@ class Member {
     public $dob;
 
     /**
+     * @Column(type="string", length=13, name="employeeCode",nullable=true) 
+     */
+    public $employeeCode;
+
+    /**
      * @Column(type="string", length=10, name="employeeTypeId",nullable=true) 
      */
     public $employeeTypeId;
 
-   /**
+    /**
      * @Column(type="string", length=10, name="facultyId",nullable=true) 
      */
     public $facultyId;
@@ -48,8 +63,16 @@ class Member {
      * @Column(type="string", length=10, name="departmentId",nullable=true) 
      */
     public $departmentId;
-    
-     
+
+    /**
+     * @Column(type="string", length=10, name="positionId",nullable=true) 
+     */
+    public $positionId;
+
+    /**
+     * @Column(type="string", length=10, name="matierId",nullable=true) 
+     */
+    public $matierId;
 
     /**
      * @Column(type="string", length=255, name="internalPhone",nullable=true) 
@@ -67,34 +90,9 @@ class Member {
     public $mobile;
 
     /**
-     * @Column(type="string", length=13, name="employeeCode",nullable=true) 
-     */
-    public $employeeCode;
-
-    /**
-     * @Column(type="string", length=10, name="positionId",nullable=true) 
-     */
-    public $positionId;
-
-    /**
-     * @Column(type="string", length=10, name="titleId",nullable=true) 
-     */
-    public $titleId;
-
-    /**
-     * @Column(type="string", length=10, name="matierId",nullable=true) 
-     */
-    public $matierId;
-
-    /**
      * @Column(type="date",  name="workStartDate") 
      */
     public $workStartDate;
-
-    /**
-     * @Column(type="string", length=10, name="academicId",nullable=true) 
-     */
-    public $academicId;
 
     function getMemberId() {
         return $this->memberId;
@@ -102,6 +100,14 @@ class Member {
 
     function getIdCard() {
         return $this->idCard;
+    }
+
+    function getTitleId() {
+        return $this->titleId;
+    }
+
+    function getAcademicId() {
+        return $this->academicId;
     }
 
     function getFname() {
@@ -116,16 +122,28 @@ class Member {
         return $this->dob;
     }
 
-    function getEmployeeId() {
-        return $this->employeeId;
+    function getEmployeeCode() {
+        return $this->employeeCode;
+    }
+
+    function getEmployeeTypeId() {
+        return $this->employeeTypeId;
+    }
+
+    function getFacultyId() {
+        return $this->facultyId;
     }
 
     function getDepartmentId() {
         return $this->departmentId;
     }
 
-    function getFacultyId() {
-        return $this->facultyId;
+    function getPositionId() {
+        return $this->positionId;
+    }
+
+    function getMatierId() {
+        return $this->matierId;
     }
 
     function getInternalPhone() {
@@ -140,28 +158,8 @@ class Member {
         return $this->mobile;
     }
 
-    function getEmployeeCode() {
-        return $this->employeeCode;
-    }
-
-    function getPositionId() {
-        return $this->positionId;
-    }
-
-    function getTitleId() {
-        return $this->titleId;
-    }
-
-    function getLineId() {
-        return $this->lineId;
-    }
-
     function getWorkStartDate() {
         return $this->workStartDate;
-    }
-
-    function getAcademicId() {
-        return $this->academicId;
     }
 
     function setMemberId($memberId) {
@@ -170,6 +168,14 @@ class Member {
 
     function setIdCard($idCard) {
         $this->idCard = $idCard;
+    }
+
+    function setTitleId($titleId) {
+        $this->titleId = $titleId;
+    }
+
+    function setAcademicId($academicId) {
+        $this->academicId = $academicId;
     }
 
     function setFname($fname) {
@@ -184,16 +190,28 @@ class Member {
         $this->dob = $dob;
     }
 
-    function setEmployeeId($employeeId) {
-        $this->employeeId = $employeeId;
+    function setEmployeeCode($employeeCode) {
+        $this->employeeCode = $employeeCode;
+    }
+
+    function setEmployeeTypeId($employeeTypeId) {
+        $this->employeeTypeId = $employeeTypeId;
+    }
+
+    function setFacultyId($facultyId) {
+        $this->facultyId = $facultyId;
     }
 
     function setDepartmentId($departmentId) {
         $this->departmentId = $departmentId;
     }
 
-    function setFacultyId($facultyId) {
-        $this->facultyId = $facultyId;
+    function setPositionId($positionId) {
+        $this->positionId = $positionId;
+    }
+
+    function setMatierId($matierId) {
+        $this->matierId = $matierId;
     }
 
     function setInternalPhone($internalPhone) {
@@ -208,29 +226,8 @@ class Member {
         $this->mobile = $mobile;
     }
 
-    function setEmployeeCode($employeeCode) {
-        $this->employeeCode = $employeeCode;
-    }
-
-    function setPositionId($positionId) {
-        $this->positionId = $positionId;
-    }
-
-    function setTitleId($titleId) {
-        $this->titleId = $titleId;
-    }
-
-    function setLineId($lineId) {
-        $this->lineId = $lineId;
-    }
-
     function setWorkStartDate($workStartDate) {
         $this->workStartDate = $workStartDate;
     }
-
-    function setAcademicId($academicId) {
-        $this->academicId = $academicId;
-    }
-
 
 }
