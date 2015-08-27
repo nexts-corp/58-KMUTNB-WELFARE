@@ -20,6 +20,11 @@ class Member {
     public $idCard;
 
     /**
+     * @Column(type="string", length=10, name="genderId",nullable=true) 
+     */
+    public $genderId;
+
+    /**
      * @Column(type="string", length=10, name="titleId",nullable=true) 
      */
     public $titleId;
@@ -102,6 +107,10 @@ class Member {
         return $this->idCard;
     }
 
+    function getGenderId() {
+        return $this->genderId;
+    }
+
     function getTitleId() {
         return $this->titleId;
     }
@@ -168,6 +177,10 @@ class Member {
 
     function setIdCard($idCard) {
         $this->idCard = $idCard;
+    }
+
+    function setGenderId($genderId) {
+        $this->genderId = $genderId;
     }
 
     function setTitleId($titleId) {
