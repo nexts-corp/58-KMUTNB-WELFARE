@@ -57,12 +57,12 @@ class ViewService extends CServiceBase implements IViewService {
         $filter = new \apps\member\entity\Member();
         $filter->setMemberId($id);
         $dao_register = $this->datacontext->getObject($filter);
-        //print_r($dao_register[0]->dob);
+//        print_r($dao_register[0]->dob);
         $datebrith = $dao_register[0]->dob->format('d-m-Y');
         //print_r($datebrith);
-        $view->dob = $datebrith;
+        $view->dobs = $datebrith;
         $view->datas = $dao_register;
-        //print_r($view);
+//        print_r($view);
         return $view;
     }
 
