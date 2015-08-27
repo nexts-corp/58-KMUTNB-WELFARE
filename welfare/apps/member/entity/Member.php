@@ -84,7 +84,7 @@ class Member {
     /**
      * @Column(type="string", length=10, name="lineId",nullable=true) 
      */
-    public $lineId;
+    public $lineWorkId;
 
     /**
      * @Column(type="date",  name="workStartDate") 
