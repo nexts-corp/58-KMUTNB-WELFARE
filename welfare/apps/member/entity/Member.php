@@ -35,9 +35,9 @@ class Member {
     public $dob;
 
     /**
-     * @Column(type="string", length=10, name="employeeId",nullable=true) 
+     * @Column(type="string", length=10, name="employeeTypeId",nullable=true) 
      */
-    public $employeeId;
+    public $employeeTypeId;
 
    /**
      * @Column(type="string", length=10, name="facultyId",nullable=true) 
