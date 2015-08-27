@@ -82,9 +82,9 @@ class Member {
     public $titleId;
 
     /**
-     * @Column(type="string", length=10, name="lineId",nullable=true) 
+     * @Column(type="string", length=10, name="matierId",nullable=true) 
      */
-    public $lineWorkId;
+    public $matierId;
 
     /**
      * @Column(type="date",  name="workStartDate") 
