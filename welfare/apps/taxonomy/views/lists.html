@@ -31,7 +31,7 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <div class="col-md-5">
+                        <div class="col-md-8">
                             <select id="selectParent" class="form-control">
                                 <option value="0">Chose Parent</option>
                                 {{#parent}}
@@ -39,7 +39,7 @@
                                 {{/parent}}
                             </select>
                         </div>
-                        <div class="pull-right">
+                        <div class="col-sm-2 pull-right">
                             <button class="btn btn-primary" 
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/taxonomy/view/add"
@@ -56,10 +56,10 @@
                                         <th class="center">{{#i18n}}parent{{/i18n}}</th>
                                         <th class="center">{{#i18n}}pCode{{/i18n}}</th>
                                         <th class="center">{{#i18n}}code{{/i18n}}</th>
-                                         <th class="center">{{#i18n}}value1{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}value1{{/i18n}}</th>
                                         <th class="center">{{#i18n}}value2{{/i18n}}</th>
-                                         <th class="center">{{#i18n}}optional{{/i18n}}</th>
-                                         
+                                        <th class="center">{{#i18n}}optional{{/i18n}}</th>
+
                                         <th class="center">{{#i18n}}edit{{/i18n}}</th>
                                         <th class="center">{{#i18n}}delete{{/i18n}}</th>
                                     </tr>
@@ -104,9 +104,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#selectParent").click(function(e){
-           var id = $(this).val();
-           getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', {parentId:id});
+        $("#selectParent").click(function (e) {
+            var id = $(this).val();
+            getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', {parentId: id});
         });
         $(".delete").click(function () {
             var data = {};
@@ -118,6 +118,8 @@
                 if (result.delete == true) {
                     alert("ลบเรียบร้อย");
                     getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
+                } else if (result.delete == "delChildBefore") {
+                    alert("กรุณาลบ Child ก่อนที่จะเปลี่ยนตัวเองจาก Parent เป็น Child");
                 } else {
                     alert("ลบไม่สำเร็จ");
                 }

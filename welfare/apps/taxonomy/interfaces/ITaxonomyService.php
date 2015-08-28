@@ -35,4 +35,12 @@ interface ITaxonomyService {
      * @description delete data to database
      */
     public function delete($taxonomy);
+    
+    /**
+     * @name getParent
+     * @uri /getParent
+     * @return string lists
+     * @description ลิสต์ข้อมูลพ่อ
+     */
+    public function getParent();
 }

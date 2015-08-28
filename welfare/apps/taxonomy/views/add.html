@@ -66,9 +66,17 @@
                                         <select id="parentId" name="parentId" class="form-control">
                                             <option value="0">Create New</option>
                                             {{#parent}}
-                                            <option value="{{id}}">[{{pCode}}] {{value1}} , {{value2}} [{{code}}]</option>
+                                            <option value="{{id}}">[{{pCode}}] {{value1}} , {{value2}} ({{code}})</option>
                                             {{/parent}}
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}taxonomy.pCode{{/i18n}}</label>
+                                <div class="col-lg-10">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" disabled id="pCode" name="pCode" value="{{pCode}}" />
                                     </div>
                                 </div>
                             </div>
@@ -83,14 +91,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}taxonomy.pCode{{/i18n}}</label>
-                                <div class="col-lg-10">
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="pCode" name="pCode" value="{{pCode}}" />
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{#i18n}}taxonomy.code{{/i18n}}</label>
                                 <div class="col-lg-10">
@@ -117,6 +118,18 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $("#parentId").click(function () {
+            var value = $(this).val();
+            var pCode = $("#parentId option[value='" + value + "']").text();
+            if (value != "0") {
+                pCode = pCode.substr(pCode.indexOf('('));
+                pCode = pCode.replace("(", "");
+                pCode = pCode.replace(")", "");
+                $("#pCode").val(pCode);
+            } else {
+                $("#pCode").val("");
+            }
+        });
         $("#btn_submit").click(function () {
             var data = {};
             data['id'] = $("#id").val();
@@ -127,22 +140,29 @@
             data['value1'] = $('#value1').val();
             data['value2'] = $('#value2').val();
             data['optional'] = $('#optional').val();
-            var jdata = {};
-            jdata['taxonomy'] = data;
-            if (data['value1'] != "") {
-                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/save', jsonEncode(jdata));
-                if (result.save == true) {
-                    alert("บันทึกเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
-                } else {
-                    alert("บันทึกไม่สำเร็จ");
-                }
+            if (data['parent'] == 'Y' && data['code'] == '') {
+                alert("กรุณาใส่ Code");
+                $("#code").focus();
+            } else if (data['parentId'] == '0' && data['parent'] == 'N') {
+                alert("Error! ไม่สามารถเป็น Child ได้");
             } else {
-                alert("กรุณาใส่ Value1");
-                $("#value1").focus();
+                var jdata = {};
+                jdata['taxonomy'] = data;
+                if (data['value1'] != "") {
+                    var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/save', jsonEncode(jdata));
+                    if (result.save == true) {
+                        alert("บันทึกเรียบร้อย");
+                        getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
+                    } else {
+                        alert("บันทึกไม่สำเร็จ");
+                    }
+                } else {
+                    alert("กรุณาใส่ Value1");
+                    $("#value1").focus();
+                }
             }
+
             return false;
         });
-
     });
 </script>
