@@ -62,7 +62,8 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
-
+        $data->dob = new \DateTime($data->dob);
+        $data->workStartDate = new \DateTime($data->workStartDate);
         if ($this->datacontext->updateObject($data)) {
             return true;
         } else {

@@ -55,12 +55,22 @@ class ViewService extends CServiceBase implements IViewService {
     public function memberEdit($id) {
         $view = new CJView("member/edit", CJViewType::HTML_VIEW_ENGINE);
         $filter = new \apps\member\entity\Member();
+        
+//        $path = '\\apps\\common\\entity\\';
+//        
+//        $sql = "SELECT "
+//                ."FROM \apps\member\entity\Member mem"
+//                . "INNER JOIN \apps\taxonomy\entity\Taxonomy tax"
+//                . "with tax.id";
+        
         $filter->setMemberId($id);
         $dao_register = $this->datacontext->getObject($filter);
 //        print_r($dao_register[0]->dob);
         $datebrith = $dao_register[0]->dob->format('d-m-Y');
+        $datestart = $dao_register[0]->workStartDate->format('d-m-Y');
         //print_r($datebrith);
         $view->dobs = $datebrith;
+        $view->workstart = $datestart;
         $view->datas = $dao_register;
 //        print_r($view);
         return $view;
