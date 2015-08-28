@@ -9,9 +9,6 @@ use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IWelfareService;
 
 use apps\common\entity\Welfare;
-use apps\common\entity\WelfareSub;
-use apps\common\entity\WelfareConditions;
-use apps\common\entity\PositionsType;
 
 class WelfareService extends CServiceBase implements IWelfareService {
 

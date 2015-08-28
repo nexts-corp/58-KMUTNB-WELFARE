@@ -1,5 +1,5 @@
 <?php
-namespace apps\common\entity;
+namespace apps\welfare\entity;
 /**
      * @Entity
      * @Table(name="Welfare")

@@ -1,15 +1,3 @@
-<script>
-    $(function() {
-    var availableTags = [
-    {{#welfare}}
-        "{{welfareSubName}}",
-    {{/welfare}}
-    ];
-            $("#SearchName").autocomplete({
-    source: availableTags
-    });
-    });
-</script>
 <!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
@@ -65,7 +53,7 @@
                         <div class="pull-right">
                             <button class="btn btn-primary"
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/welfare/view/welfare/add/sub/{{welfareId}}"
+                                    data-api="{{_context_path}}/api/welfare/view/condition/add/{{welfareId}}"
                                     data-param="null"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
@@ -81,7 +69,6 @@
                                         <th>&nbsp;{{#i18n}}welfarename{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}amountmoney{{/i18n}}</th>
 
-                                        <th>&nbsp;สถานะ</th>
                                         <th class="center">จัดการ</th>
                                     </tr>
                                 </thead>
@@ -92,15 +79,12 @@
                                         <td>&nbsp;{{welfareSubId}}</td>
                                         <td>&nbsp;{{welfareSubName}}</td>
                                         <td>&nbsp;{{amount}}</td>
-                                        <td>&nbsp;
-                                            <a href="#" id="status[0]" name="status[0]"><span class="label label-success">เปิดการใช้งาน</span></a>
-
-                                        </td>
+                                        
                                         <td class="center">
                                             
                                             <button class="btn btn-maroon btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/welfare/conditions/{{welfareSubId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/condition/add/{{welfareSubId}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}welcodion{{/i18n}} 
@@ -109,7 +93,7 @@
                                             
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/welfare/editsub/{{welfareSubId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/condition/edit/{{welfareSubId}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
@@ -132,6 +116,20 @@
 
     <!-- /Page Body -->
 </div>
+
+<script>
+    $(function() {
+    var availableTags = [
+    {{#welfare}}
+        "{{welfareSubName}}",
+    {{/welfare}}
+    ];
+            $("#SearchName").autocomplete({
+    source: availableTags
+    });
+    });
+</script>
+
 <script>
             $('.btn-del').click(function(){
     var id = $(this).attr('row-index');

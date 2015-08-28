@@ -39,7 +39,7 @@
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}welfarename{{/i18n}}</label>
-                                <div class="col-lg-9">
+                                <div class="col-lg-5">
                                     <input type="text" class="form-control" name="firstName" placeholder="ชื่อสวัสดิการ"
                                            data-bv-notempty="true" id="name"
                                            data-bv-notempty-message="ชื่อสวัสดิการ" />
@@ -49,15 +49,16 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}welfaredescription{{/i18n}}</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}welfaredescription{{/i18n}}"
-                                           data-bv-notempty="true" id="description"
-                                           data-bv-notempty-message="{{#i18n}}welfaredescription{{/i18n}}" />
+                                    
+                                    <textarea rows="4" id="description" cols="70"></textarea>
+                                    
+                                    
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredatestart{{/i18n}}</label>
-                                <div class="controls col-lg-9">
+                                <div class="controls col-lg-5">
                                    <div class="input-group">
                                         <input class="form-control date-picker" id="dateStart" type="text" data-date-format="dd-mm-yyyy">
                                         <span class="input-group-addon">
@@ -69,9 +70,9 @@
 
                             <div class="form-group">
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredateend{{/i18n}}</label>
-                                <div class="controls col-lg-9">
+                                <div class="controls col-lg-5">
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="dateEnd" type="text" data-date-format="dd-mm-yyyy">
+                                        <input class="form-control date-picker" id="datepicker-th" type="text" data-date-format="dd-mm-yyyy">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -87,7 +88,7 @@
                                             <div class="checkbox">
                                                 <label>
 
-                                                    <input type="checkbox" {{isStatusVoluntary}} id="StatusVoluntary" value="true">
+                                                    <input type="checkbox" {{isStatusVoluntary}} id="StatusVoluntary">
 
                                                     <span class="text">{{#i18n}}conditionconditionstatusvoluntary{{/i18n}}</span>
                                                 </label>
@@ -157,7 +158,6 @@
 
 
 <!--Bootstrap Date Picker-->
-    <script src="assets/js/datetime/bootstrap-datepicker.js"></script>
 
     <!--Bootstrap Time Picker-->
 <!--    <script src="assets/js/datetime/bootstrap-timepicker.js"></script>-->

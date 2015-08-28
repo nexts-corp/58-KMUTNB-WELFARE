@@ -1,14 +1,4 @@
-<script>
-    $(function() {
-    var availableTags = [
-    {{#welfare}}"{{welfareName}}",
-    {{/welfare}}
-    ];
-            $("#SearchName").autocomplete({
-    source: availableTags
-    });
-    });
-</script>
+
 <!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
@@ -52,17 +42,17 @@
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
                         <div class="pull-right">
-                            <button class="btn btn-primary"
+<!--                            <button class="btn btn-primary"
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/insurance/view/insurance/add"
                                     data-param="null"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}print{{/i18n}} 
-                            </button>
+                            </button>-->
                         </div>
 
                         <div class="pull-right">
-                            
+
                             <button class="btn btn-primary"
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/welfare/view/welfare/add"
@@ -79,37 +69,29 @@
                                     <tr>
                                         <th>&nbsp;{{#i18n}}welfarecode{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}welfarename{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfaredescription{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}welfaredatestart{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}welfaredateend{{/i18n}}</th>
-                                        <th>&nbsp;สถานะ</th>
                                         <th class="center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#welfare}}
+                                    {{#datas}}
                                     <tr class="selectable">
 
                                         <td>{{welfareId}}</td>
                                         <td>{{name}}</td>
-                                        <td>{{description}}</td>
                                         <td>{{dateStart}}</td>
                                         <td>{{dateEnd}}</td>
-                                        <td>
-                                            
-                                            
-                                            <a href="#" id="status[0]" name="status[0]"><span class="label label-success">เปิดการใช้งาน</span></a>
-
-                                        </td>
+                                   
                                         <td class="center">
                                             <button class="btn btn-maroon btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/welfare/list/sub/{{welfareId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/condition/lists/{{welfareId}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}managementWelfare{{/i18n}} 
                                             </button>
-                                            
+
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/welfare/view/welfare/edit/{{welfareId}}"
@@ -117,12 +99,10 @@
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
-                                           
-                                             
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareId}}" >{{#i18n}}deletes{{/i18n}}</button>
                                         </td>
                                     </tr>
-                                    {{/welfare}}
+                                    {{/datas}}
                                 </tbody>
 
                             </table>
@@ -136,27 +116,38 @@
     <!-- /Page Body -->
 </div>
 <script>
-            $('.btn-del').click(function(){
-    var id = $(this).attr('row-index');
-            var data = {"welfareId":id};
-            var msg = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
-            if (msg.deletewelfare == true){
-    getHTML('content-body','{{_context_path}}/api/welfare/view/welfare/list',null);
-    }
-    });</script> 
+            $(function() {
+            var availableTags = [
+            {{#welfare}}"{{welfareName}}",
+            {{/welfare}}
+            ];
+                    $("#SearchName").autocomplete({
+            source: availableTags
+            });
+            });
+</script>
 
 <script>
-            $("#btnsearch").click(function () {
-    var SearchName = $("#SearchName").val();
-            if (SearchName == ""){
-    document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-    } else{
+                    $('.btn-del').click(function(){
+                    var id = $(this).attr('row-index');
+                    var data = {"welfareId":id};
+                    var msg = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
+                    if (msg.deletewelfare == true){
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/list', null);
+            }
+            });
+</script> 
 
-    var data = {"SearchName":SearchName};
-//       
+<script>
+                    $("#btnsearch").click(function () {
+            var SearchName = $("#SearchName").val();
+                    if (SearchName == ""){
+            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+            } else{
 
-            getHTML('content-body','{{_context_path}}/api/welfare/welfare/view/search', data);
-    }
-    });
+            var data = {"SearchName":SearchName};
+                    getHTML('content-body', '{{_context_path}}/api/welfare/welfare/view/search', data);
+            }
+            });
 
 </script>

@@ -11,137 +11,53 @@ interface IViewService {
      * @name viewList
      * @uri /welfare/list
      * @return html viewList xxx
-     * @description หน้าแสดงรายการจัดการสมาชิก
+     * @description จัดการรายการสวัสดิการ
      */
     public function welfareList();
     
     /**
-     * @name viewWelfareSubList
-     * @uri /welfare/list/sub
-     * @param String welfareId Description
-     * @return html viewList xxx
-     * @description หน้าแสดงรายการจัดการสมาชิก
-     */
-    public function viewWelfareSubList($welfareId);
-    
-    /**
-     * @name viewAddwelfare
+     * @name welfareAdd
      * @uri /welfare/add
-     * @return html viewAddwelfare Description
-     * @description view Add welfare 
+     * @return html welfareAdd Description
+     * @description view เพิ่มข้อมูลสวัสดิการ
      */
     public function welfareAdd();
     
     /**
-     * @name viewAddSubwelfare
-     * @uri /welfare/add/sub
-     * @param String welfareId Description
-     * @return html viewAddSubwelfare Description
-     * @description view Add sub welfare 
-     */
-    public function viewAddSubwelfare($welfareId);
-    
-    /**
-     * @name viewconditions
-     * @uri /welfare/conditions
-     * @param String welfareSubId Description
-     * @return html viewconditions Description
-     * @description view conditions 
-     */
-    public function viewconditions($welfareSubId);
-    
-    
-    /**
      * @name viewedit
      * @uri /welfare/edit
-     * @param String welfareId Description
-     * @return html viewedit Description
-     * @description view list new
+     * @param integer id Description
+     * @return html welfareEdit Description
+     * @description view แก้ไขข้อมูลสวัสดิการ
      */
-    public function welfareedit($welfareId);
+    public function welfareEdit($id);
     
     /**
-     * @name vieweditsub
-     * @uri /welfare/editsub
-     * @param String welfareSubId Description
-     * @return html vieweditsub Description
-     * @description view list new
+     * @name conditionList
+     * @uri /condition/lists
+     * @param integer id Description
+     * @return html viewList 
+     * @description จัดการเงื่อนไขสวัสดิการ
      */
-    public function welfareeditsub($welfareSubId);
+    public function conditionLists($id);
     
     /**
-     * @name viewList
-     * @uri /welfareCut/list
-     * @return html viewList xxx
-     * @description หน้าแสดงรายการจัดการสมาชิก
+     * @name conditionAdd
+     * @uri /condition/add
+     * @param integer id Description
+     * @return html viewAddSubwelfare Description
+     * @description view เพิ่มเงื่อนไขสวัสดิการ
      */
-    public function welfareCutList();
+    public function conditionAdd($id);
+    
+    /**
+     * @name conditionEdit
+     * @uri /condition/edit
+     * @param integer id Description
+     * @return html viewconditions Description
+     * @description view แก้ไขเงื่อนไขสวัสดิการ 
+     */
+    public function conditionEdit($id);
 
-    /**
-     * @name viewList
-     * @uri /welfareclaims/list
-     * @return html viewList xxx
-     * @description หน้าแสดงรายการจัดการสมาชิก
-     */
-    public function welfareclaimslist();
     
-    /**
-     * @name welfareclaimsAdd
-     * @uri /welfareclaims/add
-     * @return html viewAddclaims Description
-     * @description view Add claims
-     */
-    public function welfareclaimsAdd();
-    
-    /**
-     * @name sendList
-     * @uri /welfareclaims/send
-     * @return html send xxx
-     * @description หน้าแสดงรายการจัดการสมาชิก
-     */
-    public function welfareclaimssendList();
-
-    /**
-     * @name waitList
-     * @uri /welfareclaims/wait
-     * @return html wait xxx
-     * @description หน้าแสดงรายการจัดการสมาชิก
-     */
-    public function welfareclaimswaitList();
-    
-    /**
-     * @name show
-     * @uri /welfareclaims/show
-     * @return html show Description
-     * @description view show claims
-     */
-    public function welfareclaimsshow();
-    
-    
-    /**
-     * @name listWelfare
-     * @uri /welfareclaims/list/welfare
-     * @param Int registerId Description
-     * @return html listWelfare Description
-     * @description แสดงสวัสดิการแต่ละบุคคล
-     */
-    public function welfareclaimslistWelfare($registerId);
-    
-    /**
-     * @name showAdd
-     * @uri /welfareclaims/list/add
-     * @param Int registerId Description
-     * @return html listWelfare Description
-     * @description แสดงสวัสดิการแต่ละบุคคล
-     */
-    public function welfareclaimsshowAdd($registerId);
-    
-    /**
-     * @name welfareclaimsshowApprove
-     * @uri /welfareclaims/show/approve
-     * @param Int registerId Description
-     * @return html showApprove Description
-     * @description แสดงสวัสดิการแต่ละบุคคล
-     */
-    public function welfareclaimsshowApprove($registerId);
 }
