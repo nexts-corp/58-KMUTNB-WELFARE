@@ -45,20 +45,20 @@ interface ITaxonomyService {
     public function getParent();
     
     /**
-     * @name getChild
-     * @uri /getChild
+     * @name getPCode
+     * @uri /getPCode
      * @param string pCode
      * @return string lists
-     * @description ลิสต์ข้อมูลลูก
+     * @description ลิสต์ข้อมูลลูก pCode
      */
-    public function getChild($pCode);
+    public function getPCode($pCode);
     
     /**
      * @name getParentId
      * @uri /getParentId
      * @param string parentId
      * @return string lists
-     * @description ลิสต์ข้อมูลลูก
+     * @description ลิสต์ข้อมูลลูก parentId
      */
     public function getParentId($parentId);
 }
