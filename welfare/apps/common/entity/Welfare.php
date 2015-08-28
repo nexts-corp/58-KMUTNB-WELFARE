@@ -22,7 +22,7 @@ class Welfare {
        public $description;
        
        /**
-        *@Column(type="date", name="dateCreate",nullable=true) 
+        *@Column(type="datetime", name="dateCreate",length=14,nullable=true) 
         */
        public $dateCreate;
        

@@ -121,14 +121,19 @@ class ViewService extends CServiceBase implements IViewService{
         $listWelfare = new Welfare();
         
         $listWel = $this->datacontext->getObject($listWelfare);
-        print_r($listWel);
-        if ($listWel!=null){
-        $datestart = $listWel[0]->dateStart->format('d-m-Y');
-        $dateEnd = $listWel[0]->dateEnd->format('d-m-Y');
-        
-        $view->wdateStart =  $datestart;
-        $view->wdateEnd = $dateEnd;
+       
+        if (count($listWel)>0){
+            foreach($listWel as $key => $value){
+                $listWel[$key]->dateStart = $value->dateStart->format('d-m-Y');
+                $listWel[$key]->dateEnd = $value->dateEnd->format('d-m-Y');
+            }
+//        $datestart = $listWel[]->dateStart->format('d-m-Y');
+//        $dateEnd = $listWel[0]->dateEnd->format('d-m-Y');
+//        
+//        $view->wdateStart =  $datestart;
+//        $view->wdateEnd = $dateEnd;
         $view->welfare = $listWel;
+         //print_r($datestart);
         return $view;
         }else{
             $view->welfare = $listWel;
