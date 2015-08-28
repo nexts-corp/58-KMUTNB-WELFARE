@@ -1,5 +1,42 @@
 //test confict file by somchit
 //somchit
+function getPCode(pCode) {
+    var data;
+    $.ajax({
+        url: '{{_context_path_}}/api/taxonomy/taxonomy/getPCode',
+        type: 'post',
+        data: {pCode: pCode},
+        async: false,
+        error: function (xhr) {
+            if (xhr.status == 401) {
+                window.location.href = xhr.getResponseHeader('Location');
+            }
+        },
+        success: function (result) {
+            data = result;
+        }
+    });
+    return data;
+}
+function getParentId(parentId) {
+    var data;
+    $.ajax({
+        url: '{{_context_path_}}/api/taxonomy/taxonomy/getParentId',
+        type: 'post',
+        data: {parentId: parentId},
+        async: false,
+        error: function (xhr) {
+            if (xhr.status == 401) {
+                window.location.href = xhr.getResponseHeader('Location');
+            }
+        },
+        success: function (result) {
+            data = result;
+        }
+    });
+    return data;
+}
+
 
 function getHTML(id, link, data) {
     //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
