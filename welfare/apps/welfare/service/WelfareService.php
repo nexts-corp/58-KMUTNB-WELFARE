@@ -22,6 +22,8 @@ class WelfareService extends CServiceBase implements IWelfareService {
     }
 
     public function save($data) {
+        $data->dateStart = new \DateTime($data->dateStart);
+        $data->dateEnd = new \DateTime($data->dateEnd);
         if ($this->datacontext->saveObject($data)) {
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;

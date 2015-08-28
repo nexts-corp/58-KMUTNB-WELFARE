@@ -119,9 +119,23 @@ class ViewService extends CServiceBase implements IViewService{
     public function welfareList() {
         $view = new CJView("welfare/lists", CJViewType::HTML_VIEW_ENGINE);
         $listWelfare = new Welfare();
+        
         $listWel = $this->datacontext->getObject($listWelfare);
+        print_r($listWel);
+        if ($listWel!=null){
+        $datestart = $listWel[0]->dateStart->format('d-m-Y');
+        $dateEnd = $listWel[0]->dateEnd->format('d-m-Y');
+        
+        $view->wdateStart =  $datestart;
+        $view->wdateEnd = $dateEnd;
         $view->welfare = $listWel;
         return $view;
+        }else{
+            $view->welfare = $listWel;
+            return $view;
+        }
+        
+        
     }
 
     public function welfareedit($welfareId) {

@@ -79,7 +79,7 @@
                                     <tr>
                                         <th>&nbsp;{{#i18n}}welfarecode{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}welfarename{{/i18n}}</th>
-
+                                        <th>&nbsp;{{#i18n}}welfaredescription{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}welfaredatestart{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}welfaredateend{{/i18n}}</th>
                                         <th>&nbsp;สถานะ</th>
@@ -90,11 +90,11 @@
                                     {{#welfare}}
                                     <tr class="selectable">
 
-                                        <td>&nbsp;{{welfareId}}</td>
-                                        <td>&nbsp;{{welfareName}}</td>
-
-                                        <td>&nbsp;{{welfareStart}}</td>
-                                        <td>&nbsp;{{welfareEnd}}</td>
+                                        <td>{{welfareId}}</td>
+                                        <td>{{name}}</td>
+                                        <td>{{description}}</td>
+                                        <td>{{wdateStart}}</td>
+                                        <td>{{wdateEnd}}</td>
                                         <td>&nbsp;
                                             <a href="#" id="status[0]" name="status[0]"><span class="label label-success">เปิดการใช้งาน</span></a>
 

@@ -17,46 +17,46 @@ class Welfare {
        public $name;
        
        /**
-        *@Column(type="string", name="description") 
+        *@Column(type="string", name="description",nullable=true) 
         */
        public $description;
        
        /**
-        *@Column(type="date", name="dateCreate") 
+        *@Column(type="date", name="dateCreate",nullable=true) 
         */
        public $dateCreate;
        
        /**
-        *@Column(type="date", name="dateUpdate") 
+        *@Column(type="date", name="dateUpdate",nullable=true) 
         */
        public $dateUpdate;
        
        /**
-        *@Column(type="date", name="dateCande") 
+        *@Column(type="date", name="dateCande",nullable=true) 
         */
        public $dateCande;
        
         /**
-        *@Column(type="date", name="dateStart") 
+        *@Column(type="date", name="dateStart",nullable=true) 
         */
        public $dateStart;
        
        /**
-        *@Column(type="date", name="dateEnd") 
+        *@Column(type="date", name="dateEnd",nullable=true) 
         */
        public $dateEnd;
        
        /**
-        *@Column(type="string", name="free") 
+        *@Column(type="string", name="free",nullable=true) 
         */
        public $free;
        
        /**
-        *@Column(type="string", name="willing") 
+        *@Column(type="string", name="willing",nullable=true) 
         */
        public $willing;
        /**
-        *@Column(type="string", name="retire") 
+        *@Column(type="string", name="retire",nullable=true) 
         */
        public $retire;
        
