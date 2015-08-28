@@ -7,12 +7,8 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IViewService;
 
-use apps\common\entity\Welfare;
-use apps\common\entity\Register;
-use apps\common\entity\WelfareRights;
-use apps\common\entity\WelfareSub;
-use apps\common\entity\WelfareConditions;
-use apps\common\entity\PositionsType;
+use apps\welfare\entity\Welfare;
+
 
 class ViewService extends CServiceBase implements IViewService{
     
