@@ -43,4 +43,13 @@ interface ITaxonomyService {
      * @description ลิสต์ข้อมูลพ่อ
      */
     public function getParent();
+    
+    /**
+     * @name getChild
+     * @uri /getChild
+     * @param string pCode
+     * @return string lists
+     * @description ลิสต์ข้อมูลลูก
+     */
+    public function getChild($pCode);
 }
