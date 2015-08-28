@@ -47,7 +47,13 @@ class ViewService extends CServiceBase implements IViewService {
         $faculty->pCode = "faculty";
         $view->faculty = $this->datacontext->getObject($faculty);
         
+        $userType = new Taxonomy();
+        $userType->pCode = "userType";
+        $view->userType = $this->datacontext->getObject($userType);
         
+        $matier = new Taxonomy();
+        $matier->pCode = "matier";
+        $view->matier = $this->datacontext->getObject($matier);
         
         return $view;
     }

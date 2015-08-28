@@ -44,7 +44,7 @@
                                     <div class="controls col-lg-12">
                                         <div class="input-group">
                                             <input class="form-control date-picker" id="dob" value= "{{dobs}}" type="text" data-date-format="dd-mm-yyyy">
-                                            
+
                                             <span class="input-group-addon"> 
                                                 <i class="fa fa-calendar"></i>
                                             </span>
@@ -60,10 +60,7 @@
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
                                         <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
-                                            <option value="">{{#i18n}}academicPositionsId{{/i18n}}</option>
-                                            {{#academic}}
-                                            <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                            {{/academic}}
+
                                         </select>
                                     </div>
                                 </div>
@@ -318,6 +315,9 @@
 
 $(document).ready(function () {
 
+    listsAcademic();
+
+
     $("#btn_submit").click(function () {
 //alert(555555555555);
         var data = {};
@@ -364,6 +364,25 @@ $(document).ready(function () {
             }
         });
     });
+    $('.date-picker').datepicker();
+    function listsAcademic() {
+        var academicId = '{{#datas}}{{academicId}}{{/datas}}';
+        var academic = getPCode("academic");
+        var html = "";
+        if (academic != "") {
+            $.each(academic, function (key, value) {
+                if (value.id == academicId) {
+                    html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                } else {
+                    html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                }
+            });
+        } else {
+            html = "<option value=''>ตำแหน่งทางวิชาการ</option>";
+        }
+        $("#academicId").html(html);
+    }
 });
-$('.date-picker').datepicker();
+
+
     </script>

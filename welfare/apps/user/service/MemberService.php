@@ -23,7 +23,7 @@ class MemberService extends CServiceBase implements IMemberService {
 
         $data->dob = new \DateTime($data->dob);
         $data->workStartDate = new \DateTime($data->workStartDate);
-
+//        return $data;
         if ($this->datacontext->saveObject($data)) {
 
             $user = new User();
@@ -35,7 +35,7 @@ class MemberService extends CServiceBase implements IMemberService {
             
             $user->setMemberId($data->memberId);
             $user->setUsername($data->idCard);
-            //$user->setUserTypeId($data->userTypeId);
+            $user->setUserTypeId($data->userTypeId);
             $aa = $data->dob->format('d-m-Y');
             $user->setPassword(md5($aa));
 

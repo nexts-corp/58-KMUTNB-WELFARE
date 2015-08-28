@@ -52,7 +52,7 @@
 
 
                             </div>
-                    
+
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
                                 <div class="col-lg-4">
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{#i18n}}registerName{{/i18n}}</label>
                                 <div class="col-lg-4">
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">{{#i18n}}gender{{/i18n}}</label>
                                 <div class="col-lg-4 control-group ">
@@ -106,7 +106,7 @@
                                             <input name="genderId" id="genderId" value="{{id}}" type="radio"  checked="checked">
                                             <span class="text">{{value1}} </span> </label>
                                     </div>
-                                    
+
                                     {{/gender}}
                                 </div>
                             </div>
@@ -157,8 +157,8 @@
                                         <div class="col-lg-9">
                                             <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country">
                                                 <option value="">เลือกภาควิชา</option>
-                                               {{#faculty}}
-                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{#faculty}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                 {{/faculty}}
                                             </select>
                                             <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
@@ -169,25 +169,23 @@
                                             <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
                                                 <option value="">สังกัด</option>
                                                 {{#department}}
-                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                 {{/department}}
                                             </select>
                                             <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
+                                        
                                         <div class="col-lg-9 control-group ">
+                                        {{#matier}}  
                                             <div class="radio col-lg-6">
                                                 <label>
-                                                    <input name="form-field-radio" id="lineId" type="radio"  checked="checked">
-                                                    <span class="text">{{#i18n}}academicSupport{{/i18n}} </span> </label>
+                                                    <input name="form-field-radio" value="{{id}}" id="matierId" type="radio"  checked="checked">
+                                                    <span class="text">{{value1}}</span> </label>
                                             </div>
-                                            <div class="radio col-lg-6">
-                                                <label>
-                                                    <input name="form-field-radio" id="matierId" type="radio" class="inverted">
-                                                    <span class="text">{{#i18n}}academics{{/i18n}}</span> </label>
-                                            </div>
+                                        {{/matier}}    
                                         </div>
                                     </div>
 
@@ -225,54 +223,11 @@
                                         <div class="col-lg-9">
                                             <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
                                                 {{#userType}}
-                                                <option value="{{userTypeId}}">{{userTypeName}}</option>
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                 {{/userType}}
                                             </select>
                                             <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
                                     </div>
-
-                                    <div class="form-group radio_dep">
-                                        <label class="col-lg-3 control-label"></label>
-                                        <div class="col-lg-9">
-                                            <div class="radio">
-                                                <label>
-
-                                                    <input name="radio_dep" value="1" type="radio" id="checkUser" >
-
-                                                    <span class="text">{{#i18n}}selectSuperAdmin{{/i18n}}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group radio_dep">
-                                        <label class="col-lg-3 control-label"></label>
-                                        <div class="col-lg-9">
-                                            <div class="radio">
-                                                <label>
-
-                                                    <input name="radio_dep" value="1" type="radio" id="checkUser" >
-
-                                                    <span class="text">{{#i18n}}selectadminfac{{/i18n}}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p id="xxx"></p>
-                                    <div class="form-group radio_dep">
-                                        <label class="col-lg-3 control-label"></label>
-                                        <div class="col-lg-9">
-                                            <div class="radio">
-                                                <label>
-
-                                                    <input name="radio_dep" value="2" type="radio"  id="checkUser">
-
-                                                    <span class="text">{{#i18n}}selectadmindepart{{/i18n}}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
 
                                     <div class="form-group">
                                         <div class="col-lg-offset-6 col-lg-8">
@@ -289,61 +244,67 @@
             </div>
         </div>
     </div>
-
-
-                    <script type="text/javascript">
-
-                        $(document).ready(function () {
-
-                            //$("[name=radio_dep]:checked").val();
-
-                            $("#facultyId").change(function () {
-                                $("#departmentId").empty();
-                                var id = $("#facultyId").val();
-                                var data = {"facultyId": id};
-                                getHTML('departmentId', '{{_context_path}}/api/user/member/get/datas/department', data);
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#facultyId").change(function () {
+                var id = $("#facultyId").val();
+                $.ajax({
+                    url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
+                    data: {parentId: id},
+                    success: function (result) {
+                        var data = result["lists"];
+                        var html;
+                        if (data == "") {
+                            html = '<option value="">สังกัด</option>';
+                        } else {
+                            $.each(data, function (key, value) {
+                                html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
                             });
+                        }
+                        $("#departmentId").html(html);
+                    }
+                });
+            });
+            $("#userTypeId").change(function () {
+                var userTypeId = $("#userTypeId").val();
+                if (userTypeId != 1) {
+                    $(".radio_dep").hide();
+                    $("#checkUser").empty();
+                } else {
+                    $(".radio_dep").show();
+                }
+            });
+            $("#btn_submit").click(function () {
+                var data = {};
+                data['fname'] = $("#fname").val();
+                data['lname'] = $("#lname").val();
+                data['genderId'] = $("#genderId").val();
+                data['idCard'] = $("#idCard").val();
+                data['dob'] = $("#dob").val();
+                data['employeeCode'] = $("#employeeCode").val();
+                data['employeeTypeId'] = $("#employeeTypeId").val();
+                data['academicId'] = $("#academicId").val();
+                data['departmentId'] = $("#departmentId").val();
+                data['facultyId'] = $("#facultyId").val();
+                data['workStartDate'] = $("#workStartDate").val();
+                data['matierId'] = $("#matierId").val();
+                data['positionId'] = $("#positionId").val();
+                data['userTypeId'] = $("#userTypeId").val();
+                var jdata = {};
+                jdata['data'] = data;
+                $.ajax({
+                    url: '{{_context_path}}/api/user/member/save',
+                    data: jsonEncode(jdata),
+                    type: 'post',
+                    success: function (result) {
 
-                            $("#userTypeId").change(function () {
-                                var userTypeId = $("#userTypeId").val();
-                                if (userTypeId != 1) {
-                                    $(".radio_dep").hide();
-                                    $("#checkUser").empty();
-                                } else {
-                                    $(".radio_dep").show();
-                                }
+                        getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
+                    }
+                });
+            });
+            $('.date-picker').datepicker();
+        });
 
-                            });
+    </script>
+</div>
 
-                            $("#btn_submit").click(function () {
-                                var data = {};
-                                data['fname'] = $("#fname").val();
-                                data['lname'] = $("#lname").val();
-                                data['genderId'] = $("#genderId").val();
-                                data['idCard'] = $("#idCard").val();
-                                data['dob'] = $("#dob").val();
-                                data['employeeCode'] = $("#employeeCode").val();
-                                data['employeeTypeId'] = $("#employeeTypeId").val();
-                                data['departmentId'] = $("#departmentId").val();
-                                data['facultyId'] = $("#facultyId").val();
-                                data['workStartDate'] = $("#workStartDate").val();
-                                data['matierId'] = $("#matierId").val();
-                                data['positionId'] = $("#positionId").val();
-                                data['userTypeId'] = $("#userTypeId").val();
-                                //data['SuperAdminId'] = "1";
-
-                                var jdata = {};
-                                jdata['data'] = data;
-                                $.ajax({
-                                    url: '{{_context_path}}/api/user/member/save',
-                                    data: jsonEncode(jdata),
-                                    type: 'post',
-                                    success: function (result) {
-
-                                        getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
-                                    }
-                                });
-                            });
-                        });
-                        $('.date-picker').datepicker();
-                    </script>

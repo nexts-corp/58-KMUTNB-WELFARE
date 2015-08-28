@@ -98,8 +98,18 @@ class Member {
      * @Column(type="date",  name="workStartDate") 
      */
     public $workStartDate;
+    public $userTypeId;
 
-    function getMemberId() {
+    
+    function getUserTypeId() {
+        return $this->userTypeId;
+    }
+
+    function setUserTypeId($userTypeId) {
+        $this->userTypeId = $userTypeId;
+    }
+
+        function getMemberId() {
         return $this->memberId;
     }
 

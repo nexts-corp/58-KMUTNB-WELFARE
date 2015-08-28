@@ -3,7 +3,7 @@
 function getPCode(pCode) {
     var data;
     $.ajax({
-        url: '{{_context_path_}}/api/taxonomy/taxonomy/getPCode',
+        url: '/welfare/api/taxonomy/taxonomy/getPCode',
         type: 'post',
         data: {pCode: pCode},
         async: false,
@@ -13,7 +13,7 @@ function getPCode(pCode) {
             }
         },
         success: function (result) {
-            data = result;
+            data = result["lists"];
         }
     });
     return data;
@@ -21,7 +21,7 @@ function getPCode(pCode) {
 function getParentId(parentId) {
     var data;
     $.ajax({
-        url: '{{_context_path_}}/api/taxonomy/taxonomy/getParentId',
+        url: '/welfare/api/taxonomy/taxonomy/getParentId',
         type: 'post',
         data: {parentId: parentId},
         async: false,
@@ -31,7 +31,7 @@ function getParentId(parentId) {
             }
         },
         success: function (result) {
-            data = result;
+            data = result["lists"];
         }
     });
     return data;
