@@ -21,7 +21,7 @@ interface IWelfareService {
     /**
      * @name Addwelfare
      * @uri /save
-     * @param apps\common\entity\Welfare data []
+     * @param apps\welfare\entity\Welfare data []
      * @return boolean save [return ture or false if don't ]
      * @description save data to database
      */
