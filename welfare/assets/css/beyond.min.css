@@ -3090,7 +3090,7 @@ font-family:'Open Sans', 'Segoe UI'
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	margin: 0 0 30px 0
+	margin: 0 0 10px 0
 }
 .widget.collapsed .widget-body {
 	display: none
