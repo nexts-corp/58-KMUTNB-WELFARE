@@ -15,7 +15,7 @@
     <div class="page-header position-relative">
         <div class="header-title">
             <h1>
-                
+
             </h1>
         </div>
         <!--Header Buttons-->
@@ -34,17 +34,17 @@
                     <div class="widget-body">
                         <form  class="form-horizontal">
                             <div class="form-title">
-                                {{#i18n}}pleaseinput{{/i18n}}
                             </div>
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}subwelfarename{{/i18n}}</label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
-                                           data-bv-notempty="true" id="welfareSubName"
+                                    <input type="text" class="form-control" name="conditionName" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
+                                           data-bv-notempty="true" id="conditionName"
                                            data-bv-notempty-message="{{#i18n}}subwelfarename{{/i18n}}" />
                                 </div>
                             </div>
+
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}amountwelfare{{/i18n}}</label>
@@ -55,59 +55,247 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredatestart{{/i18n}}</label>
-                                <div class="controls col-lg-6">
-                                   <div class="input-group">
-                                        <input class="form-control date-picker" id="welfareStart" type="text" data-date-format="dd-mm-yyyy">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredateend{{/i18n}}</label>
-                                <div class="controls col-lg-6">
-                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="welfareEnd" type="text" data-date-format="dd-mm-yyyy">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-
-<!--                            <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
-                                <div class="col-lg-9">
-
-                                    <select class="form-control" name="country" data-bv-field="country">
-                                        <option value="">{{#i18n}}pleaseinputwelfare{{/i18n}}</option>
-                                        <option value="1">สวัสดิการให้กู้</option>
-                                        <option value="2">สวัสดิการให้เปล่า</option>
-
-
-                                    </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
-
-                                </div>
-                            </div>-->
-
-
-                            <div class="form-group">
-                                
-                                    <div class="col-lg-offset-6 col-lg-6">
-                                        <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
-                                        <input class="btn btn-default" type="submit" value="{{#i18n}}button.cancel{{/i18n}}" />
-                                    </div>
-                               
-                            </div>
-
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget radius-bordered">
+            <div class="widget-header">
+                <span class="widget-caption">กำหนดประเภทบุคลากรผู้ได้รับสวัสดิการ</span>
+            </div>
+            <div class="widget-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="reservation" class="col-lg-3 control-label"></label>
+                        <div class="controls col-lg-12">
+                            <div class="row">
+
+                                {{#employeeType}}
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+
+                                            <input type="checkbox" class="inverted" id="willing" value="">
+
+                                            <span class="text">{{value1}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {{/employeeType}}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="widget radius-bordered">
+            <div class="widget-header">
+                <span class="widget-caption">เลือกประเภทเงื่อนไขสวัสดิการ</span>
+            </div>
+            <div class="widget-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="reservation" class="col-lg-3 control-label"></label>
+                        <div class="controls col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+
+                                            <input type="checkbox" class="inverted" id="dateAdded" value="">
+
+                                            <span class="text">{{#i18n}}dateAdded{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="inverted" name="retirementDate" id="retirementDate" >
+                                            <span class="text">{{#i18n}}retirementDate{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="inverted" id="ageOfmember"  >
+                                            <span class="text">{{#i18n}}ageOfmember{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="inverted" id="workingLife" value="">
+                                            <span class="text">{{#i18n}}workingLife{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="widget radius-bordered">
+            <div class="widget-header">
+                <span class="widget-caption">{{#i18n}}welfarecondition{{/i18n}}</span>
+            </div>
+            <div class="widget-body">
+                <div id="registrationForm" class="form-horizontal">
+
+                    <div style="display:none" id="dateAddedCheck">
+
+                        <div class="form-group">
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
+                            <div class="controls col-lg-9">
+                                <div class="input-group">
+                                    <input class="form-control date-picker" id="welfareEnd"  type="text" data-date-format="dd-mm-yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none" id="retirementDateCheck">
+                        <div class="form-group">
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
+                            <div class="controls col-lg-9">
+                                <div class="input-group">
+                                    <input class="form-control date-picker" id="dateEndWork"  type="text" data-date-format="dd-mm-yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none" id="ageOfmemberCheck">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageless{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageLess" 
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionagemore{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageMore" 
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageas{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageAs" 
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionagesince{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageSince" 
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageto{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageTo" 
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="display: none" id="workingLifeCheck">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkLess{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkLess" 
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkMore{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkMore" 
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkAs{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkAs" 
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkSince{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkSince" 
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkTo{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkTo"  
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-6 col-lg-8">
+                            <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -121,37 +309,27 @@
 <!-- /Page Content -->
 
 
-
-<script type="text/javascript">
-
+<script>
     $(document).ready(function () {
 
-        $("#btn_submit").click(function () {
-            var data = {};
-            data['welfareId'] = {{welfareId}};
-            data['welfareSubName'] = $("#welfareSubName").val();
-            data['amount'] = $("#amount").val();
-            data['welfareStart'] = $("#welfareStart").val();
-            data['welfareEnd'] = $("#welfareEnd").val();
+        $('#dateAdded').click(function () {
+            $("#dateAddedCheck").slideToggle(this.checked);
 
-            var jdata = {};
-            jdata['data'] = data;
-            $.ajax({
-                url: '{{_context_path}}/api/welfare/welfare/savesub/wel',
-                data: jsonEncode(jdata),
-                type: 'post', // 'or get'
-                success: function (result) {
-                    alert(result.save);
-                    //alert(result.message);
-                    getHTML('content-body','{{_context_path}}/api/welfare/view/welfare/list/sub/{{welfareId}}',null);
-                   
-                }
-            });
-            return false;
         });
-        
+        $('#ageOfmember').click(function () {
+            $("#ageOfmemberCheck").slideToggle(this.checked);
+
+        });
+        $('#workingLife').click(function () {
+            $("#workingLifeCheck").slideToggle(this.checked);
+
+        });
+        $('#retirementDate').click(function () {
+            $("#retirementDateCheck").slideToggle(this.checked);
+
+        });
+
 
     });
-    
-     $('.date-picker').datepicker();
 </script>
+

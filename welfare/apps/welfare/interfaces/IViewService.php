@@ -9,11 +9,11 @@ namespace apps\welfare\interfaces;
 interface IViewService {
     /**
      * @name viewList
-     * @uri /welfare/list
+     * @uri /welfare/lists
      * @return html viewList xxx
      * @description จัดการรายการสวัสดิการ
      */
-    public function welfareList();
+    public function welfareLists();
     
     /**
      * @name welfareAdd

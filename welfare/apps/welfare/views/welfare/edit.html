@@ -36,21 +36,33 @@
                             <div class="form-title">
                                 {{#i18n}}pleaseinput{{/i18n}}
                             </div>
-                            {{#welfare}}
+                             {{#datas}}
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}welfarename{{/i18n}}</label>
-                                <div class="col-lg-9">
+                                <div class="col-lg-5">
                                     <input type="text" class="form-control" name="firstName" placeholder="ชื่อสวัสดิการ"
-                                           data-bv-notempty="true" id="welfareName" value="{{welfareName}}"
+                                           data-bv-notempty="true" id="name"
+                                           value="{{name}}"
                                            data-bv-notempty-message="ชื่อสวัสดิการ" />
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}welfaredescription{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    
+                                    <textarea rows="4" id="description" cols="70">{{description}}</textarea>
+                                    
+                                    
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredatestart{{/i18n}}</label>
-                                <div class="controls col-lg-9">
+                                <div class="controls col-lg-5">
                                    <div class="input-group">
-                                        <input class="form-control date-picker" id="welfareStart" value="{{welfareStart}}" type="text" data-date-format="dd-mm-yyyy">
+                                       <input class="form-control date-picker" id="dateStart" value="{{dateStart}}" type="text" data-date-format="dd-mm-yyyy">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -60,19 +72,67 @@
 
                             <div class="form-group">
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredateend{{/i18n}}</label>
-                                <div class="controls col-lg-9">
+                                <div class="controls col-lg-5">
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="welfareEnd" value="{{welfareEnd}}" type="text" data-date-format="dd-mm-yyyy">
+                                        <input class="form-control date-picker" id="dateEnd" value="{{dateEnd}}" type="text" data-date-format="dd-mm-yyyy">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            {{/welfare}}
                             
+                            <div class="form-group">
+                                <label for="reservation" class="col-lg-3 control-label"></label>
+                                <div class="controls col-lg-9">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                                            <div class="checkbox">
+                                                <label>
+
+                                                    <input type="checkbox" {{isStatusVoluntary}} id="StatusVoluntary">
+
+                                                    <span class="text">{{#i18n}}conditionconditionstatusvoluntary{{/i18n}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" class="inverted" {{isStatusRetired}} id="StatusRetired" >
+                                                    <span class="text">{{#i18n}}conditionstatusretired{{/i18n}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" class="inverted" {{isStatusRetired}} id="StatusRetired"  >
+                                                    <span class="text">{{#i18n}}free{{/i18n}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {{/datas}}
+<!--                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
+                                <div class="col-lg-9">
+
+                                    <select class="form-control" name="country" data-bv-field="country">
+                                        <option value="">{{#i18n}}pleaseinputwelfare{{/i18n}}</option>
+                                        <option value="1">สวัสดิการให้กู้</option>
+                                        <option value="2">สวัสดิการให้เปล่า</option>
 
 
+                                    </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+
+                                </div>
+                            </div>-->
 
 
                             <div class="form-group">
@@ -81,7 +141,7 @@
                                         <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
                                         <input class="btn btn-default" type="submit" value="{{#i18n}}button.cancel{{/i18n}}" />
                                     </div>
-                  
+                                
                             </div>
 
                         </form>
@@ -99,44 +159,33 @@
 <!-- /Page Content -->
 
 
-<!--Bootstrap Date Picker-->
-    <script src="assets/js/datetime/bootstrap-datepicker.js"></script>
 
-    <!--Bootstrap Time Picker-->
-<!--    <script src="assets/js/datetime/bootstrap-timepicker.js"></script>-->
-
-    <!--Bootstrap Date Range Picker-->
-<!--    <script src="assets/js/datetime/moment.js"></script>-->
-<!--    <script src="assets/js/datetime/daterangepicker.js"></script>-->
-    
+   
 <script type="text/javascript">
 
     $(document).ready(function () {
 
-        $("#btn_submit").click(function () {
-            var data = {};
-             data['welfareId'] = {{#welfare}}"{{welfareId}}"{{/welfare}};
-            data['welfareName'] = $("#welfareName").val();
-            data['welfareStart'] = $("#welfareStart").val();
-            data['welfareEnd'] = $("#welfareEnd").val();
+    $("#btn_submit").click(function () {
+    var data = {};
+             var data = {};
+             data['welfareId'] = {{#datas}}"{{welfareId}}"{{/datas}};
+             data['name'] = $("#name").val();
+            data['description'] = $("#description").val();
+            data['dateStart'] = $("#dateStart").val();
+            data['dateEnd'] = $("#dateEnd").val();
+            
 
             var jdata = {};
             jdata['data'] = data;
-            $.ajax({
-                url: '{{_context_path}}/api/welfare/welfare/update',
-                data: jsonEncode(jdata),
-                type: 'post', // 'or get'
-                success: function (result) {
-                    alert(result.save);
-                    //alert(result.message);
-                    getHTML('content-body','{{_context_path}}/api/welfare/view/welfare/list',null);
+            var result = sendData('{{_context_path}}/api/welfare/welfare/update', jsonEncode(jdata));
+            
+                if (result.update == true) {
+                getHTML('content-body', '{{_context_path}}/api/basics/view/welfare/lists',null);
+                Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                } else{
+                Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                 }
-            });
-            return false;
-        });
-        
-
     });
-    
-     $('.date-picker').datepicker();
+    return false;
+    });
 </script>

@@ -8,7 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IWelfareService;
 
-use apps\common\entity\Welfare;
+use apps\welfare\entity\Welfare;
 
 class WelfareService extends CServiceBase implements IWelfareService {
 
@@ -40,12 +40,11 @@ class WelfareService extends CServiceBase implements IWelfareService {
         }
     }
 
-    public function delete($welfareId) {
-        $deletewel = new Welfare();
-        $deletewel->setWelfareId($welfareId);
-        //$delwelfare = $this->datacontext->getObject($deletewel)[0];
-
-        if ($this->datacontext->removeObject($deletewel)) {
+    public function delete($id) {
+        $daoWelfare = new Welfare();
+        $daoWelfare->setWelfareId($id);
+        
+        if ($this->datacontext->removeObject($daoWelfare)) {
             return true;
         } else {
             $this->getResponse()->add("message", $this->datacontext->getLastMessage());
@@ -127,20 +126,20 @@ class WelfareService extends CServiceBase implements IWelfareService {
         return $view;
     }
 
-    public function deleteSub($welfareSubId) {
-        print_r($welfareSubId);
-        $deletewel = new WelfareSub();
-        $deletewel->setWelfareSubId($welfareSubId);
-        
-        //$delwelfare = $this->datacontext->getObject($deletewel)[0];
-
-        if ($this->datacontext->removeObject($deletewel)) {
-            return true;
-        } else {
-            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
-            return false;
-        }
-    }
+//    public function deleteSub($welfareSubId) {
+//        print_r($welfareSubId);
+//        $deletewel = new WelfareSub();
+//        $deletewel->setWelfareSubId($welfareSubId);
+//        
+//        //$delwelfare = $this->datacontext->getObject($deletewel)[0];
+//
+//        if ($this->datacontext->removeObject($deletewel)) {
+//            return true;
+//        } else {
+//            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+//            return false;
+//        }
+//    }
     
 
 //put your code here

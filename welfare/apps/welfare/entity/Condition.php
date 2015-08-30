@@ -1,25 +1,25 @@
 <?php
-namespace apps\common\entity;
+namespace apps\welfare\entity;
 /**
      * @Entity
-     * @Table(name="WelfareConditions")
+     * @Table(name="Condition")
      */
-class WelfareConditions {
+class Condition {
     /** 
         * @Id
         * @GeneratedValue
-        * @Column(type="integer" , length=11, name="conditionsId") */
-       public $conditionsId;
+        * @Column(type="integer" , length=11, name="conditionId") */
+       public $conditionId;
        
         /**
-        *@Column(type="string", name="welfareId") 
+        *@Column(type="integer", name="welfareId") 
         */
        public $welfareId;
        
         /**
-        *@Column(type="string", name="description") 
+        *@Column(type="string", name="conditionName") 
         */
-       public $description;
+       public $conditionName;
        
        
        /**
@@ -76,8 +76,11 @@ class WelfareConditions {
         */
        public $resetTime;
        
-       function getConditionsId() {
-           return $this->conditionsId;
+      
+
+       
+       function getConditionId() {
+           return $this->conditionId;
        }
 
        function getWelfareId() {
@@ -128,8 +131,8 @@ class WelfareConditions {
            return $this->resetTime;
        }
 
-       function setConditionsId($conditionsId) {
-           $this->conditionsId = $conditionsId;
+       function setConditionId($conditionId) {
+           $this->conditionId = $conditionId;
        }
 
        function setWelfareId($welfareId) {
@@ -180,8 +183,7 @@ class WelfareConditions {
            $this->resetTime = $resetTime;
        }
 
-       
-       
+
 
 //       function isStatusVoluntary(){
 //      

@@ -4,26 +4,26 @@ namespace apps\welfare\interfaces;
 
 /**
  * @name welfare
- * @uri /welfare
- * @description จัดการ เพิ่ม/ลบ/แก้ไข ข้อมูลสวัสดิการ
+ * @uri /condition
+ * @description จัดการ เพิ่ม/ลบ/แก้ไข เงื่อนไขสวัสดิการ
  */
-interface IWelfareService {
+interface IConditionService {
 
     /**
      * @name save
      * @uri /save
-     * @param apps\welfare\entity\Welfare data []
+     * @param apps\welfare\entity\Condition data []
      * @return boolean save [return ture or false if don't ]
-     * @description save เพิ่มข้อมูลสวัสดิการ
+     * @description save เพิ่มเงื่อนไขสวัสดิการ
      */
     public function save($data);
     
     /**
      * @name updatewelfare
      * @uri /update
-     * @param apps\welfare\entity\Welfare data []
+     * @param apps\welfare\entity\Condition data []
      * @return boolean update [return ture or false if don't ]
-     * @description update แก้ไขข้อมูลสวัสดิการ
+     * @description update แก้ไขเงื่อนไขสวัสดิการ
      */
     public function update($data);
 
@@ -32,7 +32,7 @@ interface IWelfareService {
      * @uri /delete
      * @param integer Id Description
      * @return boolean delete [return ture or false if don't ]
-     * @description delete ลบข้อมูลสวัสดิการ
+     * @description delete ลบเงื่อนไขสวัสดิการ
      */
     public function delete($Id);
     

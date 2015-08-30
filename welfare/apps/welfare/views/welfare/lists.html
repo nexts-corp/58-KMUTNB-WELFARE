@@ -128,15 +128,24 @@
 </script>
 
 <script>
-                    $('.btn-del').click(function(){
-                    var id = $(this).attr('row-index');
-                    var data = {"welfareId":id};
-                    var msg = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
-                    if (msg.deletewelfare == true){
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/list', null);
+             $('.btn-del').click(function(){
+                    var Id = $(this).attr('row-index');
+ 
+                if (confirm("คุณต้องการลบ?")) { 
+                     var data = {"Id":Id};
+                     var result = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
+                
+                if (result.delete == true) {
+                getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                }else{
+                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                 }
             }
+                   
             });
 </script> 
+
 
 <script>
                     $("#btnsearch").click(function () {
