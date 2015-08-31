@@ -65,6 +65,7 @@ class MemberService extends CServiceBase implements IMemberService {
         $data->dob = new \DateTime($data->dob);
         $data->workStartDate = new \DateTime($data->workStartDate);
         if ($this->datacontext->updateObject($data)) {
+            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
             return true;
         } else {
             $this->getResponse()->add("message", $this->datacontext->getLastMessage());
@@ -72,10 +73,11 @@ class MemberService extends CServiceBase implements IMemberService {
         }
     }
 
-    public function deleteRegister($Id) {
+    public function delete($Id) {
 
-        $deleteRegister = new Register();
-        $deleteRegister->setRegisterId($Id);
+        $member= new \apps\member\entity\Member();
+        $member = $this->datacontext->getObject($Id);
+        $member->setMemberActiveId($memberActiveId);
         return $this->datacontext->removeObject($deleteRegister);
     }
 

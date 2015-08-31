@@ -93,11 +93,57 @@ class Member {
      * @Column(type="string", length=255, name="mobile",nullable=true) 
      */
     public $mobile;
-
+    
     /**
+     * @Column(type="string", length=255, name="email",nullable=true) 
+     */
+    public $email;
+    
+     /**
      * @Column(type="date",  name="workStartDate") 
      */
     public $workStartDate;
+    
+     /**
+     * @Column(type="date",  name="workEndDate" ,nullable=true) 
+     */
+    public $workEndtDate;
+    
+    /**
+     * @Column(type="string", length=255, name="memberActiveId",nullable=true) 
+     */
+    public $memberActiveId;
+    
+    function getWorkEndtDate() {
+        return $this->workEndtDate;
+    }
+
+    
+
+    function setWorkEndtDate($workEndtDate) {
+        $this->workEndtDate = $workEndtDate;
+    }
+
+    function getMemberActiveId() {
+        return $this->memberActiveId;
+    }
+
+    function setMemberActiveId($memberActiveId) {
+        $this->memberActiveId = $memberActiveId;
+    }
+
+    
+        
+    
+    function getEmail() {
+        return $this->email;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+       
     public $userTypeId;
 
     

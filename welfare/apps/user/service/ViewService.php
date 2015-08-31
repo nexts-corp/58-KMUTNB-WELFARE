@@ -60,25 +60,18 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberEdit($id) {
         $view = new CJView("member/edit", CJViewType::HTML_VIEW_ENGINE);
-        $filter = new \apps\member\entity\Member();
+        $member = new \apps\member\entity\Member();
+        $member->setMemberId($id);
+        $member = $this->datacontext->getObject($member)[0];
         
-//        $path = '\\apps\\common\\entity\\';
-//        
-//        $sql = "SELECT "
-//                ."FROM \apps\member\entity\Member mem"
-//                . "INNER JOIN \apps\taxonomy\entity\Taxonomy tax"
-//                . "with tax.id";
+        $member->dob = $member->dob->format('d-m-Y');
+        $member->workStartDate = $member->workStartDate->format('d-m-Y');
         
-        $filter->setMemberId($id);
-        $dao_register = $this->datacontext->getObject($filter);
-//        print_r($dao_register[0]->dob);
-        $datebrith = $dao_register[0]->dob->format('d-m-Y');
-        $datestart = $dao_register[0]->workStartDate->format('d-m-Y');
-        //print_r($datebrith);
-        $view->dobs = $datebrith;
-        $view->workstart = $datestart;
-        $view->datas = $dao_register;
-//        print_r($view);
+        $user = new \apps\user\entity\User();
+        $user->memberId = $member->memberId;
+        $user = $this->datacontext->getObject($user)[0];
+        $member->userTypeId = $user->userTypeId;
+        $view->datas = $member;
         return $view;
     }
 
@@ -88,29 +81,6 @@ class ViewService extends CServiceBase implements IViewService {
         $listregister = new \apps\member\entity\Member();
         $listreg = $this->datacontext->getObject($listregister);
         $view->list = $listreg;
-        return $view;
-    }
-
-    public function typeAdd() {
-        $view = new CJView("type/add", CJViewType::HTML_VIEW_ENGINE);
-
-        return $view;
-    }
-
-    public function typeEdit($id) {
-        $view = new CJView("type/edit", CJViewType::HTML_VIEW_ENGINE);
-        $filter = new \apps\common\entity\UserType();
-        $filter->setUserTypeId($id);
-        $dao_usertype = $this->datacontext->getObject($filter);
-        $view->data = $dao_usertype;
-        return $view;
-    }
-
-    public function typeLists() {
-        $view = new CJView("type/lists", CJViewType::HTML_VIEW_ENGINE);
-        $filter = new \apps\common\entity\UserType();
-        $dao_usertype = $this->datacontext->getObject($filter);
-        $view->cuss = $dao_usertype;
         return $view;
     }
 

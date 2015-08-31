@@ -68,7 +68,7 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
-                                        <select class="form-control col-lg-12" id="titleId" name="employeeTypeId" data-bv-field="country">
+                                        <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country">
                                             <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
                                             {{#titleName}}
                                             <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -177,15 +177,15 @@
 
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
-                                        
+
                                         <div class="col-lg-9 control-group ">
-                                        {{#matier}}  
+                                            {{#matier}}  
                                             <div class="radio col-lg-6">
                                                 <label>
                                                     <input name="form-field-radio" value="{{id}}" id="matierId" type="radio"  checked="checked">
                                                     <span class="text">{{value1}}</span> </label>
                                             </div>
-                                        {{/matier}}    
+                                            {{/matier}}    
                                         </div>
                                     </div>
 
@@ -219,9 +219,47 @@
                                     <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
 
                                     <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
                                         <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
                                         <div class="col-lg-9">
                                             <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
+                                                <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
                                                 {{#userType}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                 {{/userType}}
@@ -246,6 +284,7 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
+
             $("#facultyId").change(function () {
                 var id = $("#facultyId").val();
                 $.ajax({
@@ -275,32 +314,43 @@
                 }
             });
             $("#btn_submit").click(function () {
-                var data = {};
-                data['fname'] = $("#fname").val();
-                data['lname'] = $("#lname").val();
-                data['genderId'] = $("#genderId").val();
-                data['idCard'] = $("#idCard").val();
-                data['dob'] = $("#dob").val();
-                data['employeeCode'] = $("#employeeCode").val();
-                data['employeeTypeId'] = $("#employeeTypeId").val();
-                data['academicId'] = $("#academicId").val();
-                data['departmentId'] = $("#departmentId").val();
-                data['facultyId'] = $("#facultyId").val();
-                data['workStartDate'] = $("#workStartDate").val();
-                data['matierId'] = $("#matierId").val();
-                data['positionId'] = $("#positionId").val();
-                data['userTypeId'] = $("#userTypeId").val();
-                var jdata = {};
-                jdata['data'] = data;
-                $.ajax({
-                    url: '{{_context_path}}/api/user/member/save',
-                    data: jsonEncode(jdata),
-                    type: 'post',
-                    success: function (result) {
+                if (formatPersonId($('#idCard').val()) != "") {
+                    var data = {};
+                    data['fname'] = $("#fname").val();
+                    data['lname'] = $("#lname").val();
+                    data['titleId'] = $("#titleId").val();
+                    data['genderId'] = $('input[name=genderId]:checked').val();
+                    data['idCard'] = $("#idCard").val();
+                    data['dob'] = $("#dob").val();
+                    data['employeeCode'] = $("#employeeCode").val();
+                    data['employeeTypeId'] = $("#employeeTypeId").val();
+                    data['academicId'] = $("#academicId").val();
+                    data['departmentId'] = $("#departmentId").val();
+                    data['facultyId'] = $("#facultyId").val();
+                    data['workStartDate'] = $("#workStartDate").val();
+                    data['matierId'] = $('input[name=matierId]:checked').val();
+                    data['positionId'] = $("#positionId").val();
+                    data['userTypeId'] = $("#userTypeId").val();
+                    data['internalPhone'] = $("#internalPhone").val();
+                    data['phone'] = $("#phone").val();
+                    data['mobile'] = $("#mobile").val();
+                    data['email'] = $("#email").val();
 
-                        getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
-                    }
-                });
+                    var jdata = {};
+                    jdata['data'] = data;
+                    $.ajax({
+                        url: '{{_context_path}}/api/user/member/save',
+                        data: jsonEncode(jdata),
+                        type: 'post',
+                        success: function (result) {
+
+                            getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
+                        }
+                    });
+                }else{
+                    alert("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");
+                }
+
             });
             $('.date-picker').datepicker();
         });

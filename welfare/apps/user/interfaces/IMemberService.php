@@ -35,7 +35,7 @@ interface IMemberService {
      * @return html deleteRegister Description
      * @description view deleteRegister   
      */
-    public function deleteRegister($registerId);
+    public function delete($registerId);
 
     /**
      * @name getDepartment
