@@ -32,15 +32,15 @@ class AuthenService extends CServiceBase implements IAuthenService {
             $user = $this->datacontext->getObject($check);
 
             if (count($user) > 0) {
-                
+
                 $data = base64_decode($code);
-                
+
                 $datas = explode("|", $data);
                 $cc = (array) JWT::decode($datas[1], "123456", array('HS256'));
                 $pp = array(
                     "uid" => $user[0]->userId
                 );
-                
+
                 $uid = JWT::encode($pp, "123456");
                 $euid = base64_encode($uid);
 
@@ -86,21 +86,33 @@ class AuthenService extends CServiceBase implements IAuthenService {
 
             $acc = new \th\co\bpg\cde\collection\CJAccount();
             $acc->code = $info[0]->memberId;
-            $acc->name = $info[0]->fname." ".$info[0]->lname;
-            $acc->userTypeId = $user[0]->userTypeId;
-            $acc->domain = $user[0]->userTypeId;
+            $acc->name = $info[0]->fname . " " . $info[0]->lname;
+
+            $taxUserType = new \apps\taxonomy\entity\Taxonomy();
+            $taxUserType->id = $user[0]->userTypeId;
+            $userType = $this->datacontext->getObject($taxUserType)[0];
+            $acc->usertype = $userType->code;
+            $acc->domain = $userType->code;
             $acc->resources = array();
 
             //$acc->facultyId=$user[0]->registerId;
 
             $acc->attribute = array();
-            $acc->attribute["departmentId"] = $info[0]->departmentId;
-            $acc->attribute["facultyId"] = $info[0]->facultyId;
+            $taxFaculty = new \apps\taxonomy\entity\Taxonomy();
+            $taxFaculty->id = $info[0]->facultyId;
+            $faculty = $this->datacontext->getObject($taxFaculty)[0];
+            $acc->attribute["facultyId"] = $faculty->code;
+            
+            $taxDepartment = new \apps\taxonomy\entity\Taxonomy();
+            $taxDepartment->id = $info[0]->departmentId;
+            $department = $this->datacontext->getObject($taxDepartment)[0];
+            $acc->attribute["departmentId"] = $department->code;
+            
             $acc->attribute["memberId"] = $user[0]->memberId;
             //print $acc;
             //$acc->departmentId=$user[0]->departmentId;
 
-            if ($user[0]->userTypeId == 1) {
+            if ($userType->code == "administrator") {
                 $acc->resources[] = "1000";
             } else {
                 $acc->resources[] = "0100";

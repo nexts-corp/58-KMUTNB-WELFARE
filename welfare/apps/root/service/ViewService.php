@@ -18,8 +18,10 @@ class ViewService extends CServiceBase implements IViewService {
     public function logout() {
         unset($_COOKIE['token']);
         unset($_COOKIE['userinfo']);
+        unset($_COOKIE['usertype']);
         setcookie('token', null, -1, '/');
         setcookie('userinfo', null, -1, '/');
+        setcookie('usertype', null, -1, '/');
         return $this->index();
     }
 

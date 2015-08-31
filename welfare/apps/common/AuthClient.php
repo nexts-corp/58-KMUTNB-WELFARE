@@ -69,7 +69,7 @@ class AuthClient extends COAuthClient {
         $acc = JWT::decode($data, $this->params["OAUTH2_CLIENT_SECRET"], array('HS256'));
         //print_r($acc->resources);
         setcookie("userinfo", $acc->name, 0, "/");
-        setcookie("userTypeId", $acc->userTypeId, 0, "/");
+        setcookie("usertype", $acc->usertype, 0, "/");
         return $acc;
     }
 

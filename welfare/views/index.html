@@ -66,10 +66,10 @@
 $(document).ready(function () {
 
     getHTML('header', '{{_context_path}}/api/menu/view/header', null);
-    var userTypeId = Cookies.get("userTypeId");
-    if (userTypeId == 1) {
+    var usertype = Cookies.get("usertype");
+    if (usertype == "administrator") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/admin', null);
-    } else if (userTypeId == 2) {
+    } else if (usertype == "user") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/member', null);
     }
 });
