@@ -27,7 +27,7 @@ class AuthenService extends CServiceBase implements IAuthenService {
             $username = $this->getRequest()->username;
             $password = $this->getRequest()->password;
             $check = new \apps\user\entity\User();
-            $check->userName = $username;
+            $check->username = $username;
             $check->password = md5($password);
             $user = $this->datacontext->getObject($check);
 
