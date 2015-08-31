@@ -4,15 +4,15 @@ namespace apps\welfare\interfaces;
 
 /**
  * @name welfare
- * @uri /condition
+ * @uri /conditions
  * @description จัดการ เพิ่ม/ลบ/แก้ไข เงื่อนไขสวัสดิการ
  */
-interface IConditionService {
+interface IConditionsService {
 
     /**
      * @name save
      * @uri /save
-     * @param apps\welfare\entity\Condition data []
+     * @param apps\welfare\entity\Conditions data []
      * @return boolean save [return ture or false if don't ]
      * @description save เพิ่มเงื่อนไขสวัสดิการ
      */
@@ -21,7 +21,7 @@ interface IConditionService {
     /**
      * @name updatewelfare
      * @uri /update
-     * @param apps\welfare\entity\Condition data []
+     * @param apps\welfare\entity\Conditions data []
      * @return boolean update [return ture or false if don't ]
      * @description update แก้ไขเงื่อนไขสวัสดิการ
      */

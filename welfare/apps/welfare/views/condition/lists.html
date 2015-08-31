@@ -66,7 +66,7 @@
                                 <thead>
                                     <tr>
                                         <th>&nbsp;{{#i18n}}welfaredetailcode{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfarename{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}wefare.conditionDiscription{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}amountmoney{{/i18n}}</th>
 
                                         <th class="center">จัดการ</th>
@@ -75,16 +75,16 @@
                                 <tbody>
                                     {{#datas}}
                                     <tr class="selectable">
-
-                                        <td>&nbsp;{{welfareSubId}}</td>
-                                        <td>&nbsp;{{welfareSubName}}</td>
+                                            
+                                        <td>&nbsp;{{welfareId}}</td>
+                                        <td>&nbsp;{{discription}}</td>
                                         <td>&nbsp;{{amount}}</td>
                                         
                                         <td class="center">
                                             
                                             <button class="btn btn-maroon btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/condition/add/{{welfareSubId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/condition/add/{{welfareId}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}welcodion{{/i18n}} 
@@ -93,7 +93,7 @@
                                             
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/condition/edit/{{welfareSubId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/condition/edit/{{welfareId}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
@@ -117,7 +117,7 @@
     <!-- /Page Body -->
 </div>
 
-<script>
+<!--<script>
     $(function() {
     var availableTags = [
     {{#welfare}}
@@ -157,4 +157,4 @@
     }
     });
 
-</script>
+</script>-->

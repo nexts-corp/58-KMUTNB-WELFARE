@@ -8,7 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IViewService;
 use apps\welfare\entity\Welfare;
-use apps\welfare\entity\Condition;
+use apps\welfare\entity\Conditions;
 use apps\taxonomy\entity\Taxonomy;
 
 class ViewService extends CServiceBase implements IViewService {
@@ -68,11 +68,15 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function conditionAdd($id) {
         $view = new CJView("condition/add", CJViewType::HTML_VIEW_ENGINE);
-        
         $employeeType = new Taxonomy();
         $employeeType->pCode = "employeeType";
         $view->employeeType = $this->datacontext->getObject($employeeType);
         
+        $view->welfareId=$id;
+        
+        $gender = new Taxonomy();
+        $gender->pCode = "gender";
+        $view->gender = $this->datacontext->getObject($gender);
         
         return $view;
     }
@@ -90,10 +94,12 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function conditionLists($id) {
         $view = new CJView("condition/lists", CJViewType::HTML_VIEW_ENGINE);
-        $daoCondition=new Condition();
+        $daoCondition=new Conditions();
         $daoCondition->setWelfareId($id);
         $obj=$this->datacontext->getObject($daoCondition);
         $view->datas=$obj;
+        $view->welfareId=$id;
+
         return $view;
     }
 

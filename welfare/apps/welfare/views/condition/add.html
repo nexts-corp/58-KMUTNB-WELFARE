@@ -39,8 +39,8 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}subwelfarename{{/i18n}}</label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="conditionName" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
-                                           data-bv-notempty="true" id="conditionName"
+                                    <input type="text" class="form-control" name="description" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
+                                           data-bv-notempty="true" id="description"
                                            data-bv-notempty-message="{{#i18n}}subwelfarename{{/i18n}}" />
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                     <div class="checkbox">
                                         <label>
 
-                                            <input type="checkbox" class="inverted" id="willing" value="">
+                                            <input type="checkbox" class="inverted employeeType" id="employeeTypeId" name="employeeTypeId" value="{{id}}" >
 
                                             <span class="text">{{value1}}</span>
                                         </label>
@@ -112,7 +112,7 @@
 
                                             <input type="checkbox" class="inverted" id="dateAdded" value="">
 
-                                            <span class="text">{{#i18n}}dateAdded{{/i18n}}</span>
+                                            <span class="text">{{#i18n}}dateAdded{{/i18n}}/{{#i18n}}retirementDate{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -121,11 +121,10 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" class="inverted" name="retirementDate" id="retirementDate" >
-                                            <span class="text">{{#i18n}}retirementDate{{/i18n}}</span>
+                                            <span class="text">{{#i18n}}gender{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
-
 
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
@@ -139,8 +138,8 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" id="workingLife" value="">
-                                            <span class="text">{{#i18n}}workingLife{{/i18n}}</span>
+                                            <input type="checkbox" class="inverted" id="seniority" value="">
+                                            <span class="text">{{#i18n}}seniority{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -169,16 +168,14 @@
                             <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="welfareEnd"  type="text" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control date-picker" id="dateStartWork"  type="text" data-date-format="dd-mm-yyyy">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style="display: none" id="retirementDateCheck">
                         <div class="form-group">
                             <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
                             <div class="controls col-lg-9">
@@ -192,40 +189,16 @@
                         </div>
                     </div>
 
+
+
                     <div style="display: none" id="ageOfmemberCheck">
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageless{{/i18n}}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
-                                       data-bv-notempty="true" id="ageLess" 
-                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
-                            </div>
 
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionagemore{{/i18n}}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
-                                       data-bv-notempty="true" id="ageMore" 
-                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageas{{/i18n}}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
-                                       data-bv-notempty="true" id="ageAs" 
-                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
-                            </div>
-
-                        </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">{{#i18n}}conditionagesince{{/i18n}}</label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
-                                       data-bv-notempty="true" id="ageSince" 
+                                       data-bv-notempty="true" id="ageStart" 
                                        data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
                             </div>
 
@@ -234,61 +207,53 @@
                             <label class="col-lg-3 control-label">{{#i18n}}conditionageto{{/i18n}}</label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
-                                       data-bv-notempty="true" id="ageTo" 
+                                       data-bv-notempty="true" id="ageEnd" 
                                        data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
                             </div>
 
                         </div>
                     </div>
 
-                    <div style="display: none" id="workingLifeCheck">
+                    <div style="display: none" id="seniorityCheck">
+
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkLess{{/i18n}}</label>
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkStart{{/i18n}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
-                                       data-bv-notempty="true" id="ageWorkLess" 
+                                <input type="text" class="form-control" name="ageWorkStart" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkStart" 
                                        data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkMore{{/i18n}}</label>
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkEnd{{/i18n}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
-                                       data-bv-notempty="true" id="ageWorkMore" 
+                                <input type="text" class="form-control" name="ageWorkEnd" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkEnd"  
                                        data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkAs{{/i18n}}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
-                                       data-bv-notempty="true" id="ageWorkAs" 
-                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkSince{{/i18n}}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
-                                       data-bv-notempty="true" id="ageWorkSince" 
-                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkTo{{/i18n}}</label>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}agework{{/i18n}}"
-                                       data-bv-notempty="true" id="ageWorkTo"  
-                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
-                            </div>
-                        </div>
-
                     </div>
 
+                    <div style="display: none" id="retirementDateCheck">
+                        <div class="form-group">
 
+                            {{#gender}}
 
+                            <div class="col-lg-3 control-label">
+                                <div class="checkbox">
+                                    <label>
 
+                                        <input type="radio" class="inverted gender" id="genderId" name="genderId" value="{{id}}" >
+
+                                        <span class="text">{{value1}}</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {{/gender}}
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-lg-offset-6 col-lg-8">
@@ -313,21 +278,78 @@
     $(document).ready(function () {
 
         $('#dateAdded').click(function () {
-            $("#dateAddedCheck").slideToggle(this.checked);
-
+            $("#dateAddedCheck").slideToggle();
         });
         $('#ageOfmember').click(function () {
-            $("#ageOfmemberCheck").slideToggle(this.checked);
-
+            $("#ageOfmemberCheck").slideToggle();
         });
-        $('#workingLife').click(function () {
-            $("#workingLifeCheck").slideToggle(this.checked);
-
+        $('#seniority').click(function () {
+            $("#seniorityCheck").slideToggle();
         });
         $('#retirementDate').click(function () {
-            $("#retirementDateCheck").slideToggle(this.checked);
-
+            $("#retirementDateCheck").slideToggle();
         });
+
+
+
+        $("#btn_submit").click(function () {
+            var employeeTypeId = [];
+            $(".employeeType").each(function (k, v) {
+
+                if (this.checked) {
+                    employeeTypeId.push($(this).val());
+                }
+
+            });
+            var data1 = [];
+            $.each(employeeTypeId, function (k, v) {
+                var data = {};
+                data['welfareId'] = "{{welfareId}}";
+                data['description'] = $("#description").val();
+                data['amount'] = $("#amount").val();
+                data['positionsTypeId'] = $("#positionsTypeId").val();
+                data['dateStartWork'] = $("#dateStartWork").val();
+                data['dateEndWork'] = $("#dateEndWork").val();
+                data['ageStart'] = $("#ageStart").val();
+                data['ageEnd'] = $("#ageEnd").val();
+                data['ageWorkStart'] = $("#ageWorkStart").val();
+                data['ageWorkEnd'] = $("#ageWorkEnd").val();
+                data['genderId'] = $('input[name=genderId]:checked').val();
+                data['employeeTypeId'] = v;
+                data1.push(data);
+            });
+//            var data = {};
+//            data['welfareId'] = "{{welfareId}}";
+//            data['description'] = $("#description").val();
+//            data['amount'] = $("#amount").val();
+//            data['positionsTypeId'] = $("#positionsTypeId").val();
+//            data['dateStartWork'] = $("#dateStartWork").val();
+//            data['dateEndWork'] = $("#dateEndWork").val();
+//            data['ageStart'] = $("#ageStart").val();
+//            data['ageEnd'] = $("#ageEnd").val();
+//            data['ageWorkStart'] = $("#ageWorkStart").val();
+//            data['ageWorkEnd'] = $("#ageWorkEnd").val();
+//            data['genderId'] = $('input[name=genderId]:checked').val();
+//            data['employeeTypeId'] = employeeTypeId;
+
+            var jdata = {};
+            jdata['data'] = data1;
+            $.ajax({
+                url: '{{_context_path}}/api/welfare/conditions/save',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                    if (result.save == true) {
+                        getHTML('content-body', '{{_context_path}}/api/welfare/view/condition/lists/{{welfareId}}', null);
+                        Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                    } else {
+                        Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+
+                    }
+                }
+            });
+        });
+
 
 
     });

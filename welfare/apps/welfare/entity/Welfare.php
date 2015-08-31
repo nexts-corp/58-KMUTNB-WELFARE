@@ -60,6 +60,9 @@ class Welfare {
         */
        public $retire;
        
+       
+       
+       
        function getWelfareId() {
            return $this->welfareId;
        }
