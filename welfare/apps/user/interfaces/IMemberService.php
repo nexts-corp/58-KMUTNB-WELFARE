@@ -31,11 +31,11 @@ interface IMemberService {
     /**
      * @name deleteRegister
      * @uri /delete
-     * @param integer registerId Description
-     * @return html deleteRegister Description
+     * @param integer memberId
+     * @return string delete
      * @description view deleteRegister   
      */
-    public function delete($registerId);
+    public function delete($memberId);
 
     /**
      * @name getDepartment

@@ -87,7 +87,7 @@
 <script>
                     $('.btn-del').click(function(){
             var id = $(this).attr('row-index');
-                    var data = {"registerId":id};
+                    var data = {"memberId":id};
                     var msg = sendData('{{_context_path}}/api/user/member/delete', data);
                     getHTML('content-body', '{{_context_path}}/api/user/view/member/lists',null);
             });

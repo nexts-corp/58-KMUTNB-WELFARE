@@ -107,21 +107,21 @@ class Member {
      /**
      * @Column(type="date",  name="workEndDate" ,nullable=true) 
      */
-    public $workEndtDate;
+    public $workEndDate;
     
     /**
-     * @Column(type="string", length=255, name="memberActiveId",nullable=true) 
+     * @Column(type="string", length=10, name="memberActiveId",nullable=true) 
      */
     public $memberActiveId;
     
-    function getWorkEndtDate() {
-        return $this->workEndtDate;
+    function getWorkEndDate() {
+        return $this->workEndDate;
     }
 
     
 
-    function setWorkEndtDate($workEndtDate) {
-        $this->workEndtDate = $workEndtDate;
+    function setWorkEndDate($workEndDate) {
+        $this->workEndDate = $workEndDate;
     }
 
     function getMemberActiveId() {

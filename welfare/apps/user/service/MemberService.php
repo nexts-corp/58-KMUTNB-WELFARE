@@ -73,12 +73,20 @@ class MemberService extends CServiceBase implements IMemberService {
         }
     }
 
-    public function delete($Id) {
+    public function delete($memberId) {
+        $taxonomy = new \apps\taxonomy\entity\Taxonomy();
+        $taxonomy->pCode = "memberActive";
+        $taxonomy->code = "leave";
+        $dataTax = $this->datacontext->getObject($taxonomy)[0];
 
         $member= new \apps\member\entity\Member();
-        $member = $this->datacontext->getObject($Id);
-        $member->setMemberActiveId($memberActiveId);
-        return $this->datacontext->removeObject($deleteRegister);
+        $member->memberId = $memberId;
+        $dataMem = $this->datacontext->getObject($member)[0];
+        
+        $dataMem->memberActiveId = $dataTax->id;
+        $dataMem->workEndDate = new \DateTime('now');
+        
+        return $this->datacontext->updateObject($dataMem);
     }
 
     public function getDepartment($id) {
