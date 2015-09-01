@@ -235,7 +235,7 @@
                         </div>
                     </div>
 
-                    <div style="display: none" id="retirementDateCheck">
+                    <div style="display: none" id="genderCheck">
                         <div class="form-group">
 
                             {{#gender}}
@@ -287,7 +287,7 @@
             $("#seniorityCheck").slideToggle();
         });
         $('#retirementDate').click(function () {
-            $("#retirementDateCheck").slideToggle();
+            $("#genderCheck").slideToggle();
         });
 
 
@@ -307,7 +307,6 @@
                 data['welfareId'] = "{{welfareId}}";
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
-                data['positionsTypeId'] = $("#positionsTypeId").val();
                 data['dateStartWork'] = $("#dateStartWork").val();
                 data['dateEndWork'] = $("#dateEndWork").val();
                 data['ageStart'] = $("#ageStart").val();
@@ -318,19 +317,7 @@
                 data['employeeTypeId'] = v;
                 data1.push(data);
             });
-//            var data = {};
-//            data['welfareId'] = "{{welfareId}}";
-//            data['description'] = $("#description").val();
-//            data['amount'] = $("#amount").val();
-//            data['positionsTypeId'] = $("#positionsTypeId").val();
-//            data['dateStartWork'] = $("#dateStartWork").val();
-//            data['dateEndWork'] = $("#dateEndWork").val();
-//            data['ageStart'] = $("#ageStart").val();
-//            data['ageEnd'] = $("#ageEnd").val();
-//            data['ageWorkStart'] = $("#ageWorkStart").val();
-//            data['ageWorkEnd'] = $("#ageWorkEnd").val();
-//            data['genderId'] = $('input[name=genderId]:checked').val();
-//            data['employeeTypeId'] = employeeTypeId;
+
 
             var jdata = {};
             jdata['data'] = data1;

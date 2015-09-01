@@ -1,0 +1,375 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}welfareadd{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}welfareadd{{/i18n}}</span>
+                    </div>
+                    <div class="widget-body">
+                       {{#datas}}
+                        <form  class="form-horizontal">
+                            <div class="form-title">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}subwelfarename{{/i18n}}</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="description" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
+                                           data-bv-notempty="true" id="description"
+                                           value="{{description}}"
+                                           data-bv-notempty-message="{{#i18n}}subwelfarename{{/i18n}}" />
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}amountwelfare{{/i18n}}</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
+                                           data-bv-notempty="true" id="amount"
+                                           value="{{amount}}"
+                                           data-bv-notempty-message="{{#i18n}}amountwelfare{{/i18n}}" />
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget radius-bordered">
+            <div class="widget-header">
+                <span class="widget-caption">กำหนดประเภทบุคลากรผู้ได้รับสวัสดิการ</span>
+            </div>
+            <div class="widget-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="reservation" class="col-lg-3 control-label"></label>
+                        <div class="controls col-lg-12">
+                            <div class="row">
+
+                               
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+
+                                            <input type="checkbox" class="inverted employeeType" id="employeeTypeId" name="employeeTypeId" value="{{id}}" disabled="disabled" checked >
+
+                                            <span class="text">{{value1}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                {{/datas}}
+                               
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="widget radius-bordered">
+            <div class="widget-header">
+                <span class="widget-caption">เลือกประเภทเงื่อนไขสวัสดิการ</span>
+            </div>
+            <div class="widget-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="reservation" class="col-lg-3 control-label"></label>
+                        <div class="controls col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+
+                                            <input type="checkbox" class="inverted" id="dateAdded" value="">
+
+                                            <span class="text">{{#i18n}}dateAdded{{/i18n}}/{{#i18n}}retirementDate{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="inverted" name="retirementDate" id="retirementDate" >
+                                            <span class="text">{{#i18n}}gender{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="inverted" id="ageOfmember"  >
+                                            <span class="text">{{#i18n}}ageOfmember{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="inverted" id="seniority" value="">
+                                            <span class="text">{{#i18n}}seniority{{/i18n}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="widget radius-bordered">
+            <div class="widget-header">
+                <span class="widget-caption">{{#i18n}}welfarecondition{{/i18n}}</span>
+            </div>
+            <div class="widget-body">
+                <div id="registrationForm" class="form-horizontal">
+
+                    <div style="display:none" id="dateAddedCheck">
+                       
+                        <div class="form-group">
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
+                            <div class="controls col-lg-9">
+                                <div class="input-group">
+                                    <input class="form-control date-picker" id="dateStartWork" value="{{dateStartWork}}" type="text" data-date-format="dd-mm-yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
+                            <div class="controls col-lg-9">
+                                <div class="input-group">
+                                    <input class="form-control date-picker" id="dateEndWork" value="{{dateEndWork}}" type="text" data-date-format="dd-mm-yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+
+                    {{#datas}}
+                    <div style="display: none" id="ageOfmemberCheck">
+
+                         
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionagesince{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="ageStart" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageStart"
+                                       value="{{ageStart}}"
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageto{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="ageEnd" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageEnd" 
+                                       value="{{ageEnd}}"
+                                       data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
+                            </div>
+
+                        </div>
+                          
+                    </div>
+
+                    <div style="display: none" id="seniorityCheck">
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkStart{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="ageWorkStart" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkStart" 
+                                       value="{{ageWorkStart}}"
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkEnd{{/i18n}}</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" name="ageWorkEnd" placeholder="{{#i18n}}agework{{/i18n}}"
+                                       data-bv-notempty="true" id="ageWorkEnd"  
+                                       value="{{ageWorkEnd}}"
+                                       data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
+                            </div>
+                        </div>
+                    </div>
+                    {{/datas}}
+                    <div style="display: none" id="genderCheck">
+                        <div class="form-group">
+
+                            {{#gender}}
+
+                            <div class="col-lg-3 control-label">
+                                <div class="checkbox">
+                                    <label>
+
+                                        <input type="radio" class="inverted gender" id="genderId" name="genderId" value="{{id}}" >
+
+                                        <span class="text">{{value1}}</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {{/gender}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-6 col-lg-8">
+                            <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<!-- /Page Content -->
+
+
+<script>
+    $(document).ready(function () {
+        
+        var dateStartWork = $("#dateStartWork").val();
+        var dateEndWork = $("#dateEndWork").val();
+        var ageStart = $("#ageStart").val();
+        var ageEnd = $("#ageEnd").val();
+        var ageWorkStart = $("#ageWorkStart").val();
+        var ageWorkEnd = $("#ageWorkEnd").val();
+        // check data
+        if(dateStartWork !="" || dateEndWork !=""){
+        $("#dateAddedCheck").slideToggle();   
+          $("#dateAdded").prop("checked",true);
+        }
+        if(ageStart > 0 || ageEnd > 0){
+          $("#ageOfmemberCheck").slideToggle();   
+            $("#ageOfmember").prop("checked",true);
+        }
+         if(ageWorkStart > 0 || ageWorkEnd > 0){
+              $("#seniorityCheck").slideToggle();   
+                $("#seniority").prop("checked",true);
+            }
+      
+        //check click 
+        $('#dateAdded').click(function () {
+            $("#dateAddedCheck").slideToggle();   
+        });
+        $('#ageOfmember').click(function () {
+            $("#ageOfmemberCheck").slideToggle(); 
+        });
+        $('#seniority').click(function () {
+            $("#seniorityCheck").slideToggle();
+            
+        });
+        $('#retirementDate').click(function () {
+            $("#genderCheck").slideToggle();
+            $("#genderId").prop("",true);
+        });
+        
+        
+        // check btn
+        $("#btn_submit").click(function () {
+            var employeeTypeId = [];
+            $(".employeeType").each(function (k, v) {
+
+                if (this.checked) {
+                    employeeTypeId.push($(this).val());
+                }
+
+            });
+            var data1 = [];
+            $.each(employeeTypeId, function (k, v) {
+                var data = {};
+                data['conditionsId']="{{conditionsId}}"
+                data['description'] = $("#description").val();
+                data['amount'] = $("#amount").val();
+                data['dateStartWork'] = $("#dateStartWork").val();
+                data['dateEndWork'] = $("#dateEndWork").val();
+                data['ageStart'] = $("#ageStart").val();
+                data['ageEnd'] = $("#ageEnd").val();
+                data['ageWorkStart'] = $("#ageWorkStart").val();
+                data['ageWorkEnd'] = $("#ageWorkEnd").val();
+                data['genderId'] = $('input[name=genderId]:checked').val();
+                data['employeeTypeId'] = v;
+                data1.push(data);
+            });
+
+
+            var jdata = {};
+            jdata['data'] = data1;
+            $.ajax({
+                url: '{{_context_path}}/api/welfare/conditions/update',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                if (result.update == true) {
+                getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}',null);
+                Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                } else{
+                Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                }
+                }
+            });
+        });
+
+
+
+    });
+</script>
+

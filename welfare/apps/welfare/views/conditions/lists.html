@@ -53,7 +53,7 @@
                         <div class="pull-right">
                             <button class="btn btn-primary"
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/welfare/view/condition/add/{{welfareId}}"
+                                    data-api="{{_context_path}}/api/welfare/view/conditions/add/{{welfareId}}"
                                     data-param="null"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
@@ -66,8 +66,9 @@
                                 <thead>
                                     <tr>
                                         <th>&nbsp;{{#i18n}}welfaredetailcode{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}wefare.conditionDiscription{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}conditionsDiscription{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}amountmoney{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}employeeType{{/i18n}}</th>
 
                                         <th class="center">จัดการ</th>
                                     </tr>
@@ -76,31 +77,22 @@
                                     {{#datas}}
                                     <tr class="selectable">
                                             
-                                        <td>&nbsp;{{welfareId}}</td>
-                                        <td>&nbsp;{{discription}}</td>
+                                        <td>&nbsp;{{conditionsId}}</td>
+                                        <td>&nbsp;{{description}}</td>
                                         <td>&nbsp;{{amount}}</td>
-                                        
+                                        <td>&nbsp;{{value1}}</td>
                                         <td class="center">
-                                            
-                                            <button class="btn btn-maroon btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/condition/add/{{welfareId}}"
-                                                    data-param="null"
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}welcodion{{/i18n}} 
-                                            </button>
-                                            
-                                            
+                                       
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/condition/edit/{{welfareId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/conditions/edit/{{conditionsId}}"
                                                     data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
                                             
                                             
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareSubId}}" >{{#i18n}}deletes{{/i18n}}</button>
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{conditionsId}}" >{{#i18n}}deletes{{/i18n}}</button>
                                         </td>
                                     </tr>
                                     {{/datas}}
@@ -117,31 +109,25 @@
     <!-- /Page Body -->
 </div>
 
-<!--<script>
-    $(function() {
-    var availableTags = [
-    {{#welfare}}
-        "{{welfareSubName}}",
-    {{/welfare}}
-    ];
-            $("#SearchName").autocomplete({
-    source: availableTags
-    });
-    });
-</script>
+
 
 <script>
-            $('.btn-del').click(function(){
-    var id = $(this).attr('row-index');
-            var data = {"welfareSubId":id};
-            var msg = sendData('{{_context_path}}/api/welfare/welfare/delete/sub',data);
-            if (msg.deletewelfare == true){
-    
-    getHTML('content-body','{{_context_path}}/api/welfare/view/welfare/list/sub/{{#welfare}}{{welfareId}}{{/welfare}}',null);
-    }
-    });
-
-
+             $('.btn-del').click(function(){
+                    var Id = $(this).attr('row-index');
+ 
+                if (confirm("คุณต้องการลบ?")) { 
+                     var data = {"Id":Id};
+                     var result = sendData('{{_context_path}}/api/welfare/conditions/delete', data);
+                
+                if (result.delete == true) {
+                getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', null);
+                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                }else{
+                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                 }
+            }
+                   
+            });
 </script> 
 <script>
             $("#btnsearch").click(function () {
@@ -153,8 +139,8 @@
     var data = {"SearchName":SearchName};
 //       
 
-            getHTML('content-body','{{_context_path}}/api/welfare/welfare/view/searchsub', data);
+            //getHTML('content-body','{{_context_path}}/api/welfare/welfare/view/searchsub', data);
     }
     });
 
-</script>-->
+</script>

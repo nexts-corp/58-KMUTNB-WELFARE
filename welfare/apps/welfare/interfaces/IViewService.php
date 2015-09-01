@@ -33,31 +33,31 @@ interface IViewService {
     public function welfareEdit($id);
     
     /**
-     * @name conditionList
-     * @uri /condition/lists
+     * @name conditionsList
+     * @uri /conditions/lists
      * @param integer id Description
      * @return html viewList 
      * @description จัดการเงื่อนไขสวัสดิการ
      */
-    public function conditionLists($id);
+    public function conditionsLists($id);
     
     /**
-     * @name conditionAdd
-     * @uri /condition/add
+     * @name conditionsAdd
+     * @uri /conditions/add
      * @param integer id Description
      * @return html viewAddSubwelfare Description
      * @description view เพิ่มเงื่อนไขสวัสดิการ
      */
-    public function conditionAdd($id);
+    public function conditionsAdd($id);
     
     /**
-     * @name conditionEdit
-     * @uri /condition/edit
+     * @name conditionsEdit
+     * @uri /conditions/edit
      * @param integer id Description
-     * @return html viewconditions Description
+     * @return html viewconditionss Description
      * @description view แก้ไขเงื่อนไขสวัสดิการ 
      */
-    public function conditionEdit($id);
+    public function conditionsEdit($id);
 
     
 }

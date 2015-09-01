@@ -64,10 +64,10 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     //end page welfare list
-    //start page condition add 
+    //start page conditions add 
 
-    public function conditionAdd($id) {
-        $view = new CJView("condition/add", CJViewType::HTML_VIEW_ENGINE);
+    public function conditionsAdd($id) {
+        $view = new CJView("conditions/add", CJViewType::HTML_VIEW_ENGINE);
         $employeeType = new Taxonomy();
         $employeeType->pCode = "employeeType";
         $view->employeeType = $this->datacontext->getObject($employeeType);
@@ -81,27 +81,80 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    //end page condition view add
-    //start page condition view edit 
+    //end page conditions view add
+    //start page conditions view edit 
 
-    public function conditionEdit($id) {
-        $view = new CJView("condition/edit", CJViewType::HTML_VIEW_ENGINE);
+    public function conditionsEdit($id) {
+        $view = new CJView("conditions/edit", CJViewType::HTML_VIEW_ENGINE);
+        
+        $employeeType = '\\apps\\taxonomy\\entity\\';
+        $daoCondition = '\\apps\\welfare\\entity\\';
+        
+        
+        $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.welfareId,cdt.description,"
+                . "cdt.welfareId,cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,cdt.ageEnd,"
+                . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,"
+                . "cdt.returnTypeId,txn.id,txn.value1 "
+                . "FROM ".$daoCondition."Conditions cdt Left JOIN ".$employeeType."Taxonomy  txn with "
+                . "cdt.employeeTypeId = txn.id "
+                . "where cdt.conditionsId = :id";
+        
+        $obj = $this->datacontext->getObject($sql,array("id"=>$id));
+        
+        $dateEndWork = $obj[0]['dateEndWork']->format('d-m-Y');
+        $dateStartWork = $obj[0]['dateStartWork']->format('d-m-Y');
+        $conditionsId=$obj[0]['conditionsId'];
+        
+        $view->dateEndWork=$dateEndWork;
+        $view->dateStartWork=$dateStartWork;
+        $view->conditionsId=$conditionsId;
+        $sqlGender = "SELECT gd.genderId,"
+                . "tn.id,tn.value1 "
+                . "FROM ".$daoCondition."Conditions gd Left JOIN ".$employeeType."Taxonomy  tn with "
+                . "gd.genderId = tn.id "
+                . "where gd.conditionsId =$id";
+        
+        $objGender = $this->datacontext->getObject($sqlGender,array("id"=>$id));
+        
+        
+        $view->datas=$obj;
+        $view->welfareId=$id;
+    if(empty($objGender[0]['genderId'])){
+        $gender = new Taxonomy();
+        $gender->pCode = "gender";
+        $view->gender = $this->datacontext->getObject($gender);
+        }else{
+         $view->gender=$objGender;
+        }
         return $view;
     }
 
-    //end page condition view edit
-    //start page condition view lists 
+    //end page conditions view edit
+    //start page conditions view lists 
 
-    public function conditionLists($id) {
-        $view = new CJView("condition/lists", CJViewType::HTML_VIEW_ENGINE);
-        $daoCondition=new Conditions();
-        $daoCondition->setWelfareId($id);
-        $obj=$this->datacontext->getObject($daoCondition);
+    public function conditionsLists($id) {
+        $view = new CJView("conditions/lists", CJViewType::HTML_VIEW_ENGINE);
+        
+        $employeeType = '\\apps\\taxonomy\\entity\\';
+        $daoCondition = '\\apps\\welfare\\entity\\';
+        
+        
+        $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.welfareId,cdt.description,"
+                . "cdt.welfareId,cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,"
+                . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,"
+                . "cdt.returnTypeId,txn.id,txn.value1 "
+                . "FROM ".$daoCondition."Conditions cdt Left JOIN ".$employeeType."Taxonomy  txn with "
+                . "cdt.employeeTypeId = txn.id "
+                . "where cdt.welfareId = :id";
+        
+     $obj = $this->datacontext->getObject($sql,array("id"=>$id));
+
+        
         $view->datas=$obj;
         $view->welfareId=$id;
 
         return $view;
     }
 
-    //end page condition view lists
+    //end page conditions view lists
 }
