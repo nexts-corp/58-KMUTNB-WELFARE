@@ -58,7 +58,7 @@ interface IMemberService {
     /**
      * @name search
      * @uri /search
-     * @param String data 
+     * @param String SearchName 
      * @return string search Description
      * @description ค้นหา   
      */

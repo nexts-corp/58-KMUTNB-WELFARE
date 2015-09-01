@@ -105,12 +105,16 @@ class MemberService extends CServiceBase implements IMemberService {
 
     public function search($data) {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-
-        $sql="select mem from \\apps\\member\\entity\\Member mem "
-                . "INNER JOIN \\apps\\taxonomy\\entity\\Taxonomy tax"
-                . " where mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name "
-                . "and tax.pCode = 'memberActive' and tax.code = 'working'";
-//        print_r($sql);
+        //print_r($data);
+                
+        $sql="select  mem.memberId,mem.idCard,mem.titleId,mem.academicId,mem.fname,mem.lname, "
+                . "tax.pCode,tax.code "
+                . "FROM \\apps\\member\\entity\\Member mem "
+                . "INNER JOIN \\apps\\taxonomy\\entity\\Taxonomy tax "
+                . "with mem.memberActiveId = tax.id "
+                . "WHERE tax.pCode = 'memberActive' and tax.code = 'working' "
+                . "and mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name ";
+        //print_r($sql);
         $view->list = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
 //        print_r($view->datas);
         return $view;
