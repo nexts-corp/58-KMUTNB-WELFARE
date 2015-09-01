@@ -109,7 +109,19 @@
     <!-- /Page Body -->
 </div>
 
-
+<script>
+            $(function() {
+            var availableTags = [
+            {{#datas}}"{{description}}",
+            "{{amount}}",
+            "{{value1}}",
+            {{/datas}}
+            ];
+                    $("#SearchName").autocomplete({
+            source: availableTags
+            });
+            });
+</script>
 
 <script>
              $('.btn-del').click(function(){
@@ -129,18 +141,16 @@
                    
             });
 </script> 
+
 <script>
-            $("#btnsearch").click(function () {
-    var SearchName = $("#SearchName").val();
+           $("#btnsearch").click(function () {
+            var SearchName = $("#SearchName").val();
+
             if (SearchName == ""){
-    document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-    } else{
-
-    var data = {"SearchName":SearchName};
-//       
-
-            //getHTML('content-body','{{_context_path}}/api/welfare/welfare/view/searchsub', data);
-    }
-    });
-
-</script>
+            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+            } else{
+            
+                    getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName:SearchName});
+            }
+            });
+</script> 

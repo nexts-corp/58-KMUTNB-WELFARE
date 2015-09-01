@@ -118,8 +118,8 @@
 <script>
             $(function() {
             var availableTags = [
-            {{#welfare}}"{{welfareName}}",
-            {{/welfare}}
+            {{#datas}}"{{name}}",
+            {{/datas}}
             ];
                     $("#SearchName").autocomplete({
             source: availableTags
@@ -146,17 +146,15 @@
             });
 </script> 
 
-
 <script>
-                    $("#btnsearch").click(function () {
+           $("#btnsearch").click(function () {
             var SearchName = $("#SearchName").val();
-                    if (SearchName == ""){
+
+            if (SearchName == ""){
             document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
             } else{
-
-            var data = {"SearchName":SearchName};
-                    getHTML('content-body', '{{_context_path}}/api/welfare/welfare/view/search', data);
+            
+                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName:SearchName});
             }
             });
-
-</script>
+</script> 

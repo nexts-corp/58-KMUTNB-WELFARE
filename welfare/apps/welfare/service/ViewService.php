@@ -47,10 +47,29 @@ class ViewService extends CServiceBase implements IViewService {
     //start page welfare list
 
     public function welfareLists() {
+        
+        $data = $this->getRequest()->SearchName;
+     
+        if (!empty($data)) {
+        $view = new CJView("welfare/lists", CJViewType::HTML_VIEW_ENGINE);
+            $sql="select wf from \\apps\\welfare\\entity\\welfare wf "
+                ." where wf.name LIKE :name ";
+             $obj = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
+            
+            if (count($obj) > 0) {
+            foreach ($obj as $key => $value) {
+                $obj[$key]->dateStart = $value->dateStart->format('d-m-Y');
+                $obj[$key]->dateEnd = $value->dateEnd->format('d-m-Y');
+            }
+        }
+            $view->datas=$obj;
+            return $view;
+            
+        }else{
         $view = new CJView("welfare/lists", CJViewType::HTML_VIEW_ENGINE);
         $daoWelfare = new Welfare();
         $obj = $this->datacontext->getObject($daoWelfare);
-
+        
         if (count($obj) > 0) {
             foreach ($obj as $key => $value) {
                 $obj[$key]->dateStart = $value->dateStart->format('d-m-Y');
@@ -59,8 +78,9 @@ class ViewService extends CServiceBase implements IViewService {
         }
 
         $view->datas = $obj;
-
+        
         return $view;
+        }
     }
 
     //end page welfare list
@@ -133,6 +153,29 @@ class ViewService extends CServiceBase implements IViewService {
     //start page conditions view lists 
 
     public function conditionsLists($id) {
+        
+           
+        $data = $this->getRequest()->SearchName;
+     
+        if (!empty($data)) {
+             $view = new CJView("conditions/lists", CJViewType::HTML_VIEW_ENGINE);
+        $employeeType = '\\apps\\taxonomy\\entity\\';
+        $daoCondition = '\\apps\\welfare\\entity\\';
+        
+          $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.welfareId,cdt.description,"
+                . "cdt.welfareId,cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,"
+                . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,"
+                . "cdt.returnTypeId,txn.id,txn.value1 "
+                . "FROM ".$daoCondition."Conditions cdt Left JOIN ".$employeeType."Taxonomy  txn with "
+                . "cdt.employeeTypeId = txn.id "
+                ." where cdt.description LIKE :name or txn.value1 LIKE :name or cdt.amount LIKE :name";
+                $obj = $this->datacontext->getObject($sql, array("name" =>"%".$data."%"));
+        
+                $view->datas=$obj;
+                $view->welfareId=$id;
+
+                return $view;
+        }else{
         $view = new CJView("conditions/lists", CJViewType::HTML_VIEW_ENGINE);
         
         $employeeType = '\\apps\\taxonomy\\entity\\';
@@ -154,6 +197,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view->welfareId=$id;
 
         return $view;
+        }
     }
 
     //end page conditions view lists
