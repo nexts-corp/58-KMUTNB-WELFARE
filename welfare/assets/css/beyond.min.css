@@ -9504,7 +9504,7 @@ input[type=checkbox]:active~.text :before, input[type=radio]:active~.text :befor
 	box-shadow: 0 1px 2px rgba(0,0,0,.05), inset 0 1px 3px rgba(0,0,0,.1)
 }
 input[type=checkbox]:disabled~.text, input[type=radio]:disabled~.text, input[type=checkbox][disabled]~.text, input[type=radio][disabled]~.text, input[type=checkbox].disabled~.text, input[type=radio].disabled~.text {
-	color: rgba(0,0,0,.4)
+	color: rgba(0,0,0,1)
 }
 input[type=checkbox]:disabled~.text:before, input[type=radio]:disabled~.text:before, input[type=checkbox][disabled]~.text:before, input[type=radio][disabled]~.text:before, input[type=checkbox].disabled~.text:before, input[type=radio].disabled~.text:before {
 	background-color: #f5f5f5 !important;
