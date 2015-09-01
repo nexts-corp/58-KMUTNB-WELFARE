@@ -54,4 +54,13 @@ interface IMemberService {
      * @description view department   
      */
     public function getData($id);
+    
+    /**
+     * @name search
+     * @uri /search
+     * @param String data 
+     * @return string search Description
+     * @description ค้นหา   
+     */
+    public function search($data);
 }

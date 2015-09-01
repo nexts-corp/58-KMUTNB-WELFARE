@@ -78,9 +78,22 @@ class ViewService extends CServiceBase implements IViewService {
     public function memberLists() {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
         //$listregister = new \apps\common\entity\Register();
-        $listregister = new \apps\member\entity\Member();
-        $listreg = $this->datacontext->getObject($listregister);
-        $view->list = $listreg;
+        $sql = "select  mem.memberId,mem.idCard,mem.titleId,mem.academicId,mem.fname,mem.lname, "
+                . "tax.pCode,tax.code "
+                . "FROM \\apps\\member\\entity\\Member mem "
+                . "INNER JOIN \\apps\\taxonomy\\entity\\Taxonomy tax "
+                . "with mem.memberActiveId = tax.id "
+                . "WHERE tax.pCode = 'memberActive' and tax.code = 'working'";
+       
+        $datamem = $this->datacontext->getObject($sql);
+        //print_r($listreg);
+//        $title = new Taxonomy();
+//        $title->pCode = "titleName";
+//        $title->id = $datamem->titleId;
+//        $datatitle = $this->datacontext->getObject($title);
+//        
+//        print_r($datatitle);
+        $view->list = $datamem;
         return $view;
     }
 

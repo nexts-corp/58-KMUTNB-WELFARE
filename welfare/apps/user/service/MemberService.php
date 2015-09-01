@@ -7,9 +7,9 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use \apps\user\interfaces\IMemberService;
-use \apps\common\entity\Register;
+
 use apps\user\entity\User;
-use \apps\common\entity\Department;
+
 
 class MemberService extends CServiceBase implements IMemberService {
 
@@ -20,18 +20,19 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function save($data) {
-
+        $taxonomy = new \apps\taxonomy\entity\Taxonomy();
+        $taxonomy->pCode = "memberActive";
+        $taxonomy->code = "working";
+        $dataTax = $this->datacontext->getObject($taxonomy)[0];
+        
+        $data->memberActiveId = $dataTax->id;
         $data->dob = new \DateTime($data->dob);
         $data->workStartDate = new \DateTime($data->workStartDate);
 //        return $data;
         if ($this->datacontext->saveObject($data)) {
 
             $user = new User();
-//            $user->setRegisterId($data->memberId);
-//            $user->setUserName($data->registerIdCard);
-//            $user->setUserTypeId($data->userTypeId);
-//            $aa = $data->registerDateOfBirth->format('d-m-Y');
-//            $user->setPassword(md5($aa));
+         
             
             $user->setMemberId($data->memberId);
             $user->setUsername($data->idCard);
@@ -39,14 +40,7 @@ class MemberService extends CServiceBase implements IMemberService {
             $aa = $data->dob->format('d-m-Y');
             $user->setPassword(md5($aa));
 
-//            if ($data->checkUser == "1") {
-//                $user->setSuperAdminId($data->SuperAdminId);
-//            } elseif ($data->checkUser == "2") {
-//                $user->setFacultyId($data->facultyId);
-//            } elseif ($data->checkUser == "3") {
-//                $user->setFacultyId($data->facultyId);
-//                $user->setDepartmentId($data->departmentId);
-//            }
+         
             if ($this->datacontext->saveObject($user)) {
                 $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
 
@@ -106,6 +100,19 @@ class MemberService extends CServiceBase implements IMemberService {
         $filter->setFacultyId($id);
         $dao_department = $this->datacontext->getObject($filter);
         $view->data = $dao_department;
+        return $view;
+    }
+
+    public function search($data) {
+        $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
+
+        $sql="select mem from \\apps\\member\\entity\\Member mem "
+                . "INNER JOIN \\apps\\taxonomy\\entity\\Taxonomy tax"
+                . " where mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name "
+                . "and tax.pCode = 'memberActive' and tax.code = 'working'";
+//        print_r($sql);
+        $view->list = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
+//        print_r($view->datas);
         return $view;
     }
 
