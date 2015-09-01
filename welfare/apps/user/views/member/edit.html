@@ -43,7 +43,7 @@
 
                                     <div class="controls col-lg-12">
                                         <div class="input-group">
-                                            <input class="form-control date-picker" id="dob" value= "{{dob}}" type="text" data-date-format="dd-mm-yyyy">
+                                            <input class="form-control cDate" id="dob" value= "{{dob}}" type="text">
 
                                             <span class="input-group-addon"> 
                                                 <i class="fa fa-calendar"></i>
@@ -181,7 +181,7 @@
 
                                             <div class="controls col-lg-12">
                                                 <div class="input-group">
-                                                    <input class="form-control date-picker" value="{{workStartDate}}" id="workStartDate" type="text" data-date-format="dd-mm-yyyy">
+                                                    <input class="form-control cDate" value="{{workStartDate}}" id="workStartDate" type="text">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
@@ -339,7 +339,8 @@ $(document).ready(function () {
             }
         });
     });
-    $('.date-picker').datepicker();
+//    $('.date-picker').datepicker();
+        $(".cDate").datepicker({language: 'th-th', format: 'dd/mm/yyyy', autoclose: true});
     function listsAcademic() {
         var academicId = '{{#datas}}{{academicId}}{{/datas}}';
         var academic = getPCode("academic");

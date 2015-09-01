@@ -42,7 +42,7 @@
 
                                     <div class="controls col-lg-12">
                                         <div class="input-group">
-                                            <input class="form-control date-picker" id="dob" type="text" data-date-format="dd-mm-yyyy">
+                                            <input class="form-control cDate" id="dob" >
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span>
@@ -191,19 +191,16 @@
 
                                     <div class="form-group">
                                         <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
-
                                         <div class="col-lg-9">
-
                                             <div class="controls col-lg-12">
                                                 <div class="input-group">
-                                                    <input class="form-control date-picker" id="workStartDate" type="text" data-date-format="dd-mm-yyyy">
+                                                    <input class="form-control cDate" id="workStartDate" >
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
 
                                 </div>
@@ -352,7 +349,7 @@
                 }
 
             });
-            $('.date-picker').datepicker();
+            $(".cDate").datepicker({language: 'th-th', format: 'dd/mm/yyyy', autoclose: true});
         });
 
     </script>
