@@ -26,8 +26,22 @@ class MemberService extends CServiceBase implements IMemberService {
         $dataTax = $this->datacontext->getObject($taxonomy)[0];
         
         $data->memberActiveId = $dataTax->id;
-        $data->dob = new \DateTime($data->dob);
-        $data->workStartDate = new \DateTime($data->workStartDate);
+        
+        $dob1 = explode("-",$data->dob);
+        $dob1[2] = intVal($dob1[2])-543;
+        $dob = $dob1[2]."-".$dob1[1]."-".$dob1[0];
+        
+        $date1 = explode("-",$data->workStartDate);
+        $date1[2] = intVal($date1[2])-543;
+        $workStartDate = $date1[2]."-".$date1[1]."-".$date1[0];
+        
+        $data->dob = new \DateTime($dob);
+        
+        $data->workStartDate = new \DateTime($workStartDate);
+//        
+//        $data->dob = $data->dob->format('Y-m-d');
+//        $data->workStartDate = $data->workStartDate->format('Y-m-d');
+        //print_r($data);
 //        return $data;
         if ($this->datacontext->saveObject($data)) {
 
@@ -37,8 +51,10 @@ class MemberService extends CServiceBase implements IMemberService {
             $user->setMemberId($data->memberId);
             $user->setUsername($data->idCard);
             $user->setUserTypeId($data->userTypeId);
-            $aa = $data->dob->format('d-m-Y');
-            $user->setPassword(md5($aa));
+            $dob = $data->dob->format('d-m-Y');
+            $pwd = explode("-",$dob);
+            $password = $pwd[0].$pwd[1].(intval($pwd[2])+543);
+            $user->setPassword(md5($password));
 
          
             if ($this->datacontext->saveObject($user)) {
@@ -56,8 +72,17 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
-        $data->dob = new \DateTime($data->dob);
-        $data->workStartDate = new \DateTime($data->workStartDate);
+        $dob1 = explode("-",$data->dob);
+        $dob1[2] = intVal($dob1[2])-543;
+        $dob = $dob1[2]."-".$dob1[1]."-".$dob1[0];
+        
+        $date1 = explode("-",$data->workStartDate);
+        $date1[2] = intVal($date1[2])-543;
+        $workStartDate = $date1[2]."-".$date1[1]."-".$date1[0];
+        
+        $data->dob = new \DateTime($dob);
+        
+        $data->workStartDate = new \DateTime($workStartDate);
         if ($this->datacontext->updateObject($data)) {
             $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
             return true;

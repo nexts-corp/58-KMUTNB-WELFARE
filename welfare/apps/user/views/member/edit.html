@@ -21,7 +21,7 @@
     <!-- Page Body -->
     <div class="page-body">
         <div class="row">
-            {{#datas}}
+{{#datas}}
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
                     <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
@@ -43,9 +43,8 @@
 
                                     <div class="controls col-lg-12">
                                         <div class="input-group">
-                                            <input class="form-control cDate" id="dob" value= "{{dob}}" type="text">
-
-                                            <span class="input-group-addon"> 
+                                            <input class="form-control cDate" value="{{dob}}" type="text" id="dob" />
+                                            <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </span>
                                         </div>
@@ -178,15 +177,14 @@
                                         <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
 
                                         <div class="col-lg-9">
-
-                                            <div class="controls col-lg-12">
-                                                <div class="input-group">
-                                                    <input class="form-control cDate" value="{{workStartDate}}" id="workStartDate" type="text">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                </div>
+                                            <!--<div class="controls col-lg-12">-->
+                                            <div class="input-group">
+                                                <input class="form-control cDate" type="text" value="{{workStartDate}}"  id="workStartDate" style="z-index: 9999;" />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
                                             </div>
+                                            <!--</div>-->
                                         </div>
 
                                     </div>
@@ -270,8 +268,6 @@
     </div>
 
 
-    <script src="{{_context_path}}/assets/js/datetime/bootstrap-datepicker.js"></script>
-
     <!--        <script type="text/javascript">
         
             $(document).ready(function () {
@@ -293,6 +289,7 @@
     <script type="text/javascript">
 
 $(document).ready(function () {
+    $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
     listsAcademic();
     listtitleName();
     listgender();
@@ -340,7 +337,8 @@ $(document).ready(function () {
         });
     });
 //    $('.date-picker').datepicker();
-        $(".cDate").datepicker({language: 'th-th', format: 'dd/mm/yyyy', autoclose: true});
+
+
     function listsAcademic() {
         var academicId = '{{#datas}}{{academicId}}{{/datas}}';
         var academic = getPCode("academic");

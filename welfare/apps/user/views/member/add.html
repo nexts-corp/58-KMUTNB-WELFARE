@@ -19,256 +19,256 @@
     </div>
     <!-- /Page Header --> 
     <!-- Page Body -->
-    <div class="page-body">
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-                <div class="widget radius-bordered">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
-                    <div class="widget-body">
-                        <div  class="form-horizontal">
+    <form id="registerForm">
+        <div class="page-body">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <div class="widget radius-bordered">
+                        <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                        <div class="widget-body">
+                            <div  class="form-horizontal">
 
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}registerIdCard{{/i18n}}</label>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="idCard" name="registerIdCard" placeholder="{{#i18n}}registerIdCard{{/i18n}}"
-                                               data-bv-notempty="true"
-                                               data-bv-notempty-message="{{#i18n}}registerIdCard{{/i18n}}" />
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">{{#i18n}}registerIdCard{{/i18n}}</label>
+                                    <div class="col-lg-4">
+                                        <div class="col-lg-12">
+                                            <input type="text" class="form-control" id="idCard" name="registerIdCard" placeholder="{{#i18n}}registerIdCard{{/i18n}}"
+                                                   data-bv-notempty="true" 
+                                                   data-bv-notempty-message="{{#i18n}}registerIdCard{{/i18n}}" required />
+                                        </div>
                                     </div>
+                                    <label for="reservation" class="col-lg-2 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
+
+                                    <div class="col-lg-4">
+
+                                        <div class="controls col-lg-12">
+                                            <div class="input-group">
+                                                <input class="form-control cDate" id="dob" required />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
-                                <label for="reservation" class="col-lg-2 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
 
-                                <div class="col-lg-4">
-
-                                    <div class="controls col-lg-12">
-                                        <div class="input-group">
-                                            <input class="form-control cDate" id="dob" >
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
+                                    <div class="col-lg-4">
+                                        <div class="col-lg-12">
+                                            <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
+                                                <option value="">{{#i18n}}academicPositionsId{{/i18n}}</option>
+                                                {{#academic}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/academic}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
+                                    <div class="col-lg-4">
+                                        <div class="col-lg-12">
+                                            <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country" required >
+                                                <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
+                                                {{#titleName}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/titleName}}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
 
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-12">
-                                        <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
-                                            <option value="">{{#i18n}}academicPositionsId{{/i18n}}</option>
-                                            {{#academic}}
-                                            <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                            {{/academic}}
-                                        </select>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">{{#i18n}}registerName{{/i18n}}</label>
+                                    <div class="col-lg-4">
+                                        <div class="col-lg-12">
+                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}" required />
+                                        </div>
+                                    </div>
+                                    <label class="col-lg-2 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
+                                    <div class="col-lg-4">
+                                        <div class="col-lg-12">
+                                            <input  class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
+                                                   data-bv-notempty="true"
+                                                   data-bv-notempty-message="{{#i18n}}registerLastName{{/i18n}}" required />
+                                        </div>
                                     </div>
                                 </div>
-                                <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-12">
-                                        <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country">
-                                            <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
-                                            {{#titleName}}
-                                            <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                            {{/titleName}}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}registerName{{/i18n}}</label>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}"
-                                               data-bv-notempty="true"
-                                               data-bv-notempty-message="{{#i18n}}registerName{{/i18n}}" />
-                                    </div>
-                                </div>
-                                <label class="col-lg-2 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
-                                <div class="col-lg-4">
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
-                                               data-bv-notempty="true"
-                                               data-bv-notempty-message="{{#i18n}}registerLastName{{/i18n}}" />
-                                    </div>
-                                </div>
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">{{#i18n}}gender{{/i18n}}</label>
+                                    <div class="col-lg-4 control-group ">
+                                        {{#gender}}
+                                        <div class="radio col-lg-6">
+                                            <label>
+                                                <input name="genderId" id="genderId" value="{{id}}" type="radio"  checked="checked">
+                                                <span class="text">{{value1}} </span> </label>
+                                        </div>
 
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}gender{{/i18n}}</label>
-                                <div class="col-lg-4 control-group ">
-                                    {{#gender}}
-                                    <div class="radio col-lg-6">
-                                        <label>
-                                            <input name="genderId" id="genderId" value="{{id}}" type="radio"  checked="checked">
-                                            <span class="text">{{value1}} </span> </label>
+                                        {{/gender}}
                                     </div>
-
-                                    {{/gender}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                        <div class="widget radius-bordered">
-                            <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
-                            <div class="widget-body">
-                                <div class="form-horizontal">
-                                    <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                            <div class="widget radius-bordered">
+                                <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                                <div class="widget-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="employeeCode" name="employeeCode" placeholder="{{#i18n}}registerStaffCode{{/i18n}}"
-                                                   data-bv-notempty="true"
-                                                   data-bv-notempty-message=" {{#i18n}}registerStaffCode{{/i18n}}" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="employeeTypeId" name="employeeTypeId" data-bv-field="country">
-                                                <option value="">ระบุประเภทพนักงาน</option>
-                                                {{#employeeType}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/employeeType}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="positionId" name="positionId" data-bv-field="country">
-                                                <option value="">ระบุตำแหน่งงาน</option>
-                                                {{#position}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/position}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country">
-                                                <option value="">เลือกภาควิชา</option>
-                                                {{#faculty}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/faculty}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
-                                                <option value="">สังกัด</option>
-                                                {{#department}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/department}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
-
-                                        <div class="col-lg-9 control-group ">
-                                            {{#matier}}  
-                                            <div class="radio col-lg-6">
-                                                <label>
-                                                    <input name="form-field-radio" value="{{id}}" id="matierId" type="radio"  checked="checked">
-                                                    <span class="text">{{value1}}</span> </label>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="employeeCode" name="employeeCode" placeholder="{{#i18n}}registerStaffCode{{/i18n}}"
+                                                       data-bv-notempty="true"
+                                                       data-bv-notempty-message=" {{#i18n}}registerStaffCode{{/i18n}}" required />
                                             </div>
-                                            {{/matier}}    
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <div class="controls col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" id="employeeTypeId" name="employeeTypeId" data-bv-field="country" required >
+                                                    <option value="">ระบุประเภทพนักงาน</option>
+                                                    {{#employeeType}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/employeeType}}
+                                                </select>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" id="positionId" name="positionId" data-bv-field="country" required >
+                                                    <option value="">ระบุตำแหน่งงาน</option>
+                                                    {{#position}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/position}}
+                                                </select>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country" required >
+                                                    <option value="">เลือกภาควิชา</option>
+                                                    {{#faculty}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/faculty}}
+                                                </select>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
+                                                    <option value="">สังกัด</option>
+                                                    {{#department}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/department}}
+                                                </select>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
+
+                                            <div class="col-lg-9 control-group " style="z-index: 0;">
+                                                {{#matier}}  
+                                                <div class="radio col-lg-6">
+                                                    <label>
+                                                        <input name="form-field-radio" value="{{id}}" id="matierId" type="radio"  checked="checked">
+                                                        <span class="text">{{value1}}</span> </label>
+                                                </div>
+                                                {{/matier}}    
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <!--<div class="controls col-lg-12">-->
                                                 <div class="input-group">
-                                                    <input class="form-control cDate" id="workStartDate" >
+                                                    <input class="form-control cDate" id="workStartDate" style="z-index: 9999;" required />
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 </div>
+                                                <!--</div>-->
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                        <div class="widget radius-bordered">
-                            <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
-                            <div class="widget-body">
-                                <div class="form-horizontal">
-                                    <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                            <div class="widget radius-bordered">
+                                <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                                <div class="widget-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
-                                                   data-bv-notempty="true"
-                                                   data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
+                                                       data-bv-notempty="true"
+                                                       data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
-                                                   data-bv-notempty="true"
-                                                   data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
+                                                       data-bv-notempty="true"
+                                                       data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
-                                                   data-bv-notempty="true"
-                                                   data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
+                                                       data-bv-notempty="true"
+                                                       data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
-                                                   data-bv-notempty="true"
-                                                   data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
+                                                       data-bv-notempty="true"
+                                                       data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                            </div>
                                         </div>
-                                    </div>
 
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
-                                                <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
-                                                {{#userType}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/userType}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                    </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country" required >
+                                                    <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
+                                                    {{#userType}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/userType}}
+                                                </select>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <div class="col-lg-offset-6 col-lg-8">
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-6 col-lg-8">
 
-                                            <button id="btn_submit" name="bn" class="btn btn-primary" type="button"> {{#i18n}}button.submit{{/i18n}}</button>
+                                                <button id="btn_submit" name="btn_submit" class="btn btn-primary" > {{#i18n}}button.submit{{/i18n}}</button>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -278,10 +278,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $("#registerForm").h5Validate();
             $("#facultyId").change(function () {
                 var id = $("#facultyId").val();
                 $.ajax({
@@ -335,21 +335,23 @@
 
                     var jdata = {};
                     jdata['data'] = data;
-                    $.ajax({
-                        url: '{{_context_path}}/api/user/member/save',
-                        data: jsonEncode(jdata),
-                        type: 'post',
-                        success: function (result) {
+//                    $.ajax({
+//                        url: '{{_context_path}}/api/user/member/save',
+//                        data: jsonEncode(jdata),
+//                        type: 'post',
+//                        success: function (result) {
+//
+//                            getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
+//                        }
+//                    });
 
-                            getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
-                        }
-                    });
-                }else{
+                } else {
                     alert("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");
+                    $('#idCard').focus();
                 }
-
+                return false;
             });
-            $(".cDate").datepicker({language: 'th-th', format: 'dd/mm/yyyy', autoclose: true});
+            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
         });
 
     </script>

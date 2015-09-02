@@ -56,11 +56,11 @@
                                     </tr>
                                 </thead>
                                 <tbody id="title">
-                                      
+                                    {{#lists}}
                                     <tr class="selectable" >
 
-<!--                                        <td>{{idCard}}</td>
-                                        <td><div id="title"></div> {{fname}}      {{lname}}</td>
+                                        <td>{{idCard}}</td>
+                                        <td><div id="title"></div>{{value1}} {{fname}}      {{lname}}</td>
 
                                         <td class="center">
 
@@ -73,9 +73,9 @@
                                             </button>
 
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{memberId}}" >Delete</button> 
-                                        </td>-->
+                                        </td>
                                     </tr>
-                                    
+                                    {{/lists}}
 
                                 </tbody>
                             </table>
@@ -90,98 +90,61 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+            $(document).ready(function () {
 
-        //titleName();
-        listtitleName();
+    //titleName();
+    //listtitleName();
 
-        $('.btn-del').click(function () {
-            var id = $(this).attr('row-index');
+    $('.btn-del').click(function () {
+    var id = $(this).attr('row-index');
             var data = {"memberId": id};
             var msg = sendData('{{_context_path}}/api/user/member/delete', data);
             getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
-        });
-
-        $("#btnsearch").click(function () {
-            var SearchName = $("#SearchName").val();
+    });
+            $("#btnsearch").click(function () {
+    var SearchName = $("#SearchName").val();
             if (SearchName == "") {
-                document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-            } else {
+    document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+    } else {
 
-                var data = {"SearchName": SearchName};
-                getHTML('content-body', '{{_context_path}}/api/user/member/search', data);
-            }
-        });
-
-
-        function listtitleName() {
+    var data = {"SearchName": SearchName};
+            getHTML('content-body', '{{_context_path}}/api/user/member/search', data);
+    }
+    });
+            function listtitleName() {
             var html = "";
             {{#list}}
             var titleId = '{{titleId}}';
-            //console.log(titleId);
-            var titleName = getPCode("titleName");
-             
-            
-            
-            if (titleName != "") {
-                $.each(titleName, function (key, value) {
-                    if (value.id == titleId) {
-                        //alert(titleId);
-                    
-                         html += "<tr class='selectable'><td>{{idCard}}</td> <td>" + value["value1"] + "{{fname}}" + " " + "{{lname}}</td><td class='center'><button class='btn btn-info btn-xs edit' data-id='content-body'data-api='{{_context_path}}/api/user/view/member/edit/{{memberId}}' data-param='null' onclick='btnHTML(this)'><i class='fa fa-edit'></i>{{#i18n}}edit{{/i18n}}</button><button class='btn-del btn btn-xs btn-danger' row-index='{{memberId}}' >Delete</button></td></tr>";
+                    //console.log(titleId);
+                    var titleName = getPCode("titleName");
+                    if (titleName != "") {
+            $.each(titleName, function (key, value) {
+            if (value.id == titleId) {
+            //alert(titleId);
+
+            html += "<tr class='selectable'><td>{{idCard}}</td> <td>" + value["value1"] + "{{fname}}" + " " + "{{lname}}</td><td class='center'><button class='btn btn-info btn-xs edit' data-id='content-body'data-api='{{_context_path}}/api/user/view/member/edit/{{memberId}}' data-param='null' onclick='btnHTML(this)'><i class='fa fa-edit'></i>{{#i18n}}edit{{/i18n}}</button><button class='btn-del btn btn-xs btn-danger' row-index='{{memberId}}' >Delete</button></td></tr>";
 //
 //                        html += "<label>" + value.value1 + "</label>";
-                    } else {
-                        //html += "<label>" + value.value1 +"fuck"+ "</label>";
-                    }
-                });
             } else {
-                // html = "<option value=''>คำนำหน้าชื่อ</option>";
+            //html += "<label>" + value.value1 +"fuck"+ "</label>";
             }
-            
+            });
+            } else {
+            // html = "<option value=''>คำนำหน้าชื่อ</option>";
+            }
+
             $("#title").html(html);
-           {{/list}}
-            
-            
-        }
+            {{/list}}
 
-//        function titleName() {
-//            {{#list}}
-//            var memberId = '{{memberId}}';
-//            var titleId = '{{titleId}}';
-//            var academicId = '{{academicId}}';
-//            {{/list}}
-//            var titleName = getPCode("titleName");
-//            var academic = getPCode("academic");
-//            var html = "";
-//            //alert(memberId);
-//            if (titleName != "") {
-//                //alert("dddddddd");
-//                if (academic != "") {
-//                     alert("aaaaaaaaa");
-//                    $.each(memberId, function (key, value) {
-//                        
-//                        html += "<td>{{idCard}}</td> <td>" + value["value1"] + "{{fname}}" + " " + "{{lname}}</td><td class='center'><button class='btn btn-info btn-xs edit' data-id='content-body'data-api='{{_context_path}}/api/user/view/member/edit/{{memberId}}' data-param='null' onclick='btnHTML(this)'><i class='fa fa-edit'></i>{{#i18n}}edit{{/i18n}}</button><button class='btn-del btn btn-xs btn-danger' row-index='{{memberId}}' >Delete</button></td>";
-//
-//                    });
-//                   
-//                }
-//                else {
-//                    alert(2);
-//                }
-//
-//            }
-//            else {
-//                alert(3);
-//            }
-//            $("#membername").html(html);
-//        }
+
+            }
 
 
 
 
 
-    });
+
+            });
 
 
 
