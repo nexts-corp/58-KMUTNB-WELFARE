@@ -22,39 +22,39 @@ class ViewService extends CServiceBase implements IViewService {
         $academic = new Taxonomy();
         $academic->pCode = "academic";
         $view->academic = $this->datacontext->getObject($academic);
-        
+
         $titleName = new Taxonomy();
         $titleName->pCode = "titleName";
         $view->titleName = $this->datacontext->getObject($titleName);
-        
+
         $gender = new Taxonomy();
         $gender->pCode = "gender";
         $view->gender = $this->datacontext->getObject($gender);
-        
+
         $employeeType = new Taxonomy();
         $employeeType->pCode = "employeeType";
         $view->employeeType = $this->datacontext->getObject($employeeType);
-        
+
         $position = new Taxonomy();
         $position->pCode = "position";
         $view->position = $this->datacontext->getObject($position);
-        
+
         $department = new Taxonomy();
         $department->pCode = "department";
         $view->department = $this->datacontext->getObject($department);
-        
+
         $faculty = new Taxonomy();
         $faculty->pCode = "faculty";
         $view->faculty = $this->datacontext->getObject($faculty);
-        
+
         $userType = new Taxonomy();
         $userType->pCode = "userType";
         $view->userType = $this->datacontext->getObject($userType);
-        
+
         $matier = new Taxonomy();
         $matier->pCode = "matier";
         $view->matier = $this->datacontext->getObject($matier);
-        
+
         return $view;
     }
 
@@ -63,10 +63,15 @@ class ViewService extends CServiceBase implements IViewService {
         $member = new \apps\member\entity\Member();
         $member->setMemberId($id);
         $member = $this->datacontext->getObject($member)[0];
+
+        $dob = $member->dob->format('d-m-Y');
+        $mem = explode("-", $dob);
+        $member->dob = $mem[0]."-".$mem[1]."-".(intval($mem[2]) + 543);
         
-        $member->dob = $member->dob->format('d-m-Y');
-        $member->workStartDate = $member->workStartDate->format('d-m-Y');
-        
+        $workStartDate = $member->workStartDate->format('d-m-Y');
+        $wsd = explode("-", $workStartDate);
+        $member->workStartDate = $wsd[0]."-".$wsd[1]."-".(intval($wsd[2]) + 543);
+
         $user = new \apps\user\entity\User();
         $user->memberId = $member->memberId;
         $user = $this->datacontext->getObject($user)[0];
@@ -77,23 +82,21 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberLists() {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-        //$listregister = new \apps\common\entity\Register();
-        $sql = "select  mem.memberId,mem.idCard,mem.titleId,mem.academicId,mem.fname,mem.lname, "
-                . "tax.pCode,tax.code "
-                . "FROM \\apps\\member\\entity\\Member mem "
-                . "INNER JOIN \\apps\\taxonomy\\entity\\Taxonomy tax "
-                . "with mem.memberActiveId = tax.id "
-                . "WHERE tax.pCode = 'memberActive' and tax.code = 'working'";
-       
-        $datamem = $this->datacontext->getObject($sql);
-        //print_r($listreg);
-//        $title = new Taxonomy();
-//        $title->pCode = "titleName";
-//        $title->id = $datamem->titleId;
-//        $datatitle = $this->datacontext->getObject($title);
-//        
-//        print_r($datatitle);
-        $view->list = $datamem;
+//$listregister = new \apps\common\entity\Register();
+        $sql = "select * "
+                . "FROM member mem1 "
+                . "INNER JOIN taxonomy tax1 "
+                . "on mem1.titleId = tax1.id "
+                . "WHERE mem1.memberId in ( "
+                . "select mem2.memberId "
+                . "FROM member mem2 "
+                . "INNER JOIN taxonomy tax2 "
+                . "on mem2.memberActiveId = tax2.id "
+                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
+                . ")";
+        $data = $this->datacontext->pdoQuery($sql);
+        // print_r($data);
+        $view->lists = $data;
         return $view;
     }
 
