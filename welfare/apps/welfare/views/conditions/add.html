@@ -55,6 +55,22 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}returnType{{/i18n}}</label>
+                                <div class="col-lg-6">
+
+                                    <select class="form-control" name="country" data-bv-field="country" id="returnTypeId">
+
+                                        {{#unit}}
+
+                                        <option value='{{id}}' >{{value1}}</option>
+
+                                        {{/unit}}
+                                    </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -255,16 +271,56 @@
                         </div>
                     </div>
 
+
+
                     <div class="form-group">
                         <div class="col-lg-offset-6 col-lg-8">
                             <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                            <input class="btn btn-primary" id="btn_preview" type="button" value="ตรวจสอบผู้มีสิทธิ์" />
+
                         </div>
                     </div>
 
                 </div>
+
+
             </div>
         </div>
 
+        <div id="preview" style="display: none;">
+            <div class="widget radius-bordered">
+                <div class="widget-header">
+                    <span class="widget-caption">รายการบุคลากรผู้มีสิทธิ์ได้รับตามเงื่อนไข</span>
+                </div>
+                <div class="widget-body">
+                    <div class="form-horizontal">
+
+                        <table class="table table-hover table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}welfarename{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="selectable">
+
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
 
 
     </div>
@@ -307,13 +363,18 @@
                 data['welfareId'] = "{{welfareId}}";
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
-                data['dateStartWork'] = $("#dateStartWork").val();
-                data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#dateStartWork").val() != "") {
+                    data['dateStartWork'] = $("#dateStartWork").val();
+                }
+                if ($("#dateEndWork").val() != "") {
+                    data['dateEndWork'] = $("#dateEndWork").val();
+                }
                 data['ageStart'] = $("#ageStart").val();
                 data['ageEnd'] = $("#ageEnd").val();
                 data['ageWorkStart'] = $("#ageWorkStart").val();
                 data['ageWorkEnd'] = $("#ageWorkEnd").val();
                 data['genderId'] = $('input[name=genderId]:checked').val();
+                data['returnTypeId'] = $('#returnTypeId').val();
                 data['employeeTypeId'] = v;
                 data1.push(data);
             });
@@ -327,7 +388,7 @@
                 type: 'post', // 'or get'
                 success: function (result) {
                     if (result.save == true) {
-                        getHTML('content-body', '{{_context_path}}/api/welfare/view/condition/lists/{{welfareId}}', null);
+                        getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', null);
                         Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
                     } else {
                         Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
@@ -337,6 +398,56 @@
             });
         });
 
+        $("#btn_preview").click(function () {
+            var employeeTypeId = [];
+            $(".employeeType").each(function (k, v) {
+
+                if (this.checked) {
+                    employeeTypeId.push($(this).val());
+                }
+
+            });
+            var data1 = [];
+            $.each(employeeTypeId, function (k, v) {
+                var data = {};
+                if ($("#dateStartWork").val() != "") {
+                    data['dateStartWork'] = $("#dateStartWork").val();
+                }
+                if ($("#dateEndWork").val() != "") {
+                    data['dateEndWork'] = $("#dateEndWork").val();
+                }
+                data['ageStart'] = $("#ageStart").val();
+                data['ageEnd'] = $("#ageEnd").val();
+                data['ageWorkStart'] = $("#ageWorkStart").val();
+                data['ageWorkEnd'] = $("#ageWorkEnd").val();
+                data['genderId'] = $('input[name=genderId]:checked').val();
+                data['employeeTypeId'] = v;
+                data1.push(data);
+            });
+            var jdata = {};
+            jdata['conditions'] = data1;
+            if (data1.length > 0) {
+                $.ajax({
+                    url: '{{_context_path}}/api/welfare/view/previews/test/lists',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                        if (result.previews == "null") {
+                            Notify('กรุณาเลือกข้อมูล !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        } else {
+                            $("#preview").slideToggle(this.checked = true);
+                            var html = "";
+                            html += "<td></td>"
+                            "<td></td>"
+                            "<td></td>"
+                            "<td></td>";
+
+                            $(".selectable").html(html);
+                        }
+                    }
+                });
+            }
+        });
 
 
     });

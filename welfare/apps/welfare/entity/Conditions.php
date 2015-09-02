@@ -4,7 +4,7 @@ namespace apps\welfare\entity;
 
 /**
  * @Entity
- * @Table(name="Conditions")
+ * @Table(name="WelfareConditions")
  */
 class Conditions {
 
@@ -30,6 +30,11 @@ class Conditions {
     public $amount;
 
     /**
+     * @Column(type="string", length=10, name="returnTypeId",nullable=true)
+     */
+    public $returnTypeId; //หน่วยนับ
+
+    /**
      * @Column(type="date", name="dateStartWork",nullable=true)
      */
     public $dateStartWork; //วันที่บรรจุ
@@ -45,7 +50,7 @@ class Conditions {
     public $ageStart; //อายุตั้งแต่
 
     /**
-     * @Column(type="integer", length=3, name="ageTo",nullable=true)
+     * @Column(type="integer", length=3, name="ageEnd",nullable=true)
      */
     public $ageEnd; //อายุถึง
 
@@ -68,11 +73,6 @@ class Conditions {
      * @Column(type="string", length=10, name="employeeTypeId",nullable=true)
      */
     public $employeeTypeId; //พนักงาน
-
-    /**
-     * @Column(type="string", length=10, name="returnTypeId",nullable=true)
-     */
-    public $returnTypeId; //หน่วยนับ
 
     function getConditionsId() {
         return $this->conditionsId;

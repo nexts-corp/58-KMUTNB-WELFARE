@@ -42,24 +42,12 @@
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
                         <div class="pull-right">
-<!--                            <button class="btn btn-primary"
-                                    data-id="content-body"
-                                    data-api="{{_context_path}}/api/insurance/view/insurance/add"
-                                    data-param="null"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>{{#i18n}}print{{/i18n}} 
-                            </button>-->
+                            
+                            
                         </div>
 
                         <div class="pull-right">
 
-                            <button class="btn btn-primary"
-                                    data-id="content-body"
-                                    data-api="{{_context_path}}/api/welfare/view/welfare/add"
-                                    data-param="null"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
-                            </button>
                         </div>
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -67,14 +55,14 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>&nbsp;{{#i18n}}welfarecode{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfarename{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfaredatestart{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfaredateend{{/i18n}}</th>
-                                        <th class="center">จัดการ</th>
+                                        <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}welfarename{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                        <th class="text-center">รายละเอียด</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     {{#datas}}
                                     <tr class="selectable">
 
@@ -83,32 +71,7 @@
                                         <td>{{dateStart}}</td>
                                         <td>{{dateEnd}}</td>
                                    
-                                        <td class="center">
-                                            <button class="btn btn-maroon btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}"
-                                                    data-param="null"
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}managementWelfare{{/i18n}} 
-                                            </button>
-                                            
-                                                   <button class="btn btn-success btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/previews/lists/{{welfareId}}"
-                                                    data-param="null"
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}welfare.right{{/i18n}} 
-                                            </button>
-
-                                            <button class="btn btn-info btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/welfare/edit/{{welfareId}}"
-                                                    data-param="null"
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
-                                            </button>
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareId}}" >{{#i18n}}deletes{{/i18n}}</button>
-                                        </td>
+                                       
                                     </tr>
                                     {{/datas}}
                                 </tbody>

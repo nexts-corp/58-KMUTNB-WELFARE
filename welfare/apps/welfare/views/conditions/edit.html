@@ -58,6 +58,22 @@
                                 </div>
                             </div>
                             
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}returnType{{/i18n}}</label>
+                                <div class="col-lg-6">
+
+                                    <select class="form-control" name="country" data-bv-field="country" id="returnTypeId">
+                                        
+                                       {{#unit}}
+       
+                                        <option value='{{id}}' >{{value1}}</option>
+        
+                                         {{/unit}}
+                                    </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+
+                                </div>
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
@@ -339,8 +355,12 @@
                 data['conditionsId']="{{conditionsId}}"
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
-                data['dateStartWork'] = $("#dateStartWork").val();
-                data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#dateStartWork").val() != "") {
+                    data['dateStartWork'] = $("#dateStartWork").val();
+                }
+                if ($("#dateEndWork").val() != "") {
+                    data['dateEndWork'] = $("#dateEndWork").val();
+                }
                 data['ageStart'] = $("#ageStart").val();
                 data['ageEnd'] = $("#ageEnd").val();
                 data['ageWorkStart'] = $("#ageWorkStart").val();

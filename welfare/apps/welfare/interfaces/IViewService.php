@@ -59,5 +59,21 @@ interface IViewService {
      */
     public function conditionsEdit($id);
 
+    /**
+     * @name viewList
+     * @uri /previews/lists
+     * @param integer id Description
+     * @return html previews
+     * @description ตรวจสอบรายการผู้มีสิทธิได้รับสวัสดิการ
+     */
+    public function previewsLists($id);
     
+    /**
+     * @name viewTestList
+     * @uri /previews/test/lists
+     * @param apps\welfare\entity\Conditions conditions
+     * @return string previews
+     * @description ตรวจสอบรายการผู้มีสิทธิได้รับสวัสดิการ
+     */
+    public function previewsTestLists($conditions);
 }

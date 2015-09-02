@@ -32,7 +32,7 @@
                         <span class="widget-caption">{{#i18n}}welfareadd{{/i18n}}</span>
                     </div>
                     <div class="widget-body">
-                        <form  class="form-horizontal">
+                        <div  class="form-horizontal">
                             <div class="form-title">
                                 {{#i18n}}pleaseinput{{/i18n}}
                             </div>
@@ -84,10 +84,9 @@
                                 <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
                                 <div class="col-lg-5">
 
-                                    <select class="form-control" name="country" id="welfareType" data-bv-field="country">
-                                        <option value="">{{#i18n}}pleaseinputwelfare{{/i18n}}</option>
-                                        <option value="1">สวัสดิการให้กู้</option>
-                                        <option value="2">สวัสดิการให้เปล่า</option>
+                                    <select class="form-control" name="country" id="free" data-bv-field="country">
+                                        <option value="free">สวัสดิการให้เปล่า</option>
+                                        <option value="loan">สวัสดิการให้กู้</option>
 
 
                                     </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
@@ -119,46 +118,23 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="col-lg-4 col-sm-4 col-xs-4">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" class="inverted"  id="free" value="">
-                                                    <span class="text">{{#i18n}}free{{/i18n}}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        
                                     </div>
                                 </div>
                             </div>
                             
-<!--
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
-                                <div class="col-lg-9">
-
-                                    <select class="form-control" name="country" data-bv-field="country">
-                                        <option value="">{{#i18n}}pleaseinputwelfare{{/i18n}}</option>
-                                        <option value="1">สวัสดิการให้กู้</option>
-                                        <option value="2">สวัสดิการให้เปล่า</option>
-
-
-                                    </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
-
-                                </div>
-                            </div>-->
+             
 
 
                             <div class="form-group">
                                 
                                     <div class="col-lg-offset-6 col-lg-8">
                                         <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
-                                        <input class="btn btn-default" type="submit" value="{{#i18n}}button.cancel{{/i18n}}" />
+                                        <input class="btn btn-default" type="reset" value="{{#i18n}}button.cancel{{/i18n}}" />
                                     </div>
                                 
                             </div>
 
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
