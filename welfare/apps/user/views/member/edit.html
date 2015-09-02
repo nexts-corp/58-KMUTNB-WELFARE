@@ -33,7 +33,7 @@
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
                                         <input type="text" class="form-control" id="idCard" name="registerIdCard" placeholder="{{#i18n}}registerIdCard{{/i18n}}"
-                                               data-bv-notempty="true" value="{{idCard}}" 
+                                               data-bv-notempty="true" value="{{idCard}}" disabled=""
                                                data-bv-notempty-message="{{#i18n}}registerIdCard{{/i18n}}" />
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
-                                        <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
+                                        <select class="form-control col-lg-12" disabled="" id="academicId" name="academicId" data-bv-field="country">
 
                                         </select>
                                     </div>
@@ -73,7 +73,7 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
-                                        <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country">
+                                        <select class="form-control col-lg-12" disabled="" id="titleId" name="titleId" data-bv-field="country">
 
                                         </select>
                                     </div>
@@ -85,7 +85,7 @@
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
                                         <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}"
-                                               data-bv-notempty="true" value="{{fname}}"
+                                               data-bv-notempty="true" value="{{fname}}" disabled=""
                                                data-bv-notempty-message="{{#i18n}}registerName{{/i18n}}" />
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
                                         <input type="text" class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
-                                               data-bv-notempty="true" value="{{lname}}"
+                                               data-bv-notempty="true" value="{{lname}}" disabled=""
                                                data-bv-notempty-message="{{#i18n}}registerLastName{{/i18n}}" />
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="employeeCode" name="employeeCode" placeholder="{{#i18n}}registerStaffCode{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{employeeCode}}"
+                                                   data-bv-notempty="true" value="{{employeeCode}}" disabled=""
                                                    data-bv-notempty-message=" {{#i18n}}registerStaffCode{{/i18n}}" />
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" id="employeeTypeId" name="employeeTypeId" data-bv-field="country">
+                                            <select class="form-control" id="employeeTypeId" disabled="" name="employeeTypeId" data-bv-field="country">
                                                 <option value="">ระบุประเภทพนักงาน</option>
                                                 {{#employeeType}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -134,7 +134,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" id="positionId" name="positionId" data-bv-field="country">
+                                            <select class="form-control" id="positionId" disabled="" name="positionId" data-bv-field="country">
                                                 <option value="">ระบุตำแหน่งงาน</option>
                                                 {{#position}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -145,7 +145,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country">
+                                            <select class="form-control" disabled="" id="facultyId"  name="facultyId" data-bv-field="country">
                                                 <option value="">เลือกคณะวิชา/สำนัก</option>
                                                 {{#faculty}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -156,7 +156,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" id="departmentId" name="departmentId" data-bv-field="country">
+                                            <select class="form-control" disabled="" id="departmentId" name="departmentId" data-bv-field="country">
                                                 <option value="">สังกัด/ภาควิชา</option>
                                                 {{#department}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -178,7 +178,7 @@
                                         <div class="col-lg-9">
                                             <!--<div class="controls col-lg-12">-->
                                             <div class="input-group">
-                                                <input class="form-control cDate" type="text" value="{{workStartDate}}"  id="workStartDate" style="z-index: 9999;" />
+                                                <input class="form-control cDate" type="text" value="{{workStartDate}}" disabled="" id="workStartDate" style="z-index: 9999;" />
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
@@ -203,7 +203,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
+                                            <input type="text" disabled="" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
                                                    data-bv-notempty="true" value="{{internalPhone}}"
                                                    data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
                                         </div>
@@ -212,7 +212,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
+                                            <input type="text" class="form-control" disabled="" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
                                                    data-bv-notempty="true" value="{{phone}}"
                                                    data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
                                         </div>
@@ -221,7 +221,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
+                                            <input type="text" class="form-control" disabled="" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
                                                    data-bv-notempty="true" value="{{mobile}}"
                                                    data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
                                         </div>
@@ -231,7 +231,7 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{email}}"
+                                                   data-bv-notempty="true" value="{{email}}" disabled=""
                                                    data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
+                                            <select class="form-control" disabled="" id="userTypeId" name="userTypeId" data-bv-field="country">
                                                 {{#userType}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                 {{/userType}}
@@ -494,10 +494,10 @@ $(document).ready(function () {
         if (matier != "") {
             $.each(matier, function (key, value) {
                 if (value.id == matierId) {
-                    html += "<div class='radio col-lg-6'><label><input name='matierId' id='matierId' value='" + value["id"] + "' type='radio' checked='checked' /><span class='text'>" + value.value1 + "</span></label></div>";
+                    html += "<div class='radio col-lg-6'  ><label><input disabled name='matierId' id='matierId' value='" + value["id"] + "' type='radio' checked='checked' /><span class='text'>" + value.value1 + "</span></label></div>";
 
                 } else {
-                    html += "<div class='radio col-lg-6'><label><input name='matierId' id='matierId' value='" + value["id"] + "' type='radio' /><span class='text'>" + value.value1 + "</span></label></div>";
+                    html += "<div class='radio col-lg-6'  ><label><input disabled name='matierId' id='matierId' value='" + value["id"] + "' type='radio' /><span class='text'>" + value.value1 + "</span></label></div>";
                 }
             });
         } else {
