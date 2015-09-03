@@ -66,11 +66,11 @@ class ViewService extends CServiceBase implements IViewService {
 
         $dob = $member->dob->format('d-m-Y');
         $mem = explode("-", $dob);
-        $member->dob = $mem[0]."-".$mem[1]."-".(intval($mem[2]) + 543);
-        
+        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
         $workStartDate = $member->workStartDate->format('d-m-Y');
         $wsd = explode("-", $workStartDate);
-        $member->workStartDate = $wsd[0]."-".$wsd[1]."-".(intval($wsd[2]) + 543);
+        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
 
         $user = new \apps\user\entity\User();
         $user->memberId = $member->memberId;
@@ -94,9 +94,12 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on mem2.memberActiveId = tax2.id "
                 . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
                 . ")";
+
+
         $data = $this->datacontext->pdoQuery($sql);
         // print_r($data);
         $view->lists = $data;
         return $view;
     }
+
 }

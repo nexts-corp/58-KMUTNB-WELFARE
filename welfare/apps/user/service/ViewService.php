@@ -83,19 +83,30 @@ class ViewService extends CServiceBase implements IViewService {
     public function memberLists() {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
 //$listregister = new \apps\common\entity\Register();
-        $sql = "select * "
-                . "FROM member mem1 "
-                . "INNER JOIN taxonomy tax1 "
-                . "on mem1.titleId = tax1.id "
-                . "WHERE mem1.memberId in ( "
-                . "select mem2.memberId "
-                . "FROM member mem2 "
-                . "INNER JOIN taxonomy tax2 "
-                . "on mem2.memberActiveId = tax2.id "
-                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
-                . ")";
-        $data = $this->datacontext->pdoQuery($sql);
-        // print_r($data);
+//        $sql = "select * "
+//                . "FROM member mem1 "
+//                . "INNER JOIN taxonomy tax1 "
+//                . "on mem1.titleId = tax1.id "
+//                . "WHERE mem1.memberId in ( "
+//                . "select mem2.memberId "
+//                . "FROM member mem2 "
+//                . "INNER JOIN taxonomy tax2 "
+//                . "on mem2.memberActiveId = tax2.id "
+//                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
+//                . ")";
+        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
+                . "FROM apps\\member\\entity\\Member mem1 "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
+                . "with mem1.titleId = tax1.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
+               . "with mem1.memberActiveId = tax2.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
+                . "with mem1.facultyId = tax3.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
+                . "with mem1.departmentId = tax4.id "
+                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' ";
+        $data = $this->datacontext->getObject($sql);
+//         print_r($data);
         $view->lists = $data;
         return $view;
     }

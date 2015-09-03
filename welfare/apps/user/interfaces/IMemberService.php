@@ -22,11 +22,12 @@ interface IMemberService {
     /**
      * @name update
      * @uri /update
-     * @param apps\member\entity\Member data Description
+     * @param string data
      * @return boolean update Description
      * @description view list new
      */
     public function update($data);
+
 
     /**
      * @name deleteRegister

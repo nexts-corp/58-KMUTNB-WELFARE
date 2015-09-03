@@ -31,6 +31,8 @@ class User {
      */
     public $userTypeId;
     
+    public $oldpassword;
+    
     function getUserId() {
         return $this->userId;
     }
