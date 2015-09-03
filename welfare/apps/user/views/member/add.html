@@ -43,7 +43,7 @@
 
                                         <div class="controls col-lg-12">
                                             <div class="input-group">
-                                                <input class="form-control cDate" id="dob" required />
+                                                <input class="form-control cDate" id="dob" data-validation="required" />
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
@@ -281,6 +281,7 @@
     </form>
     <script type="text/javascript">
         $(document).ready(function () {
+            $.validate();
             //$("#registerForm").h5Validate();
             $("#facultyId").change(function () {
                 var id = $("#facultyId").val();

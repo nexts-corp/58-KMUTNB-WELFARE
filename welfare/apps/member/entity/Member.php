@@ -78,7 +78,23 @@ class Member {
      * @Column(type="string", length=10, name="matierId",nullable=true) 
      */
     public $matierId;
-
+    
+    
+    /**
+     * @Column(type="string", length=255, name="salaryStart",nullable=true) 
+     */
+    public $salaryStart;
+    
+    /**
+     * @Column(type="string", length=255, name="salaryPresent",nullable=true) 
+     */
+    public $salaryPresent;
+    
+     /**
+     * @Column(type="string", length=255, name="address",nullable=true) 
+     */
+    public $address;
+    
     /**
      * @Column(type="string", length=255, name="internalPhone",nullable=true) 
      */
@@ -114,48 +130,7 @@ class Member {
      */
     public $memberActiveId;
     
-    function getWorkEndDate() {
-        return $this->workEndDate;
-    }
-
-    
-
-    function setWorkEndDate($workEndDate) {
-        $this->workEndDate = $workEndDate;
-    }
-
-    function getMemberActiveId() {
-        return $this->memberActiveId;
-    }
-
-    function setMemberActiveId($memberActiveId) {
-        $this->memberActiveId = $memberActiveId;
-    }
-
-    
-        
-    
-    function getEmail() {
-        return $this->email;
-    }
-
-    function setEmail($email) {
-        $this->email = $email;
-    }
-
-       
-    public $userTypeId;
-
-    
-    function getUserTypeId() {
-        return $this->userTypeId;
-    }
-
-    function setUserTypeId($userTypeId) {
-        $this->userTypeId = $userTypeId;
-    }
-
-        function getMemberId() {
+    function getMemberId() {
         return $this->memberId;
     }
 
@@ -211,6 +186,18 @@ class Member {
         return $this->matierId;
     }
 
+    function getSalaryStart() {
+        return $this->salaryStart;
+    }
+
+    function getSalaryPresent() {
+        return $this->salaryPresent;
+    }
+
+    function getAddress() {
+        return $this->address;
+    }
+
     function getInternalPhone() {
         return $this->internalPhone;
     }
@@ -223,8 +210,20 @@ class Member {
         return $this->mobile;
     }
 
+    function getEmail() {
+        return $this->email;
+    }
+
     function getWorkStartDate() {
         return $this->workStartDate;
+    }
+
+    function getWorkEndDate() {
+        return $this->workEndDate;
+    }
+
+    function getMemberActiveId() {
+        return $this->memberActiveId;
     }
 
     function setMemberId($memberId) {
@@ -283,6 +282,18 @@ class Member {
         $this->matierId = $matierId;
     }
 
+    function setSalaryStart($salaryStart) {
+        $this->salaryStart = $salaryStart;
+    }
+
+    function setSalaryPresent($salaryPresent) {
+        $this->salaryPresent = $salaryPresent;
+    }
+
+    function setAddress($address) {
+        $this->address = $address;
+    }
+
     function setInternalPhone($internalPhone) {
         $this->internalPhone = $internalPhone;
     }
@@ -295,8 +306,22 @@ class Member {
         $this->mobile = $mobile;
     }
 
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
     function setWorkStartDate($workStartDate) {
         $this->workStartDate = $workStartDate;
     }
+
+    function setWorkEndDate($workEndDate) {
+        $this->workEndDate = $workEndDate;
+    }
+
+    function setMemberActiveId($memberActiveId) {
+        $this->memberActiveId = $memberActiveId;
+    }
+
+
 
 }

@@ -27,93 +27,124 @@
                         <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
                         <div class="widget-body">
                             <div  class="form-horizontal">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}IdCard{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="idCard" name="registerIdCard" placeholder="{{#i18n}}IdCard{{/i18n}}"
+                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกรหัสบัตรประชาชน" 
+                                                       data-validation-error-msg-container="#idcard-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="idcard-msg-error">
 
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">{{#i18n}}registerIdCard{{/i18n}}</label>
-                                    <div class="col-lg-4">
-                                        <div class="col-lg-12">
-                                            <input type="text" class="form-control" id="idCard" name="registerIdCard" placeholder="{{#i18n}}registerIdCard{{/i18n}}"
-                                                   data-bv-notempty="true" 
-                                                   data-bv-notempty-message="{{#i18n}}registerIdCard{{/i18n}}" required />
-                                        </div>
-                                    </div>
-                                    <label for="reservation" class="col-lg-2 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
-
-                                    <div class="col-lg-4">
-
-                                        <div class="controls col-lg-12">
-                                            <div class="input-group">
-                                                <input class="form-control cDate" id="dob" required />
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
 
+                                            <div class="col-lg-9">
+                                                <div class="input-group">
+                                                    <input class="form-control cDate" id="dob" data-validation="required" 
+                                                           data-validation-error-msg="*กรุณาระบุวัน/เดือน/ปีเกิด" data-validation-error-msg-container="#dob-msg-error" />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
 
-                                </div>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="dob-msg-error">
 
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
-                                    <div class="col-lg-4">
-                                        <div class="col-lg-12">
-                                            <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
-                                                <option value="">{{#i18n}}academicPositionsId{{/i18n}}</option>
-                                                {{#academic}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/academic}}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
-                                    <div class="col-lg-4">
-                                        <div class="col-lg-12">
-                                            <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country" required >
-                                                <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
-                                                {{#titleName}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/titleName}}
-                                            </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
+                                                    <option value="">{{#i18n}}academicPositionsId{{/i18n}}</option>
+                                                    {{#academic}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/academic}}
+                                                </select>
+                                            </div>
 
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">{{#i18n}}registerName{{/i18n}}</label>
-                                    <div class="col-lg-4">
-                                        <div class="col-lg-12">
-                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}" required />
                                         </div>
                                     </div>
-                                    <label class="col-lg-2 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
-                                    <div class="col-lg-4">
-                                        <div class="col-lg-12">
-                                            <input  class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
-                                                   data-bv-notempty="true"
-                                                   data-bv-notempty-message="{{#i18n}}registerLastName{{/i18n}}" required />
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country"  
+                                                        data-validation="required" data-validation-error-msg="*กรุณาเลือกคำนำหน้าชื่อ" 
+                                                        data-validation-error-msg-container="#titleId-msg-error">
+                                                    <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
+                                                    {{#titleName}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/titleName}}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="titleId-msg-error">
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerName{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}"  
+                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกชื่อจริง" 
+                                                       data-validation-error-msg-container="#fname-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="fname-msg-error">
 
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">{{#i18n}}gender{{/i18n}}</label>
-                                    <div class="col-lg-4 control-group ">
-                                        {{#gender}}
-                                        <div class="radio col-lg-6">
-                                            <label>
-                                                <input name="genderId" id="genderId" value="{{id}}" type="radio"  checked="checked">
-                                                <span class="text">{{value1}} </span> </label>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
+                                            <div class="col-lg-9">
 
-                                        {{/gender}}
+                                                <input  class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
+                                                        data-validation="required" data-validation-error-msg="*กรุณากรอกนามสกุล" 
+                                                        data-validation-error-msg-container="#lname-msg-error" />
+
+                                            </div>
+                                            <div class="col-lg-offset-4" id="lname-msg-error">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label class="col-lg-3 control-label">{{#i18n}}gender{{/i18n}}</label>
+                                        <div class="col-lg-9 control-group ">
+                                            {{#gender}}
+                                            <div class="radio col-lg-6">
+                                                <label>
+                                                    <input name="genderId" id="genderId" value="{{id}}" type="radio" checked="checked">
+                                                    <span class="text">{{value1}} </span> </label>
+                                            </div>
+
+                                            {{/gender}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-6 col-lg-6 col-xs-12">
                             <div class="widget radius-bordered">
                                 <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
                                 <div class="widget-body">
@@ -124,43 +155,68 @@
                                             <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="employeeCode" name="employeeCode" placeholder="{{#i18n}}registerStaffCode{{/i18n}}"
-                                                       data-bv-notempty="true"
-                                                       data-bv-notempty-message=" {{#i18n}}registerStaffCode{{/i18n}}" required />
+                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกเลขที่อัตรา" 
+                                                       data-validation-error-msg-container="#employeeCode-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="employeeCode-msg-error">
+
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
                                             <div class="col-lg-9">
-                                                <select class="form-control" id="employeeTypeId" name="employeeTypeId" data-bv-field="country" required >
+                                                <select class="form-control" id="employeeTypeId" name="employeeTypeId" data-bv-field="country" 
+                                                        data-validation="required" data-validation-error-msg="*กรุณาระบุประเภทพนักงาน" 
+                                                        data-validation-error-msg-container="#employeeTypeId-msg-error" >
                                                     <option value="">ระบุประเภทพนักงาน</option>
                                                     {{#employeeType}}
                                                     <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                     {{/employeeType}}
                                                 </select>
-                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+                                            </div>
+                                            <div class="col-lg-offset-4" id="employeeTypeId-msg-error">
+
+                                            </div>
+
+
                                         </div>
+
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
                                             <div class="col-lg-9">
-                                                <select class="form-control" id="positionId" name="positionId" data-bv-field="country" required >
+                                                <select class="form-control" id="positionId" name="positionId" data-bv-field="country" 
+                                                        data-validation="required" data-validation-error-msg="*กรุณาเลือกตำแหน่งงาน" 
+                                                        data-validation-error-msg-container="#positionId-msg-error" >
                                                     <option value="">ระบุตำแหน่งงาน</option>
                                                     {{#position}}
                                                     <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                     {{/position}}
                                                 </select>
-                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+                                            </div>
+                                            <div class="col-lg-offset-4" id="positionId-msg-error">
+
+                                            </div>
                                         </div>
+
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
                                             <div class="col-lg-9">
-                                                <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country" required >
+                                                <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country" 
+                                                        data-validation="required" data-validation-error-msg="*กรุณาเลือกภาควิชา" 
+                                                        data-validation-error-msg-container="#facultyId-msg-error" >
                                                     <option value="">เลือกภาควิชา</option>
                                                     {{#faculty}}
                                                     <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                     {{/faculty}}
                                                 </select>
-                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+                                            </div>
+                                            <div class="col-lg-offset-4" id="facultyId-msg-error">
+
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
@@ -193,12 +249,39 @@
                                             <div class="col-lg-9">
                                                 <!--<div class="controls col-lg-12">-->
                                                 <div class="input-group">
-                                                    <input class="form-control cDate" id="workStartDate" style="z-index: 9999;" required />
+                                                    <input class="form-control cDate" id="workStartDate" style="z-index: 9999;" 
+                                                           data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
+                                                           data-validation-error-msg-container="#workStartDate-msg-error" />
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 </div>
                                                 <!--</div>-->
+                                            </div>
+                                            <div class="col-lg-offset-4" id="workStartDate-msg-error">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerSalaryAdded{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="salaryStart" name="salaryStart" placeholder="{{#i18n}}registerSalaryAdded{{/i18n}}"
+                                                       data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนแรกเข้า"
+                                                       data-validation-error-msg-container="#salaryStart-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="salaryStart-msg-error">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="salaryPresent" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
+                                                       data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนปัจุบัน"
+                                                       data-validation-error-msg-container="#salaryPresent-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="salaryPresent-msg-error">
+
                                             </div>
                                         </div>
 
@@ -207,12 +290,21 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-6 col-lg-6 col-xs-12">
                             <div class="widget radius-bordered">
                                 <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
                                 <div class="widget-body">
                                     <div class="form-horizontal">
                                         <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerAddress{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" name="address" id="address" placeholder="{{#i18n}}registerAddress{{/i18n}}"
+                                                       data-bv-notempty="true"
+                                                       data-bv-notempty-message="{{#i18n}}registerAddress{{/i18n}}" />
+                                            </div>
+                                        </div>
 
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
@@ -281,7 +373,8 @@
     </form>
     <script type="text/javascript">
         $(document).ready(function () {
-           // $("#registerForm").h5Validate();
+            $.validate();
+            // $("#registerForm").h5Validate();
             $("#facultyId").change(function () {
                 var id = $("#facultyId").val();
                 $.ajax({
@@ -328,22 +421,26 @@
                     data['matierId'] = $('input[name=matierId]:checked').val();
                     data['positionId'] = $("#positionId").val();
                     data['userTypeId'] = $("#userTypeId").val();
+                    data['salaryStart'] = $("#salaryStart").val();
+                    data['salaryPresent'] = $("#salaryPresent").val();
+                    data['address'] = $("#address").val();
                     data['internalPhone'] = $("#internalPhone").val();
                     data['phone'] = $("#phone").val();
                     data['mobile'] = $("#mobile").val();
                     data['email'] = $("#email").val();
 
+
                     var jdata = {};
                     jdata['data'] = data;
-//                    $.ajax({
-//                        url: '{{_context_path}}/api/user/member/save',
-//                        data: jsonEncode(jdata),
-//                        type: 'post',
-//                        success: function (result) {
-//
-//                            getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
-//                        }
-//                    });
+                    $.ajax({
+                        url: '{{_context_path}}/api/member/member/save',
+                        data: jsonEncode(jdata),
+                        type: 'post',
+                        success: function (result) {
+
+                            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                        }
+                    });
 
                 } else {
                     alert("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");

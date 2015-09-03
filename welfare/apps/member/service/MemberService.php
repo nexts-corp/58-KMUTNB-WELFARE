@@ -7,7 +7,7 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\member\interfaces\IMemberService;
-use apps\common\entity\Register;
+use apps\user\entity\User;
 
 class MemberService extends CServiceBase implements IMemberService {
 
