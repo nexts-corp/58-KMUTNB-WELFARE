@@ -252,22 +252,58 @@ class ViewService extends CServiceBase implements IViewService {
         //$conditions[0]->employeeTypeId;
        
         
-        if($conditions[0]->dateStartWork !=""){
-          $checkDateStartWork=" and cdt.dateStartWork = mb.workStartDate ";
-        }
-        if($conditions[0]->dateEndWork !=""){
-            $checkdateEndWork=" and cdt.dateEndWork = mb.workEndDate ";
-        }
-        if($conditions[0]->ageStart !=""){
+        if($conditions[0]->dateStartWork !="" and $conditions[0]->dateEndWork ==""){
             
+            
+            $startWork=$conditions[0]->dateStartWork;
+            $checkDateWork=" mb.workStartDate = $startWork";
+          
+        }
+        if($conditions[0]->dateStartWork =="" and $conditions[0]->dateEndWork !=""){
+            
+            $endWork=$conditions[0]->dateEndWork;
+            $checkDateWork=" mb.workEndDate = $endWork ";
+            
+        }
+        if($conditions[0]->dateStartWork !="" and $conditions[0]->dateEndWork !=""){
+            
+            $startWork=$conditions[0]->dateStartWork;
+            $endWork=$conditions[0]->dateEndWork;
+            $checkDateWork="mb.workEndDate  <= '$endWork' AND mb.workStartDate >= '$startWork' ";
+
+        }
+        if($conditions[0]->ageStart !="" and $conditions[0]->ageEnd =="" ){
+            
+            $year=Date("Y");
+            $totalYear=$year-$conditions[0]->ageStart;
+     
            //อายุตั้งแต่ 30 
-            $checkageStart=" and cdt.ageStart = mb.dob ";
+            $checkAge=" and mb.dob = $totalYear";
         }
-        if($conditions[0]->ageEnd !=""){
+        if($conditions[0]->ageStart =="" and $conditions[0]->ageEnd !=""){
+            
+             $year=Date("Y");
+            $totalYear=$year-$conditions[0]->ageEnd;
+            
             //ถึง 50
-            $checkageEnd=" and cdt.ageEnd = mb.workEndDate ";
+            $checkAge=" and mb.dob = $totalYear";
         }
-         if($conditions[0]->ageWorkStart !=""){
+        if($conditions[0]->ageEnd !="" and $conditions[0]->ageStart !=""){
+            
+            $year=Date("Y");
+            $ageEndSetYear=$year-$conditions[0]->ageEnd;
+            $ageStartSetYear=$year-$conditions[0]->ageStart;
+
+            $checkAge="and mb.dob BETWEEN  '$ageEndSetYear' AND '$ageStartSetYear' ";
+        }
+        
+         if($conditions[0]->ageWorkStart !="" and $conditions[0]->ageWorkEnd ==""){
+            
+             $year=Date("Y");
+            $ageEndSetYear=$year-$conditions[0]->ageEnd;
+            $ageStartSetYear=$year-$conditions[0]->ageStart;
+            $checkAgeWork=" and mb.dob = $totalYear";
+
             $checkageWorkStart=" and cdt.dateEndWork = mb.workEndDate ";
         }
          if($conditions[0]->ageWorkEnd !=""){
@@ -286,8 +322,8 @@ class ViewService extends CServiceBase implements IViewService {
         $sql = "SELECT mb.fname,mb.lname,mb.workStartDate,mb.employeeTypeId, "
                 . "mb.facultyId,mb.departmentId,mb.dob "
                 . "FROM " . $partMember . "Member mb "
-                . "Left JOIN " . $partTaxonomy . "Taxonomy txn"
-                . "where  $checkgenderId";
+                . "Left JOIN " . $partTaxonomy . "Taxonomy txn "
+                . "where $checkAge $checkgenderId";
         
         $obj=$this->datacontext->getObject($sql);
         
