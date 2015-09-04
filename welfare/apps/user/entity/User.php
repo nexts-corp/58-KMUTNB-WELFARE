@@ -33,6 +33,8 @@ class User {
     
     public $oldpassword;
     
+    public $confirmpassword;
+            
     function getUserId() {
         return $this->userId;
     }

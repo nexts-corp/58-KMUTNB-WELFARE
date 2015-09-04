@@ -74,25 +74,33 @@ class MemberService extends CServiceBase implements IMemberService {
         $memberId = $data->memberId;
         $oldpassword = $data->oldpassword;
         $password = md5($data->password);
+        $confirmpassword = md5($data->confirmpassword);
         $oldpassword = md5($oldpassword);
         //print_r($password);
-        $user = new User();
-        $user->setMemberId($memberId);
-        $member = $this->datacontext->getObject($user)[0];
-        
-        if ($oldpassword==$member->password){
-            //echo "เยสสสสสส";
-            $member->memberId = $memberId;
-            $member->password = $password;
+        if ($password == $confirmpassword) {
+
+            $user = new User();
+            $user->setMemberId($memberId);
+            $member = $this->datacontext->getObject($user)[0];
+
+            if ($oldpassword == $member->password) {
+                //echo "เยสสสสสส";
+                $member->memberId = $memberId;
+                $member->password = $password;
 //            print_r($member);
-            $this->datacontext->updateObject($member);
-            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+                $this->datacontext->updateObject($member);
+                $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+            } else {
+                $this->getResponse()->add("message", "รหัสผ่านเดิมไม่ถูกต้อง");
+                return false;
+            }
+        }else {
+            $this->getResponse()->add("message", "รหัสผ่านใหม่ไม่ตรงกัน");
+                return false;
         }
-        else {
-            $this->getResponse()->add("message", "รหัสผ่านเดิมไม่ถูกต้อง");
-            return false;
-        }
-        
+            
+
+
 //        $dob1 = explode("-", $data->dob);
 //        $dob1[2] = intVal($dob1[2]) - 543;
 //        $dob = $dob1[2] . "-" . $dob1[1] . "-" . $dob1[0];

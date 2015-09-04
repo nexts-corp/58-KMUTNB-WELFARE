@@ -44,8 +44,7 @@
                                 <div class="col-lg-9">
                                     <div class="col-lg-12">
                                         <input type="password"  class="form-control" id="oldpassword" name="oldpassword" placeholder="{{#i18n}}oldpassword{{/i18n}}"
-                                               data-validation="required" data-validation-error-msg="*กรุณากรอกรหัสเดิม" 
-                                               data-validation-error-msg-container="#oldpassword-msg-error" />
+                                               data-validation="strength"  data-validation-strength="2"  />
                                     </div>
 
                                 </div>
@@ -58,12 +57,27 @@
                                 <div class="col-lg-9">
                                     <div class="col-lg-12">
                                         <input  type="password" class="form-control" id="password" name="password" placeholder="{{#i18n}}newpassword{{/i18n}}"
-                                                data-validation="required" data-validation-error-msg="*กรุณากรอกรหัสใหม่" 
+                                                data-validation="confirmation" data-validation-error-msg="*กรุณากรอกรหัสใหม่" 
                                                 data-validation-error-msg-container="#newpassword-msg-error" />
                                     </div>
 
                                 </div>
                                 <div class="col-lg-offset-4" id="newpassword-msg-error">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}confirmpassword{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <div class="col-lg-12">
+                                        <input  type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="{{#i18n}}newpassword{{/i18n}}"
+                                                data-validation="confirmation" data-validation-error-msg="*กรุณากรอกรหัสใหม่" 
+                                                data-validation-error-msg-container="#confirmpassword-msg-error" />
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-offset-4" id="confirmpassword-msg-error">
 
                                 </div>
                             </div>
@@ -295,7 +309,9 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $.validate();
+            $.validate({
+                modules: 'security'
+            });
             $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
             listsAcademic();
             listtitleName();
@@ -312,6 +328,8 @@
                 data['memberId'] = "{{#datas}}{{memberId}}{{/datas}}";
                 data['oldpassword'] = $("#oldpassword").val();
                 data['password'] = $("#password").val();
+                data['confirmpassword'] = $("#confirmpassword").val();
+
 
 
                 var jdata = {};
@@ -322,10 +340,12 @@
                     type: 'post', // 'or get'
                     success: function (result) {
                         //alert(result.save);
-
-                        alert(result.message);
-                        getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
-
+                        if (result.update == false) {
+                            alert(result.message);
+                        } else {
+                            alert(result.message);
+                            getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
+                        }
                     }
                 });
             });
