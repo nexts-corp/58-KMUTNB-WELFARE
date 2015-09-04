@@ -34,5 +34,7 @@ interface IViewService {
      */
     public function memberEdit($id);
     
+    
+    
    
 }

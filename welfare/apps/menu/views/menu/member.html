@@ -174,13 +174,22 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/pass/setting/view/tab/pass')">
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">แก้ไขรหัสผ่าน</span>
                     </a>
+                    
                 </li>
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/profile/setting/view/tab/profile')">
-                        <span class="menu-text">ข้อมูลส่วนตัว</span>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/member/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">แก้ไขข้อมูลส่วนตัว</span>
                     </a>
                 </li>
 
