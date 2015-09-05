@@ -58,22 +58,22 @@ interface IViewService {
      * @description view แก้ไขเงื่อนไขสวัสดิการ 
      */
     public function conditionsEdit($id);
-
-    /**
-     * @name viewList
-     * @uri /previews/lists
-     * @param integer id Description
-     * @return html previews
-     * @description ตรวจสอบรายการผู้มีสิทธิได้รับสวัสดิการ
-     */
-    public function previewsLists($id);
     
+    /**
+     * @name viewPrivewsList
+     * @uri /priviews/lists
+     * @param integer conditionsId Description
+     * @return html previews
+     * @description แสดงรายการผู้มีสิทธิได้รับสวัสดิการ
+     */
+    public function previewsUserLists($conditions);
+
     /**
      * @name viewTestList
      * @uri /previews/test/lists
      * @param apps\welfare\entity\Conditions conditions
      * @return string previews
-     * @description ตรวจสอบรายการผู้มีสิทธิได้รับสวัสดิการ
+     * @description เช็คเงื่อนไขผู้มีสิทธิ์ได้รับสวัสดิการ
      */
     public function previewsTestLists($conditions);
 }

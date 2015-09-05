@@ -36,4 +36,5 @@ interface IConditionsService {
      */
     public function delete($Id);
     
+    
 }

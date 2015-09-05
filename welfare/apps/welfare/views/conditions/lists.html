@@ -32,10 +32,10 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">
+                        <div class="col-lg-5 control-label">
                             <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
                             <p id="demo" style="color:#d14"></p>
-                        </label>
+                        </div>
 
                         <div class="col-lg-3">
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
@@ -76,13 +76,22 @@
                                 <tbody>
                                     {{#datas}}
                                     <tr class="selectable">
-                                            
+
                                         <td>&nbsp;{{conditionsId}}</td>
                                         <td>&nbsp;{{description}}</td>
                                         <td>&nbsp;{{amount}}</td>
                                         <td>&nbsp;{{value1}}</td>
                                         <td class="center">
-                                       
+
+                                           
+                                                <button class="btn btn-info btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/welfare/view/priviews/lists/{{conditionsId}}"
+                                                    data-param="null"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa fa-eye"></i>{{#i18n}}welfare.right{{/i18n}} 
+                                            </button>
+
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/welfare/view/conditions/edit/{{conditionsId}}"
@@ -90,8 +99,9 @@
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
-                                            
-                                            
+
+
+
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{conditionsId}}" >{{#i18n}}deletes{{/i18n}}</button>
                                         </td>
                                     </tr>
@@ -108,13 +118,23 @@
 
     <!-- /Page Body -->
 </div>
+<script>
+    $("#btnsearch").click(function () {
+    var SearchName = $("#SearchName").val();
+            if (SearchName == ""){
+    document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+    } else{
 
+    getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName:SearchName});
+    }
+    });
+</script> 
 <script>
             $(function() {
             var availableTags = [
             {{#datas}}"{{description}}",
-            "{{amount}}",
-            "{{value1}}",
+                    "{{amount}}",
+                    "{{value1}}",
             {{/datas}}
             ];
                     $("#SearchName").autocomplete({
@@ -124,33 +144,20 @@
 </script>
 
 <script>
-             $('.btn-del').click(function(){
-                    var Id = $(this).attr('row-index');
- 
-                if (confirm("คุณต้องการลบ?")) { 
-                     var data = {"Id":Id};
-                     var result = sendData('{{_context_path}}/api/welfare/conditions/delete', data);
-                
-                if (result.delete == true) {
-                getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', null);
+                    
+                    $('.btn-del').click(function(){
+            var Id = $(this).attr('row-index');
+                    if (confirm("คุณต้องการลบ?")) {
+            var data = {"Id":Id};
+                    var result = sendData('{{_context_path}}/api/welfare/conditions/delete', data);
+                    if (result.delete == true) {
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', null);
                     Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-                }else{
-                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                 }
-            }
-                   
-            });
-</script> 
-
-<script>
-           $("#btnsearch").click(function () {
-            var SearchName = $("#SearchName").val();
-
-            if (SearchName == ""){
-            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
             } else{
-            
-                    getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName:SearchName});
+            Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
             }
+            }
+
             });
 </script> 
+

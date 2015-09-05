@@ -116,7 +116,7 @@ class ViewService extends CServiceBase implements IViewService {
         $daoCondition = '\\apps\\welfare\\entity\\';
 
 
-        $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.welfareId,cdt.description,"
+        $sql = "SELECT cdt.conditionsId,cdt.description,"
                 . "cdt.welfareId,cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,cdt.ageEnd,"
                 . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,"
                 . "cdt.returnTypeId,txn.id,txn.value1 "
@@ -174,8 +174,8 @@ class ViewService extends CServiceBase implements IViewService {
             $employeeType = '\\apps\\taxonomy\\entity\\';
             $daoCondition = '\\apps\\welfare\\entity\\';
 
-            $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.welfareId,cdt.description,"
-                    . "cdt.welfareId,cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,"
+            $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.description,"
+                    . "cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,"
                     . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,"
                     . "cdt.returnTypeId,txn.id,txn.value1 "
                     . "FROM " . $daoCondition . "Conditions cdt Left JOIN " . $employeeType . "Taxonomy  txn with "
@@ -194,7 +194,7 @@ class ViewService extends CServiceBase implements IViewService {
             $daoCondition = '\\apps\\welfare\\entity\\';
 
 
-            $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.welfareId,cdt.description, "
+            $sql = "SELECT cdt.conditionsId,cdt.description, "
                     . "cdt.welfareId,cdt.amount,cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart, "
                     . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,cdt.returnTypeId, "
                     . "emp.id as employeeTypeId,emp.value1 as employeeType "
@@ -213,123 +213,253 @@ class ViewService extends CServiceBase implements IViewService {
         }
     }
 
-    public function previewsLists($id) {
+    public function previewsTestLists($conditions) {
 
-        $view = new CJView("previews/lists", CJViewType::HTML_VIEW_ENGINE);
-//        $daoWelfare = new Welfare();
-//        $daoWelfare->setWelfareId($id);
-//        $obj = $this->datacontext->getObject($daoWelfare);
-//        $free=$obj[0]->free;
-//        
-//        $partConditions = '\\apps\\welfare\\entity\\';
-//        $partMember = '\\apps\\member\\entity\\';
-//        $partTaxonomy = '\\apps\\taxonomy\\entity\\';
-//        if($free=="yes"){
-//           
-//            $sql="SELECT cdt.employeeTypeId,cdt.ageStart,cdt.ageEnd,cdt.ageWorkStart,cdt.ageWorkEnd,cdt.ageWorkEnd,cdt.genderId,"
-//            . "mb.fname,mb.lname,mb.workStartDate,mb.employeeTypeId,mb.facultyId,mb.departmentId,mb.dob"
-//            . "FROM ".$partConditions."Conditions cdt Left JOIN ".$partMember."Member mb Left JOIN ".$partTaxonomy." txn with"
-//            . "where cdt.welfareId = :id";
-//          $this->datacontext->getObject($sql,array("id"=>$id));
-//        
-//            
-//        
-//        }
+         
 
-        return $view;
+          //ตรวจสอบค่าว่าง วัน-เดือน-ปี ที่บรรจุงาน
+          if ($conditions[0]->dateStartWork != "" and $conditions[0]->dateEndWork == "") {
+
+          $startWork = $conditions[0]->dateStartWork;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->ageStart != "" || $conditions[0]->ageEnd != "" || $conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+
+          //เงื่อนไข มากกว่า วัน-เดือน-ปี ที่บรรจุงาน
+          $checkDateWork = " DATE_FORMAT(mb.workStartDate,'%Y-%m-%d') >= '$startWork' " . $checkAnd . "";
+          }
+
+          //ตรวจสอบค่าว่าง วัน-เดือน-ปี วันที่เกษียณ
+          if ($conditions[0]->dateStartWork == "" and $conditions[0]->dateEndWork != "") {
+
+          $endWork = $conditions[0]->dateEndWork;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->ageStart != "" || $conditions[0]->ageEnd != "" || $conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+
+          //เงื่อนไข น้อยกว่า วัน-เดือน-ปี ที่เกษียณ
+          $checkDateWork = " DATE_FORMAT(mb.workEndDate,'%Y-%m-%d') <= '$endWork' " . $checkAnd . " ";
+          }
+
+          // ตรวสอบค่าว่าง วัน-เดือน-ปี ที่บรรจุงาน และ วัน-เดือน-ปี ที่เกษียณ
+          if ($conditions[0]->dateStartWork != "" and $conditions[0]->dateEndWork != "") {
+
+          $startWork = $conditions[0]->dateStartWork;
+          $endWork = $conditions[0]->dateEndWork;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->ageStart != "" || $conditions[0]->ageEnd != "" || $conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+
+          //เงื่อนไข หาค่าที่ น้อยกว่า วัน-เดือน-ปี ที่เกษียณ และ มากกว่า วัน-เดือน-ปี ที่บรรจุงาน
+          $checkDateWork = " DATE_FORMAT(mb.workEndDate,'%Y')  <= '$endWork' AND DATE_FORMAT(mb.workStartDate,'%Y') >= '$startWork' " . $checkAnd . " ";
+          } elseif ($conditions[0]->dateStartWork == "" and $conditions[0]->dateEndWork == "") {
+
+          //เช็คค่าว่าง ของเงื่อนไข
+          $checkDateWork = "";
+          }
+          // เช็คค่าว่าง อายุสมาชิก ตั้งแต่
+          if ($conditions[0]->ageStart != "" and $conditions[0]->ageEnd == "") {
+
+          $totalYear = $conditions[0]->ageStart;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+
+          //เช็คเงื่อนไข  มากกว่าหรือเท่ากับ อายุของสมาชิก
+          $checkAge = "  (YEAR( CURDATE( ) ) - YEAR(mb.dob )) >= '$totalYear' " . $checkAnd . " ";
+          }
+          // เช็คค่าว่าง อายุสมาชิก  ถึง
+          if ($conditions[0]->ageStart == "" and $conditions[0]->ageEnd != "") {
+
+          $totalYear = $conditions[0]->ageEnd;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+
+          //เช็คเงื่อนไข  น้อยกว่าหรือเท่ากับ อายุของสมาชิก
+          $checkAge = " (YEAR( CURDATE( ) ) - YEAR(mb.dob )) <= '$totalYear' " . $checkAnd . " ";
+          }
+
+          // เช็คค่าว่าง อายุสมาชิก  ตั้งแต่-ถึง
+          if ($conditions[0]->ageEnd != "" and $conditions[0]->ageStart != "") {
+
+          $ageEndSetYear = $conditions[0]->ageEnd;
+          $ageStartSetYear = $conditions[0]->ageStart;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+
+          //เงื่อนไข หาค่าระหว่าง อายุสมาชิกตั้งแต่...ปี ถึง ...ปี
+          $checkAge = " (YEAR( CURDATE( ) ) - YEAR(mb.dob )) BETWEEN  '$ageStartSetYear' AND '$ageEndSetYear' " . $checkAnd . " ";
+          } elseif ($conditions[0]->ageEnd == "" and $conditions[0]->ageStart == "") {
+
+          //เงื่อนไข ถ้าไม่มีการเช็คเงื่อนไข
+          $checkAge = "";
+          }
+
+          // ตรวจสอบอายุการปฏิบัติงาน
+          if ($conditions[0]->ageWorkStart != "" and $conditions[0]->ageWorkEnd == "") {
+
+          $ageWorkStart = $conditions[0]->ageWorkStart;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+          //เช็คอายุการปฏิบัติงาน ตั้งแต่
+          $checkAgeWork = " (YEAR( CURDATE( ) ) - YEAR(mb.workStartDate )) >= '$ageWorkStart' " . $checkAnd . "";
+          }
+
+          if ($conditions[0]->ageWorkStart == "" and $conditions[0]->ageWorkEnd != "") {
+
+
+          $ageWorkEnd = $conditions[0]->ageWorkEnd;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+          //เช็คอายุการปฏิบัติงาน ถึง
+          $checkAgeWork = " (YEAR( CURDATE( ) ) - YEAR(mb.workStartDate )) <= '$ageWorkEnd' " . $checkAnd . " ";
+          }
+          if ($conditions[0]->ageWorkStart != "" and $conditions[0]->ageWorkEnd != "") {
+
+
+          $ageWorkEnd = $conditions[0]->ageWorkEnd;
+          $ageWorkStart = $conditions[0]->ageWorkStart;
+
+          //ตรวจสอบค่า and
+          if ($conditions[0]->genderId != "") {
+          $checkAnd = "and";
+          } else {
+          $checkAnd = "";
+          }
+          //หาค่าระหว่าง อายุการปฏิบัติงาน ตั้งแต่...ปี ถึง...ปี
+          $checkAgeWork = " (YEAR( CURDATE( ) ) - YEAR(mb.workStartDate)) BETWEEN  '$ageWorkStart' AND '$ageWorkEnd' " . $checkAnd . " ";
+          } elseif ($conditions[0]->ageWorkStart == "" and $conditions[0]->ageWorkEnd == "") {
+          $checkAgeWork = "";
+          }
+
+          //ตรวจสอบ เพศ
+          if ($conditions[0]->genderId != "") {
+
+          $checkgenderId = "mb.genderId = " . $conditions[0]->genderId . "";
+          } elseif ($conditions[0]->genderId == "") {
+          $checkgenderId = "";
+          }
+
+
+          if($conditions[0]->conditionsId ==""){
+
+          $sql = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+          . "mb.departmentId,"
+          . "(tax1.value1) As titlename, "
+          . "(tax2.value1) As academic, "
+          . "(tax3.value1) As employeeType, "
+          . "(tax4.value1) As gender, "
+          . "(tax5.value1) As faculty, "
+          . "(tax6.value1) As department "
+          . "FROM member mb "
+          . "Left JOIN taxonomy tax1 "
+          . "on mb.titleId = tax1.id "
+          . "Left JOIN taxonomy tax2 "
+          . "on mb.academicId = tax2.id "
+          . "Left JOIN taxonomy tax3 "
+          . "on mb.employeeTypeId = tax3.id "
+          . "Left JOIN taxonomy tax4 "
+          . "on mb.genderId = tax4.id "
+          . "Left JOIN taxonomy tax5 "
+          . "on mb.facultyId = tax5.id "
+          . "Left JOIN taxonomy tax6 "
+          . "on mb.departmentId = tax6.id "
+          . "where " . $checkDateWork . " " . $checkAge . " " . $checkAgeWork . " " . $checkgenderId . "";
+
+          $obj = $this->datacontext->pdoQuery($sql);
+          return $obj;
+
+          }
+          
+          if($conditions[0]->conditionsId !=""){
+
+               $employeeTypeId = $conditions[0]->employeeTypeId;
+               $conditionsId = $conditions[0]->conditionsId;
+
+          $sql = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+          . "mb.departmentId,"
+          . "(tax1.value1) As titlename, "
+          . "(tax2.value1) As academic, "
+          . "(tax3.value1) As employeeType, "
+          . "(tax4.value1) As gender, "
+          . "(tax5.value1) As faculty, "
+          . "(tax6.value1) As department "
+          . "FROM member mb "
+          . "Left JOIN taxonomy tax1 "
+          . "on mb.titleId = tax1.id "
+          . "Left JOIN taxonomy tax2 "
+          . "on mb.academicId = tax2.id "
+          . "Left JOIN taxonomy tax3 "
+          . "on mb.employeeTypeId = tax3.id "
+          . "Left JOIN taxonomy tax4 "
+          . "on mb.genderId = tax4.id "
+          . "Left JOIN taxonomy tax5 "
+          . "on mb.facultyId = tax5.id "
+          . "Left JOIN taxonomy tax6 "
+          . "on mb.departmentId = tax6.id "
+          . "where conditionsId=".$conditionsId." and employeeTypeId=".$employeeTypeId." and " . $checkDateWork . " " . $checkAge . " " . $checkAgeWork . " " . $checkgenderId . "";
+
+          $obj = $this->datacontext->pdoQuery($sql);
+          
+          return $obj;
+
+          } 
     }
 
-    public function previewsTestLists($conditions) {
-        
-        
-        $conditions[0]->dateStartWork;
-        $conditions[0]->dateEndWork;
-        $conditions[0]->ageStart;
-        $conditions[0]->ageEnd;
-        $conditions[0]->ageWorkStart;
-        $conditions[0]->ageWorkEnd;
-        $conditions[0]->genderId;
-        //$conditions[0]->employeeTypeId;
-       
-        
-        if($conditions[0]->dateStartWork !="" and $conditions[0]->dateEndWork ==""){
-            
-            
-            $startWork=$conditions[0]->dateStartWork;
-            $checkDateWork=" mb.workStartDate = $startWork";
-          
-        }
-        if($conditions[0]->dateStartWork =="" and $conditions[0]->dateEndWork !=""){
-            
-            $endWork=$conditions[0]->dateEndWork;
-            $checkDateWork=" mb.workEndDate = $endWork ";
-            
-        }
-        if($conditions[0]->dateStartWork !="" and $conditions[0]->dateEndWork !=""){
-            
-            $startWork=$conditions[0]->dateStartWork;
-            $endWork=$conditions[0]->dateEndWork;
-            $checkDateWork="mb.workEndDate  <= '$endWork' AND mb.workStartDate >= '$startWork' ";
+    public function previewsUserLists($id) {
 
-        }
-        if($conditions[0]->ageStart !="" and $conditions[0]->ageEnd =="" ){
-            
-            $year=Date("Y");
-            $totalYear=$year-$conditions[0]->ageStart;
+        $view = new CJView("previews/lists", CJViewType::HTML_VIEW_ENGINE);
+
+        $partCondition = '\\apps\\welfare\\entity\\';
      
-           //อายุตั้งแต่ 30 
-            $checkAge=" and mb.dob = $totalYear";
-        }
-        if($conditions[0]->ageStart =="" and $conditions[0]->ageEnd !=""){
-            
-             $year=Date("Y");
-            $totalYear=$year-$conditions[0]->ageEnd;
-            
-            //ถึง 50
-            $checkAge=" and mb.dob = $totalYear";
-        }
-        if($conditions[0]->ageEnd !="" and $conditions[0]->ageStart !=""){
-            
-            $year=Date("Y");
-            $ageEndSetYear=$year-$conditions[0]->ageEnd;
-            $ageStartSetYear=$year-$conditions[0]->ageStart;
 
-            $checkAge="and mb.dob BETWEEN  '$ageEndSetYear' AND '$ageStartSetYear' ";
-        }
-        
-         if($conditions[0]->ageWorkStart !="" and $conditions[0]->ageWorkEnd ==""){
-            
-             $year=Date("Y");
-            $ageEndSetYear=$year-$conditions[0]->ageEnd;
-            $ageStartSetYear=$year-$conditions[0]->ageStart;
-            $checkAgeWork=" and mb.dob = $totalYear";
+        $sql = "SELECT cdt.conditionsId,cdt.welfareId,cdt.employeeTypeId, "
+                . "cdt.dateStartWork,cdt.dateEndWork,cdt.ageStart,cdt.ageEnd,"
+                . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,cdt.genderId "
+                . "FROM " . $partCondition . "Conditions cdt "
+                . "where cdt.conditionsId = :id";
 
-            $checkageWorkStart=" and cdt.dateEndWork = mb.workEndDate ";
-        }
-         if($conditions[0]->ageWorkEnd !=""){
-            $checkageWorkEnd=" and cdt.dateEndWork = mb.workEndDate ";
+        $obj = $this->datacontext->getObject($sql, array("id" => $id));
+       
+        $view->datas = $obj;
 
-        }
-        if($conditions[0]->genderId !=""){
-            $checkgenderId="".$conditions[0]->genderId." = mb.genderId ";
-        }
-
-        //$partConditions = '\\apps\\welfare\\entity\\';
-        $partMember = '\\apps\\member\\entity\\';
-        $partTaxonomy = '\\apps\\taxonomy\\entity\\';
-        
-
-        $sql = "SELECT mb.fname,mb.lname,mb.workStartDate,mb.employeeTypeId, "
-                . "mb.facultyId,mb.departmentId,mb.dob "
-                . "FROM " . $partMember . "Member mb "
-                . "Left JOIN " . $partTaxonomy . "Taxonomy txn "
-                . "where $checkAge $checkgenderId";
-        
-        $obj=$this->datacontext->getObject($sql);
-        
-        print_r($obj);
-        
-        return $conditions;
+        return $view;
     }
 
     //end page conditions view lists

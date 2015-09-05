@@ -295,21 +295,21 @@
                 <div class="widget-body">
                     <div class="form-horizontal">
 
-                        <table class="table table-hover table-striped table-bordered table-condensed">
+                        <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
                             <thead>
                                 <tr>
                                     <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
                                     <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}welfarename{{/i18n}}</th>
+                         
+                                    <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                     <th class="text-center">สังกัด</th>
                                     <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <tr class="selectable">
-
-
-                                </tr>
+                                
+                                
                             </tbody>
 
                         </table>
@@ -436,13 +436,26 @@
                             Notify('กรุณาเลือกข้อมูล !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                         } else {
                             $("#preview").slideToggle(this.checked = true);
+                            
                             var html = "";
-                            html += "<td></td>"
-                            "<td></td>"
-                            "<td></td>"
-                            "<td></td>";
+                            var $html = '';
+                            for(var i = 0; i < result.previews.length ; i++){
+                                var data = result.previews[i];
+                                if(data.academic==null){
+                                    var academic = data.academic="";
+                                }else{
+                                   var academic = data.academic;
 
-                            $(".selectable").html(html);
+                                }
+                                $html += '<tr class="selectable">';
+                                $html += '<td>'+(i+1)+'</td>';
+                                $html += '<td>'+data.titlename+' '+academic+' '+data.fname+' '+data.lname+'</td>';
+                                $html += '<td>'+data.gender+'</td>';
+                                $html += '<td>ภาควิชา/สำนักงาน '+data.department+'  '+data.faculty+'</td>';
+                                $html += '<td>'+data.employeeType+'</td>';
+                            }
+
+                            $("table#showTable tbody").html($html);
                         }
                     }
                 });

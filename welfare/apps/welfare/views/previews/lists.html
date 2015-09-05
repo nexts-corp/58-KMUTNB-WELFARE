@@ -33,17 +33,17 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">
+                        <div class="col-lg-5 control-label">
                             <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
                             <p id="demo" style="color:#d14"></p>
-                        </label>
+                        </div>
 
                         <div class="col-lg-3">
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
                         <div class="pull-right">
-                            
-                            
+
+
                         </div>
 
                         <div class="pull-right">
@@ -52,31 +52,26 @@
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
+
+                            <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}welfarename{{/i18n}}</th>
+
+                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                        <th class="text-center">สังกัด</th>
                                         <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        <th class="text-center">รายละเอียด</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                    {{#datas}}
-                                    <tr class="selectable">
 
-                                        <td>{{welfareId}}</td>
-                                        <td>{{name}}</td>
-                                        <td>{{dateStart}}</td>
-                                        <td>{{dateEnd}}</td>
-                                   
-                                       
-                                    </tr>
-                                    {{/datas}}
+
+
                                 </tbody>
 
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -87,45 +82,63 @@
     <!-- /Page Body -->
 </div>
 <script>
-            $(function() {
-            var availableTags = [
-            {{#datas}}"{{name}}",
-            {{/datas}}
-            ];
-                    $("#SearchName").autocomplete({
-            source: availableTags
-            });
-            });
+    $(document).ready(function () {
+        
+   
+    
+    {{#datas}}
+        var dateEndWork = "{{dateEndWork}}";
+        var dateStartWork = "{{dateStartWork}}";
+        var conditionsId={{conditionsId}};
+        var ageStart={{ageStart}};
+        var ageEnd={{ageEnd}};
+        var ageWorkStart={{ageWorkStart}};
+        var ageWorkEnd={{ageWorkEnd}};
+        var genderId={{genderId}};
+        var employeeTypeId={{employeeTypeId}};
+        
+    {{/datas}} 
+    var data1 = {};
+            if (dateStartWork != "") {
+                data1['dateStartWork'] = dateStartWork;
+            }
+            if (dateEndWork != "") {
+                data1['dateEndWork'] = dateEndWork;
+            }
+            
+            data1['conditionsId']=conditionsId
+            
+            if(ageStart > 0){
+            data1['ageStart'] =ageStart;
+            }
+             if(ageEnd > 0){
+            data1['ageEnd'] =ageEnd;
+            }
+            if(ageWorkStart > 0){
+            data1['ageWorkStart'] =ageWorkStart;
+            }
+            if(ageWorkEnd > 0){
+            data1['ageWorkEnd'] =ageWorkEnd;
+            }
+            if(genderId > 0){
+            data1['genderId'] = genderId;
+            }
+            data1['employeeTypeId'] = employeeTypeId;
+   
+            var jdata = {};
+            jdata['conditions'] = data1;
+    $.ajax({
+            url: '{{_context_path}}/api/welfare/view/previews/test/lists',
+            data: jsonEncode(jdata),
+            type: 'post', // 'or get'
+            success: function (result) {
+                alert("xxx");
+        } 
+
+    });
+  });
+  
 </script>
 
-<script>
-             $('.btn-del').click(function(){
-                    var Id = $(this).attr('row-index');
- 
-                if (confirm("คุณต้องการลบ?")) { 
-                     var data = {"Id":Id};
-                     var result = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
-                
-                if (result.delete == true) {
-                getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
-                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-                }else{
-                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                 }
-            }
-                   
-            });
-</script> 
 
-<script>
-           $("#btnsearch").click(function () {
-            var SearchName = $("#SearchName").val();
 
-            if (SearchName == ""){
-            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-            } else{
-            
-                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName:SearchName});
-            }
-            });
-</script> 
