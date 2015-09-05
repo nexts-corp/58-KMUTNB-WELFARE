@@ -138,8 +138,8 @@ class MemberService extends CServiceBase implements IMemberService {
                 . "WHERE tax.pCode = 'memberActive' and tax.code = 'working' "
                 . "and mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name ";
         //print_r($sql);
-        $view->list = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
-//        print_r($view->datas);
+        $view->lists = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
+//        print_r($view->lists);
         return $view;
     }
 
