@@ -215,119 +215,133 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function previewsTestLists($conditions) {
 
+         if($conditions->conditionsId==""){
+         $dateStartWork = $conditions[0]->dateStartWork;
+         $dateEndWork = $conditions[0]->dateEndWork;
+         $ageStart = $conditions[0]->ageStart;
+         $ageEnd = $conditions[0]->ageEnd;
+         $ageWorkStart = $conditions[0]->ageWorkStart;
+         $ageWorkEnd = $conditions[0]->ageWorkEnd;
+         $genderId = $conditions[0]->genderId;
+         $employeeTypeId = $conditions[0]->employeeTypeId;
+         }else{
+         $conditionsId = $conditions->conditionsId;
+         $dateStartWork = $conditions->dateStartWork;
+         $dateEndWork = $conditions->dateEndWork;
+         $ageStart = $conditions->ageStart;
+         $ageEnd = $conditions->ageEnd;
+         $ageWorkStart = $conditions->ageWorkStart;
+         $ageWorkEnd = $conditions->ageWorkEnd;
+         $genderId = $conditions->genderId;
+         $employeeTypeId = $conditions->employeeTypeId;
          
+         }
+       
 
           //ตรวจสอบค่าว่าง วัน-เดือน-ปี ที่บรรจุงาน
-          if ($conditions[0]->dateStartWork != "" and $conditions[0]->dateEndWork == "") {
+          if ($dateStartWork != "" and $dateEndWork == "") {
 
-          $startWork = $conditions[0]->dateStartWork;
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->ageStart != "" || $conditions[0]->ageEnd != "" || $conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          if ($ageStart != "" || $ageEnd != "" || $ageWorkStart !="" || $ageWorkEnd != "" || $genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
 
           //เงื่อนไข มากกว่า วัน-เดือน-ปี ที่บรรจุงาน
-          $checkDateWork = " DATE_FORMAT(mb.workStartDate,'%Y-%m-%d') >= '$startWork' " . $checkAnd . "";
+          $checkDateWork = " DATE_FORMAT(mb.workStartDate,'%Y-%m-%d') >= '$dateStartWork' " . $checkAnd . "";
           }
 
           //ตรวจสอบค่าว่าง วัน-เดือน-ปี วันที่เกษียณ
-          if ($conditions[0]->dateStartWork == "" and $conditions[0]->dateEndWork != "") {
+          if ($dateStartWork == "" and $dateEndWork != "") {
 
-          $endWork = $conditions[0]->dateEndWork;
+         
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->ageStart != "" || $conditions[0]->ageEnd != "" || $conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          if ($ageStart != "" || $ageEnd != "" || $ageWorkStart !="" || $ageWorkEnd != "" || $genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
 
           //เงื่อนไข น้อยกว่า วัน-เดือน-ปี ที่เกษียณ
-          $checkDateWork = " DATE_FORMAT(mb.workEndDate,'%Y-%m-%d') <= '$endWork' " . $checkAnd . " ";
+          $checkDateWork = " DATE_FORMAT(mb.workEndDate,'%Y-%m-%d') <= '$dateEndWork' " . $checkAnd . " ";
           }
 
           // ตรวสอบค่าว่าง วัน-เดือน-ปี ที่บรรจุงาน และ วัน-เดือน-ปี ที่เกษียณ
-          if ($conditions[0]->dateStartWork != "" and $conditions[0]->dateEndWork != "") {
+          if ($dateStartWork != "" and $dateEndWork != "") {
 
-          $startWork = $conditions[0]->dateStartWork;
-          $endWork = $conditions[0]->dateEndWork;
+          
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->ageStart != "" || $conditions[0]->ageEnd != "" || $conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          if ($ageStart != "" || $ageEnd != "" || $ageWorkStart !="" || $ageWorkEnd != "" || $genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
 
           //เงื่อนไข หาค่าที่ น้อยกว่า วัน-เดือน-ปี ที่เกษียณ และ มากกว่า วัน-เดือน-ปี ที่บรรจุงาน
-          $checkDateWork = " DATE_FORMAT(mb.workEndDate,'%Y')  <= '$endWork' AND DATE_FORMAT(mb.workStartDate,'%Y') >= '$startWork' " . $checkAnd . " ";
-          } elseif ($conditions[0]->dateStartWork == "" and $conditions[0]->dateEndWork == "") {
+          $checkDateWork = " DATE_FORMAT(mb.workEndDate,'%Y')  <= '$dateEndWork' AND DATE_FORMAT(mb.workStartDate,'%Y') >= '$dateStartWork' " . $checkAnd . " ";
+          } elseif ($dateStartWork == "" and $dateEndWork == "") {
 
           //เช็คค่าว่าง ของเงื่อนไข
           $checkDateWork = "";
           }
           // เช็คค่าว่าง อายุสมาชิก ตั้งแต่
-          if ($conditions[0]->ageStart != "" and $conditions[0]->ageEnd == "") {
+          if ($ageStart != "" and $ageEnd == "") {
 
-          $totalYear = $conditions[0]->ageStart;
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          if ($ageWorkStart !="" || $ageWorkEnd != "" || $genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
 
           //เช็คเงื่อนไข  มากกว่าหรือเท่ากับ อายุของสมาชิก
-          $checkAge = "  (YEAR( CURDATE( ) ) - YEAR(mb.dob )) >= '$totalYear' " . $checkAnd . " ";
+          $checkAge = "  (YEAR( CURDATE( ) ) - YEAR(mb.dob )) >= '$ageStart' " . $checkAnd . " ";
           }
           // เช็คค่าว่าง อายุสมาชิก  ถึง
-          if ($conditions[0]->ageStart == "" and $conditions[0]->ageEnd != "") {
+          if ($ageStart == "" and $ageEnd != "") {
 
-          $totalYear = $conditions[0]->ageEnd;
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          if ($ageWorkStart !="" || $ageWorkEnd != "" || $genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
 
           //เช็คเงื่อนไข  น้อยกว่าหรือเท่ากับ อายุของสมาชิก
-          $checkAge = " (YEAR( CURDATE( ) ) - YEAR(mb.dob )) <= '$totalYear' " . $checkAnd . " ";
+          $checkAge = " (YEAR( CURDATE( ) ) - YEAR(mb.dob )) <= '$ageEnd' " . $checkAnd . " ";
           }
 
           // เช็คค่าว่าง อายุสมาชิก  ตั้งแต่-ถึง
-          if ($conditions[0]->ageEnd != "" and $conditions[0]->ageStart != "") {
+          if ($ageEnd != "" and $ageStart != "") {
 
-          $ageEndSetYear = $conditions[0]->ageEnd;
-          $ageStartSetYear = $conditions[0]->ageStart;
-
+ 
           //ตรวจสอบค่า and
-          if ($conditions[0]->ageWorkStart || $conditions[0]->ageWorkEnd !== "" || $conditions[0]->genderId != "") {
+          if ($ageWorkStart !="" || $ageWorkEnd != "" || $genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
 
           //เงื่อนไข หาค่าระหว่าง อายุสมาชิกตั้งแต่...ปี ถึง ...ปี
-          $checkAge = " (YEAR( CURDATE( ) ) - YEAR(mb.dob )) BETWEEN  '$ageStartSetYear' AND '$ageEndSetYear' " . $checkAnd . " ";
-          } elseif ($conditions[0]->ageEnd == "" and $conditions[0]->ageStart == "") {
+          $checkAge = " (YEAR( CURDATE( ) ) - YEAR(mb.dob )) BETWEEN  '$ageStart' AND '$ageEnd' " . $checkAnd . " ";
+          } elseif ($ageEnd == "" and $ageStart == "") {
 
           //เงื่อนไข ถ้าไม่มีการเช็คเงื่อนไข
           $checkAge = "";
           }
 
           // ตรวจสอบอายุการปฏิบัติงาน
-          if ($conditions[0]->ageWorkStart != "" and $conditions[0]->ageWorkEnd == "") {
+          if ($ageWorkStart != "" and $ageWorkEnd == "") {
 
-          $ageWorkStart = $conditions[0]->ageWorkStart;
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->genderId != "") {
+          if ($genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
@@ -336,13 +350,12 @@ class ViewService extends CServiceBase implements IViewService {
           $checkAgeWork = " (YEAR( CURDATE( ) ) - YEAR(mb.workStartDate )) >= '$ageWorkStart' " . $checkAnd . "";
           }
 
-          if ($conditions[0]->ageWorkStart == "" and $conditions[0]->ageWorkEnd != "") {
+          if ($ageWorkStart == "" and $ageWorkEnd != "") {
 
 
-          $ageWorkEnd = $conditions[0]->ageWorkEnd;
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->genderId != "") {
+          if ($genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
@@ -350,34 +363,30 @@ class ViewService extends CServiceBase implements IViewService {
           //เช็คอายุการปฏิบัติงาน ถึง
           $checkAgeWork = " (YEAR( CURDATE( ) ) - YEAR(mb.workStartDate )) <= '$ageWorkEnd' " . $checkAnd . " ";
           }
-          if ($conditions[0]->ageWorkStart != "" and $conditions[0]->ageWorkEnd != "") {
-
-
-          $ageWorkEnd = $conditions[0]->ageWorkEnd;
-          $ageWorkStart = $conditions[0]->ageWorkStart;
+          if ($ageWorkStart != "" and $ageWorkEnd != "") {
 
           //ตรวจสอบค่า and
-          if ($conditions[0]->genderId != "") {
+          if ($genderId != "") {
           $checkAnd = "and";
           } else {
           $checkAnd = "";
           }
           //หาค่าระหว่าง อายุการปฏิบัติงาน ตั้งแต่...ปี ถึง...ปี
           $checkAgeWork = " (YEAR( CURDATE( ) ) - YEAR(mb.workStartDate)) BETWEEN  '$ageWorkStart' AND '$ageWorkEnd' " . $checkAnd . " ";
-          } elseif ($conditions[0]->ageWorkStart == "" and $conditions[0]->ageWorkEnd == "") {
+          } elseif ($ageWorkStart == "" and $ageWorkEnd == "") {
           $checkAgeWork = "";
           }
 
           //ตรวจสอบ เพศ
-          if ($conditions[0]->genderId != "") {
+          if ($genderId != "") {
 
-          $checkgenderId = "mb.genderId = " . $conditions[0]->genderId . "";
-          } elseif ($conditions[0]->genderId == "") {
+          $checkgenderId = "mb.genderId = " . $genderId . "";
+          } elseif ($genderId == "") {
           $checkgenderId = "";
           }
 
 
-          if($conditions[0]->conditionsId ==""){
+          if($conditions->conditionsId ==""){
 
           $sql = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
           . "mb.departmentId,"
@@ -407,10 +416,7 @@ class ViewService extends CServiceBase implements IViewService {
 
           }
           
-          if($conditions[0]->conditionsId !=""){
-
-               $employeeTypeId = $conditions[0]->employeeTypeId;
-               $conditionsId = $conditions[0]->conditionsId;
+          if($conditions->conditionsId !=""){
 
           $sql = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
           . "mb.departmentId,"
@@ -433,10 +439,10 @@ class ViewService extends CServiceBase implements IViewService {
           . "on mb.facultyId = tax5.id "
           . "Left JOIN taxonomy tax6 "
           . "on mb.departmentId = tax6.id "
-          . "where conditionsId=".$conditionsId." and employeeTypeId=".$employeeTypeId." and " . $checkDateWork . " " . $checkAge . " " . $checkAgeWork . " " . $checkgenderId . "";
+          . "where mb.employeeTypeId=".$employeeTypeId." and " . $checkDateWork . " " . $checkAge . " " . $checkAgeWork . " " . $checkgenderId . "";
 
           $obj = $this->datacontext->pdoQuery($sql);
-          
+
           return $obj;
 
           } 
@@ -458,7 +464,7 @@ class ViewService extends CServiceBase implements IViewService {
         $obj = $this->datacontext->getObject($sql, array("id" => $id));
        
         $view->datas = $obj;
-
+        
         return $view;
     }
 

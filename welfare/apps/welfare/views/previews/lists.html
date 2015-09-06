@@ -89,13 +89,13 @@
     {{#datas}}
         var dateEndWork = "{{dateEndWork}}";
         var dateStartWork = "{{dateStartWork}}";
-        var conditionsId={{conditionsId}};
-        var ageStart={{ageStart}};
-        var ageEnd={{ageEnd}};
-        var ageWorkStart={{ageWorkStart}};
-        var ageWorkEnd={{ageWorkEnd}};
-        var genderId={{genderId}};
-        var employeeTypeId={{employeeTypeId}};
+        var conditionsId="{{conditionsId}}";
+        var ageStart="{{ageStart}}";
+        var ageEnd="{{ageEnd}}";
+        var ageWorkStart="{{ageWorkStart}}";
+        var ageWorkEnd="{{ageWorkEnd}}";
+        var genderId="{{genderId}}";
+        var employeeTypeId="{{employeeTypeId}}";
         
     {{/datas}} 
     var data1 = {};
@@ -132,7 +132,26 @@
             data: jsonEncode(jdata),
             type: 'post', // 'or get'
             success: function (result) {
-                alert("xxx");
+                
+                var html = "";
+                            var $html = '';
+                            for(var i = 0; i < result.previews.length ; i++){
+                                var data = result.previews[i];
+                                if(data.academic==null){
+                                    var academic = data.academic="";
+                                }else{
+                                   var academic = data.academic;
+
+                                }
+                                $html += '<tr class="selectable">';
+                                $html += '<td>'+(i+1)+'</td>';
+                                $html += '<td>'+data.titlename+' '+academic+' '+data.fname+' '+data.lname+'</td>';
+                                $html += '<td>'+data.gender+'</td>';
+                                $html += '<td>ภาควิชา/สำนักงาน '+data.department+'  '+data.faculty+'</td>';
+                                $html += '<td>'+data.employeeType+'</td>';
+                            }
+
+                            $("table#showTable tbody").html($html);
         } 
 
     });
