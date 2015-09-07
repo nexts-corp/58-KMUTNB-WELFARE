@@ -100,4 +100,48 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function memberShow($id) {
+        $view = new CJView("member/user/profile", CJViewType::HTML_VIEW_ENGINE);
+        $member = new \apps\member\entity\Member();
+        $member->setMemberId($id);
+        $member = $this->datacontext->getObject($member)[0];
+
+        $dob = $member->dob->format('d-m-Y');
+        $mem = explode("-", $dob);
+        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
+        $workStartDate = $member->workStartDate->format('d-m-Y');
+        $wsd = explode("-", $workStartDate);
+        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+
+        $user = new \apps\user\entity\User();
+        $user->memberId = $member->memberId;
+        $user = $this->datacontext->getObject($user)[0];
+        $member->userTypeId = $user->userTypeId;
+        $view->datas = $member;
+        return $view;
+    }
+
+    public function editProfile($id) {
+        $view = new CJView("member/user/editProfile", CJViewType::HTML_VIEW_ENGINE);
+        $member = new \apps\member\entity\Member();
+        $member->setMemberId($id);
+        $member = $this->datacontext->getObject($member)[0];
+
+        $dob = $member->dob->format('d-m-Y');
+        $mem = explode("-", $dob);
+        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
+        $workStartDate = $member->workStartDate->format('d-m-Y');
+        $wsd = explode("-", $workStartDate);
+        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+
+        $user = new \apps\user\entity\User();
+        $user->memberId = $member->memberId;
+        $user = $this->datacontext->getObject($user)[0];
+        $member->userTypeId = $user->userTypeId;
+        $view->datas = $member;
+        return $view;
+    }
+
 }

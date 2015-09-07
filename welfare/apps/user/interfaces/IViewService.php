@@ -35,6 +35,13 @@ interface IViewService {
     public function memberEdit($id);
     
     
-    
+    /**
+     * @name memberPassword
+     * @uri /member/password
+     * @param integer id
+     * @return html view
+     * @description view แก้ไขผู้ใช้งาน   
+     */
+    public function memberPassword($id);
    
 }

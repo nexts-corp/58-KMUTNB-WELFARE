@@ -94,31 +94,10 @@ class MemberService extends CServiceBase implements IMemberService {
                 $this->getResponse()->add("message", "รหัสผ่านเดิมไม่ถูกต้อง");
                 return false;
             }
-        }else {
+        } else {
             $this->getResponse()->add("message", "รหัสผ่านใหม่ไม่ตรงกัน");
-                return false;
+            return false;
         }
-            
-
-
-//        $dob1 = explode("-", $data->dob);
-//        $dob1[2] = intVal($dob1[2]) - 543;
-//        $dob = $dob1[2] . "-" . $dob1[1] . "-" . $dob1[0];
-//
-//        $date1 = explode("-", $data->workStartDate);
-//        $date1[2] = intVal($date1[2]) - 543;
-//        $workStartDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
-//
-//        $data->dob = new \DateTime($dob);
-//
-//        $data->workStartDate = new \DateTime($workStartDate);
-//        if ($this->datacontext->updateObject($data)) {
-//            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
-//            return true;
-//        } else {
-//            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
-//            return false;
-//        }
     }
 
     public function delete($memberId) {
@@ -177,6 +156,36 @@ class MemberService extends CServiceBase implements IMemberService {
         $view->lists = $this->datacontext->getObject($sql, array("name" => "%" . $data . "%"));
         //print_r($view->list);
         return $view;
+    }
+
+    public function changePassword($data) {
+        $memberId = $data->memberId;
+        $oldpassword = $data->oldpassword;
+        $password = md5($data->password);
+        $confirmpassword = md5($data->confirmpassword);
+        $oldpassword = md5($oldpassword);
+        //print_r($password);
+        if ($password == $confirmpassword) {
+
+            $user = new User();
+            $user->setMemberId($memberId);
+            $member = $this->datacontext->getObject($user)[0];
+
+            if ($oldpassword == $member->password) {
+                //echo "เยสสสสสส";
+                $member->memberId = $memberId;
+                $member->password = $password;
+//            print_r($member);
+                $this->datacontext->updateObject($member);
+                $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+            } else {
+                $this->getResponse()->add("message", "รหัสผ่านเดิมไม่ถูกต้อง");
+                return false;
+            }
+        } else {
+            $this->getResponse()->add("message", "รหัสผ่านใหม่ไม่ตรงกัน");
+            return false;
+        }
     }
 
 }

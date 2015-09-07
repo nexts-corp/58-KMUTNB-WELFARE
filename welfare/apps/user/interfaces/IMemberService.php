@@ -64,4 +64,13 @@ interface IMemberService {
      * @description ค้นหา   
      */
     public function search($data);
+    
+    /**
+     * @name changePassword
+     * @uri /change/password
+     * @param string data
+     * @return boolean update Description
+     * @description view list new
+     */
+    public function changePassword($data);
 }
