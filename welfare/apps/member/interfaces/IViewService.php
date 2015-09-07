@@ -35,5 +35,25 @@ interface IViewService {
      */
     public function memberEdit($id);
     
+    /**
+     * @name memberShow
+     * @uri /member/show
+     * @param integer id
+     * @return html view
+     * @description view แก้ไขผู้ใช้งาน   
+     */
+    public function memberShow($id);
+    
+    /**
+     * @name editProfile
+     * @uri /edit/profile
+     * @param integer id
+     * @return html view
+     * @description view แก้ไขผู้ใช้งาน   
+     */
+    public function editProfile($id);
+    
+    
+    
    
 }

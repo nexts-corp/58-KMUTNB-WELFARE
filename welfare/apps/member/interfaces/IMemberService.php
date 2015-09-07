@@ -64,4 +64,13 @@ interface IMemberService {
      * @description ค้นหา   
      */
     public function search($data);
+    
+    /**
+     * @name updateProfile
+     * @uri /profile/update
+     * @param apps\member\entity\Member data Description
+     * @return boolean update Description
+     * @description view list new
+     */
+    public function updateProfile($data);
 }

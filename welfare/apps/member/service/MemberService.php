@@ -148,4 +148,14 @@ class MemberService extends CServiceBase implements IMemberService {
         return $view;
     }
 
+    public function updateProfile($data) {
+        if ($this->datacontext->updateObject($data)) {
+            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+            return true;
+        } else {
+            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return false;
+        }
+    }
+
 }
