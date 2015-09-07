@@ -80,10 +80,9 @@
                                         <td>&nbsp;{{conditionsId}}</td>
                                         <td>&nbsp;{{description}}</td>
                                         <td>&nbsp;{{amount}}</td>
-                                        <td>&nbsp;{{value1}}</td>
+                                        <td>&nbsp;{{employeeType}}</td>
                                         <td class="center">
 
-                                           
                                                 <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/welfare/view/priviews/lists/{{conditionsId}}"
@@ -134,7 +133,7 @@
             var availableTags = [
             {{#datas}}"{{description}}",
                     "{{amount}}",
-                    "{{value1}}",
+                    "{{employeeType}}",
             {{/datas}}
             ];
                     $("#SearchName").autocomplete({
@@ -145,7 +144,7 @@
 
 <script>
                     
-                    $('.btn-del').click(function(){
+            $('.btn-del').click(function(){
             var Id = $(this).attr('row-index');
                     if (confirm("คุณต้องการลบ?")) {
             var data = {"Id":Id};

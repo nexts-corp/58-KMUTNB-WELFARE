@@ -418,7 +418,7 @@ class ViewService extends CServiceBase implements IViewService {
           
           if($conditions->conditionsId !=""){
 
-          $sql = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+          $sql = "SELECT mb.memberId,mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
           . "mb.departmentId,"
           . "(tax1.value1) As titlename, "
           . "(tax2.value1) As academic, "
@@ -442,7 +442,8 @@ class ViewService extends CServiceBase implements IViewService {
           . "where mb.employeeTypeId=".$employeeTypeId." and " . $checkDateWork . " " . $checkAge . " " . $checkAgeWork . " " . $checkgenderId . "";
 
           $obj = $this->datacontext->pdoQuery($sql);
-
+          
+          
           return $obj;
 
           } 

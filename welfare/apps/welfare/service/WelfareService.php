@@ -60,9 +60,5 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
   
 
-  
-
-    
-
 //put your code here
 }

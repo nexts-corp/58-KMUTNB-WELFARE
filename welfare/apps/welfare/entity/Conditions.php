@@ -65,7 +65,7 @@ class Conditions {
     public $ageWorkEnd; //อายุการปฎิบัติงานถึง
 
     /**
-     * @Column(type="string", length=3, name="genderId",nullable=true)
+     * @Column(type="string", length=13, name="genderId",nullable=true)
      */
     public $genderId; //เพศ
 

@@ -37,4 +37,12 @@ interface IConditionsService {
     public function delete($Id);
     
     
+    /**
+     * @name save
+     * @uri /right/save
+     * @param apps\welfare\entity\Right data []
+     * @return boolean save [return ture or false if don't ]
+     * @description save เพิ่มเงื่อนไขสวัสดิการ
+     */
+    public function saveRight($data);
 }
