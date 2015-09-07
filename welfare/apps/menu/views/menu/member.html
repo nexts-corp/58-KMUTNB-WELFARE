@@ -15,32 +15,33 @@
 
             <ul class="submenu">
                 <!--<li>-->
-                    <!--<a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/check/welfare/view/tab/info')">-->
-                        <!--<span class="menu-text">สวัสดิการที่ได้รับ</span>-->
-                    <!--</a>-->
+                <!--<a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/check/welfare/view/tab/info')">-->
+                <!--<span class="menu-text">สวัสดิการที่ได้รับ</span>-->
+                <!--</a>-->
                 <!--</li>-->
 
                 <!--<li>-->
-                    <!--<a href="#" >-->
-                        <!--<span class="menu-text">สวัสดิการที่พึงจะได้รับ</span>-->
-                    <!--</a>-->
+                <!--<a href="#" >-->
+                <!--<span class="menu-text">สวัสดิการที่พึงจะได้รับ</span>-->
+                <!--</a>-->
                 <!--</li>-->
                 <!--<li>-->
-                    <!--<a href="#" onclick="#">-->
-                        <!--<span class="menu-text">สวัสดิการที่รับไปแล้ว</span>-->
-                    <!--</a>-->
+                <!--<a href="#" onclick="#">-->
+                <!--<span class="menu-text">สวัสดิการที่รับไปแล้ว</span>-->
+                <!--</a>-->
                 <!--</li>-->
 
 
 
 
                 <li>
-                    <a href="#" onclick="getHTML('content-body','{{_context_path}}/api/member/view/welfare/info', null);">
+
+                    <a href="#" onclick="getHTML('content-body','{{_context_path}}/api/member / view / welfare / info', null);">
                         <span class="menu-text">สวัสดิการที่พึงจะได้รับ</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" onclick="getHTML('content-body', '{{_context_path}}/api/member/view/welfare/wait', null);">
+                    <a href="#" onclick="getHTML('content-body', '{{_context_path}}/api/member / view / welfare / wait', null);">
                         <span class="menu-text">สวัสดิการที่รับไปแล้ว</span>
                     </a>
                 </li>
@@ -64,25 +65,54 @@
 
 
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/fund/panel/tab/fund/policy">
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">นโยบาย</span>
                     </a>
+                    <!--                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/fund/panel/tab/fund/policy">
+                                            <span class="menu-text">นโยบาย</span>
+                                        </a>-->
                 </li>
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/fund/panel/tab/fund/live')">
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">กองทุนสำรองเลี้ยงชีพ</span>
                     </a>
+                    <!--                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/fund/panel/tab/fund/live')">
+                                            <span class="menu-text"></span>
+                                        </a>-->
                 </li>
 
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/fund/panel/tab/fund/cooperative')">
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">สำรองเลี้ยงชีพ(สหกรณ์)</span>
                     </a>
+
+                    <!--                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/fund/panel/tab/fund/cooperative')">
+                                            <span class="menu-text"></span>
+                                        </a>-->
                 </li>
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/ManagementFund/fundretire/list')">
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">สำรองเลี้ยงชีพ(เกษียณอายุ)</span>
                     </a>
+                    <!--                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/ManagementFund/fundretire/list')">
+                                            <span class="menu-text"></span>
+                                        </a>-->
                 </li>
 
 
@@ -90,52 +120,81 @@
         </li>
 
         <li>
-            <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/medicalFee/view/medical')">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    ค่ารักษาพยาบาล
-                </span>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">ค่ารักษาพยาบาล</span>
             </a>
+
+            <!--            <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member / medicalFee / view / medical')">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                
+                            </span>
+                        </a>-->
 
         </li>
 
         <li>
-            <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member/insurance/view/tab/insurance')">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    ข้อมูลประกันสังคม
-                </span>
-
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">ข้อมูลประกันสังคม</span>
             </a>
+            <!--            <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member / insurance / view / tab / insurance')">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                
+                            </span>
+            
+                        </a>-->
 
-           
-        </li>
-
-        <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    ประกันกลุ่ม
-                </span>
-
-                <i class="menu-expand"></i>
-            </a>
 
         </li>
 
         <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    ข่าวสารและประกาศ
-                </span>
-
-                <i class="menu-expand"></i>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">ประกันกลุ่ม</span>
             </a>
+            <!--            <a href="#" class="menu-dropdown">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                
+                            </span>
+            
+                            <i class="menu-expand"></i>
+                        </a>-->
+
+        </li>
+
+        <li>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">ข่าวสารและประกาศ</span>
+            </a>
+            <!--            <a href="#" class="menu-dropdown">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                
+                            </span>
+            
+                            <i class="menu-expand"></i>
+                        </a>-->
 
             <ul class="submenu">
 
@@ -144,17 +203,23 @@
         </li>
 
         <li>    
-
-            <a href="#" onclick="">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    รายการผู้รับผลประโยชน์
-                </span>
-
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">รายการผู้รับผลประโยชน์</span>
             </a>
+            <!--            <a href="#" onclick="">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                
+                            </span>
+            
+                        </a>-->
 
-        
+
         </li>
 
 
@@ -181,7 +246,7 @@
                        onclick="btnHTML(this)">
                         <span class="menu-text">แก้ไขรหัสผ่าน</span>
                     </a>
-                    
+
                 </li>
                 <li>
                     <a href="#" 
@@ -197,37 +262,56 @@
         </li>
 
         <li>    
-
-            <a href="#" >
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    ถาม-ตอบ
-                </span>
-
-                <i class="menu-expand"></i>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/member/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">ถาม-ตอบ</span>
             </a>
+            <!--            <a href="#" >
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                ถาม-ตอบ
+                            </span>
+            
+                            <i class="menu-expand"></i>
+                        </a>-->
 
-           
+
         </li>
 
         <li>    
-
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    ติดต่อ
-                </span>
-
-                <i class="menu-expand"></i>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/member/view/member/edit/{{code}}"
+               data-param="null"
+               onclick="btnHTML(this)">
+                <span class="menu-text">ติดต่อ</span>
             </a>
+            <!--            <a href="#" class="menu-dropdown">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                ติดต่อ
+                            </span>
+            
+                            <i class="menu-expand"></i>
+                        </a>-->
 
             <ul class="submenu">
                 <li>
-                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/ManagementRetire / retire / list')">
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/member/view/member/edit/{{code}}"
+                       data-param="null"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">รายการข้อมูลผู้เกษียนอายุ</span>
                     </a>
+                    <!--                    <a href="#" onclick="getBodyMember('{{_context_path}}/api/ManagementRetire / retire / list')">
+                                            <span class="menu-text"></span>
+                                        </a>-->
                 </li>
             </ul>
         </li>
