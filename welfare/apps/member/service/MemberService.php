@@ -130,13 +130,18 @@ class MemberService extends CServiceBase implements IMemberService {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
         //print_r($data);
                 
-        $sql="select  mem.memberId,mem.idCard,mem.titleId,mem.academicId,mem.fname,mem.lname, "
-                . "tax.pCode,tax.code "
-                . "FROM \\apps\\member\\entity\\Member mem "
-                . "INNER JOIN \\apps\\taxonomy\\entity\\Taxonomy tax "
-                . "with mem.memberActiveId = tax.id "
-                . "WHERE tax.pCode = 'memberActive' and tax.code = 'working' "
-                . "and mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name ";
+        $sql="select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
+                . "FROM apps\\member\\entity\\Member mem1 "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
+                . "with mem1.titleId = tax1.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
+                . "with mem1.memberActiveId = tax2.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
+                . "with mem1.facultyId = tax3.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
+                . "with mem1.departmentId = tax4.id "
+                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
+                . "and mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
         //print_r($sql);
         $view->lists = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
 //        print_r($view->lists);
