@@ -149,7 +149,17 @@
                                 $html += '<td>'+data.gender+'</td>';
                                 $html += '<td>ภาควิชา/สำนักงาน '+data.department+'  '+data.faculty+'</td>';
                                 $html += '<td>'+data.employeeType+'</td>';
-                            }
+                                
+                                var data2={};
+                                
+                                 data2['memberId']=data.memberId;
+                                 data2['conditionsId']=conditionsId;
+
+                                
+                                var jdata = {};
+                                jdata['data'] = data2;
+                                sendData('{{_context_path}}/api/welfare/conditions/right/save',jsonEncode(jdata));
+            }
 
                             $("table#showTable tbody").html($html);
         } 

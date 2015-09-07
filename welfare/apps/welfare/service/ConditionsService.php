@@ -8,6 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IConditionsService;
 use apps\welfare\entity\Conditions;
+use apps\welfare\entity\Right;
 
 class ConditionsService extends CServiceBase implements IConditionsService {
 
@@ -61,6 +62,27 @@ class ConditionsService extends CServiceBase implements IConditionsService {
         
     }
     
-    
+    public function saveRight($data){
+        
+          
+               $memberId=$data->memberId;
+               $conditionsId=$data->conditionsId;
+               
+              $checkRight = "SELECT ri.conditionId,ri.memberId, "
+                      . "FROM welfareright ri "
+                      . "where ri.memberId = ".$memberId." and ri.conditionsId=".$conditionsId."";
+            
+             $daoRight=$this->datacontext->pdoQuery($checkRight);
+             
+              if($daoRight == true){
+             $this->datacontext->saveObject($data);
+             return true;
+             }else{
+             return false;
+             }
+             
+          }
+        
+        
 
 }
