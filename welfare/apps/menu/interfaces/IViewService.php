@@ -35,5 +35,22 @@ interface IViewService {
      */
     public function member();
     
+    /**
+     * @name menu/department
+     * @uri /menu/department
+     * @return html view
+     * @description เรียก head menu มาแสดง
+     * @authen true
+     */
+    public function department();
+    
+    /**
+     * @name menu/faculty
+     * @uri /menu/faculty
+     * @return html view
+     * @description เรียก head menu มาแสดง
+     */
+    public function faculty();
+    
     
 }

@@ -71,10 +71,15 @@
 $(document).ready(function () {
     getHTML('header', '{{_context_path}}/api/menu/view/header', null);
     var usertype = Cookies.get("usertype");
+//    alert(usertype);
     if (usertype == "administrator") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/admin', null);
     } else if (usertype == "user") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/member', null);
+    }else if (usertype == "adminDepartment") {
+        getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/department', null);
+    }else if (usertype == "adminFaculty") {
+        getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/faculty', null);
     }
 });
 

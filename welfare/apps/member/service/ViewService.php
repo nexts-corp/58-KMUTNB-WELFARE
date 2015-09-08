@@ -81,7 +81,15 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function memberLists() {
-        $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
+        $usertype = $this->getCurrentUser()->usertype;
+        
+        $facultyId = $this->getCurrentUser()->attribute->facultyId;
+        $departmentId = $this->getCurrentUser()->attribute->departmentId;
+        print_r($facultyId);
+        
+        if($usertype=="administrator"){
+            print_r("admin");
+            $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
 //$listregister = new \apps\common\entity\Register();
         $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
                 . "FROM apps\\member\\entity\\Member mem1 "
@@ -98,6 +106,49 @@ class ViewService extends CServiceBase implements IViewService {
         // print_r($data);
         $view->lists = $data;
         return $view;
+        }
+        else if($usertype=="adminFaculty"){
+            print_r("adminFaculty");
+            $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
+//$listregister = new \apps\common\entity\Register();
+        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
+                . "FROM apps\\member\\entity\\Member mem1 "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
+                . "with mem1.titleId = tax1.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
+                . "with mem1.memberActiveId = tax2.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
+                . "with mem1.facultyId = tax3.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
+                . "with mem1.departmentId = tax4.id "
+                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
+                . "and tax3.code = '$facultyId' ";
+        $data = $this->datacontext->getObject($sql);
+        // print_r($data);
+        $view->lists = $data;
+        return $view;
+        }
+        else if($usertype=="adminDepartment"){
+            print_r("adminDepartment");
+            $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
+//$listregister = new \apps\common\entity\Register();
+        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
+                . "FROM apps\\member\\entity\\Member mem1 "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
+                . "with mem1.titleId = tax1.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
+                . "with mem1.memberActiveId = tax2.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
+                . "with mem1.facultyId = tax3.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
+                . "with mem1.departmentId = tax4.id "
+                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
+                . "and tax3.code = '$departmentId' ";
+        $data = $this->datacontext->getObject($sql);
+        // print_r($data);
+        $view->lists = $data;
+        }
+        
     }
 
     public function memberShow($id) {
