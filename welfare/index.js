@@ -36,7 +36,19 @@ function getParentId(parentId) {
     });
     return data;
 }
-
+function btnHTML(value) {
+    var id = $(value).data("id");
+    var api = $(value).data("api");
+    var object = $(value).data("object");
+    var param = $(value).data("param");
+    var data = {};
+    if (typeof object == 'undefined'||typeof param == 'undefined') {
+        data= null;
+    }else{
+        data[object] = param;
+    }
+    getHTML(id, api, data);
+}
 
 function getHTML(id, link, data) {
     //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
@@ -98,13 +110,3 @@ function jsonEncode(data) {
     return dataJSONEN;
 }
 
-function btnHTML(value) {
-    var id = $(value).attr("data-id");
-    var api = $(value).attr("data-api");
-    var param = $(value).attr("data-param");
-    // console.log(id + ";" + api + ";" + data);
-    if (param == "null") {
-        param = null;
-    }
-    getHTML(id, api, param);
-}
