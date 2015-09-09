@@ -438,7 +438,13 @@
                         type: 'post',
                         success: function (result) {
 
-                            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                            if (result.save == true) {
+                                getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                                Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                            } else {
+                                Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+
+                            }
                         }
                     });
 

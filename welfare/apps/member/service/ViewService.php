@@ -18,7 +18,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function memberAdd() {
-        $view = new CJView("member/add", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("admin/add", CJViewType::HTML_VIEW_ENGINE);
         $academic = new Taxonomy();
         $academic->pCode = "academic";
         $view->academic = $this->datacontext->getObject($academic);
@@ -59,38 +59,83 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function memberEdit($id) {
-        $view = new CJView("member/edit", CJViewType::HTML_VIEW_ENGINE);
-        $member = new \apps\member\entity\Member();
-        $member->setMemberId($id);
-        $member = $this->datacontext->getObject($member)[0];
+        $usertype = $this->getCurrentUser()->usertype;
 
-        $dob = $member->dob->format('d-m-Y');
-        $mem = explode("-", $dob);
-        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+        $facultyId = $this->getCurrentUser()->attribute->facultyId;
+        $departmentId = $this->getCurrentUser()->attribute->departmentId;
 
-        $workStartDate = $member->workStartDate->format('d-m-Y');
-        $wsd = explode("-", $workStartDate);
-        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+        if ($usertype == "administrator") {
+            print_r("admin");
+            $view = new CJView("admin/edit", CJViewType::HTML_VIEW_ENGINE);
+            $member = new \apps\member\entity\Member();
+            $member->setMemberId($id);
+            $member = $this->datacontext->getObject($member)[0];
 
-        $user = new \apps\user\entity\User();
-        $user->memberId = $member->memberId;
-        $user = $this->datacontext->getObject($user)[0];
-        $member->userTypeId = $user->userTypeId;
-        $view->datas = $member;
-        return $view;
+            $dob = $member->dob->format('d-m-Y');
+            $mem = explode("-", $dob);
+            $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
+            $workStartDate = $member->workStartDate->format('d-m-Y');
+            $wsd = explode("-", $workStartDate);
+            $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+
+            $user = new \apps\user\entity\User();
+            $user->memberId = $member->memberId;
+            $user = $this->datacontext->getObject($user)[0];
+            $member->userTypeId = $user->userTypeId;
+            $view->datas = $member;
+            return $view;
+        } else if ($usertype == "adminFaculty") {
+            print_r("adminFaculty");
+            $view = new CJView("faculty/edit", CJViewType::HTML_VIEW_ENGINE);
+            $member = new \apps\member\entity\Member();
+            $member->setMemberId($id);
+            $member = $this->datacontext->getObject($member)[0];
+
+            $dob = $member->dob->format('d-m-Y');
+            $mem = explode("-", $dob);
+            $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
+            $workStartDate = $member->workStartDate->format('d-m-Y');
+            $wsd = explode("-", $workStartDate);
+            $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+
+            $user = new \apps\user\entity\User();
+            $user->memberId = $member->memberId;
+            $user = $this->datacontext->getObject($user)[0];
+            $member->userTypeId = $user->userTypeId;
+            $view->datas = $member;
+            return $view;
+        } else if ($usertype == "adminDepartment") {
+            print_r("adminDepartment");
+            $view = new CJView("department/edit", CJViewType::HTML_VIEW_ENGINE);
+            $member = new \apps\member\entity\Member();
+            $member->setMemberId($id);
+            $member = $this->datacontext->getObject($member)[0];
+
+            $dob = $member->dob->format('d-m-Y');
+            $mem = explode("-", $dob);
+            $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
+            $workStartDate = $member->workStartDate->format('d-m-Y');
+            $wsd = explode("-", $workStartDate);
+            $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+
+            $user = new \apps\user\entity\User();
+            $user->memberId = $member->memberId;
+            $user = $this->datacontext->getObject($user)[0];
+            $member->userTypeId = $user->userTypeId;
+            $view->datas = $member;
+            return $view;
+        }
     }
 
     public function memberLists() {
         $usertype = $this->getCurrentUser()->usertype;
-        
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
-        print_r($facultyId);
-        
-        if($usertype=="administrator"){
-            print_r("admin");
-            $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-//$listregister = new \apps\common\entity\Register();
+        $searchName = $this->getRequest()->searchName;
+        $param = array();
         $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
                 . "FROM apps\\member\\entity\\Member mem1 "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
@@ -102,57 +147,32 @@ class ViewService extends CServiceBase implements IViewService {
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
                 . "with mem1.departmentId = tax4.id "
                 . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' ";
-        $data = $this->datacontext->getObject($sql);
-        // print_r($data);
-        $view->lists = $data;
+
+        if ($usertype == "administrator") {
+            $view = new CJView("admin/lists", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($usertype == "adminFaculty") {
+            $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
+            
+            $sql .= " and tax3.code = :facultyId "; //กรณีที่ไม่ได้ search
+            $param["facultyId"] = $facultyId;
+        } elseif ($usertype == "adminDepartment") {
+            $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
+            
+            $sql .= " and tax4.code = :departmentId "; //กรณีที่ไม่ได้ search
+            $param["departmentId"] = $departmentId;
+        }
+
+        if ($searchName != "") {
+            $search = new MemberService();
+            $view->lists = $search->search($searchName);
+        } else {
+            $view->lists = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
+        }
         return $view;
-        }
-        else if($usertype=="adminFaculty"){
-            print_r("adminFaculty");
-            $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-//$listregister = new \apps\common\entity\Register();
-        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
-                . "FROM apps\\member\\entity\\Member mem1 "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleId = tax1.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
-                . "with mem1.memberActiveId = tax2.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
-                . "with mem1.facultyId = tax3.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
-                . "with mem1.departmentId = tax4.id "
-                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
-                . "and tax3.code = '$facultyId' ";
-        $data = $this->datacontext->getObject($sql);
-        // print_r($data);
-        $view->lists = $data;
-        return $view;
-        }
-        else if($usertype=="adminDepartment"){
-            print_r("adminDepartment");
-            $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-//$listregister = new \apps\common\entity\Register();
-        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
-                . "FROM apps\\member\\entity\\Member mem1 "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleId = tax1.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
-                . "with mem1.memberActiveId = tax2.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
-                . "with mem1.facultyId = tax3.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
-                . "with mem1.departmentId = tax4.id "
-                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
-                . "and tax3.code = '$departmentId' ";
-        $data = $this->datacontext->getObject($sql);
-        // print_r($data);
-        $view->lists = $data;
-        }
-        
     }
 
     public function memberShow($id) {
-        $view = new CJView("member/user/profile", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("user/profile", CJViewType::HTML_VIEW_ENGINE);
         $member = new \apps\member\entity\Member();
         $member->setMemberId($id);
         $member = $this->datacontext->getObject($member)[0];
@@ -174,7 +194,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function editProfile($id) {
-        $view = new CJView("member/user/editProfile", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         $member = new \apps\member\entity\Member();
         $member->setMemberId($id);
         $member = $this->datacontext->getObject($member)[0];

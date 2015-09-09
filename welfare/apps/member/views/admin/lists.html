@@ -28,18 +28,18 @@
                     </div>
                     <div class="widget-body">
                         <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
+                            <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >  
                             <p id="demo" style="color:#d14"></p>
                         </label>
 
                         <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
                         <div class="pull-right">
                             <button class="btn btn-primary"
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/member/view/member/add"
-                                    data-param="null"
+
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
                             </button>
@@ -70,7 +70,7 @@
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/member/view/member/edit/{{memberId}}"
-                                                    data-param="null"
+
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
@@ -100,18 +100,28 @@
 
         $('.btn-del').click(function () {
             var id = $(this).attr('row-index');
-            var data = {"memberId": id};
-            var msg = sendData('{{_context_path}}/api/member/member/delete', data);
-            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+
+            if (confirm("คุณต้องการลบ?")) {
+                var data = {"memberId": id};
+                var msg = sendData('{{_context_path}}/api/member/member/delete', data);
+
+                if (msg.delete == true) {
+                    
+                    getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                } else {
+                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                }
+            }
+
         });
-        $("#btnsearch").click(function () {
-            var SearchName = $("#SearchName").val();
-            if (SearchName == "") {
+        $("#btnSearch").click(function () {
+            var searchName = $("#searchName").val();
+            if (searchName == "") {
                 document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
             } else {
-
-                var data = {"SearchName": SearchName};
-                getHTML('content-body', '{{_context_path}}/api/member/member/search', data);
+                var data = {"searchName": searchName};
+                getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', data);
             }
         });
 

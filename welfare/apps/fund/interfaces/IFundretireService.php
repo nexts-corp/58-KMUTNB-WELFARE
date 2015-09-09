@@ -1,5 +1,5 @@
 <?php
-namespace apps\ManagementFund\interfaces;
+namespace apps\fund\interfaces;
 /**
  * @name fundretire
  * @uri /fundretire

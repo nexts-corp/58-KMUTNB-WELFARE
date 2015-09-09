@@ -18,21 +18,11 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function cooperativeAdd() {
         
-        $view = new CJView("cooperative/add", CJViewType::HTML_VIEW_ENGINE);
-        return  $view;
-        
-    }
-
-    public function detailsLists($id) {
-        
-       $view = new CJView("cooperative/adddetail", CJViewType::HTML_VIEW_ENGINE);
-        return  $view;
     }
 
     public function cooperativeLists() {
-        
         $view = new CJView("cooperative/lists", CJViewType::HTML_VIEW_ENGINE);
-        return  $view;
+        return $view;
     }
 
     public function fundAdd() {
@@ -56,11 +46,13 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function liveLists() {
-        
+        $view = new CJView("fundlive/lists", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
     }
 
     public function policyAdd() {
-        
+        $view = new CJView("policy/add", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
     }
 
     public function policyEdit($id) {
@@ -68,7 +60,8 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function policyLists() {
-        
+        $view = new CJView("policy/lists", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
     }
 
     public function retireAdd($id) {
@@ -79,14 +72,9 @@ class ViewService extends CServiceBase implements IViewService {
         
     }
 
-    public function retireLists($id) {
-        
+    public function retireLists() {
+        $view = new CJView("fundretire/lists", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
     }
-
-    
-
-    // start serviec view academic
-
-   
 
 }

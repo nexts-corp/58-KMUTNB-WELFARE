@@ -25,23 +25,7 @@ interface IViewService {
      */
     public function cooperativeAdd();
   
-    /**
-     * @name cooperativeLists
-     * @uri /details/lists
-     * @return html view
-     * @description รายการตำแหน่งทางการศึกษา
-     */
-    public function detailsLists();
     
-    /**
-     * @name cooperativeAdd
-     * @uri /details/add
-     * @return html view
-     * @description view เพิ่มตำแหน่งทางการศึกษา  
-     */
-    public function detailsAdd();
-    
-    // end view cooperative
 
     /**
      * @name liveLists
@@ -73,11 +57,11 @@ interface IViewService {
     /**
      * @name retireLists
      * @uri /retire/lists
-     * @param integer id
+     
      * @return html view
      * @description รายการภาควิชาหรือสำนักงาน
      */
-    public function retireLists($id);
+    public function retireLists();
 
     /**
      * @name retireAdd

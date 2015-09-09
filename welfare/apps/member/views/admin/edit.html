@@ -332,6 +332,7 @@
             listmatier();
             listuserTypeId();
 
+
             $("#btn_submit").click(function () {
 //alert(555555555555);
                 var data = {};
@@ -367,8 +368,12 @@
                     type: 'post', // 'or get'
                     success: function (result) {
                         //alert(result.save);
-                        alert(result.message);
-                        getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                        if (result.update == true) {
+                            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                            Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                        } else {
+                            Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        }
                     }
                 });
             });

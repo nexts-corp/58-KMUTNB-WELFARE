@@ -1,10 +1,10 @@
 <?php
-namespace apps\ManagementFund\service;
+namespace apps\fund\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
-use apps\ManagementFund\interfaces\IPolicyService;
+use apps\fund\interfaces\IPolicyService;
 use apps\common\entity\Policy;
 
 class PolicyService extends CServiceBase implements IPolicyService{
@@ -16,11 +16,8 @@ class PolicyService extends CServiceBase implements IPolicyService{
     }           
     
     public function viewList() {
-        $view = new CJView("policy/list", CJViewType::HTML_VIEW_ENGINE);
-        $listPolicy = new Policy();
-        $Policy = $this->datacontext->getObject($listPolicy);
-
-        $view->list = $Policy;
+        $view = new CJView("policy/lists", CJViewType::HTML_VIEW_ENGINE);
+        
         
         return  $view;
     }

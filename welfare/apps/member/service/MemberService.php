@@ -22,19 +22,19 @@ class MemberService extends CServiceBase implements IMemberService {
         $taxonomy->pCode = "memberActive";
         $taxonomy->code = "working";
         $dataTax = $this->datacontext->getObject($taxonomy)[0];
-        
+
         $data->memberActiveId = $dataTax->id;
-        
-        $dob1 = explode("-",$data->dob);
-        $dob1[2] = intVal($dob1[2])-543;
-        $dob = $dob1[2]."-".$dob1[1]."-".$dob1[0];
-        
-        $date1 = explode("-",$data->workStartDate);
-        $date1[2] = intVal($date1[2])-543;
-        $workStartDate = $date1[2]."-".$date1[1]."-".$date1[0];
-        
+
+        $dob1 = explode("-", $data->dob);
+        $dob1[2] = intVal($dob1[2]) - 543;
+        $dob = $dob1[2] . "-" . $dob1[1] . "-" . $dob1[0];
+
+        $date1 = explode("-", $data->workStartDate);
+        $date1[2] = intVal($date1[2]) - 543;
+        $workStartDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
+
         $data->dob = new \DateTime($dob);
-        
+
         $data->workStartDate = new \DateTime($workStartDate);
 //        
 //        $data->dob = $data->dob->format('Y-m-d');
@@ -44,17 +44,17 @@ class MemberService extends CServiceBase implements IMemberService {
         if ($this->datacontext->saveObject($data)) {
 
             $user = new User();
-         
-            
+
+
             $user->setMemberId($data->memberId);
             $user->setUsername($data->idCard);
             $user->setUserTypeId($data->userTypeId);
             $dob = $data->dob->format('d-m-Y');
-            $pwd = explode("-",$dob);
-            $password = $pwd[0].$pwd[1].(intval($pwd[2])+543);
+            $pwd = explode("-", $dob);
+            $password = $pwd[0] . $pwd[1] . (intval($pwd[2]) + 543);
             $user->setPassword(md5($password));
 
-         
+
             if ($this->datacontext->saveObject($user)) {
                 $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
 
@@ -70,16 +70,16 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
-        $dob1 = explode("-",$data->dob);
-        $dob1[2] = intVal($dob1[2])-543;
-        $dob = $dob1[2]."-".$dob1[1]."-".$dob1[0];
-        
-        $date1 = explode("-",$data->workStartDate);
-        $date1[2] = intVal($date1[2])-543;
-        $workStartDate = $date1[2]."-".$date1[1]."-".$date1[0];
-        
+        $dob1 = explode("-", $data->dob);
+        $dob1[2] = intVal($dob1[2]) - 543;
+        $dob = $dob1[2] . "-" . $dob1[1] . "-" . $dob1[0];
+
+        $date1 = explode("-", $data->workStartDate);
+        $date1[2] = intVal($date1[2]) - 543;
+        $workStartDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
+
         $data->dob = new \DateTime($dob);
-        
+
         $data->workStartDate = new \DateTime($workStartDate);
         if ($this->datacontext->updateObject($data)) {
             $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
@@ -96,14 +96,21 @@ class MemberService extends CServiceBase implements IMemberService {
         $taxonomy->code = "leave";
         $dataTax = $this->datacontext->getObject($taxonomy)[0];
 
-        $member= new \apps\member\entity\Member();
+        $member = new \apps\member\entity\Member();
         $member->memberId = $memberId;
         $dataMem = $this->datacontext->getObject($member)[0];
-        
+
         $dataMem->memberActiveId = $dataTax->id;
         $dataMem->workEndDate = new \DateTime('now');
         
-        return $this->datacontext->updateObject($dataMem);
+        if ($this->datacontext->updateObject($dataMem)) {
+            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+            return true;
+        } else {
+//            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return false;
+        }
+        
     }
 
     public function getDepartment($id) {
@@ -127,10 +134,16 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
-        $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-        //print_r($data);
-                
-        $sql="select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
+        $usertype = $this->getCurrentUser()->usertype;
+        $facultyId = $this->getCurrentUser()->attribute->facultyId;
+        $departmentId = $this->getCurrentUser()->attribute->departmentId;
+        $param = array(
+            "name" => "%" . $data . "%"
+        );
+        $sql = "select tax1.value1 As titlename, "
+                . "mem1.fname,mem1.lname,mem1.idCard,mem1.memberId, "
+                . "tax3.value1 as faculty, "
+                . "tax4.value1 as department "
                 . "FROM apps\\member\\entity\\Member mem1 "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
                 . "with mem1.titleId = tax1.id "
@@ -141,11 +154,17 @@ class MemberService extends CServiceBase implements IMemberService {
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
                 . "with mem1.departmentId = tax4.id "
                 . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
-                . "and mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
-        //print_r($sql);
-        $view->lists = $this->datacontext->getObject($sql,array("name"=>"%".$data."%"));
-//        print_r($view->lists);
-        return $view;
+                . "and (mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name) ";
+        if ($usertype == "administrator") {
+            
+        } elseif ($usertype == "adminFaculty") {
+            $sql .= " and tax3.code = :facultyId ";
+            $param["facultyId"] = $facultyId;
+        } elseif ($usertype == "adminDepartment") {
+            $sql .= " and tax4.code = :departmentId ";
+            $param["departmentId"] = $departmentId;
+        }
+        return $this->datacontext->getObject($sql, $param);
     }
 
     public function updateProfile($data) {

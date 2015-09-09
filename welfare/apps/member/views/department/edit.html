@@ -1,0 +1,528 @@
+
+<div class="page-content"> 
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
+            <li class="active">{{#i18n}}addregister{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb --> 
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1> {{#i18n}}addregister{{/i18n}} </h1>
+        </div>
+        <!--Header Buttons--> 
+
+        <!--Header Buttons End--> 
+    </div>
+    <!-- /Page Header --> 
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            {{#datas}}
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div  class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}registerIdCard{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="idCard" disabled="" name="registerIdCard" placeholder="{{#i18n}}registerIdCard{{/i18n}}"
+                                               data-bv-notempty="true" value="{{idCard}}" 
+                                               data-bv-notempty-message="{{#i18n}}registerIdCard{{/i18n}}" />
+                                    </div>
+                                </div>
+                                <label for="reservation" class="col-lg-2 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
+
+                                <div class="col-lg-4">
+
+                                    <div class="controls col-lg-12">
+                                        <div class="input-group">
+                                            <input class="form-control cDate" disabled="" value="{{dob}}" type="text" id="dob" />
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}registerName{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}"
+                                               data-bv-notempty="true" value="{{fname}}"
+                                               data-bv-notempty-message="{{#i18n}}registerName{{/i18n}}" />
+                                    </div>
+                                </div>
+                                <label class="col-lg-2 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
+                                               data-bv-notempty="true" value="{{lname}}"
+                                               data-bv-notempty-message="{{#i18n}}registerLastName{{/i18n}}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}gender{{/i18n}}</label>
+                                <div class="col-lg-4 control-group " id="gender">
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="widget radius-bordered">
+                            <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                            <div class="widget-body">
+                                <div class="form-horizontal">
+                                    <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" disabled="" id="employeeCode" name="employeeCode" placeholder="{{#i18n}}registerStaffCode{{/i18n}}"
+                                                   data-bv-notempty="true" value="{{employeeCode}}"
+                                                   data-bv-notempty-message=" {{#i18n}}registerStaffCode{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" id="employeeTypeId" name="employeeTypeId" data-bv-field="country">
+                                                <option value="">ระบุประเภทพนักงาน</option>
+                                                {{#employeeType}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/employeeType}}
+                                            </select>
+                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}positionsWorkNameTh{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" id="positionId" name="positionId" data-bv-field="country">
+                                                <option value="">ระบุตำแหน่งงาน</option>
+                                                {{#position}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/position}}
+                                            </select>
+                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" id="facultyId" disabled="" name="facultyId" data-bv-field="country">
+                                                <option value="">เลือกคณะวิชา/สำนัก</option>
+                                                {{#faculty}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/faculty}}
+                                            </select>
+                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}departmentId{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" disabled="" id="departmentId" name="departmentId" data-bv-field="country">
+                                                <option value="">สังกัด/ภาควิชา</option>
+                                                {{#department}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/department}}
+                                            </select>
+                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}linePosition{{/i18n}}</label>
+                                        <div class="col-lg-9 control-group " id="matier">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
+
+                                        <div class="col-lg-9">
+                                            <!--<div class="controls col-lg-12">-->
+                                            <div class="input-group">
+                                                <input class="form-control cDate" disabled="" type="text" value="{{workStartDate}}"  id="workStartDate" style="z-index: 9999;" />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <!--</div>-->
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}registerSalaryAdded{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="salaryStart" disabled="" name="salaryStart" placeholder="{{#i18n}}registerSalaryAdded{{/i18n}}"
+                                                   data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนแรกเข้า"
+                                                   data-validation-error-msg-container="#salaryStart-msg-error" value="{{salaryStart}}" />
+                                        </div>
+                                        <div class="col-lg-offset-4" id="salaryStart-msg-error">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="salaryPresent" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
+                                                   data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนปัจุบัน"
+                                                   data-validation-error-msg-container="#salaryPresent-msg-error" value="{{salaryPresent}}" />
+                                        </div>
+                                        <div class="col-lg-offset-4" id="salaryPresent-msg-error">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="widget radius-bordered">
+                            <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                            <div class="widget-body">
+                                <div class="form-horizontal">
+                                    <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}registerAddress{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" name="address" id="address" placeholder="{{#i18n}}registerAddress{{/i18n}}"
+                                                   data-bv-notempty="true" value="{{address}}"
+                                                   data-bv-notempty-message="{{#i18n}}registerAddress{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
+                                                   data-bv-notempty="true" value="{{internalPhone}}"
+                                                   data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
+                                                   data-bv-notempty="true" value="{{phone}}"
+                                                   data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
+                                                   data-bv-notempty="true" value="{{mobile}}"
+                                                   data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
+                                                   data-bv-notempty="true" value="{{email}}"
+                                                   data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-6 col-lg-8">
+
+                                            <button id="btn_submit" name="bn" class="btn btn-primary" type="button"> {{#i18n}}button.submit{{/i18n}}</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/datas}}
+        </div>
+    </div>
+
+
+    <!--        <script type="text/javascript">
+        
+            $(document).ready(function () {
+        
+                $("#facultyId1").change(function () {
+                    $("#departmentId1").empty();
+                    var id = $("#facultyId1").val();
+                    var data = {"facultyId": id};
+                    getDepartment1('{{_context_path}}/api/user/user/register/get/datas/department', data);
+                });
+                $("#facultyId").change(function () {
+                    $("#departmentId").empty();
+                    var id = $("#facultyId").val();
+                    var data = {"facultyId": id};
+                    getDepartment('{{_context_path}}/api/user/user/register/get/department', data);
+                });
+        
+            </script>-->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+            listsAcademic();
+            listtitleName();
+            listgender();
+            listemployeeTypeId();
+            listpositionId();
+            listfacultyId();
+            listmatier();
+
+
+
+            $("#btn_submit").click(function () {
+//alert(555555555555);
+                var data = {};
+                data['memberId'] = "{{#datas}}{{memberId}}{{/datas}}";
+                data['fname'] = $("#fname").val();
+                data['lname'] = $("#lname").val();
+                data['titleId'] = $("#titleId").val();
+                data['genderId'] = $('input[name=genderId]:checked').val();
+                data['idCard'] = $("#idCard").val();
+                data['dob'] = $("#dob").val();
+                data['employeeCode'] = $("#employeeCode").val();
+                data['employeeTypeId'] = $("#employeeTypeId").val();
+                data['academicId'] = $("#academicId").val();
+                data['departmentId'] = $("#departmentId").val();
+                data['facultyId'] = $("#facultyId").val();
+                data['workStartDate'] = $("#workStartDate").val();
+                data['matierId'] = $('input[name=matierId]:checked').val();
+                data['positionId'] = $("#positionId").val();
+                data['userTypeId'] = $("#userTypeId").val();
+                data['salaryStart'] = $("#salaryStart").val();
+                data['salaryPresent'] = $("#salaryPresent").val();
+                data['address'] = $("#address").val();
+                data['internalPhone'] = $("#internalPhone").val();
+                data['phone'] = $("#phone").val();
+                data['mobile'] = $("#mobile").val();
+                data['email'] = $("#email").val();
+
+                var jdata = {};
+                jdata['data'] = data;
+                $.ajax({
+                    url: '{{_context_path}}/api/member/member/update',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                        //alert(result.save);
+                        if (result.update == true) {
+                            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                            Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                        } else {
+                            Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        }
+                    }
+
+                });
+            });
+//    $('.date-picker').datepicker();
+
+
+            function listsAcademic() {
+                var academicId = '{{#datas}}{{academicId}}{{/datas}}';
+                var academic = getPCode("academic");
+                var html = "";
+                if (academic != "") {
+                    $.each(academic, function (key, value) {
+                        if (value.id == academicId) {
+                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                        } else {
+                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                        }
+                    });
+                } else {
+                    html = "<option value=''>ตำแหน่งทางวิชาการ</option>";
+                }
+                $("#academicId").html(html);
+            }
+
+            function listtitleName() {
+                var titleId = '{{#datas}}{{titleId}}{{/datas}}';
+                var titleName = getPCode("titleName");
+                var html = "";
+                if (titleName != "") {
+                    $.each(titleName, function (key, value) {
+                        if (value.id == titleId) {
+                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                        } else {
+                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                        }
+                    });
+                } else {
+                    html = "<option value=''>คำนำหน้าชื่อ</option>";
+                }
+                $("#titleId").html(html);
+            }
+
+            function listemployeeTypeId() {
+                var employeeTypeId = '{{#datas}}{{employeeTypeId}}{{/datas}}';
+                var employeeType = getPCode("employeeType");
+                var html = "";
+                if (employeeType != "") {
+                    $.each(employeeType, function (key, value) {
+                        if (value.id == employeeTypeId) {
+                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                        } else {
+                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                        }
+                    });
+                } else {
+                    html = "<option value=''>ประเภทพนักงาน</option>";
+                }
+                $("#employeeTypeId").html(html);
+            }
+
+            function listpositionId() {
+                var positionId = '{{#datas}}{{positionId}}{{/datas}}';
+                var position = getPCode("position");
+                var html = "";
+                if (position != "") {
+                    $.each(position, function (key, value) {
+                        if (value.id == positionId) {
+                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                        } else {
+                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                        }
+                    });
+                } else {
+                    html = "<option value=''>ตำแหน่งงาน</option>";
+                }
+                $("#positionId").html(html);
+            }
+
+
+
+
+            function listfacultyId() {
+                var facultyId = '{{#datas}}{{facultyId}}{{/datas}}';
+                var faculty = getPCode("faculty");
+                var html = "";
+                if (faculty != "") {
+                    $.each(faculty, function (key, value) {
+                        if (value.id == facultyId) {
+                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                        } else {
+                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                        }
+                    });
+                } else {
+                    html = "<option value=''>เลือกคณะวิชา/สำนัก</option>";
+                }
+                $("#facultyId").html(html);
+                listdepartmentId();
+            }
+
+            function listdepartmentId() {
+                var departmentId = '{{#datas}}{{departmentId}}{{/datas}}';
+                var facultyId = '{{#datas}}{{facultyId}}{{/datas}}';
+                var department = getParentId(facultyId);
+                var html = "";
+                if (department != "") {
+                    $.each(department, function (key, value) {
+                        if (value.id == departmentId) {
+                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
+                        } else {
+                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
+                        }
+                    });
+                } else {
+                    html = "<option value=''>เลือกคณะวิชา/สำนัก</option>";
+                }
+                $("#departmentId").html(html);
+            }
+
+            function listgender() {
+                var genderId = '{{#datas}}{{genderId}}{{/datas}}';
+                var gender = getPCode("gender");
+                var html = "";
+                if (gender != "") {
+                    $.each(gender, function (key, value) {
+                        if (value.id == genderId) {
+                            html += "<div class='radio col-lg-6'><label><input name='genderId' id='genderId' value='" + value["id"] + "' type='radio' checked='checked' /><span class='text'>" + value.value1 + "</span></label></div>";
+
+                        } else {
+                            html += "<div class='radio col-lg-6'><label><input name='genderId' id='genderId' value='" + value["id"] + "' type='radio' /><span class='text'>" + value.value1 + "</span></label></div>";
+                        }
+                    });
+                } else {
+                    //  html = "<option value=''>คำนำหน้าชื่อ</option>";
+                }
+                $("#gender").html(html);
+            }
+
+            function listmatier() {
+                var matierId = '{{#datas}}{{matierId}}{{/datas}}';
+                var matier = getPCode("matier");
+                var html = "";
+                if (matier != "") {
+                    $.each(matier, function (key, value) {
+                        if (value.id == matierId) {
+                            html += "<div class='radio col-lg-6'><label><input name='matierId' id='matierId' value='" + value["id"] + "' type='radio' checked='checked' /><span class='text'>" + value.value1 + "</span></label></div>";
+
+                        } else {
+                            html += "<div class='radio col-lg-6'><label><input name='matierId' id='matierId' value='" + value["id"] + "' type='radio' /><span class='text'>" + value.value1 + "</span></label></div>";
+                        }
+                    });
+                } else {
+                    //  html = "<option value=''>คำนำหน้าชื่อ</option>";
+                }
+                $("#matier").html(html);
+            }
+
+        });
+
+
+    </script>

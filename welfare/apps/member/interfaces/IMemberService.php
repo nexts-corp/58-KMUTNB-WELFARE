@@ -59,7 +59,7 @@ interface IMemberService {
     /**
      * @name search
      * @uri /search
-     * @param String SearchName 
+     * @param string data
      * @return string search Description
      * @description ค้นหา   
      */

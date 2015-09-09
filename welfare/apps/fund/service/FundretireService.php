@@ -1,10 +1,10 @@
 <?php
-namespace apps\ManagementFund\service;
+namespace apps\fund\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
-use apps\ManagementFund\interfaces\IFundretireService;
+use apps\fund\interfaces\IFundretireService;
 class FundretireService extends CServiceBase implements IFundretireService{
    
     public $datacontext;

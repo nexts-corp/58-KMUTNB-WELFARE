@@ -130,6 +130,8 @@ class Member {
      */
     public $memberActiveId;
     
+    public $userTypeId;
+            
     function getMemberId() {
         return $this->memberId;
     }
