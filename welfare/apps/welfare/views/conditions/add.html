@@ -181,10 +181,10 @@
                     <div style="display:none" id="dateAddedCheck">
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkStartDateing{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="dateStartWork"  type="text" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control date-picker" id="workStartDate"  type="text" data-date-format="dd-mm-yyyy">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -193,10 +193,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkEndDate{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="dateEndWork"  type="text" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control date-picker" id="workEndDate"  type="text" data-date-format="dd-mm-yyyy">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -363,11 +363,11 @@
                 data['welfareId'] = "{{welfareId}}";
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
-                if ($("#dateStartWork").val() != "") {
-                    data['dateStartWork'] = $("#dateStartWork").val();
+                if ($("#workStartDate").val() != "") {
+                    data['workStartDate'] = $("#workStartDate").val();
                 }
-                if ($("#dateEndWork").val() != "") {
-                    data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#workEndDate").val() != "") {
+                    data['workEndDate'] = $("#workEndDate").val();
                 }
                 data['ageStart'] = $("#ageStart").val();
                 data['ageEnd'] = $("#ageEnd").val();
@@ -410,17 +410,18 @@
             var data1 = [];
             $.each(employeeTypeId, function (k, v) {
                 var data = {};
-                if ($("#dateStartWork").val() != "") {
-                    data['dateStartWork'] = $("#dateStartWork").val();
+                if ($("#workStartDate").val() != "") {
+                    data['workStartDate'] = $("#workStartDate").val();
                 }
-                if ($("#dateEndWork").val() != "") {
-                    data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#workEndDate").val() != "") {
+                    data['workEndDate'] = $("#workEndDate").val();
                 }
                 data['ageStart'] = $("#ageStart").val();
                 data['ageEnd'] = $("#ageEnd").val();
                 data['ageWorkStart'] = $("#ageWorkStart").val();
                 data['ageWorkEnd'] = $("#ageWorkEnd").val();
                 data['genderId'] = $('input[name=genderId]:checked').val();
+                
                 data['employeeTypeId'] = v;
                 data1.push(data);
             });
