@@ -35,14 +35,14 @@ class Conditions {
     public $returnTypeId; //หน่วยนับ
 
     /**
-     * @Column(type="date", name="dateStartWork",nullable=true)
+     * @Column(type="date", name="workStartDate",nullable=true)
      */
-    public $dateStartWork; //วันที่บรรจุ
+    public $workStartDate; //วันที่บรรจุ
 
     /**
-     * @Column(type="date", name="dateEndWork",nullable=true)
+     * @Column(type="date", name="workEndDate",nullable=true)
      */
-    public $dateEndWork; //วันที่เกษียณ
+    public $workEndDate; //วันที่เกษียณ
 
     /**
      * @Column(type="integer", length=3, name="ageStart",nullable=true)
@@ -73,6 +73,8 @@ class Conditions {
      * @Column(type="string", length=10, name="employeeTypeId",nullable=true)
      */
     public $employeeTypeId; //พนักงาน
+    
+    
 
     function getConditionsId() {
         return $this->conditionsId;
@@ -90,12 +92,12 @@ class Conditions {
         return $this->amount;
     }
 
-    function getDateStartWork() {
-        return $this->dateStartWork;
+    function getWorkStartDate() {
+        return $this->workStartDate;
     }
 
-    function getDateEndWork() {
-        return $this->dateEndWork;
+    function getWorkEndDate() {
+        return $this->workEndDate;
     }
 
     function getAgeStart() {
@@ -142,12 +144,12 @@ class Conditions {
         $this->amount = $amount;
     }
 
-    function setDateStartWork($dateStartWork) {
-        $this->dateStartWork = $dateStartWork;
+    function setWorkStartDate($workStartDate) {
+        $this->workStartDate = $workStartDate;
     }
 
-    function setDateEndWork($dateEndWork) {
-        $this->dateEndWork = $dateEndWork;
+    function setWorkEndDate($workEndDate) {
+        $this->workEndDate = $workEndDate;
     }
 
     function setAgeStart($ageStart) {

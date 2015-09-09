@@ -81,12 +81,21 @@
                             </div>
                             
                              <div class="form-group">
+                                <label class="col-lg-3 control-label">รีเซท เดือน</label>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" name="name" placeholder="ใส่ตัวเลข"
+                                           data-bv-notempty="true" id="resetTime"
+                                           data-bv-notempty-message="ใส่ตัวเลข" />
+                                </div>
+                            </div>
+                            
+                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
                                 <div class="col-lg-5">
 
                                     <select class="form-control" name="country" id="free" data-bv-field="country">
-                                        <option value="free">สวัสดิการให้เปล่า</option>
-                                        <option value="loan">สวัสดิการให้กู้</option>
+                                        <option value="N">สวัสดิการให้เปล่า</option>
+                                        <option value="Y">สวัสดิการให้กู้</option>
 
 
                                     </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
@@ -160,7 +169,7 @@
             data['description'] = $("#description").val();
             data['dateStart'] = $("#dateStart").val();
             data['dateEnd'] = $("#dateEnd").val();
-            
+            data['resetTime'] = $("#resetTime").val();
             data['free']=$("#free").val();
             var jdata = {};
             jdata['data'] = data;

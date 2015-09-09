@@ -1,157 +1,168 @@
 <?php
+
 namespace apps\welfare\entity;
+
 /**
-     * @Entity
-     * @Table(name="Welfare")
-     */
+ * @Entity
+ * @Table(name="Welfare")
+ */
 class Welfare {
-   /** 
-        * @Id
-        * @GeneratedValue
-        * @Column(type="integer" , length=11, name="welfareId") */
-       public $welfareId;
-       
-        /**
-        *@Column(type="string", name="name") 
-        */
-       public $name;
-       
-       /**
-        *@Column(type="string", name="description",nullable=true) 
-        */
-       public $description;
-       
-       /**
-        *@Column(type="datetime", name="dateCreate",length=14,nullable=true) 
-        */
-       public $dateCreate;
-       
-       /**
-        *@Column(type="date", name="dateUpdate",nullable=true) 
-        */
-       public $dateUpdate;
-       
-       /**
-        *@Column(type="date", name="dateCande",nullable=true) 
-        */
-       public $dateCande;
-       
-        /**
-        *@Column(type="date", name="dateStart",nullable=true) 
-        */
-       public $dateStart;
-       
-       /**
-        *@Column(type="date", name="dateEnd",nullable=true) 
-        */
-       public $dateEnd;
-       
-       /**
-        *@Column(type="string", name="free",nullable=true) 
-        */
-       public $free;
-       
-       /**
-        *@Column(type="string", name="willing",nullable=true) 
-        */
-       public $willing;
-       /**
-        *@Column(type="string", name="retire",nullable=true) 
-        */
-       public $retire;
-       
-       
-       
-       
-       function getWelfareId() {
-           return $this->welfareId;
-       }
 
-       function getName() {
-           return $this->name;
-       }
+    /**
+     * @Id
+     * @GeneratedValue
+     * @Column(type="integer" , length=11, name="welfareId") */
+    public $welfareId;
 
-       function getDescription() {
-           return $this->description;
-       }
+    /**
+     * @Column(type="string", name="name") 
+     */
+    public $name;
 
-       function getDateCreate() {
-           return $this->dateCreate;
-       }
+    /**
+     * @Column(type="string", name="description",nullable=true) 
+     */
+    public $description;
 
-       function getDateUpdate() {
-           return $this->dateUpdate;
-       }
+    /**
+     * @Column(type="datetime", name="dateCreate",length=14,nullable=true) 
+     */
+    public $dateCreate;
 
-       function getDateCande() {
-           return $this->dateCande;
-       }
+    /**
+     * @Column(type="date", name="dateUpdate",nullable=true) 
+     */
+    public $dateUpdate;
 
-       function getDateStart() {
-           return $this->dateStart;
-       }
+    /**
+     * @Column(type="date", name="dateCande",nullable=true) 
+     */
+    public $dateCande;
 
-       function getDateEnd() {
-           return $this->dateEnd;
-       }
+    /**
+     * @Column(type="date", name="dateStart",nullable=true) 
+     */
+    public $dateStart;
 
-       function getFree() {
-           return $this->free;
-       }
+    /**
+     * @Column(type="date", name="dateEnd",nullable=true) 
+     */
+    public $dateEnd;
 
-       function getWilling() {
-           return $this->willing;
-       }
+    /**
+     * @Column(type="string", name="free",nullable=true) 
+     */
+    public $free;
 
-       function getRetire() {
-           return $this->retire;
-       }
+    /**
+     * @Column(type="string", name="willing",nullable=true) 
+     */
+    public $willing;
 
-       function setWelfareId($welfareId) {
-           $this->welfareId = $welfareId;
-       }
+    /**
+     * @Column(type="string", name="retire",nullable=true) 
+     */
+    public $retire;
 
-       function setName($name) {
-           $this->name = $name;
-       }
+    /**
+     * @Column(type="integer", length=11, name="resetTime",nullable=true)
+     */
+    public $resetTime; //เวลาresetสวัสดิการ (เดือน)
 
-       function setDescription($description) {
-           $this->description = $description;
-       }
+    function getWelfareId() {
+        return $this->welfareId;
+    }
 
-       function setDateCreate($dateCreate) {
-           $this->dateCreate = $dateCreate;
-       }
+    function getName() {
+        return $this->name;
+    }
 
-       function setDateUpdate($dateUpdate) {
-           $this->dateUpdate = $dateUpdate;
-       }
+    function getDescription() {
+        return $this->description;
+    }
 
-       function setDateCande($dateCande) {
-           $this->dateCande = $dateCande;
-       }
+    function getDateCreate() {
+        return $this->dateCreate;
+    }
 
-       function setDateStart($dateStart) {
-           $this->dateStart = $dateStart;
-       }
+    function getDateUpdate() {
+        return $this->dateUpdate;
+    }
 
-       function setDateEnd($dateEnd) {
-           $this->dateEnd = $dateEnd;
-       }
+    function getDateCande() {
+        return $this->dateCande;
+    }
 
-       function setFree($free) {
-           $this->free = $free;
-       }
+    function getDateStart() {
+        return $this->dateStart;
+    }
 
-       function setWilling($willing) {
-           $this->willing = $willing;
-       }
+    function getDateEnd() {
+        return $this->dateEnd;
+    }
 
-       function setRetire($retire) {
-           $this->retire = $retire;
-       }
+    function getFree() {
+        return $this->free;
+    }
 
+    function getWilling() {
+        return $this->willing;
+    }
 
+    function getRetire() {
+        return $this->retire;
+    }
 
+    function getResetTime() {
+        return $this->resetTime;
+    }
+
+    function setWelfareId($welfareId) {
+        $this->welfareId = $welfareId;
+    }
+
+    function setName($name) {
+        $this->name = $name;
+    }
+
+    function setDescription($description) {
+        $this->description = $description;
+    }
+
+    function setDateCreate($dateCreate) {
+        $this->dateCreate = $dateCreate;
+    }
+
+    function setDateUpdate($dateUpdate) {
+        $this->dateUpdate = $dateUpdate;
+    }
+
+    function setDateCande($dateCande) {
+        $this->dateCande = $dateCande;
+    }
+
+    function setDateStart($dateStart) {
+        $this->dateStart = $dateStart;
+    }
+
+    function setDateEnd($dateEnd) {
+        $this->dateEnd = $dateEnd;
+    }
+
+    function setFree($free) {
+        $this->free = $free;
+    }
+
+    function setWilling($willing) {
+        $this->willing = $willing;
+    }
+
+    function setRetire($retire) {
+        $this->retire = $retire;
+    }
+
+    function setResetTime($resetTime) {
+        $this->resetTime = $resetTime;
+    }
 
 }

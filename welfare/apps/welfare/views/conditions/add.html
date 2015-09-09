@@ -126,7 +126,7 @@
                                     <div class="checkbox">
                                         <label>
 
-                                            <input type="checkbox" class="inverted" id="dateAdded" value="">
+                                            <input type="checkbox" class="inverted" id="optionDateStartAndEnd" value="">
 
                                             <span class="text">{{#i18n}}dateAdded{{/i18n}}/{{#i18n}}retirementDate{{/i18n}}</span>
                                         </label>
@@ -136,7 +136,7 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" name="retirementDate" id="retirementDate" >
+                                            <input type="checkbox" class="inverted" name="optionGender" id="optionGender" >
                                             <span class="text">{{#i18n}}gender{{/i18n}}</span>
                                         </label>
                                     </div>
@@ -145,7 +145,7 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" id="ageOfmember"  >
+                                            <input type="checkbox" class="inverted" id="optionAgeOfmember"  >
                                             <span class="text">{{#i18n}}ageOfmember{{/i18n}}</span>
                                         </label>
                                     </div>
@@ -154,8 +154,8 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" id="seniority" value="">
-                                            <span class="text">{{#i18n}}seniority{{/i18n}}</span>
+                                            <input type="checkbox" class="inverted" id="optionAgeOfWork" value="">
+                                            <span class="text">{{#i18n}}ageOfWork{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -178,13 +178,13 @@
             <div class="widget-body">
                 <div id="registrationForm" class="form-horizontal">
 
-                    <div style="display:none" id="dateAddedCheck">
+                    <div style="display:none" id="checkDateStartAndEnd">
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkStartDateing{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="workStartDate"  type="text" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control date-picker" id="dateStartWork"  type="text" data-date-format="dd-mm-yyyy">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -193,10 +193,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkEndDate{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="workEndDate"  type="text" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control date-picker" id="dateEndWork"  type="text" data-date-format="dd-mm-yyyy">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -207,7 +207,7 @@
 
 
 
-                    <div style="display: none" id="ageOfmemberCheck">
+                    <div style="display: none" id="checkAgeOfmember">
 
 
                         <div class="form-group">
@@ -230,7 +230,7 @@
                         </div>
                     </div>
 
-                    <div style="display: none" id="seniorityCheck">
+                    <div style="display: none" id="checkAgeOfWork">
 
 
                         <div class="form-group">
@@ -251,7 +251,7 @@
                         </div>
                     </div>
 
-                    <div style="display: none" id="genderCheck">
+                    <div style="display: none" id="checkGender">
                         <div class="form-group">
 
                             {{#gender}}
@@ -300,16 +300,16 @@
                                 <tr>
                                     <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
                                     <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
-                         
+
                                     <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                     <th class="text-center">สังกัด</th>
+                                    <th class="text-center">สังกัด</th>
                                     <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                
-                                
+
+
                             </tbody>
 
                         </table>
@@ -333,18 +333,27 @@
 <script>
     $(document).ready(function () {
 
-        $('#dateAdded').click(function () {
-            $("#dateAddedCheck").slideToggle();
+        $('#optionDateStartAndEnd').click(function () {
+
+            $("#checkDateStartAndEnd").slideToggle();
+            $("#dateStartWork").val("");
+            $("#dateEndWork").val("");
         });
-        $('#ageOfmember').click(function () {
-            $("#ageOfmemberCheck").slideToggle();
+        $('#optionGender').click(function () {
+            $('input[name=genderId]').attr('checked', false);
+            $("#checkGender").slideToggle();
         });
-        $('#seniority').click(function () {
-            $("#seniorityCheck").slideToggle();
+        $('#optionAgeOfmember').click(function () {
+            $("#checkAgeOfmember").slideToggle();
+            $("#ageStart").val("");
+            $("#ageEnd").val("");
         });
-        $('#retirementDate').click(function () {
-            $("#genderCheck").slideToggle();
+        $('#optionAgeOfWork').click(function () {
+            $("#checkAgeOfWork").slideToggle();
+            $("#ageWorkStart").val("");
+            $("#ageWorkEnd").val("");
         });
+
 
 
 
@@ -363,18 +372,28 @@
                 data['welfareId'] = "{{welfareId}}";
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
-                if ($("#workStartDate").val() != "") {
-                    data['workStartDate'] = $("#workStartDate").val();
+                
+                if ($("#dateStartWork").val() != "") {
+                    data['dateStartWork'] = $("#dateStartWork").val();
                 }
-                if ($("#workEndDate").val() != "") {
-                    data['workEndDate'] = $("#workEndDate").val();
+                if ($("#dateEndWork").val() != "") {
+                    data['dateEndWork'] = $("#dateEndWork").val();
                 }
-                data['ageStart'] = $("#ageStart").val();
-                data['ageEnd'] = $("#ageEnd").val();
-                data['ageWorkStart'] = $("#ageWorkStart").val();
-                data['ageWorkEnd'] = $("#ageWorkEnd").val();
-                data['genderId'] = $('input[name=genderId]:checked').val();
-                data['returnTypeId'] = $('#returnTypeId').val();
+                     if($("#ageStart").val() != ""){
+                     data['ageStart'] = $("#ageStart").val();
+                }
+                if($("#ageEnd").val() !=""){
+                      data['ageEnd'] = $("#ageEnd").val();
+                }
+                if($("#ageWorkStart").val() != ""){
+                    data['ageWorkStart'] = $("#ageWorkStart").val();
+                }
+                if($("#ageWorkEnd").val() !=""){
+                   data['ageWorkEnd'] = $("#ageWorkEnd").val(); 
+                }
+                if($('input[name=genderId]:checked').val() !="" ){
+                   data['genderId'] = $('input[name=genderId]:checked').val();
+                }
                 data['employeeTypeId'] = v;
                 data1.push(data);
             });
@@ -410,18 +429,27 @@
             var data1 = [];
             $.each(employeeTypeId, function (k, v) {
                 var data = {};
-                if ($("#workStartDate").val() != "") {
-                    data['workStartDate'] = $("#workStartDate").val();
+                if ($("#dateStartWork").val() != "") {
+                    data['dateStartWork'] = $("#dateStartWork").val();
                 }
-                if ($("#workEndDate").val() != "") {
-                    data['workEndDate'] = $("#workEndDate").val();
+                if ($("#dateEndWork").val() != "") {
+                    data['dateEndWork'] = $("#dateEndWork").val();
                 }
-                data['ageStart'] = $("#ageStart").val();
-                data['ageEnd'] = $("#ageEnd").val();
-                data['ageWorkStart'] = $("#ageWorkStart").val();
-                data['ageWorkEnd'] = $("#ageWorkEnd").val();
-                data['genderId'] = $('input[name=genderId]:checked').val();
-                
+                if($("#ageStart").val() != ""){
+                     data['ageStart'] = $("#ageStart").val();
+                }
+                if($("#ageEnd").val() !=""){
+                      data['ageEnd'] = $("#ageEnd").val();
+                }
+                if($("#ageWorkStart").val() != ""){
+                    data['ageWorkStart'] = $("#ageWorkStart").val();
+                }
+                if($("#ageWorkEnd").val() !=""){
+                   data['ageWorkEnd'] = $("#ageWorkEnd").val(); 
+                }
+                if($('input[name=genderId]:checked').val() !="" ){
+                   data['genderId'] = $('input[name=genderId]:checked').val();
+                }
                 data['employeeTypeId'] = v;
                 data1.push(data);
             });
@@ -437,23 +465,23 @@
                             Notify('กรุณาเลือกข้อมูล !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                         } else {
                             $("#preview").slideToggle(this.checked = true);
-                            
+
                             var html = "";
                             var $html = '';
-                            for(var i = 0; i < result.previews.length ; i++){
+                            for (var i = 0; i < result.previews.length; i++) {
                                 var data = result.previews[i];
-                                if(data.academic==null){
-                                    var academic = data.academic="";
-                                }else{
-                                   var academic = data.academic;
+                                if (data.academic == null) {
+                                    var academic = data.academic = "";
+                                } else {
+                                    var academic = data.academic;
 
                                 }
                                 $html += '<tr class="selectable">';
-                                $html += '<td>'+(i+1)+'</td>';
-                                $html += '<td>'+data.titlename+' '+academic+' '+data.fname+' '+data.lname+'</td>';
-                                $html += '<td>'+data.gender+'</td>';
-                                $html += '<td>ภาควิชา/สำนักงาน '+data.department+'  '+data.faculty+'</td>';
-                                $html += '<td>'+data.employeeType+'</td>';
+                                $html += '<td>' + (i + 1) + '</td>';
+                                $html += '<td>' + data.titlename + ' ' + academic + ' ' + data.fname + ' ' + data.lname + '</td>';
+                                $html += '<td>' + data.gender + '</td>';
+                                $html += '<td>ภาควิชา/สำนักงาน ' + data.department + '  ' + data.faculty + '</td>';
+                                $html += '<td>' + data.employeeType + '</td>';
                             }
 
                             $("table#showTable tbody").html($html);

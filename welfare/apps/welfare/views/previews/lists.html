@@ -83,90 +83,80 @@
 </div>
 <script>
     $(document).ready(function () {
-        
-   
-    
-    {{#datas}}
-        var dateEndWork = "{{dateEndWork}}";
-        var dateStartWork = "{{dateStartWork}}";
-        var conditionsId="{{conditionsId}}";
-        var ageStart="{{ageStart}}";
-        var ageEnd="{{ageEnd}}";
-        var ageWorkStart="{{ageWorkStart}}";
-        var ageWorkEnd="{{ageWorkEnd}}";
-        var genderId="{{genderId}}";
-        var employeeTypeId="{{employeeTypeId}}";
-        
-    {{/datas}} 
-    var data1 = {};
-            if (dateStartWork != "") {
-                data1['dateStartWork'] = dateStartWork;
-            }
-            if (dateEndWork != "") {
-                data1['dateEndWork'] = dateEndWork;
-            }
-            
-            data1['conditionsId']=conditionsId
-            
-            if(ageStart > 0){
-            data1['ageStart'] =ageStart;
-            }
-             if(ageEnd > 0){
-            data1['ageEnd'] =ageEnd;
-            }
-            if(ageWorkStart > 0){
-            data1['ageWorkStart'] =ageWorkStart;
-            }
-            if(ageWorkEnd > 0){
-            data1['ageWorkEnd'] =ageWorkEnd;
-            }
-            if(genderId > 0){
+
+
+
+          {{#datas}}
+        var workEndDate = "{{workEndDate}}";
+        var workStartDate = "{{workStartDate}}";
+        var conditionsId = "{{conditionsId}}";
+        var ageStart = "{{ageStart}}";
+        var ageEnd = "{{ageEnd}}";
+        var ageWorkStart = "{{ageWorkStart}}";
+        var ageWorkEnd = "{{ageWorkEnd}}";
+        var genderId = "{{genderId}}";
+        var employeeTypeId = "{{employeeTypeId}}";
+         {{/datas}} 
+        var data1 = {};
+        var data = [];
+        if (workStartDate != "") {
+            data1['workStartDate'] = workStartDate;
+        }
+        if (workEndDate != "") {
+            data1['workEndDate'] = workEndDate;
+        }
+
+        data1['conditionsId'] = conditionsId
+
+        if (ageStart > 0) {
+            data1['ageStart'] = ageStart;
+        }
+        if (ageEnd > 0) {
+            data1['ageEnd'] = ageEnd;
+        }
+        if (ageWorkStart > 0) {
+            data1['ageWorkStart'] = ageWorkStart;
+        }
+        if (ageWorkEnd > 0) {
+            data1['ageWorkEnd'] = ageWorkEnd;
+        }
+        if (genderId > 0) {
             data1['genderId'] = genderId;
-            }
-            data1['employeeTypeId'] = employeeTypeId;
-   
-            var jdata = {};
-            jdata['conditions'] = data1;
-    $.ajax({
+        }
+        data1['employeeTypeId'] = employeeTypeId;
+        data.push(data1);
+        var jdata = {};
+        jdata['conditions'] = data;
+        $.ajax({
             url: '{{_context_path}}/api/welfare/view/previews/test/lists',
             data: jsonEncode(jdata),
             type: 'post', // 'or get'
             success: function (result) {
-                
+
                 var html = "";
-                            var $html = '';
-                            for(var i = 0; i < result.previews.length ; i++){
-                                var data = result.previews[i];
-                                if(data.academic==null){
-                                    var academic = data.academic="";
-                                }else{
-                                   var academic = data.academic;
+                var $html = '';
+                for (var i = 0; i < result.previews.length; i++) {
+                    var data = result.previews[i];
+                    if (data.academic == null) {
+                        var academic = data.academic = "";
+                    } else {
+                        var academic = data.academic;
+                    }
+                    $html += '<tr class="selectable">';
+                    $html += '<td>' + (i + 1) + '</td>';
+                    $html += '<td>' + data.titlename + ' ' + academic + ' ' + data.fname + ' ' + data.lname + '</td>';
+                    $html += '<td>' + data.gender + '</td>';
+                    $html += '<td>ภาควิชา/สำนักงาน ' + data.department + '  ' + data.faculty + '</td>';
+                    $html += '<td>' + data.employeeType + '</td>';
+                 
+                }
 
-                                }
-                                $html += '<tr class="selectable">';
-                                $html += '<td>'+(i+1)+'</td>';
-                                $html += '<td>'+data.titlename+' '+academic+' '+data.fname+' '+data.lname+'</td>';
-                                $html += '<td>'+data.gender+'</td>';
-                                $html += '<td>ภาควิชา/สำนักงาน '+data.department+'  '+data.faculty+'</td>';
-                                $html += '<td>'+data.employeeType+'</td>';
-                                
-                                var data2={};
-                                
-                                 data2['memberId']=data.memberId;
-                                 data2['conditionsId']=conditionsId;
-
-                                
-                                var jdata = {};
-                                jdata['data'] = data2;
-                                sendData('{{_context_path}}/api/welfare/conditions/right/save',jsonEncode(jdata));
+                $("table#showTable tbody").html($html);
             }
 
-                            $("table#showTable tbody").html($html);
-        } 
-
+        });
     });
-  });
-  
+
 </script>
 
 

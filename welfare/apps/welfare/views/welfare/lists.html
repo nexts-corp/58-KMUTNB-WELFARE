@@ -42,13 +42,13 @@
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
                         <div class="pull-right">
-<!--                            <button class="btn btn-primary"
-                                    data-id="content-body"
-                                    data-api="{{_context_path}}/api/insurance/view/insurance/add"
-                                    data-param="null"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>{{#i18n}}print{{/i18n}} 
-                            </button>-->
+                            <!--                            <button class="btn btn-primary"
+                                                                data-id="content-body"
+                                                                data-api="{{_context_path}}/api/insurance/view/insurance/add"
+                                                                data-param="null"
+                                                                onclick="btnHTML(this)">
+                                                            <i class="fa fa-plus"></i>{{#i18n}}print{{/i18n}} 
+                                                        </button>-->
                         </div>
 
                         <div class="pull-right">
@@ -67,10 +67,15 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>&nbsp;{{#i18n}}welfarecode{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfarename{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfaredatestart{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}welfaredateend{{/i18n}}</th>
+                                        <th>{{#i18n}}welfarecode{{/i18n}}</th>
+                                        <th>{{#i18n}}welfarename{{/i18n}}</th>
+                                        <th>{{#i18n}}welfaredatestart{{/i18n}}</th>
+                                        <th>{{#i18n}}welfaredateend{{/i18n}}</th>
+                                        <th>Reset Time  </th>
+                                        <th>สวัสดิการให้เปล่า</th>
+                                        <th>สวัสดิการสมัครใจ</th>
+                                        <th>สวัสดิการผู้เกษียณ</th>
+
                                         <th class="center">จัดการ</th>
                                     </tr>
                                 </thead>
@@ -82,21 +87,24 @@
                                         <td>{{name}}</td>
                                         <td>{{dateStart}}</td>
                                         <td>{{dateEnd}}</td>
-                                   
+                                        <td>{{resetTime}}</td>
+                                        <td>{{free}}</td>
+                                         <td>{{willing}}</td>
+                                        <td>{{retire}}</td>
                                         <td class="center">
                                             <button class="btn btn-maroon btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}"
-                                                    data-param="null"
+                                                    data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                                                    data-object='welfareId'
+                                                    data-param='{{welfareId}}'
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}managementWelfare{{/i18n}} 
                                             </button>
-                                            
-                                     
+
+
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/welfare/view/welfare/edit/{{welfareId}}"
-                                                    data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
@@ -125,37 +133,32 @@
                     $("#SearchName").autocomplete({
             source: availableTags
             });
-            });
-</script>
+            });</script>
 
 <script>
-             $('.btn-del').click(function(){
-                    var Id = $(this).attr('row-index');
- 
-                if (confirm("คุณต้องการลบ?")) { 
-                     var data = {"Id":Id};
-                     var result = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
-                
-                if (result.delete == true) {
-                getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+                    $('.btn-del').click(function(){
+            var Id = $(this).attr('row-index');
+                    if (confirm("คุณต้องการลบ?")) {
+            var data = {"Id":Id};
+                    var result = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
+                    if (result.delete == true) {
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
                     Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-                }else{
-                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                 }
+            } else{
+            Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
             }
-                   
-            });
-</script> 
+            }
+
+            });</script> 
 
 <script>
-           $("#btnsearch").click(function () {
+                    $("#btnsearch").click(function () {
             var SearchName = $("#SearchName").val();
-
-            if (SearchName == ""){
+                    if (SearchName == ""){
             document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
             } else{
-            
-                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName:SearchName});
+
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName:SearchName});
             }
             });
 </script> 

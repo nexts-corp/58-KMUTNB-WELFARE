@@ -35,11 +35,10 @@ interface IViewService {
     /**
      * @name conditionsList
      * @uri /conditions/lists
-     * @param integer id Description
      * @return html viewList 
      * @description จัดการเงื่อนไขสวัสดิการ
      */
-    public function conditionsLists($id);
+    public function conditionsLists();
     
     /**
      * @name conditionsAdd

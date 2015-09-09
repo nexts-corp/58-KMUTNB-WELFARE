@@ -45,4 +45,12 @@ interface IConditionsService {
      * @description save เพิ่มเงื่อนไขสวัสดิการ
      */
     public function saveRight($data);
+    
+     /**
+     * @name test
+     * @uri /test
+     * @return string test
+     * @description test
+     */
+    public function test();
 }
