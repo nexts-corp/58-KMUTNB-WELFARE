@@ -290,7 +290,7 @@
         <div id="preview" style="display: none;">
             <div class="widget radius-bordered">
                 <div class="widget-header">
-                    <span class="widget-caption">รายการบุคลากรผู้มีสิทธิ์ได้รับตามเงื่อนไข</span>
+                    <span class="widget-caption" id="userRows"> </span>
                 </div>
                 <div class="widget-body">
                     <div class="form-horizontal">
@@ -457,34 +457,37 @@
             jdata['conditions'] = data1;
             if (data1.length > 0) {
                 $.ajax({
-                    url: '{{_context_path}}/api/welfare/view/previews/test/lists',
+                    url: '{{_context_path}}/api/welfare/conditions/preview',
                     data: jsonEncode(jdata),
                     type: 'post', // 'or get'
                     success: function (result) {
-                        if (result.previews == "null") {
+                        if (result.preview == "null") {
                             Notify('กรุณาเลือกข้อมูล !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                         } else {
-                            $("#preview").slideToggle(this.checked = true);
+                            $("#preview").slideToggle(this.checked);
 
                             var html = "";
-                            var $html = '';
-                            for (var i = 0; i < result.previews.length; i++) {
-                                var data = result.previews[i];
+                            
+                            var countUser = 0;
+                            for (var i = 0; i < result.preview.length; i++) {
+                                var data = result.preview[i];
                                 if (data.academic == null) {
                                     var academic = data.academic = "";
                                 } else {
                                     var academic = data.academic;
 
                                 }
-                                $html += '<tr class="selectable">';
-                                $html += '<td>' + (i + 1) + '</td>';
-                                $html += '<td>' + data.titlename + ' ' + academic + ' ' + data.fname + ' ' + data.lname + '</td>';
-                                $html += '<td>' + data.gender + '</td>';
-                                $html += '<td>ภาควิชา/สำนักงาน ' + data.department + '  ' + data.faculty + '</td>';
-                                $html += '<td>' + data.employeeType + '</td>';
+                                countUser++;
+                                html += '<tr class="selectable">';
+                                html += '<td>' + (i + 1) + '</td>';
+                                html += '<td>' + data.title + ' ' + data.fname + ' ' + data.lname + '</td>';
+                                html += '<td>' + data.gender + '</td>';
+                                html += '<td>ภาควิชา/สำนักงาน ' + data.department + '  ' + data.faculty + '</td>';
+                                html += '<td>' + data.employeeType + '</td>';
                             }
-
-                            $("table#showTable tbody").html($html);
+                            
+                            $("#userRows").html('จำนวนทั้งหมด '+ countUser +' คน ');
+                            $("table#showTable tbody").html(html);
                         }
                     }
                 });

@@ -47,10 +47,11 @@ interface IConditionsService {
     public function saveRight($data);
     
      /**
-     * @name test
-     * @uri /test
-     * @return string test
+     * @name preview
+     * @uri /preview
+     * @param apps\welfare\entity\Conditions conditions
+     * @return string preview
      * @description test
      */
-    public function test();
+    public function preview($conditions);
 }

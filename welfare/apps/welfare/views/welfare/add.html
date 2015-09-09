@@ -15,7 +15,7 @@
     <div class="page-header position-relative">
         <div class="header-title">
             <h1>
-                
+
             </h1>
         </div>
         <!--Header Buttons-->
@@ -45,21 +45,21 @@
                                            data-bv-notempty-message="ชื่อสวัสดิการ" />
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}welfaredescription{{/i18n}}</label>
                                 <div class="col-lg-9">
-                                    
+
                                     <textarea rows="4" id="description" cols="70"></textarea>
-                                    
-                                    
+
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredatestart{{/i18n}}</label>
                                 <div class="controls col-lg-5">
-                                   <div class="input-group">
+                                    <div class="input-group">
                                         <input class="form-control date-picker" id="dateStart" type="text" data-date-format="dd-mm-yyyy">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -79,8 +79,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                             <div class="form-group">
+
+                            <div class="form-group">
                                 <label class="col-lg-3 control-label">รีเซท เดือน</label>
                                 <div class="col-lg-5">
                                     <input type="text" class="form-control" name="name" placeholder="ใส่ตัวเลข"
@@ -88,8 +88,8 @@
                                            data-bv-notempty-message="ใส่ตัวเลข" />
                                 </div>
                             </div>
-                            
-                             <div class="form-group">
+
+                            <div class="form-group">
                                 <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
                                 <div class="col-lg-5">
 
@@ -102,7 +102,7 @@
 
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="reservation" class="col-lg-3 control-label"></label>
                                 <div class="controls col-lg-9">
@@ -111,36 +111,36 @@
                                             <div class="checkbox">
                                                 <label>
 
-                                                    <input type="checkbox" class="inverted" id="willing" value="">
+                                                    <input type="checkbox" class="inverted" id="willing" name="willing" value="">
 
                                                     <span class="text">{{#i18n}}conditionconditionstatusvoluntary{{/i18n}}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-lg-4 col-sm-4 col-xs-4">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" class="inverted"  id="retire" value="">
+                                                    <input type="checkbox" class="inverted"  id="retire" >
                                                     <span class="text">{{#i18n}}conditionstatusretired{{/i18n}}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
-                            
-             
+
+
 
 
                             <div class="form-group">
-                                
-                                    <div class="col-lg-offset-6 col-lg-8">
-                                        <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
-                                        <input class="btn btn-default" type="reset" value="{{#i18n}}button.cancel{{/i18n}}" />
-                                    </div>
-                                
+
+                                <div class="col-lg-offset-6 col-lg-8">
+                                    <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                                    <input class="btn btn-default" type="reset" value="{{#i18n}}button.cancel{{/i18n}}" />
+                                </div>
+
                             </div>
 
                         </div>
@@ -158,19 +158,35 @@
 <!-- /Page Content -->
 
 
-    
+
 <script type="text/javascript">
 
     $(document).ready(function () {
 
         $("#btn_submit").click(function () {
+
+            var willing = $("#willing").prop("checked");
+            var retire  = $("#retire").prop("checked");
+
             var data = {};
             data['name'] = $("#name").val();
             data['description'] = $("#description").val();
             data['dateStart'] = $("#dateStart").val();
             data['dateEnd'] = $("#dateEnd").val();
             data['resetTime'] = $("#resetTime").val();
-            data['free']=$("#free").val();
+            data['free'] = $("#free").val();
+            if (willing == true) {
+                data['willing'] = "Y";
+            } else {
+                data['willing'] = "N";
+
+            }
+            if(retire==true){
+                data['retire'] = "Y";
+            }else{
+                data['retire'] = "N";
+            }
+            
             var jdata = {};
             jdata['data'] = data;
             $.ajax({
@@ -178,22 +194,22 @@
                 data: jsonEncode(jdata),
                 type: 'post', // 'or get'
                 success: function (result) {
-                    if(result.save==true){
-                    getHTML('content-body','{{_context_path}}/api/welfare/view/welfare/lists',null);
-                    Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true); 
-                }else{
-                     Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
- 
+                    if (result.save == true) {
+                        getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+                        Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                    } else {
+                        Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+
                     }
-                    
+
                 }
             });
-           return false;
+            return false;
 
         });
-        
+
 
     });
-    
-     $('.date-picker').datepicker();
+
+    $('.date-picker').datepicker();
 </script>

@@ -65,7 +65,7 @@ interface IViewService {
      * @return html previews
      * @description แสดงรายการผู้มีสิทธิได้รับสวัสดิการ
      */
-    public function previewsUserLists($conditions);
+    public function previewsUserLists($conditionsId);
 
     /**
      * @name viewTestList
@@ -73,6 +73,6 @@ interface IViewService {
      * @param apps\welfare\entity\Conditions conditions
      * @return string previews
      * @description เช็คเงื่อนไขผู้มีสิทธิ์ได้รับสวัสดิการ
-     */
-    public function previewsTestLists($conditions);
+    
+    public function previewsTestLists($conditions); */
 }

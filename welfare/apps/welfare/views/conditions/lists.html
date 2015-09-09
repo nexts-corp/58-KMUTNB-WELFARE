@@ -84,8 +84,9 @@
 
                                                 <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/priviews/lists/{{conditionsId}}"
-                                                    data-param="null"
+                                                    data-api="{{_context_path}}/api/welfare/view/priviews/lists"
+                                                    data-object="conditionsId"
+                                                    data-param="{{conditionsId}}"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa fa-eye"></i>{{#i18n}}welfare.right{{/i18n}} 
                                             </button>
@@ -98,7 +99,7 @@
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
 
-
+                                                
 
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{conditionsId}}" >{{#i18n}}deletes{{/i18n}}</button>
                                         </td>

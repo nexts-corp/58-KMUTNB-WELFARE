@@ -42,7 +42,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
             }
         }
         $this->datacontext->saveObject($data);
-        
+
         foreach ($data as $key => $value) {
             $query = "select mb.memberId from Member mb "
                     . "where ";
@@ -63,7 +63,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
                             break;
                         case "ageStart":
                             $where .= " TIMESTAMPDIFF(YEAR, mb.dob, CURDATE()) >= :" . $key2 . " ";
-                               // . "CURRENT_DATE()-mb.dob >= :" . $key2 . " ";
+                            // . "CURRENT_DATE()-mb.dob >= :" . $key2 . " ";
                             $param[$key2] = $value2;
                             break;
                         case "ageEnd":
@@ -71,7 +71,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
                             $param[$key2] = $value2;
                             break;
                         case "ageWorkStart":
-                             $where .= " TIMESTAMPDIFF(YEAR, mb.workStartDate, CURDATE()) >= :" . $key2 . " ";
+                            $where .= " TIMESTAMPDIFF(YEAR, mb.workStartDate, CURDATE()) >= :" . $key2 . " ";
                             $param[$key2] = $value2;
                             break;
                         case "ageWorkEnd":
@@ -87,21 +87,24 @@ class ConditionsService extends CServiceBase implements IConditionsService {
                             $param[$key2] = $value2;
                             break;
                     }
-                    
                 }
             }
             $sql = $query . $where;
             $conId = $value->conditionsId;
-            $member = $this->datacontext->pdoQuery($sql, $param);
-            foreach($member as $memberKey => $memberValue){
-                $right = new Right();
-                $right->conditionsId = $conId;
-                $right->memberId = $memberValue["memberId"];
-                $this->datacontext->saveObject($right);
+            $welfare = new \apps\welfare\entity\Welfare();
+            $welfare->welfareId = $value->welfareId;
+            $dataWelfare = $this->datacontext->getObject($welfare)[0];
+            if ($dataWelfare->willing != "Y") {
+                $member = $this->datacontext->pdoQuery($sql, $param);
+                foreach ($member as $memberKey => $memberValue) {
+                    $right = new Right();
+                    $right->conditionsId = $conId;
+                    $right->memberId = $memberValue["memberId"];
+                    $this->datacontext->saveObject($right);
+                }
             }
         }
         return true;
-
     }
 
     public function update($data) {
@@ -138,16 +141,88 @@ class ConditionsService extends CServiceBase implements IConditionsService {
         }
     }
 
-    public function test() {
-        $sql = " select m from \\apps\\member\\entity\\Member m "
-                . "where m.workStartDate >= :workStartDate ";
-        $param = array(
-                //  "workStartDate"=>'2015-08-25',
-                // "workStartDate1"=>'2015-08-25'
-        );
-        $param["workStartDate"] = '2015-08-25';
-        return $this->datacontext->getObject($sql, $param);
-        //return $param;
+    public function preview($conditions) {
+        $query =  "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+                . "mb.departmentId,"
+//                . "(title.value1) As title, "
+//                . "(academic.value1) As academic,"
+                . "IFNULL(academic.value1,title.value1) title, " //IFNULL(value1,value2) select ถ้ามีค่าใดค่าหนึ่ง ,ถ้ามีค่าทั้งคู่จะ select value1 ออกมา 
+                . "(employeeType.value1) As employeeType, "
+                . "(gender.value1) As gender, "
+                . "(faculty.value1) As faculty, "
+                . "(department.value1) As department "
+                . "FROM member mb "
+                . "Left JOIN taxonomy title "
+                . "on mb.titleId = title.id "
+                . "Left JOIN taxonomy academic "
+                . "on mb.academicId = academic.id "
+                . "Left JOIN taxonomy employeeType "
+                . "on mb.employeeTypeId = employeeType.id "
+                . "Left JOIN taxonomy gender "
+                . "on mb.genderId = gender.id "
+                . "Left JOIN taxonomy faculty "
+                . "on mb.facultyId = faculty.id "
+                . "Left JOIN taxonomy department "
+                . "on mb.departmentId = department.id "
+                . "where ";
+        $where = "";
+        $param = array();
+        foreach ($conditions as $key => $value) {
+            if ($key == 0) {
+                foreach ($value as $key2 => $value2) {
+                    if ($value2 != null) {
+                        if ($where != "") {
+                            $where .= " and ";
+                        }
+                        switch ($key2) {
+                            case "workStartDate":
+                                $where .= " mb.workStartDate >= :" . $key2 . " ";
+                                $param[$key2] = $value2->format('Y-m-d');
+                                break;
+                            case "workEndDate":
+                                $where .= " mb.workEndDate <= :" . $key2 . " ";
+                                $param[$key2] = $value2->format('Y-m-d');
+                                break;
+                            case "ageStart":
+                                $where .= " TIMESTAMPDIFF(YEAR, mb.dob, CURDATE()) >= :" . $key2 . " ";
+                                // . "CURRENT_DATE()-mb.dob >= :" . $key2 . " ";
+                                $param[$key2] = $value2;
+                                break;
+                            case "ageEnd":
+                                $where .= " TIMESTAMPDIFF(YEAR, mb.dob, CURDATE()) <= :" . $key2 . " ";
+                                $param[$key2] = $value2;
+                                break;
+                            case "ageWorkStart":
+                                $where .= " TIMESTAMPDIFF(YEAR, mb.workStartDate, CURDATE()) >= :" . $key2 . " ";
+                                $param[$key2] = $value2;
+                                break;
+                            case "ageWorkEnd":
+                                $where .= " TIMESTAMPDIFF(YEAR, mb.workStartDate, CURDATE()) <= :" . $key2 . " ";
+                                $param[$key2] = $value2;
+                                break;
+                            case "genderId":
+                                $where .= " mb.genderId = :" . $key2 . " ";
+                                $param[$key2] = $value2;
+                                break;
+                            case "employeeTypeId":
+                                $where .= " ( mb.employeeTypeId = :" . $key2 . " ";
+                                $param[$key2] = $value2;
+                                break;
+                        }
+                    }
+                }
+            } else {
+                if ($where != "") {
+                    $where .= " or ";
+                }
+                $where .= " mb.employeeTypeId = :employeeTypeId" . $key . " ";
+                $param["employeeTypeId" . $key] = $value->employeeTypeId;
+            }
+        }
+        $where .= " ) ";
+        $sql = $query . $where;
+        $member = $this->datacontext->pdoQuery($sql, $param);
+        return $member;
     }
 
 }
