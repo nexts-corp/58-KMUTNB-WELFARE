@@ -46,8 +46,9 @@
                                 <thead>
                                     <tr>
                                         <th>{{#i18n}}listmember{{/i18n}}</th>
-                                        <th>{{#i18n}}facultyname{{/i18n}}</th>
-                                        <th>{{#i18n}}amountmoney{{/i18n}}</th>
+                                        <th>{{#i18n}}departmentId{{/i18n}}</th>
+                                        <th>{{#i18n}}facultyId{{/i18n}}</th>
+                                        <th>{{#i18n}}totalmoney{{/i18n}}</th>
                                         <th>{{#i18n}}yearretrie{{/i18n}}</th>
                                        
                                         
@@ -58,8 +59,9 @@
                                     {{#retire}}
                                     <tr class="selectable">
                                         
-                                        <td>{{fullname}}</td>
-                                        <td>{{departmentNameTh}}</td>
+                                        <td>{{academic}} {{titlename}} {{fname}}   {{lname}}</td>
+                                        <td>{{department}}</td>
+                                        <td>{{faculty}}</td>
                                         <td>{{amount}}</td>
                                         <td>{{dateOut}}</td>
                                         
@@ -79,31 +81,3 @@
 </div>
 
 
-<!--        <script type="text/javascript">
-            $(function(){
-
-                $.ajax({
-                    url: '{{_context_path}}/api/ManagementRetire/retire/show',
-                    data: {},
-                    type: 'post', // 'or get'
-                    async: true,
-                    success: function (result) {
-
-                        var $html = '';
-                        for(var i = 0; i < result.management.length ; i++){
-                            var data = result.management[i];
-                            $html += '<tr class="selectable">';
-                            $html += '<td>'+data.fullname+'</td>';
-                            $html += '<td>'+data.departmentNameTh+'</td>';
-                            $html += '<td>'+data.amount+'</td>';
-                            $html += '<td>'+data.dateOut+'</td>';
-                            $html += '<td class="center">&nbsp;<a href="#" id="status[0]" name="status[0]" ><span class="label label-success">เปิดการใช้งาน</span></a></td>';
-                            $html += '</tr>';
-                        }
-                        $("table#show tbody").html($html);
-
-                    }
-                });
-
-            });
-        </script>-->
