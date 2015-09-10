@@ -15,7 +15,7 @@
     <div class="page-header position-relative">
         <div class="header-title">
             <h1>
-                
+
             </h1>
         </div>
         <!--Header Buttons-->
@@ -33,13 +33,13 @@
                     </div>
                     <div class="widget-body">
                         <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                            <input type="text" class="form-control" name="retireYear" id="retireYear" placeholder="ค้นหา">            
                         </label>
 
                         <div class="col-lg-3">
-                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>{{#i18n}}button.search{{/i18n}}</button>
+                            <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>{{#i18n}}button.search{{/i18n}}</button>
                         </div>
-                        
+
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -50,25 +50,25 @@
                                         <th>{{#i18n}}facultyId{{/i18n}}</th>
                                         <th>{{#i18n}}totalmoney{{/i18n}}</th>
                                         <th>{{#i18n}}yearretrie{{/i18n}}</th>
-                                       
-                                        
-                                        
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {{#retire}}
                                     <tr class="selectable">
-                                        
+
                                         <td>{{academic}} {{titlename}} {{fname}}   {{lname}}</td>
                                         <td>{{department}}</td>
                                         <td>{{faculty}}</td>
                                         <td>{{amount}}</td>
                                         <td>{{dateOut}}</td>
-                                        
+
                                     </tr>
                                     {{/retire}}
                                 </tbody>
-                                
+
                             </table>
                         </div>
                     </div>
@@ -79,5 +79,34 @@
 
     <!-- /Page Body -->
 </div>
+<script>
+    $(document).ready(function () {
+        $("#btnSearch").click(function () {
+            var retireYear = $("#retireYear").val(); //2560
+            if (retireYear == "") {
+                var d = new Date();
+                retireYear = d.getFullYear();
+            } else {
+                retireYear -= 543; // 2017
+            }
+            alert(retireYear);
+            
+            var jdata = {};
+            jdata['retireYear'] = retireYear;
+            $.ajax({
+                url: '{{_context_path}}/api/retire/retire/preview',
+                data: jsonEncode(jdata),
+                type: 'post',
+                success: function (result) {
 
+                        getHTML('content-body', '{{_context_path}}/api/retire/view/retire/lists', null);
+                        
+                }
+            });
+
+        });
+    });
+
+
+</script>
 

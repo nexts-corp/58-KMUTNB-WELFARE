@@ -9,7 +9,7 @@ namespace apps\retire\interfaces;
 interface IViewService {
     /**
      * @name viewList
-     * @uri /retire/list
+     * @uri /retire/lists
      * @return html viewList xxx
      * @description หน้าแสดงรายการผู้เกษียนอายุ
      */

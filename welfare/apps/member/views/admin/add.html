@@ -449,7 +449,9 @@
                     });
 
                 } else {
-                    alert("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");
+                   
+                    Notify('กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+
                     $('#idCard').focus();
                 }
                 return false;
