@@ -66,12 +66,13 @@ class ViewService extends CServiceBase implements IViewService {
 
             $view->child = $this->datacontext->getObject($child);
         } else {
-            $sql = "select t from apps\\taxonomy\\entity\\Taxonomy t";
+            $child = "select t from apps\\taxonomy\\entity\\Taxonomy t";
             //  . " where t.parentId != '0'";
-            $view->child = $this->datacontext->getObject($sql);
+            $view->child = $this->datacontext->getObject($child);
         }
-        $parent = new \apps\taxonomy\entity\Taxonomy();
-        $parent->parent = 'Y';
+        $parent = "select t from apps\\taxonomy\\entity\\Taxonomy t "
+                . "where t.parent = 'Y' "
+                . "order by t.pCode,t.code";
         $view->parent = $this->datacontext->getObject($parent);
 
         return $view;

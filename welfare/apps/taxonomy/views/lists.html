@@ -32,8 +32,8 @@
                     </div>
                     <div class="widget-body">
                         <div class="col-md-8">
-                            <select id="selectParent" class="form-control">
-                                <option value="0">Chose Parent</option>
+                            <select id="selectParent" class="col-md-12">
+                                <option value="0">เลือกทั้งหมด</option>
                                 {{#parent}}
                                 <option value="{{id}}">[{{pCode}}] {{value1}},{{value2}} [{{code}}]</option>
                                 {{/parent}}
@@ -43,7 +43,6 @@
                             <button class="btn btn-primary" 
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/taxonomy/view/add"
-                                    data-data="null"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>เพิ่มข้อมูลใหม่ {{test}}</button> 
                         </div>
@@ -80,7 +79,6 @@
                                             <button class="btn btn-info btn-xs" 
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/taxonomy/view/edit/{{id}}"
-                                                    data-param="null"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
                                         </td>
@@ -105,7 +103,15 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#selectParent").click(function (e) {
+//        var parent = '{{#parent}}{{id}}{{/parent}}';
+        var child = '{{#child}}{{parentId}}{{/child}}';
+        var temp1 = child.substr(0, 6);
+        var temp2 = child.substr(6, 6);
+        if (temp1 == temp2 || temp2 =="") {
+            $("#selectParent").val(temp1);
+        }
+        $("#selectParent").select2();
+        $("#selectParent").change(function (e) {
             var id = $(this).val();
             getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', {parentId: id});
         });
