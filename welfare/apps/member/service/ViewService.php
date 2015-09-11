@@ -72,22 +72,47 @@ class ViewService extends CServiceBase implements IViewService {
         } else if ($usertype == "user") {
             $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         }
-        $member = new \apps\member\entity\Member();
-        $member->setMemberId($id);
-        $member = $this->datacontext->getObject($member)[0];
+        $sql = "select mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(fac.value1) as faculty,(depart.value1) as department, "
+                . "aca.value1 as academic,title.value1 as titlename ,mem1.genderId,gende.value1 as gender,mem1.dob,mem1.employeeCode, "
+                . "mem1.employeeTypeId,mem1.facultyId,mem1.departmentId,mem1.positionId,mem1.matierId,mem1.internalPhone,"
+                . "mem1.phone,mem1.mobile,mem1.email,mem1.salaryStart,emp.value1 as employeetype,psw.value1 as positionwork, "
+                . "mem1.salaryPresent,mem1.address,mem1.workStartDate,mem1.workEndDate,mem1.memberActiveId,mat.value1 as matier "
+                . "FROM apps\\member\\entity\\Member mem1 "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy title "
+                . "with mem1.titleId = title.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy gende "
+                . "with mem1.genderId = gende.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy fac "
+                . "with mem1.facultyId = fac.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy depart "
+                . "with mem1.departmentId = depart.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy mat "
+                . "with mem1.matierId = mat.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy aca "
+                . "with mem1.academicId = aca.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy emp "
+                . "with mem1.employeeTypeId = emp.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy psw "
+                . "with mem1.positionId = psw.id "
+                . "WHERE mem1.memberId=$id ";
 
-        $dob = $member->dob->format('d-m-Y');
+        $member = $this->datacontext->getObject($sql);
+//            $Y=Date("Y")+543;
+        $dob = $member[0]['dob']->format('d-m-Y');
+
+//        print_r($member);
+
         $mem = explode("-", $dob);
-        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+        $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
 
-        $workStartDate = $member->workStartDate->format('d-m-Y');
+        $workStartDate = $member[0]['workStartDate']->format('d-m-Y');
         $wsd = explode("-", $workStartDate);
-        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+        $member[0]['workStartDate'] = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
 
         $user = new \apps\user\entity\User();
-        $user->memberId = $member->memberId;
+        $user->memberId = $member[0]['memberId'];
         $user = $this->datacontext->getObject($user)[0];
-        $member->userTypeId = $user->userTypeId;
+        $member[0]['userTypeId'] = $user->userTypeId;
         $view->datas = $member;
         return $view;
     }
@@ -135,22 +160,47 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberShow($id) {
         $view = new CJView("user/profile", CJViewType::HTML_VIEW_ENGINE);
-        $member = new \apps\member\entity\Member();
-        $member->setMemberId($id);
-        $member = $this->datacontext->getObject($member)[0];
+        $sql = "select mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(fac.value1) as faculty,(depart.value1) as department, "
+                . "aca.value1 as academic,title.value1 as titlename ,mem1.genderId,gende.value1 as gender,mem1.dob,mem1.employeeCode, "
+                . "mem1.employeeTypeId,mem1.facultyId,mem1.departmentId,mem1.positionId,mem1.matierId,mem1.internalPhone,"
+                . "mem1.phone,mem1.mobile,mem1.email,mem1.salaryStart,emp.value1 as employeetype,psw.value1 as positionwork, "
+                . "mem1.salaryPresent,mem1.address,mem1.workStartDate,mem1.workEndDate,mem1.memberActiveId,mat.value1 as matier "
+                . "FROM apps\\member\\entity\\Member mem1 "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy title "
+                . "with mem1.titleId = title.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy gende "
+                . "with mem1.genderId = gende.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy fac "
+                . "with mem1.facultyId = fac.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy depart "
+                . "with mem1.departmentId = depart.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy mat "
+                . "with mem1.matierId = mat.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy aca "
+                . "with mem1.academicId = aca.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy emp "
+                . "with mem1.employeeTypeId = emp.id "
+                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy psw "
+                . "with mem1.positionId = psw.id "
+                . "WHERE mem1.memberId=$id ";
 
-        $dob = $member->dob->format('d-m-Y');
+        $member = $this->datacontext->getObject($sql);
+//            $Y=Date("Y")+543;
+        $dob = $member[0]['dob']->format('d-m-Y');
+
+//        print_r($member);
+
         $mem = explode("-", $dob);
-        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+        $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
 
-        $workStartDate = $member->workStartDate->format('d-m-Y');
+        $workStartDate = $member[0]['workStartDate']->format('d-m-Y');
         $wsd = explode("-", $workStartDate);
-        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+        $member[0]['workStartDate'] = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
 
         $user = new \apps\user\entity\User();
-        $user->memberId = $member->memberId;
+        $user->memberId = $member[0]['memberId'];
         $user = $this->datacontext->getObject($user)[0];
-        $member->userTypeId = $user->userTypeId;
+        $member[0]['userTypeId'] = $user->userTypeId;
         $view->datas = $member;
         return $view;
     }

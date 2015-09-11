@@ -18,8 +18,11 @@ class RetireService extends CServiceBase implements IRetireService {
 
     public function preview($retireYear) {
 //        $retireYear -= 543;
-        $d = new Date();
-        $retireYear = d . getFullYear();
+        if ($retireYear == "") {
+            $retireYear = date("Y");
+            print_r($retireYear); 
+        }
+        // กำลัง หาวิธี ดึง ชื่อ ผู้ เกษียน ขึ้นมาแสดง ยุ 
         $retireStart = ($retireYear - 61) . "-10-01";
         $retireEnd = ($retireYear - 60) . "-09-30";
         $query = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
@@ -50,6 +53,7 @@ class RetireService extends CServiceBase implements IRetireService {
             "retireStart" => $retireStart,
             "retireEnd" => $retireEnd
         );
+        //print_r($query);
         $member = $this->datacontext->pdoQuery($query, $param);
         return $member;
     }

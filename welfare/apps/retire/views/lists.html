@@ -49,13 +49,13 @@
                                         <th>{{#i18n}}departmentId{{/i18n}}</th>
                                         <th>{{#i18n}}facultyId{{/i18n}}</th>
                                         <th>{{#i18n}}totalmoney{{/i18n}}</th>
-                                        <th>{{#i18n}}yearretrie{{/i18n}}</th>
+                                        
 
 
 
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="retirelist">
                                     {{#retire}}
                                     <tr class="selectable">
 
@@ -63,7 +63,7 @@
                                         <td>{{department}}</td>
                                         <td>{{faculty}}</td>
                                         <td>{{amount}}</td>
-                                        <td>{{dateOut}}</td>
+                                        
 
                                     </tr>
                                     {{/retire}}
@@ -81,6 +81,7 @@
 </div>
 <script>
     $(document).ready(function () {
+
         $("#btnSearch").click(function () {
             var retireYear = $("#retireYear").val(); //2560
             if (retireYear == "") {
@@ -90,17 +91,28 @@
                 retireYear -= 543; // 2017
             }
             alert(retireYear);
-            
+
             var jdata = {};
+            var html = '';
             jdata['retireYear'] = retireYear;
             $.ajax({
                 url: '{{_context_path}}/api/retire/retire/preview',
                 data: jsonEncode(jdata),
                 type: 'post',
                 success: function (result) {
+                    
+                        getHTML('content-body', '{{_context_path}}/api/retire/view/retire/lists',{retire:result.preview});
+//                    $.each(result, function (key, value) {
+//                        console.log(value['fname']);
+//                        if (value == "") {
+//                            html += "<tr class='selectable'><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+//                        } else {
+//                            html += "<tr class='selectable'><td>" + value["title"] + " " + value.fname + " " + value.lname + "</td><td>" + value.department + "</td><td>" + value.faculty + "</td></tr>";
+//                        }
+//                    });
 
-                        getHTML('content-body', '{{_context_path}}/api/retire/view/retire/lists', null);
-                        
+
+//                    $("#retirelist").html(html);
                 }
             });
 

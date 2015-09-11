@@ -18,9 +18,19 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function retireList() {
         $view = new CJView("lists", CJViewType::HTML_VIEW_ENGINE);
-
-        $reServ = new RetireService();
-        $data = $reServ->preview($retireYear);
+       
+        
+        $retire = $this->getRequest()->retire;
+        if (count($retire) > 0) {
+            $view->retire = $retire;
+        } else {
+            $date = new \DateTime('now');
+            $reServ = new RetireService();
+            $data = $reServ->preview($date->format('Y'));
+            $view->retire = $data;
+        }
+        //print_r($date->format('Y'));
+        //exit();
         return $view;
     }
 
