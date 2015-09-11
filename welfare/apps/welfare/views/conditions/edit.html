@@ -96,13 +96,13 @@
                                     <div class="checkbox">
                                         <label>
 
-                                            <input type="checkbox" class="inverted employeeType" id="employeeTypeId" name="employeeTypeId" value="{{id}}" disabled="disabled" checked >
+                                            <input type="checkbox" class="inverted employeeType" id="employeeTypeId" name="employeeTypeId" value="{{employeeTypeId}}" disabled="disabled" checked >
 
-                                            <span class="text">{{value1}}</span>
+                                            <span class="text">{{employeeTypeValue}}</span>
                                         </label>
                                     </div>
                                 </div>
-                                {{/datas}}
+                                
                                
 
                             </div>
@@ -114,6 +114,7 @@
 
 
         </div>
+       
         <div class="widget radius-bordered">
             <div class="widget-header">
                 <span class="widget-caption">เลือกประเภทเงื่อนไขสวัสดิการ</span>
@@ -128,8 +129,8 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-
-                                            <input type="checkbox" class="inverted" id="dateAdded" value="">
+                                                
+                                            <input type="checkbox" class="inverted" id="optionDateStartAndEnd" value="">
 
                                             <span class="text">{{#i18n}}dateAdded{{/i18n}}/{{#i18n}}retirementDate{{/i18n}}</span>
                                         </label>
@@ -139,7 +140,7 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" name="retirementDate" id="retirementDate" >
+                                            <input type="checkbox" class="inverted" name="optionGender" id="optionGender" >
                                             <span class="text">{{#i18n}}gender{{/i18n}}</span>
                                         </label>
                                     </div>
@@ -148,7 +149,7 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" id="ageOfmember"  >
+                                            <input type="checkbox" class="inverted" id="optionAgeOfmember"  >
                                             <span class="text">{{#i18n}}ageOfmember{{/i18n}}</span>
                                         </label>
                                     </div>
@@ -157,8 +158,8 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" class="inverted" id="seniority" value="">
-                                            <span class="text">{{#i18n}}seniority{{/i18n}}</span>
+                                            <input type="checkbox" class="inverted" id="optionAgeOfWork" value="">
+                                            <span class="text">{{#i18n}}ageOfWork{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -180,14 +181,15 @@
             </div>
             <div class="widget-body">
                 <div id="registrationForm" class="form-horizontal">
+                    
+                    <div style="display:none" id="checkDateStartAndEnd">
 
-                    <div style="display:none" id="dateAddedCheck">
-                       
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkStartDateing{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="dateStartWork" value="{{dateStartWork}}" type="text" data-date-format="dd-mm-yyyy">
+                             <input class="form-control cDate" id="workStartDate"  value="{{workStartDate}}"
+                                data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -196,29 +198,30 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkEndDate{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="dateEndWork" value="{{dateEndWork}}" type="text" data-date-format="dd-mm-yyyy">
+                             <input class="form-control cDate" id="workEndDate"  value="{{workEndDate}}"
+                                data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ"/>
+                             
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                       
                     </div>
 
 
-                    {{#datas}}
-                    <div style="display: none" id="ageOfmemberCheck">
 
-                         
+                    <div style="display: none" id="checkAgeOfmember">
+
+
                         <div class="form-group">
                             <label class="col-lg-3 control-label">{{#i18n}}conditionagesince{{/i18n}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" name="ageStart" placeholder="{{#i18n}}age{{/i18n}}"
-                                       data-bv-notempty="true" id="ageStart"
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
+                                       data-bv-notempty="true" id="ageStart" 
                                        value="{{ageStart}}"
                                        data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
                             </div>
@@ -227,25 +230,23 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">{{#i18n}}conditionageto{{/i18n}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" name="ageEnd" placeholder="{{#i18n}}age{{/i18n}}"
+                                <input type="text" class="form-control" name="firstName" placeholder="{{#i18n}}age{{/i18n}}"
                                        data-bv-notempty="true" id="ageEnd" 
                                        value="{{ageEnd}}"
                                        data-bv-notempty-message="{{#i18n}}age{{/i18n}}" />
                             </div>
 
                         </div>
-                          
                     </div>
 
-                    <div style="display: none" id="seniorityCheck">
+                    <div style="display: none" id="checkAgeOfWork">
 
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkStart{{/i18n}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" name="ageWorkStart" placeholder="{{#i18n}}agework{{/i18n}}"
+                                <input type="text" class="form-control" value="{{ageWorkStart}}" name="ageWorkStart" placeholder="{{#i18n}}agework{{/i18n}}"
                                        data-bv-notempty="true" id="ageWorkStart" 
-                                       value="{{ageWorkStart}}"
                                        data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
                             </div>
                         </div>
@@ -253,91 +254,140 @@
                             <label class="col-lg-3 control-label">{{#i18n}}conditionageWorkEnd{{/i18n}}</label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control" name="ageWorkEnd" placeholder="{{#i18n}}agework{{/i18n}}"
-                                       data-bv-notempty="true" id="ageWorkEnd"  
-                                       value="{{ageWorkEnd}}"
+                                       data-bv-notempty="true" id="{{ageWorkEnd}}"  
                                        data-bv-notempty-message="{{#i18n}}agework{{/i18n}}" />
                             </div>
                         </div>
                     </div>
-                    {{/datas}}
-                    <div style="display: none" id="genderCheck">
+
+                    <div style="display: none" id="checkGender">
                         <div class="form-group">
 
-                            {{#gender}}
+                           
 
                             <div class="col-lg-3 control-label">
                                 <div class="checkbox">
                                     <label>
 
-                                        <input type="radio" class="inverted gender" id="genderId" name="genderId" value="{{id}}" >
+                                        <input type="radio" class="inverted gender" id="genderId" name="genderId" value="{{genderId}}" checked>
 
-                                        <span class="text">{{value1}}</span>
+                                        <span class="text">{{genderValue}}</span>
                                     </label>
                                 </div>
                             </div>
 
-                            {{/gender}}
+                          
                         </div>
                     </div>
+
+                    {{/datas}}
 
                     <div class="form-group">
                         <div class="col-lg-offset-6 col-lg-8">
                             <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                            <input class="btn btn-primary" id="btn_preview" type="button" value="ตรวจสอบผู้มีสิทธิ์" />
+
                         </div>
                     </div>
 
                 </div>
+
+
             </div>
         </div>
 
+        <div id="preview" style="display: none;">
+            <div class="widget radius-bordered">
+                <div class="widget-header">
+                    <span class="widget-caption" id="userRows"> </span>
+                </div>
+                <div class="widget-body">
+                    <div class="form-horizontal">
+
+                        <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
+
+                                    <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                    <th class="text-center">สังกัด</th>
+                                    <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
 
 
     </div>
     <!-- /Page Body -->
 </div>
 <!-- /Page Content -->
-<!-- /Page Content -->
 
 
 <script>
     $(document).ready(function () {
         
-        var dateStartWork = $("#dateStartWork").val();
-        var dateEndWork = $("#dateEndWork").val();
+        var workStartDate = $("#workStartDate").val();
+        var workEndDate = $("#workEndDate").val();
         var ageStart = $("#ageStart").val();
         var ageEnd = $("#ageEnd").val();
         var ageWorkStart = $("#ageWorkStart").val();
         var ageWorkEnd = $("#ageWorkEnd").val();
+        var genderId = $('input[name=genderId]:checked').val();
         // check data
-        if(dateStartWork !="" || dateEndWork !=""){
-        $("#dateAddedCheck").slideToggle();   
-          $("#dateAdded").prop("checked",true);
+        
+        if(workStartDate > 0 || workEndDate > 0){
+        $("#checkDateStartAndEnd").slideToggle();   
+          $("#optionDateStartAndEnd").prop("checked",true);
         }
         if(ageStart > 0 || ageEnd > 0){
-          $("#ageOfmemberCheck").slideToggle();   
-            $("#ageOfmember").prop("checked",true);
+          $("#checkAgeOfmember").slideToggle();   
+            $("#optionAgeOfmember").prop("checked",true);
         }
          if(ageWorkStart > 0 || ageWorkEnd > 0){
-              $("#seniorityCheck").slideToggle();   
-                $("#seniority").prop("checked",true);
+              $("#checkAgeOfWork").slideToggle();   
+                $("#optionAgeOfWork").prop("checked",true);
             }
-      
-        //check click 
-        $('#dateAdded').click(function () {
-            $("#dateAddedCheck").slideToggle();   
+        if( genderId > 0 ){
+               $("#checkGender").slideToggle();   
+                $("#optionGender").prop("checked",true);
+            }
+
+        $('#optionDateStartAndEnd').click(function () {
+
+            $("#checkDateStartAndEnd").slideToggle();
+            $("#workStartDate").val("");
+            $("#workEndDate").val("");
         });
-        $('#ageOfmember').click(function () {
-            $("#ageOfmemberCheck").slideToggle(); 
+        $('#optionGender').click(function () {
+            $('input[name=genderId]').attr('checked', false);
+            $("#checkGender").slideToggle();
         });
-        $('#seniority').click(function () {
-            $("#seniorityCheck").slideToggle();
-            
+        $('#optionAgeOfmember').click(function () {
+            $("#checkAgeOfmember").slideToggle();
+            $("#ageStart").val("");
+            $("#ageEnd").val("");
         });
-        $('#retirementDate').click(function () {
-            $("#genderCheck").slideToggle();
-            $("#genderId").prop("",true);
-        });
+        $('#optionAgeOfWork').click(function () {
+            $("#checkAgeOfWork").slideToggle();
+            $("#ageWorkStart").val("");
+            $("#ageWorkEnd").val("");
         
+        });
         
         // check btn
         $("#btn_submit").click(function () {
@@ -349,23 +399,36 @@
                 }
 
             });
+
             var data1 = [];
             $.each(employeeTypeId, function (k, v) {
-                var data = {};
-                data['conditionsId']="{{conditionsId}}"
+                 var data = {};
+                data['conditionsId']={{conditionsId}};
+                data['welfareId']={{#datas}}{{welfareId}}{{/datas}};
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
-                if ($("#dateStartWork").val() != "") {
-                    data['dateStartWork'] = $("#dateStartWork").val();
+                
+                if ($("#workStartDate").val() != "") {
+                    data['workStartDate'] = $("#workStartDate").val();
                 }
-                if ($("#dateEndWork").val() != "") {
-                    data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#workEndDate").val() != "") {
+                    data['workEndDate'] = $("#workEndDate").val();
                 }
-                data['ageStart'] = $("#ageStart").val();
-                data['ageEnd'] = $("#ageEnd").val();
-                data['ageWorkStart'] = $("#ageWorkStart").val();
-                data['ageWorkEnd'] = $("#ageWorkEnd").val();
-                data['genderId'] = $('input[name=genderId]:checked').val();
+                     if($("#ageStart").val() > 0){
+                     data['ageStart'] = $("#ageStart").val();
+                }
+                if($("#ageEnd").val() !=""){
+                      data['ageEnd'] = $("#ageEnd").val();
+                }
+                if($("#ageWorkStart").val() > 0){
+                    data['ageWorkStart'] = $("#ageWorkStart").val();
+                }
+                if($("#ageWorkEnd").val() > 0){
+                   data['ageWorkEnd'] = $("#ageWorkEnd").val(); 
+                }
+                if($('input[name=genderId]:checked').val() !="" ){
+                   data['genderId'] = $('input[name=genderId]:checked').val();
+                }
                 data['employeeTypeId'] = v;
                 data1.push(data);
             });
@@ -379,16 +442,96 @@
                 type: 'post', // 'or get'
                 success: function (result) {
                 if (result.update == true) {
-                getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}',null);
+                var wfId= {{#datas}}{{welfareId}}{{/datas}}
+                getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists',{welfareId:wfId});
                 Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
                 } else{
                 Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                 }
                 }
             });
+            
         });
 
+       
+        
+      $("#btn_preview").click(function () {
+            var employeeTypeId = [];
+            $(".employeeType").each(function (k, v) {
 
+                if (this.checked) {
+                    employeeTypeId.push($(this).val());
+                }
+
+            });
+            var data1 = [];
+            $.each(employeeTypeId, function (k, v) {
+                var data = {};
+                if ($("#workStartDate").val() != "") {
+                    data['workStartDate'] = $("#workStartDate").val();
+                }
+                if ($("#workEndDate").val() != "") {
+                    data['workEndDate'] = $("#workEndDate").val();
+                }
+                if($("#ageStart").val() != ""){
+                     data['ageStart'] = $("#ageStart").val();
+                }
+                if($("#ageEnd").val() !=""){
+                      data['ageEnd'] = $("#ageEnd").val();
+                }
+                if($("#ageWorkStart").val() != ""){
+                    data['ageWorkStart'] = $("#ageWorkStart").val();
+                }
+                if($("#ageWorkEnd").val() !=""){
+                   data['ageWorkEnd'] = $("#ageWorkEnd").val(); 
+                }
+                if($('input[name=genderId]:checked').val() !="" ){
+                   data['genderId'] = $('input[name=genderId]:checked').val();
+                }
+                data['employeeTypeId'] = v;
+                data1.push(data);
+            });
+            var jdata = {};
+            jdata['conditions'] = data1;
+            if (data1.length > 0) {
+                $.ajax({
+                    url: '{{_context_path}}/api/welfare/conditions/preview',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
+                        if (result.preview == "null") {
+                            Notify('กรุณาเลือกข้อมูล !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        } else {
+                            $("#preview").slideToggle(this.checked);
+
+                            var html = "";
+                            
+                            var countUser = 0;
+                            for (var i = 0; i < result.preview.length; i++) {
+                                var data = result.preview[i];
+                                if (data.academic == null) {
+                                    var academic = data.academic = "";
+                                } else {
+                                    var academic = data.academic;
+
+                                }
+                                countUser++;
+                                html += '<tr class="selectable">';
+                                html += '<td>' + (i + 1) + '</td>';
+                                html += '<td>' + data.title + ' ' + data.fname + ' ' + data.lname + '</td>';
+                                html += '<td>' + data.gender + '</td>';
+                                html += '<td>ภาควิชา/สำนักงาน ' + data.department + '  ' + data.faculty + '</td>';
+                                html += '<td>' + data.employeeType + '</td>';
+                            }
+                            
+                            $("#userRows").html('จำนวนทั้งหมด '+ countUser +' คน ');
+                            $("table#showTable tbody").html(html);
+                        }
+                    }
+                });
+            }
+        });
+   $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 
     });
 </script>

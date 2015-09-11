@@ -93,30 +93,5 @@
 
 
 <script type="text/javascript">
-    $(function(){
 
-        $.ajax({
-            url: '/sdg/api/ManagementWelfare/welfareclaims/show',
-            data: {},
-            type: 'post', // 'or get'
-            async: true,
-            success: function (result) {
-
-                var $html = '';
-                for(var i = 0; i < result.show.length ; i++){
-                    var data = result.show[i];
-                    $html += '<tr class="selectable">';
-                    $html += '<td>'+data.fullname+'</td>';
-                    $html += '<td>'+data.departmentNameTh+'</td>';
-                    $html += '<td>'+data.facultyNameTh+'</td>';
-                    $html += '<td></td>';
-                    $html += '<td class="center"><a class="btn btn-info btn-xs edit" href="#"onclick="getBody(\'{{_context_path}}/api/ManagementWelfare/welfareclaims/list/welfare/'+data.registerId+'\')"><i class="fa fa-edit"></i>จัดการการขอรับสวัสดิการ</a></td>';
-                    $html += '</tr>';
-                }
-                $("table#show tbody").html($html);
-
-            }
-        });
-
-    });
 </script>

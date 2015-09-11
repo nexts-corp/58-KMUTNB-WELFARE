@@ -19,8 +19,19 @@ class WelfareService extends CServiceBase implements IWelfareService {
     }
 
     public function save($data) {
-        $data->dateStart = new \DateTime($data->dateStart);
-        $data->dateEnd = new \DateTime($data->dateEnd);
+        
+        $dateStart = explode("-", $data->dateStart);
+        $dateStart[2] = intVal($dateStart[2]) - 543;
+        $dateStart1 = $dateStart[2] . "-" . $dateStart[1] . "-" . $dateStart[0];
+
+        $data->dateStart = new \DateTime($dateStart1);
+        
+        $dateEnd = explode("-", $data->dateEnd);
+        $dateEnd[2] = intVal($dateEnd[2]) - 543;
+        $dateEnd1 = $dateEnd[2] . "-" . $dateEnd[1] . "-" . $dateEnd[0];
+        
+        $data->dateEnd = new \DateTime($dateEnd1);
+        
         if ($this->datacontext->saveObject($data)) {
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;

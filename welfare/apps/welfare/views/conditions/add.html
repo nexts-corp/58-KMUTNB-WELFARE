@@ -24,6 +24,8 @@
     </div>
     <!-- /Page Header -->
     <!-- Page Body -->
+      <form id="frmConditions">
+
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -32,7 +34,7 @@
                         <span class="widget-caption">{{#i18n}}welfareadd{{/i18n}}</span>
                     </div>
                     <div class="widget-body">
-                        <form  class="form-horizontal">
+                        <div  class="form-horizontal">
                             <div class="form-title">
                             </div>
 
@@ -40,8 +42,8 @@
                                 <label class="col-lg-3 control-label">{{#i18n}}subwelfarename{{/i18n}}</label>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" name="description" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
-                                           data-bv-notempty="true" id="description"
-                                           data-bv-notempty-message="{{#i18n}}subwelfarename{{/i18n}}" />
+                                     id="description" data-validation="required" 
+                                     data-validation-error-msg="*กรุณากรอกข้อมูล" />
                                 </div>
                             </div>
 
@@ -50,8 +52,9 @@
                                 <label class="col-lg-3 control-label">{{#i18n}}amountwelfare{{/i18n}}</label>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
-                                           data-bv-notempty="true" id="amount"
-                                           data-bv-notempty-message="{{#i18n}}amountwelfare{{/i18n}}" />
+                                           data-bv-notempty-message="ใส่ตัวเลข" 
+                                           data-validation-error-msg="*กรุณาใส่ตัวเลข"
+                                           data-validation="number" id="amount" />
                                 </div>
                             </div>
 
@@ -71,7 +74,7 @@
                                 </div>
                             </div>
 
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,10 +184,10 @@
                     <div style="display:none" id="checkDateStartAndEnd">
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateStartWorking{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkStartDateing{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="dateStartWork"  type="text" data-date-format="dd-mm-yyyy">
+                                     <input class="form-control cDate" id="workStartDate"  />
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -193,10 +196,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditiondateEndWork{{/i18n}}</label>
+                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}conditionworkEndDate{{/i18n}}</label>
                             <div class="controls col-lg-9">
                                 <div class="input-group">
-                                    <input class="form-control date-picker" id="dateEndWork"  type="text" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control cDate" id="workEndDate" />
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
@@ -325,6 +328,7 @@
 
     </div>
     <!-- /Page Body -->
+    </form>
 </div>
 <!-- /Page Content -->
 <!-- /Page Content -->
@@ -332,12 +336,12 @@
 
 <script>
     $(document).ready(function () {
-
+    $.validate();
         $('#optionDateStartAndEnd').click(function () {
 
             $("#checkDateStartAndEnd").slideToggle();
-            $("#dateStartWork").val("");
-            $("#dateEndWork").val("");
+            $("#workStartDate").val("");
+            $("#workEndDate").val("");
         });
         $('#optionGender').click(function () {
             $('input[name=genderId]').attr('checked', false);
@@ -358,6 +362,8 @@
 
 
         $("#btn_submit").click(function () {
+            if($("#description").val() != "" || $("#amount").val() > 0 ){
+                
             var employeeTypeId = [];
             $(".employeeType").each(function (k, v) {
 
@@ -373,11 +379,11 @@
                 data['description'] = $("#description").val();
                 data['amount'] = $("#amount").val();
                 
-                if ($("#dateStartWork").val() != "") {
-                    data['dateStartWork'] = $("#dateStartWork").val();
+                if ($("#workStartDate").val() != "") {
+                    data['workStartDate'] = $("#workStartDate").val();
                 }
-                if ($("#dateEndWork").val() != "") {
-                    data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#workEndDate").val() != "") {
+                    data['workEndDate'] = $("#workEndDate").val();
                 }
                      if($("#ageStart").val() != ""){
                      data['ageStart'] = $("#ageStart").val();
@@ -407,7 +413,8 @@
                 type: 'post', // 'or get'
                 success: function (result) {
                     if (result.save == true) {
-                        getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', null);
+                        
+                        getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists',{welfareId:{{welfareId}}});
                         Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
                     } else {
                         Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
@@ -415,8 +422,14 @@
                     }
                 }
             });
+            
+        }else{
+            $("#description").focus();
+             Notify('กรุณากรอกข้อมูลให้ถูกต้อง!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+            }
+            return false;
         });
-
+        
         $("#btn_preview").click(function () {
             var employeeTypeId = [];
             $(".employeeType").each(function (k, v) {
@@ -429,11 +442,11 @@
             var data1 = [];
             $.each(employeeTypeId, function (k, v) {
                 var data = {};
-                if ($("#dateStartWork").val() != "") {
-                    data['dateStartWork'] = $("#dateStartWork").val();
+                if ($("#workStartDate").val() != "") {
+                    data['workStartDate'] = $("#workStartDate").val();
                 }
-                if ($("#dateEndWork").val() != "") {
-                    data['dateEndWork'] = $("#dateEndWork").val();
+                if ($("#workEndDate").val() != "") {
+                    data['workEndDate'] = $("#workEndDate").val();
                 }
                 if($("#ageStart").val() != ""){
                      data['ageStart'] = $("#ageStart").val();
@@ -494,6 +507,7 @@
             }
         });
 
+   $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 
     });
 </script>

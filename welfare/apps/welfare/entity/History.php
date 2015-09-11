@@ -1,12 +1,13 @@
 <?php
 
 namespace apps\welfare\entity;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
  * @Table(name="WelfareHistory")
  */
-class History {
+class History extends EntityBase{
 
     /**
      * @Id
@@ -15,9 +16,19 @@ class History {
     public $historyId;
 
     /**
-     * @Column(type="integer",length=11, name="rightId")
+     * @Column(type="integer",length=11, name="conditionsId")
      */
-    public $rightId;
+    public $conditionsId;
+    
+     /**
+     * @Column(type="integer",length=11, name="welfareId")
+     */
+    public $welfareId;
+    
+       /**
+     * @Column(type="integer",length=11, name="memberId")
+     */
+    public $memberId;
 
     /**
      * @Column(type="date", name="dateUse",nullable=true)

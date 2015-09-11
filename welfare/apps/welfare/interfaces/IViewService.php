@@ -43,29 +43,26 @@ interface IViewService {
     /**
      * @name conditionsAdd
      * @uri /conditions/add
-     * @param integer id Description
      * @return html viewAddSubwelfare Description
      * @description view เพิ่มเงื่อนไขสวัสดิการ
      */
-    public function conditionsAdd($id);
+    public function conditionsAdd();
     
     /**
      * @name conditionsEdit
      * @uri /conditions/edit
-     * @param integer id Description
      * @return html viewconditionss Description
      * @description view แก้ไขเงื่อนไขสวัสดิการ 
      */
-    public function conditionsEdit($id);
+    public function conditionsEdit();
     
     /**
      * @name viewPrivewsList
      * @uri /priviews/lists
-     * @param integer conditionsId Description
      * @return html previews
      * @description แสดงรายการผู้มีสิทธิได้รับสวัสดิการ
      */
-    public function previewsUserLists($conditionsId);
+    public function previewsUserLists();
 
     /**
      * @name viewTestList

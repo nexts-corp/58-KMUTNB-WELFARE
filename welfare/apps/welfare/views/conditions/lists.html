@@ -44,7 +44,7 @@
                             <button class="btn btn-palegreen"
                                     data-id="content-body"
                                     data-api=""
-                                    data-param="null"
+                                    
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-print"></i>{{#i18n}}print{{/i18n}} 
                             </button>
@@ -53,7 +53,9 @@
                         <div class="pull-right">
                             <button class="btn btn-primary"
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/welfare/view/conditions/add/{{welfareId}}"
+                                    data-api="{{_context_path}}/api/welfare/view/conditions/add"
+                                    data-object='welfareId'
+                                    data-param='{{welfareId}}'
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
                             </button>
@@ -93,8 +95,9 @@
 
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/conditions/edit/{{conditionsId}}"
-                                                    data-param="null"
+                                                    data-api="{{_context_path}}/api/welfare/view/conditions/edit"
+                                                    data-object="conditionsId"
+                                                    data-param="{{conditionsId}}"
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
@@ -150,7 +153,7 @@
             var data = {"Id":Id};
                     var result = sendData('{{_context_path}}/api/welfare/conditions/delete', data);
                     if (result.delete == true) {
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', null);
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists', {welfareId:{{welfareId}}});
                     Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
             } else{
             Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);

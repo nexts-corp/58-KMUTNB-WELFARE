@@ -24,6 +24,7 @@
     </div>
     <!-- /Page Header -->
     <!-- Page Body -->
+   <form id="frmWelfare">
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -41,8 +42,9 @@
                                 <label class="col-lg-3 control-label">{{#i18n}}welfarename{{/i18n}}</label>
                                 <div class="col-lg-5">
                                     <input type="text" class="form-control" name="name" placeholder="ชื่อสวัสดิการ"
-                                           data-bv-notempty="true" id="name"
-                                           data-bv-notempty-message="ชื่อสวัสดิการ" />
+                                     id="name" data-validation="required" 
+                                     data-validation-error-msg="*กรุณาใส่ชื่อสวัสดิการ" />
+                                    
                                 </div>
                             </div>
 
@@ -50,7 +52,7 @@
                                 <label class="col-lg-3 control-label">{{#i18n}}welfaredescription{{/i18n}}</label>
                                 <div class="col-lg-9">
 
-                                    <textarea rows="4" id="description" cols="70"></textarea>
+                                    <textarea rows="4" data-validation-error-msg="" id="description" cols="67" ></textarea>
 
 
                                 </div>
@@ -60,7 +62,9 @@
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredatestart{{/i18n}}</label>
                                 <div class="controls col-lg-5">
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="dateStart" type="text" data-date-format="dd-mm-yyyy">
+                                            <input class="form-control cDate" id="dateStart"  
+                                            data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
+                                            data-validation-error-msg-container="#dateStart-th-msg-error" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -72,7 +76,9 @@
                                 <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredateend{{/i18n}}</label>
                                 <div class="controls col-lg-5">
                                     <div class="input-group">
-                                        <input class="form-control date-picker" id="datepicker-th" type="text" data-date-format="dd-mm-yyyy">
+                                        <input class="form-control cDate" id="dateEnd" style="z-index: 0;" 
+                                                           data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
+                                                           data-validation-error-msg-container="#dateEnd-th-msg-error" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -83,9 +89,11 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">รีเซท เดือน</label>
                                 <div class="col-lg-5">
-                                    <input type="text" class="form-control" name="name" placeholder="ใส่ตัวเลข"
-                                           data-bv-notempty="true" id="resetTime"
-                                           data-bv-notempty-message="ใส่ตัวเลข" />
+                                    <input type="text" class="form-control" name="name" 
+                                           placeholder="ใส่ตัวเลข" id="resetTime"
+                                           data-bv-notempty-message="ใส่ตัวเลข" 
+                                           data-validation-error-msg="*กรุณาใส่ตัวเลข"
+                                           data-validation="number" />
                                 </div>
                             </div>
 
@@ -111,7 +119,7 @@
                                             <div class="checkbox">
                                                 <label>
 
-                                                    <input type="checkbox" class="inverted" id="willing" name="willing" value="">
+                                                    <input type="checkbox" class="inverted" id="willing" name="willing" value="" >
 
                                                     <span class="text">{{#i18n}}conditionconditionstatusvoluntary{{/i18n}}</span>
                                                 </label>
@@ -153,18 +161,19 @@
 
     </div>
     <!-- /Page Body -->
+   </form>
 </div>
 <!-- /Page Content -->
-<!-- /Page Content -->
+
 
 
 
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+    $.validate();
         $("#btn_submit").click(function () {
-
+            if($("#name").val() != ""){
             var willing = $("#willing").prop("checked");
             var retire  = $("#retire").prop("checked");
 
@@ -179,7 +188,6 @@
                 data['willing'] = "Y";
             } else {
                 data['willing'] = "N";
-
             }
             if(retire==true){
                 data['retire'] = "Y";
@@ -204,12 +212,17 @@
 
                 }
             });
+        }else{
+             Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+             $('#name').focus();
+        }
             return false;
 
         });
 
+   $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 
     });
 
-    $('.date-picker').datepicker();
+
 </script>

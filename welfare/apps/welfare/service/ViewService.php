@@ -36,8 +36,9 @@ class ViewService extends CServiceBase implements IViewService {
         $obj = $this->datacontext->getObject($daoWelfare);
         if (count($obj) > 0) {
             foreach ($obj as $key => $value) {
-                $obj[$key]->dateStart = $value->dateStart->format('d-m-Y');
-                $obj[$key]->dateEnd = $value->dateEnd->format('d-m-Y');
+                $Y = Date('Y') + 543;
+                $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $Y . '');
+                $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $Y . '');
             }
         }
         $view->datas = $obj;
@@ -86,7 +87,10 @@ class ViewService extends CServiceBase implements IViewService {
     //end page welfare list
     //start page conditions add 
 
-    public function conditionsAdd($id) {
+    public function conditionsAdd() {
+
+        $welfareId = $this->getRequest()->welfareId;
+
         $view = new CJView("conditions/add", CJViewType::HTML_VIEW_ENGINE);
 
         $employeeType = new Taxonomy();
@@ -97,7 +101,7 @@ class ViewService extends CServiceBase implements IViewService {
         $unit->pCode = "unit";
         $view->unit = $this->datacontext->getObject($unit);
 
-        $view->welfareId = $id;
+        $view->welfareId = $welfareId;
 
         $gender = new Taxonomy();
         $gender->pCode = "gender";
@@ -109,25 +113,38 @@ class ViewService extends CServiceBase implements IViewService {
     //end page conditions view add
     //start page conditions view edit 
 
-    public function conditionsEdit($id) {
+    public function conditionsEdit() {
+
+        $conditionsId = $this->getRequest()->conditionsId;
+
         $view = new CJView("conditions/edit", CJViewType::HTML_VIEW_ENGINE);
 
-        $employeeType = '\\apps\\taxonomy\\entity\\';
+        $path = '\\apps\\taxonomy\\entity\\';
         $daoCondition = '\\apps\\welfare\\entity\\';
-
 
         $sql = "SELECT cdt.conditionsId,cdt.description,"
                 . "cdt.welfareId,cdt.amount,cdt.workStartDate,cdt.workEndDate,cdt.ageStart,cdt.ageEnd,"
-                . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId,"
-                . "cdt.returnTypeId,txn.id,txn.value1 "
-                . "FROM " . $daoCondition . "Conditions cdt Left JOIN " . $employeeType . "Taxonomy  txn with "
-                . "cdt.employeeTypeId = txn.id "
-                . "where cdt.conditionsId = :id";
+                . "cdt.ageWorkStart,cdt.ageWorkEnd,cdt.employeeTypeId, cdt.returnTypeId, cdt.genderId , "
+                . "ept.id As employeeTypeId , ept.value1 As employeeTypeValue , "
+                . "gd.id As genderId , gd.value1 As genderValue "
+                . "FROM " . $daoCondition . "Conditions cdt "
+                . "Left JOIN " . $path . "Taxonomy  ept "
+                . "with cdt.employeeTypeId = ept.id "
+                . "Left JOIN " . $path . "Taxonomy  gd  "
+                . "with cdt.genderId = gd.id "
+                . "where cdt.conditionsId = :conditionsId";
 
-        $obj = $this->datacontext->getObject($sql, array("id" => $id));
+        $obj = $this->datacontext->getObject($sql, array("conditionsId" => $conditionsId));
+
+
         if ($obj[0]['workEndDate'] != null) {
-            $workEndDate = $obj[0]['workEndDate']->format('d-m-Y');
-            $view->workEndDate = $workEndDate;
+
+            $workEndDate = explode("-", $obj[0]['workEndDate']);
+            $workEndDate[2] = intVal($workEndDate[2]) + 543;
+            $workEndDate1 = $workEndDate[2] . "-" . $workEndDate[1] . "-" . $workEndDate[0];
+
+            //$workEndDate = $obj[0]['workEndDate']->format('d-m-Y');
+            $view->workEndDate = $workEndDate1;
         }
         if ($obj[0]['workStartDate']) {
             $workStartDate = $obj[0]['workStartDate']->format('d-m-Y');
@@ -138,26 +155,12 @@ class ViewService extends CServiceBase implements IViewService {
         $unit->pCode = "unit";
         $view->unit = $this->datacontext->getObject($unit);
 
-        $conditionsId = $obj[0]['conditionsId'];
         $view->conditionsId = $conditionsId;
-        $sqlGender = "SELECT gd.genderId,"
-                . "tn.id,tn.value1 "
-                . "FROM " . $daoCondition . "Conditions gd Left JOIN " . $employeeType . "Taxonomy  tn with "
-                . "gd.genderId = tn.id "
-                . "where gd.conditionsId =$id";
-
-        $objGender = $this->datacontext->getObject($sqlGender, array("id" => $id));
-
 
         $view->datas = $obj;
-        $view->welfareId = $id;
-        if (empty($objGender[0]['genderId'])) {
-            $gender = new Taxonomy();
-            $gender->pCode = "gender";
-            $view->gender = $this->datacontext->getObject($gender);
-        } else {
-            $view->gender = $objGender;
-        }
+
+
+        //$view->gender = $objGender;
         return $view;
     }
 
@@ -195,93 +198,13 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-//    public function previewsTestLists($conditions) {
-//        
-//        $query = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
-//                . "mb.departmentId,"
-//                . "(title.value1) As title, "
-//                . "(academic.value1) As academic, "
-//                . "(employeeType.value1) As employeeType, "
-//                . "(gender.value1) As gender, "
-//                . "(faculty.value1) As faculty, "
-//                . "(department.value1) As department "
-//                . "FROM member mb "
-//                . "Left JOIN taxonomy title "
-//                . "on mb.titleId = title.id "
-//                . "Left JOIN taxonomy academic "
-//                . "on mb.academicId = academic.id "
-//                . "Left JOIN taxonomy employeeType "
-//                . "on mb.employeeTypeId = employeeType.id "
-//                . "Left JOIN taxonomy gender "
-//                . "on mb.genderId = gender.id "
-//                . "Left JOIN taxonomy faculty "
-//                . "on mb.facultyId = faculty.id "
-//                . "Left JOIN taxonomy department "
-//                . "on mb.departmentId = department.id "
-//                . "where ";
-//        $where = "";
-//        $param = array();
-//        foreach ($conditions as $key => $value) {
-//            if ($key == 0) {
-//                foreach ($value as $key2 => $value2) {
-//                    if ($value2 != null) {
-//                        if ($where != "") {
-//                            $where .= " and ";
-//                        }
-//                        switch ($key2) {
-//                            case "workStartDate":
-//                                $where .= " mb.workStartDate >= :" . $key2 . " ";
-//                                $param[$key2] = $value2->format('Y-m-d');
-//                                break;
-//                            case "workEndDate":
-//                                $where .= " mb.workEndDate <= :" . $key2 . " ";
-//                                $param[$key2] = $value2->format('Y-m-d');
-//                                break;
-//                            case "ageStart":
-//                                $where .= " TIMESTAMPDIFF(YEAR, mb.dob, CURDATE()) >= :" . $key2 . " ";
-//                                // . "CURRENT_DATE()-mb.dob >= :" . $key2 . " ";
-//                                $param[$key2] = $value2;
-//                                break;
-//                            case "ageEnd":
-//                                $where .= " TIMESTAMPDIFF(YEAR, mb.dob, CURDATE()) <= :" . $key2 . " ";
-//                                $param[$key2] = $value2;
-//                                break;
-//                            case "ageWorkStart":
-//                                $where .= " TIMESTAMPDIFF(YEAR, mb.workStartDate, CURDATE()) >= :" . $key2 . " ";
-//                                $param[$key2] = $value2;
-//                                break;
-//                            case "ageWorkEnd":
-//                                $where .= " TIMESTAMPDIFF(YEAR, mb.workStartDate, CURDATE()) <= :" . $key2 . " ";
-//                                $param[$key2] = $value2;
-//                                break;
-//                            case "genderId":
-//                                $where .= " mb.genderId = :" . $key2 . " ";
-//                                $param[$key2] = $value2;
-//                                break;
-//                            case "employeeTypeId":
-//                                $where .= " mb.employeeTypeId = :" . $key2 . " ";
-//                                $param[$key2] = $value2;
-//                                break;
-//                        }
-//                    }
-//                }
-//            } else {
-//                if ($where != "") {
-//                    $where .= " or ";
-//                }
-//                $where .= " mb.employeeTypeId = :employeeTypeId" . $key . " ";
-//                $param["employeeTypeId" . $key] = $value->employeeTypeId;
-//            }
-//        }
-//        $sql = $query . $where;
-//        $member = $this->datacontext->pdoQuery($sql, $param);
-//        return $member;
-//      
-//    }
 
-    public function previewsUserLists($conditionsId) {
+
+    public function previewsUserLists() {
 
         $view = new CJView("previews/lists", CJViewType::HTML_VIEW_ENGINE);
+        
+        $conditionsId=$this->getRequest()->conditionsId;
         
         $condition = new Conditions();
         $condition->conditionsId = $conditionsId;
@@ -289,13 +212,13 @@ class ViewService extends CServiceBase implements IViewService {
         
         $conServ = new ConditionsService();
         $data = $conServ->preview($dataConditions);
-        $i=1;
-        foreach($data as $key => $value){
+        $i = 1;
+        foreach ($data as $key => $value) {
             $data[$key]["rowNo"] = $i++;
         }
         $view->datas = $data;
-        $view->maxRows=--$i;
-        
+        $view->maxRows = --$i;
+
         return $view;
     }
 
