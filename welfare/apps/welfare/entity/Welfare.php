@@ -1,12 +1,12 @@
 <?php
 
 namespace apps\welfare\entity;
-
+use apps\common\entity\EntityBase;
 /**
  * @Entity
  * @Table(name="Welfare")
  */
-class Welfare {
+class Welfare extends EntityBase{
 
     /**
      * @Id

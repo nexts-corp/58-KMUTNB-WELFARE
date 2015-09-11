@@ -1,10 +1,15 @@
 <?php
+
 namespace apps\user\entity;
+
+use apps\common\entity\EntityBase;
+
 /**
  * @Entity
  * @Table(name="User")
  */
-class User {
+class User extends EntityBase {
+
     /**
      * @Id
      * @GeneratedValue
@@ -25,16 +30,14 @@ class User {
      * @Column(type="integer", length=11, name="memberId",nullable=true) 
      */
     public $memberId;
-    
-     /**
+
+    /**
      * @Column(type="string", length=10, name="userTypeId",nullable=true) 
      */
     public $userTypeId;
-    
     public $oldpassword;
-    
     public $confirmpassword;
-            
+
     function getUserId() {
         return $this->userId;
     }
@@ -74,8 +77,5 @@ class User {
     function setUserTypeId($userTypeId) {
         $this->userTypeId = $userTypeId;
     }
-
-
-
 
 }

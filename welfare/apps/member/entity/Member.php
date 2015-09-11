@@ -2,11 +2,13 @@
 
 namespace apps\member\entity;
 
+use apps\common\entity\EntityBase;
+
 /**
  * @Entity
  * @Table(name="Member")
  */
-class Member {
+class Member extends EntityBase {
 
     /**
      * @Id
@@ -78,23 +80,22 @@ class Member {
      * @Column(type="string", length=10, name="matierId",nullable=true) 
      */
     public $matierId;
-    
-    
+
     /**
      * @Column(type="string", length=255, name="salaryStart",nullable=true) 
      */
     public $salaryStart;
-    
+
     /**
      * @Column(type="string", length=255, name="salaryPresent",nullable=true) 
      */
     public $salaryPresent;
-    
-     /**
+
+    /**
      * @Column(type="string", length=255, name="address",nullable=true) 
      */
     public $address;
-    
+
     /**
      * @Column(type="string", length=255, name="internalPhone",nullable=true) 
      */
@@ -109,29 +110,28 @@ class Member {
      * @Column(type="string", length=255, name="mobile",nullable=true) 
      */
     public $mobile;
-    
+
     /**
      * @Column(type="string", length=255, name="email",nullable=true) 
      */
     public $email;
-    
-     /**
+
+    /**
      * @Column(type="date",  name="workStartDate") 
      */
     public $workStartDate;
-    
-     /**
+
+    /**
      * @Column(type="date",  name="workEndDate" ,nullable=true) 
      */
     public $workEndDate;
-    
+
     /**
      * @Column(type="string", length=10, name="memberActiveId",nullable=true) 
      */
     public $memberActiveId;
-    
     public $userTypeId;
-            
+
     function getMemberId() {
         return $this->memberId;
     }
@@ -323,7 +323,5 @@ class Member {
     function setMemberActiveId($memberActiveId) {
         $this->memberActiveId = $memberActiveId;
     }
-
-
 
 }

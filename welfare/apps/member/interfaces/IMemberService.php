@@ -39,24 +39,6 @@ interface IMemberService {
     public function delete($memberId);
 
     /**
-     * @name getDepartment
-     * @uri /get/department
-     * @param integer facultyId Description
-     * @return html department Description
-     * @description view department   
-     */
-    public function getDepartment($id);
-
-    /**
-     * @name getDepartment
-     * @uri /get/datas/department
-     * @param integer facultyId Description
-     * @return html department Description
-     * @description view department   
-     */
-    public function getData($id);
-    
-    /**
      * @name search
      * @uri /search
      * @param string data
@@ -65,12 +47,4 @@ interface IMemberService {
      */
     public function search($data);
     
-    /**
-     * @name updateProfile
-     * @uri /profile/update
-     * @param apps\member\entity\Member data Description
-     * @return boolean update Description
-     * @description view list new
-     */
-    public function updateProfile($data);
 }

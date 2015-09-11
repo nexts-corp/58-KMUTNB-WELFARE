@@ -60,74 +60,36 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberEdit($id) {
         $usertype = $this->getCurrentUser()->usertype;
-
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
 
         if ($usertype == "administrator") {
-            print_r("admin");
             $view = new CJView("admin/edit", CJViewType::HTML_VIEW_ENGINE);
-            $member = new \apps\member\entity\Member();
-            $member->setMemberId($id);
-            $member = $this->datacontext->getObject($member)[0];
-
-            $dob = $member->dob->format('d-m-Y');
-            $mem = explode("-", $dob);
-            $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
-
-            $workStartDate = $member->workStartDate->format('d-m-Y');
-            $wsd = explode("-", $workStartDate);
-            $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-
-            $user = new \apps\user\entity\User();
-            $user->memberId = $member->memberId;
-            $user = $this->datacontext->getObject($user)[0];
-            $member->userTypeId = $user->userTypeId;
-            $view->datas = $member;
-            return $view;
         } else if ($usertype == "adminFaculty") {
-            print_r("adminFaculty");
             $view = new CJView("faculty/edit", CJViewType::HTML_VIEW_ENGINE);
-            $member = new \apps\member\entity\Member();
-            $member->setMemberId($id);
-            $member = $this->datacontext->getObject($member)[0];
-
-            $dob = $member->dob->format('d-m-Y');
-            $mem = explode("-", $dob);
-            $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
-
-            $workStartDate = $member->workStartDate->format('d-m-Y');
-            $wsd = explode("-", $workStartDate);
-            $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-
-            $user = new \apps\user\entity\User();
-            $user->memberId = $member->memberId;
-            $user = $this->datacontext->getObject($user)[0];
-            $member->userTypeId = $user->userTypeId;
-            $view->datas = $member;
-            return $view;
         } else if ($usertype == "adminDepartment") {
-            print_r("adminDepartment");
             $view = new CJView("department/edit", CJViewType::HTML_VIEW_ENGINE);
-            $member = new \apps\member\entity\Member();
-            $member->setMemberId($id);
-            $member = $this->datacontext->getObject($member)[0];
-
-            $dob = $member->dob->format('d-m-Y');
-            $mem = explode("-", $dob);
-            $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
-
-            $workStartDate = $member->workStartDate->format('d-m-Y');
-            $wsd = explode("-", $workStartDate);
-            $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-
-            $user = new \apps\user\entity\User();
-            $user->memberId = $member->memberId;
-            $user = $this->datacontext->getObject($user)[0];
-            $member->userTypeId = $user->userTypeId;
-            $view->datas = $member;
-            return $view;
+        } else if ($usertype == "user") {
+            $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         }
+        $member = new \apps\member\entity\Member();
+        $member->setMemberId($id);
+        $member = $this->datacontext->getObject($member)[0];
+
+        $dob = $member->dob->format('d-m-Y');
+        $mem = explode("-", $dob);
+        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
+
+        $workStartDate = $member->workStartDate->format('d-m-Y');
+        $wsd = explode("-", $workStartDate);
+        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
+
+        $user = new \apps\user\entity\User();
+        $user->memberId = $member->memberId;
+        $user = $this->datacontext->getObject($user)[0];
+        $member->userTypeId = $user->userTypeId;
+        $view->datas = $member;
+        return $view;
     }
 
     public function memberLists() {
@@ -152,12 +114,12 @@ class ViewService extends CServiceBase implements IViewService {
             $view = new CJView("admin/lists", CJViewType::HTML_VIEW_ENGINE);
         } elseif ($usertype == "adminFaculty") {
             $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
-            
+
             $sql .= " and tax3.code = :facultyId "; //กรณีที่ไม่ได้ search
             $param["facultyId"] = $facultyId;
         } elseif ($usertype == "adminDepartment") {
             $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
-            
+
             $sql .= " and tax4.code = :departmentId "; //กรณีที่ไม่ได้ search
             $param["departmentId"] = $departmentId;
         }
@@ -173,28 +135,6 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberShow($id) {
         $view = new CJView("user/profile", CJViewType::HTML_VIEW_ENGINE);
-        $member = new \apps\member\entity\Member();
-        $member->setMemberId($id);
-        $member = $this->datacontext->getObject($member)[0];
-
-        $dob = $member->dob->format('d-m-Y');
-        $mem = explode("-", $dob);
-        $member->dob = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
-
-        $workStartDate = $member->workStartDate->format('d-m-Y');
-        $wsd = explode("-", $workStartDate);
-        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-
-        $user = new \apps\user\entity\User();
-        $user->memberId = $member->memberId;
-        $user = $this->datacontext->getObject($user)[0];
-        $member->userTypeId = $user->userTypeId;
-        $view->datas = $member;
-        return $view;
-    }
-
-    public function editProfile($id) {
-        $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         $member = new \apps\member\entity\Member();
         $member->setMemberId($id);
         $member = $this->datacontext->getObject($member)[0];

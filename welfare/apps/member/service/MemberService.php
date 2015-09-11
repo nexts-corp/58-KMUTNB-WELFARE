@@ -8,6 +8,8 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\member\interfaces\IMemberService;
 use apps\user\entity\User;
+use apps\member\entity\Member;
+use apps\member\entity\MemberHistory;
 
 class MemberService extends CServiceBase implements IMemberService {
 
@@ -70,17 +72,64 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
-        $dob1 = explode("-", $data->dob);
-        $dob1[2] = intVal($dob1[2]) - 543;
-        $dob = $dob1[2] . "-" . $dob1[1] . "-" . $dob1[0];
+        if ($data->dob != "") {
+            $dob1 = explode("-", $data->dob);
+            $dob1[2] = intVal($dob1[2]) - 543;
+            $dob = $dob1[2] . "-" . $dob1[1] . "-" . $dob1[0];
+            $data->dob = new \DateTime($dob);
+        }
+        if ($data->workStartDate != "") {
+            $date1 = explode("-", $data->workStartDate);
+            $date1[2] = intVal($date1[2]) - 543;
+            $workStartDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
+            $data->workStartDate = new \DateTime($workStartDate);
+        }
 
-        $date1 = explode("-", $data->workStartDate);
-        $date1[2] = intVal($date1[2]) - 543;
-        $workStartDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
 
-        $data->dob = new \DateTime($dob);
+        $current = new Member();
+        $current->memberId = $data->memberId;
+        $current = $this->datacontext->getObject($current)[0];
+        if ($data->userTypeId != "") {
+            $user = new User();
+            $user->memberId = $data->memberId;
+            $dataUser = $this->datacontext->getObject($user)[0];
+            //   print $data->userTypeId . " " . $dataUser->userTypeId;
+            if ($data->userTypeId != $dataUser->userTypeId) {
+                // print "!=";
+                $history = new MemberHistory();
+                $history->memberId = $data->memberId;
+                $history->fieldChange = "userTypeId";
+                $history->valueOld = $dataUser->userTypeId;
+                $history->valueNew = $data->userTypeId;
+                $this->datacontext->saveObject($history);
 
-        $data->workStartDate = new \DateTime($workStartDate);
+                $dataUser->userTypeId = $userTypeId;
+                $this->datacontext->updateObject($dataUser);
+            }
+        }
+        foreach ($data as $fieldNew => $valueNew) {
+            if ($valueNew != null) {
+                foreach ($current as $filedOld => $valueOld) {
+                    if ($fieldNew == $filedOld) {
+                        if ($valueNew != $valueOld || $fieldNew == "memberId") {
+                            $history = new MemberHistory();
+                            $history->memberId = $data->memberId;
+                            $history->fieldChange = $filedOld;
+                            if ($filedOld == "workStartDate" || $filedOld == "workEndDate" || $filedOld == "dob") {
+                                $history->valueOld = $valueOld->format('Y-m-d');
+                                $history->valueNew = $valueNew->format('Y-m-d');
+                                $this->datacontext->saveObject($history);
+                            } elseif ($filedOld != "userTypeId") {
+                                $history->valueOld = $valueOld;
+                                $history->valueNew = $valueNew;
+                                $this->datacontext->saveObject($history);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         if ($this->datacontext->updateObject($data)) {
             $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
             return true;
@@ -96,13 +145,13 @@ class MemberService extends CServiceBase implements IMemberService {
         $taxonomy->code = "leave";
         $dataTax = $this->datacontext->getObject($taxonomy)[0];
 
-        $member = new \apps\member\entity\Member();
+        $member = new Member();
         $member->memberId = $memberId;
         $dataMem = $this->datacontext->getObject($member)[0];
 
         $dataMem->memberActiveId = $dataTax->id;
         $dataMem->workEndDate = new \DateTime('now');
-        
+
         if ($this->datacontext->updateObject($dataMem)) {
             $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
             return true;
@@ -110,27 +159,6 @@ class MemberService extends CServiceBase implements IMemberService {
 //            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
             return false;
         }
-        
-    }
-
-    public function getDepartment($id) {
-
-        $view = new CJView("member/get/data", CJViewType::HTML_VIEW_ENGINE);
-        $filter = new Department();
-        $filter->setFacultyId($id);
-        $dao_department = $this->datacontext->getObject($filter);
-        $view->data = $dao_department;
-        return $view;
-    }
-
-    public function getData($id) {
-
-        $view = new CJView("member/get/data", CJViewType::HTML_VIEW_ENGINE);
-        $filter = new Department();
-        $filter->setFacultyId($id);
-        $dao_department = $this->datacontext->getObject($filter);
-        $view->data = $dao_department;
-        return $view;
     }
 
     public function search($data) {
@@ -165,16 +193,6 @@ class MemberService extends CServiceBase implements IMemberService {
             $param["departmentId"] = $departmentId;
         }
         return $this->datacontext->getObject($sql, $param);
-    }
-
-    public function updateProfile($data) {
-        if ($this->datacontext->updateObject($data)) {
-            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
-            return true;
-        } else {
-            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
-            return false;
-        }
     }
 
 }

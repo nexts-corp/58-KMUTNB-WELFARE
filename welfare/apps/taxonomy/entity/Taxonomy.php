@@ -2,6 +2,8 @@
 
 namespace apps\taxonomy\entity;
 
+use apps\common\entity\EntityBase;
+
 /**
  * Description of Taxonomy
  *
@@ -12,7 +14,7 @@ namespace apps\taxonomy\entity;
  * @Entity
  * @Table(name="Taxonomy")
  */
-class Taxonomy {
+class Taxonomy extends EntityBase {
 
     /**
      * @Id
@@ -34,8 +36,8 @@ class Taxonomy {
      * @Column(type="string", length=255, name="pCode",nullable=true) 
      */
     public $pCode;
-    
-      /**
+
+    /**
      * @Column(type="string", length=255, name="code",nullable=true) 
      */
     public $code;
@@ -54,6 +56,5 @@ class Taxonomy {
      * @Column(type="string", length=255, name="optional",nullable=true) 
      */
     public $optional;
-
 
 }

@@ -315,13 +315,13 @@
 
         $(document).ready(function () {
             $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-            listsAcademic();
-            listtitleName();
-            listgender();
-            listemployeeTypeId();
-            listpositionId();
-            listfacultyId();
-            listmatier();
+//            listsAcademic();
+//            listtitleName();
+//            listgender();
+//            listemployeeTypeId();
+//            listpositionId();
+//            listfacultyId();
+//            listmatier();
             
 
             $("#btn_submit").click(function () {
@@ -337,7 +337,7 @@
                 var jdata = {};
                 jdata['data'] = data;
                 $.ajax({
-                    url: '{{_context_path}}/api/member/member/profile/update',
+                    url: '{{_context_path}}/api/member/member/update',
                     data: jsonEncode(jdata),
                     type: 'post', // 'or get'
                     success: function (result) {

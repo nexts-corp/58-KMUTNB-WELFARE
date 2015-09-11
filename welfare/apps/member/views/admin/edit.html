@@ -384,6 +384,11 @@
                 var academicId = '{{#datas}}{{academicId}}{{/datas}}';
                 var academic = getPCode("academic");
                 var html = "";
+                if (academicId == "") {
+                    html += "<option value='' selected>ตำแหน่งทางวิชาการ</option>";
+                } else {
+                    html += "<option value=''>ตำแหน่งทางวิชาการ</option>";
+                }
                 if (academic != "") {
                     $.each(academic, function (key, value) {
                         if (value.id == academicId) {
