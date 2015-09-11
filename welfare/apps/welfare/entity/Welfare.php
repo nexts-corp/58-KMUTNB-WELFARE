@@ -1,12 +1,14 @@
 <?php
 
 namespace apps\welfare\entity;
+
 use apps\common\entity\EntityBase;
+
 /**
  * @Entity
  * @Table(name="Welfare")
  */
-class Welfare extends EntityBase{
+class Welfare extends EntityBase {
 
     /**
      * @Id
@@ -25,19 +27,9 @@ class Welfare extends EntityBase{
     public $description;
 
     /**
-     * @Column(type="datetime", name="dateCreate",length=14,nullable=true) 
+     * @Column(type="date", name="dateCancel",nullable=true) 
      */
-    public $dateCreate;
-
-    /**
-     * @Column(type="date", name="dateUpdate",nullable=true) 
-     */
-    public $dateUpdate;
-
-    /**
-     * @Column(type="date", name="dateCande",nullable=true) 
-     */
-    public $dateCande;
+    public $dateCancel;
 
     /**
      * @Column(type="date", name="dateStart",nullable=true) 
@@ -81,16 +73,8 @@ class Welfare extends EntityBase{
         return $this->description;
     }
 
-    function getDateCreate() {
-        return $this->dateCreate;
-    }
-
-    function getDateUpdate() {
-        return $this->dateUpdate;
-    }
-
-    function getDateCande() {
-        return $this->dateCande;
+    function getDateCancel() {
+        return $this->dateCancel;
     }
 
     function getDateStart() {
@@ -129,16 +113,8 @@ class Welfare extends EntityBase{
         $this->description = $description;
     }
 
-    function setDateCreate($dateCreate) {
-        $this->dateCreate = $dateCreate;
-    }
-
-    function setDateUpdate($dateUpdate) {
-        $this->dateUpdate = $dateUpdate;
-    }
-
-    function setDateCande($dateCande) {
-        $this->dateCande = $dateCande;
+    function setDateCancel($dateCancel) {
+        $this->dateCancel = $dateCancel;
     }
 
     function setDateStart($dateStart) {
