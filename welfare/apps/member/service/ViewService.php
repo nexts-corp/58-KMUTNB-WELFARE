@@ -73,8 +73,8 @@ class ViewService extends CServiceBase implements IViewService {
             $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         }
         $sql = "select mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(fac.value1) as faculty,(depart.value1) as department, "
-                . "aca.value1 as academic,title.value1 as titlename ,mem1.genderId,gende.value1 as gender,mem1.dob,mem1.employeeCode, "
-                . "mem1.employeeTypeId,mem1.facultyId,mem1.departmentId,mem1.positionId,mem1.matierId,mem1.internalPhone,"
+                . "aca.value1 as academic,mem1.titleId,title.value1 as titlename ,mem1.genderId,gende.value1 as gender,mem1.dob,mem1.employeeCode, "
+                . "mem1.employeeTypeId,mem1.facultyId,mem1.departmentId,mem1.positionId,mem1.matierId,mem1.internalPhone,mem1.academicId, "
                 . "mem1.phone,mem1.mobile,mem1.email,mem1.salaryStart,emp.value1 as employeetype,psw.value1 as positionwork, "
                 . "mem1.salaryPresent,mem1.address,mem1.workStartDate,mem1.workEndDate,mem1.memberActiveId,mat.value1 as matier "
                 . "FROM apps\\member\\entity\\Member mem1 "
@@ -114,6 +114,40 @@ class ViewService extends CServiceBase implements IViewService {
         $user = $this->datacontext->getObject($user)[0];
         $member[0]['userTypeId'] = $user->userTypeId;
         $view->datas = $member;
+        
+        $academic = new Taxonomy();
+        $academic->pCode = "academic";
+        $view->academic = $this->datacontext->getObject($academic);
+
+        $titleName = new Taxonomy();
+        $titleName->pCode = "titleName";
+        $view->titleName = $this->datacontext->getObject($titleName);
+
+        $gender = new Taxonomy();
+        $gender->pCode = "gender";
+        $view->gender = $this->datacontext->getObject($gender);
+
+        $employeeType = new Taxonomy();
+        $employeeType->pCode = "employeeType";
+        $view->employeeType = $this->datacontext->getObject($employeeType);
+
+        $position = new Taxonomy();
+        $position->pCode = "position";
+        $view->position = $this->datacontext->getObject($position);
+
+
+        $faculty = new Taxonomy();
+        $faculty->pCode = "faculty";
+        $view->faculty = $this->datacontext->getObject($faculty);
+
+        $userType = new Taxonomy();
+        $userType->pCode = "userType";
+        $view->userType = $this->datacontext->getObject($userType);
+
+        $matier = new Taxonomy();
+        $matier->pCode = "matier";
+        $view->matier = $this->datacontext->getObject($matier);
+        
         return $view;
     }
 
@@ -162,7 +196,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("user/profile", CJViewType::HTML_VIEW_ENGINE);
         $sql = "select mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(fac.value1) as faculty,(depart.value1) as department, "
                 . "aca.value1 as academic,title.value1 as titlename ,mem1.genderId,gende.value1 as gender,mem1.dob,mem1.employeeCode, "
-                . "mem1.employeeTypeId,mem1.facultyId,mem1.departmentId,mem1.positionId,mem1.matierId,mem1.internalPhone,"
+                . "mem1.employeeTypeId,mem1.facultyId,mem1.departmentId,mem1.positionId,mem1.matierId,mem1.internalPhone,mem1.academicId, "
                 . "mem1.phone,mem1.mobile,mem1.email,mem1.salaryStart,emp.value1 as employeetype,psw.value1 as positionwork, "
                 . "mem1.salaryPresent,mem1.address,mem1.workStartDate,mem1.workEndDate,mem1.memberActiveId,mat.value1 as matier "
                 . "FROM apps\\member\\entity\\Member mem1 "
@@ -189,7 +223,7 @@ class ViewService extends CServiceBase implements IViewService {
         $dob = $member[0]['dob']->format('d-m-Y');
 
 //        print_r($member);
-
+//        exit();
         $mem = explode("-", $dob);
         $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
 
