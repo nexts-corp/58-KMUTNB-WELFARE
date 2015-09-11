@@ -115,7 +115,8 @@ class MemberService extends CServiceBase implements IMemberService {
                             $history = new MemberHistory();
                             $history->memberId = $data->memberId;
                             $history->fieldChange = $filedOld;
-                            if ($filedOld == "workStartDate" || $filedOld == "workEndDate" || $filedOld == "dob") {
+                            if (is_a($valueOld, "DateTime")) { //if value is DateTime
+//                            if ($filedOld == "workStartDate" || $filedOld == "workEndDate" || $filedOld == "dob") {
                                 $history->valueOld = $valueOld->format('Y-m-d');
                                 $history->valueNew = $valueNew->format('Y-m-d');
                                 $this->datacontext->saveObject($history);
