@@ -9516,7 +9516,7 @@ input[type=checkbox]:disabled~.text:before, input[type=radio]:disabled~.text:bef
 }
 input[type=checkbox]~.text, input[type=radio]~.text {
 	position: relative;
-	z-index: 11;
+	//z-index: 11;
 	display: inline-block;
 	margin: 0;
 	line-height: 20px;
