@@ -36,9 +36,57 @@ class History extends EntityBase{
     public $dateUse;
     
    /**
-     * @Column(type="date", name="amount",nullable=true)
+     * @Column(type="string", length=11,  name="amount",nullable=true)
      */
     public $amount;
     
+    function getHistoryId() {
+        return $this->historyId;
+    }
+
+    function getConditionsId() {
+        return $this->conditionsId;
+    }
+
+    function getWelfareId() {
+        return $this->welfareId;
+    }
+
+    function getMemberId() {
+        return $this->memberId;
+    }
+
+    function getDateUse() {
+        return $this->dateUse;
+    }
+
+    function getAmount() {
+        return $this->amount;
+    }
+
+    function setHistoryId($historyId) {
+        $this->historyId = $historyId;
+    }
+
+    function setConditionsId($conditionsId) {
+        $this->conditionsId = $conditionsId;
+    }
+
+    function setWelfareId($welfareId) {
+        $this->welfareId = $welfareId;
+    }
+
+    function setMemberId($memberId) {
+        $this->memberId = $memberId;
+    }
+
+    function setDateUse($dateUse) {
+        $this->dateUse = $dateUse;
+    }
+
+    function setAmount($amount) {
+        $this->amount = $amount;
+    }
+
 
 }

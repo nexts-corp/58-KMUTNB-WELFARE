@@ -54,4 +54,6 @@ interface IConditionsService {
      * @description test
      */
     public function preview($conditions);
+    
+    
 }

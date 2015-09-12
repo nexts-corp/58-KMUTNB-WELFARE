@@ -36,7 +36,7 @@ class ViewService extends CServiceBase implements IViewService {
         $obj = $this->datacontext->getObject($daoWelfare);
         if (count($obj) > 0) {
             foreach ($obj as $key => $value) {
-                $Y = Date('Y') + 543;
+                $Y = $value->format('Y') + 543;
                 $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $Y . '');
                 $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $Y . '');
             }
@@ -218,7 +218,7 @@ class ViewService extends CServiceBase implements IViewService {
         }
         $view->datas = $data;
         $view->maxRows = --$i;
-
+        $view->conditionsId=$conditionsId;
         return $view;
     }
 

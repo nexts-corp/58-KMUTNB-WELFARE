@@ -33,10 +33,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
 
     public function save($data) {
         
-        
-
        
-        
         foreach ($data as $key => $value) {
             if ($data[$key]->workStartDate != "") {
                 
@@ -155,7 +152,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
     }
 
     public function preview($conditions) {
-        $query =  "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+        $query =  "SELECT mb.memberId,mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
                 . "mb.departmentId,"
 //                . "(title.value1) As title, "
 //                . "(academic.value1) As academic,"
