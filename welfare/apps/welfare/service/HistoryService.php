@@ -48,10 +48,10 @@ class HistoryService extends CServiceBase implements IHistoryService {
         }
         
         
-        $sqlHistory = "SELECT  htr.amount,htr.conditionsId,htr.memberId,htr.welfareId";
-        
-        
-        $objWelfare = $this->datacontext->getObject($sql, array("conditionsId" => $conditionsId));
+//        $sqlHistory = "SELECT  htr.amount,htr.conditionsId,htr.memberId,htr.welfareId";
+//        
+//        
+//        $objWelfare = $this->datacontext->getObject($sql, array("conditionsId" => $conditionsId));
         
         
         return true;
