@@ -180,7 +180,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
         foreach ($conditions as $key => $value) {
             if ($key == 0) {
                 foreach ($value as $key2 => $value2) {
-                    if ($value2 != null) {
+                    if ($value2 != null || $value2 != "") {
                         if ($where != "") {
                             $where .= " and ";
                         }

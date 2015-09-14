@@ -390,10 +390,10 @@
             var data1 = [];
             $.each(employeeTypeId, function (k, v) {
             var data = {};
-                    data['welfareId'] = "{{welfareId}}";
-                    data['description'] = $("#description").val();
-                    data['amount'] = $("#amount").val();
-                    if ($("#workStartDate").val() != "") {
+            data['welfareId'] = "{{welfareId}}";
+            data['description'] = $("#description").val();
+            data['amount'] = $("#amount").val();
+            if ($("#workStartDate").val() != "") {
             data['workStartDate'] = $("#workStartDate").val();
             }
             if ($("#workEndDate").val() != "") {
@@ -502,7 +502,7 @@
                     html += '<td>' + data.title + ' ' + data.fname + ' ' + data.lname + '</td>';
                     html += '<td>' + data.gender + '</td>';
                     html += '<td>ภาควิชา/สำนักงาน ' + data.department + '  ' + data.faculty + '</td>';
-                    html += '<td>' + data.employeeType + '</td>';
+                    html += '<td>' + data.employeeType + '</td></tr>';
             }
 
             $("#userRows").html('จำนวนทั้งหมด ' + countUser + ' คน ');

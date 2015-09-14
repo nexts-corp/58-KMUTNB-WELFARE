@@ -198,29 +198,223 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-
-
     public function previewsUserLists() {
 
         $view = new CJView("previews/lists", CJViewType::HTML_VIEW_ENGINE);
-        
-        $conditionsId=$this->getRequest()->conditionsId;
-        
+
+        $conditionsId = $this->getRequest()->conditionsId;
+
         $condition = new Conditions();
         $condition->conditionsId = $conditionsId;
+
         $dataConditions = $this->datacontext->getObject($condition); //get condition
-        
+
         $conServ = new ConditionsService();
         $data = $conServ->preview($dataConditions);
         $i = 1;
+
         foreach ($data as $key => $value) {
             $data[$key]["rowNo"] = $i++;
         }
         $view->datas = $data;
         $view->maxRows = --$i;
-        $view->conditionsId=$conditionsId;
+        $view->conditionsId = $conditionsId;
+
+
         return $view;
     }
 
+    public function historyPreview($data) {
+
+        $view = new CJView("history/lists", CJViewType::HTML_VIEW_ENGINE);
+
+        $conditionsId = $data->conditionsId;
+        $memberId = $data->memberId;
+
+
+        $path = '\\apps\\taxonomy\\entity\\';
+        $parthWelfare = '\\apps\\welfare\\entity\\';
+
+        $sqlWelfare = "SELECT cdt.amount,cdt.conditionsId,cdt.welfareId, cdt.description ,"
+                . "wf.welfareId , wf.name , "
+                . "wf.description As wfDescription, wf.dateStart, "
+                . "wf.resetTime , wf.dateEnd , wf.free , "
+                . "un.id As unitId , un.value1 As unitValue  "
+                . "FROM " . $parthWelfare . "Conditions cdt "
+                . "Left JOIN " . $parthWelfare . "Welfare wf "
+                . "with cdt.welfareId = wf.welfareId "
+                . "Left JOIN " . $path . "Taxonomy  un  "
+                . "with cdt.returnTypeId = un.id "
+                . "where cdt.conditionsId = :conditionsId";
+
+        $objWelfare = $this->datacontext->getObject($sqlWelfare, array("conditionsId" => $conditionsId))[0];
+
+        foreach ($objWelfare as $key => $value) {
+            if (is_a($value, "DateTime")) {
+                $Y = $value->format('Y') + 543;
+                $objWelfare[$key] = $value->format('d-m-' . $Y . '');
+            }
+        }
+        if ($objWelfare['free'] == "Y" || $objWelfare['free'] == null) {
+            $view->freeCheck = "สวัสดิการให้เปล่า";
+        } else {
+            $view->freeCheck = "สวัสดิการให้ยืม";
+        }
+
+        $view->datasWelfare = $objWelfare;
+
+        $sqlHistory = "SELECT htr.historyId,htr.conditionsId,htr.welfareId , htr.amount ,"
+                . "htr.dateCreated,htr.dateUse,htr.memberId "
+                . "FROM " . $parthWelfare . "History htr "
+                . "where htr.conditionsId = :conditionsId And htr.memberId = :memberId";
+
+        $objHistory = $this->datacontext->getObject($sqlHistory, array("conditionsId" => $conditionsId, "memberId" => $memberId));
+        //print_r($objHistory);
+        $i = 1;
+        foreach ($objHistory as $key1 => $value1) {
+            foreach ($value1 as $key2 => $value2) {
+                $objHistory[$key1]["rowNo"] = $i;
+                if (is_a($value2, "DateTime")) {
+                    $Y = $value2->format('Y') + 543;
+                    $objHistory[$key1][$key2] = $objHistory[$key1][$key2]->format('d-m-' . $Y);
+//                    $objHistory[$key] = $i++;
+                }
+            }
+            $i++;
+        }
+        $view->countRows = --$i;
+
+        $view->memberId = $memberId;
+        $view->conditionsId = $conditionsId;
+        $view->datasHistory = $objHistory;
+
+        
+
+
+        return $view;
+    }
+
+    public function historyAdd($data) {
+        $view = new CJView("history/add", CJViewType::HTML_VIEW_ENGINE);
+
+        $conditionsId = $data->conditionsId;
+        $memberId = $data->memberId;
+        $welfareId = $data->welfareId;
+        
+        $conditionsId = $data->conditionsId;
+        $memberId = $data->memberId;
+
+
+        $path = '\\apps\\taxonomy\\entity\\';
+        $parthWelfare = '\\apps\\welfare\\entity\\';
+
+        $sqlWelfare = "SELECT cdt.amount,cdt.conditionsId,cdt.welfareId, cdt.description ,"
+                . "wf.welfareId , wf.name , "
+                . "wf.description As wfDescription, wf.dateStart, "
+                . "wf.resetTime , wf.dateEnd , wf.free , "
+                . "un.id As unitId , un.value1 As unitValue  "
+                . "FROM " . $parthWelfare . "Conditions cdt "
+                . "Left JOIN " . $parthWelfare . "Welfare wf "
+                . "with cdt.welfareId = wf.welfareId "
+                . "Left JOIN " . $path . "Taxonomy  un  "
+                . "with cdt.returnTypeId = un.id "
+                . "where cdt.conditionsId = :conditionsId";
+
+        $objWelfare = $this->datacontext->getObject($sqlWelfare, array("conditionsId" => $conditionsId))[0];
+
+        foreach ($objWelfare as $key => $value) {
+            if (is_a($value, "DateTime")) {
+                $Y = $value->format('Y') + 543;
+                $objWelfare[$key] = $value->format('d-m-' . $Y . '');
+            }
+        }
+        if ($objWelfare['free'] == "Y" || $objWelfare['free'] == null) {
+            $view->freeCheck = "สวัสดิการให้เปล่า";
+        } else {
+            $view->freeCheck = "สวัสดิการให้ยืม";
+        }
+
+        $view->datasWelfare = $objWelfare;
+        
+        $sqlHistory = "SELECT htr.historyId,htr.conditionsId,htr.welfareId , sum(htr.amount) ,"
+                . "htr.memberId"
+                . "FROM " . $parthWelfare . "History htr "
+                . "where htr.conditionsId = :conditionsId And htr.memberId = :memberId";
+
+        $objHistory = $this->datacontext->getObject($sqlHistory, array("conditionsId" => $conditionsId, "memberId" => $memberId));
+        
+        
+      
+        $view->memberId = $memberId;
+        $view->conditionsId = $conditionsId;
+        $view->welfareId = $welfareId;
+        return $view;
+    }
+    
+    public function historyEdit() {
+        
+        $view = new CJView("history/edit", CJViewType::HTML_VIEW_ENGINE);
+        
+        $historyId = $this->getRequest()->historyId;
+
+        $parthWelfare = '\\apps\\welfare\\entity\\';
+
+         $sqlHistory = "SELECT htr.conditionsId,htr.welfareId , htr.amount ,"
+                . "htr.dateCreated,htr.dateUse,htr.memberId "
+                . "FROM " . $parthWelfare . "History htr "
+                . "where htr.historyId = :historyId ";
+
+        $objHistory = $this->datacontext->getObject($sqlHistory, array("historyId" => $historyId));
+        
+        
+        
+        $view->historyId=$historyId;
+        
+        $view->datasHistory=$objHistory;
+        return $view;
+    }
+    
+    public function byMemberLists() {
+        $view = new CJView("byMember/lists",  CJViewType::HTML_VIEW_ENGINE);
+        
+        $query =  "SELECT mb.memberId,mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+                . "mb.departmentId,"
+//                . "(title.value1) As title, "
+//                . "(academic.value1) As academic,"
+                . "IFNULL(academic.value1,title.value1) title, " //IFNULL(value1,value2) select ถ้ามีค่าใดค่าหนึ่ง ,ถ้ามีค่าทั้งคู่จะ select value1 ออกมา 
+                . "(employeeType.value1) As employeeType, "
+                . "(gender.value1) As gender, "
+                . "(faculty.value1) As faculty, "
+                . "(department.value1) As department "
+                . "FROM member mb "
+                . "Left JOIN taxonomy title "
+                . "on mb.titleId = title.id "
+                . "Left JOIN taxonomy academic "
+                . "on mb.academicId = academic.id "
+                . "Left JOIN taxonomy employeeType "
+                . "on mb.employeeTypeId = employeeType.id "
+                . "Left JOIN taxonomy gender "
+                . "on mb.genderId = gender.id "
+                . "Left JOIN taxonomy faculty "
+                . "on mb.facultyId = faculty.id "
+                . "Left JOIN taxonomy department "
+                . "on mb.departmentId = department.id ";
+        
+        $member = $this->datacontext->pdoQuery($query);
+      
+        $i = 1;
+
+        foreach ($member as $key => $value) {
+            $member[$key]["rowNo"] = $i++;
+        }
+        
+      
+        
+        $view->datasMember=$member;
+        
+        return $view;
+    }
+    
+    
     //end page conditions view lists
 }

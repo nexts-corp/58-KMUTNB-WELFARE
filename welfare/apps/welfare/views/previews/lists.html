@@ -75,8 +75,6 @@
                                                     data-id="content-body"
                                                     id="checkHistory"
                                                     row-index="{{memberId}}"
-                                                    data-toggle="modal"
-                                                    data-target=".bs-example-modal-lg" > 
                                                 <i class="fa fa fa-eye"></i>{{#i18n}}welfare.history{{/i18n}}
                                             </button>
                                         </td>
@@ -99,84 +97,23 @@
 </div>
 
 
-<!--LArge Modal Templates-->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myLargeModalLabel">รายงานการใช้งาน</h4>
-            </div>
-            <div class="modal-body">
-                <div class="well bordered-left bordered-themeprimary" id="showDetails">
 
 
-
-                </div>
-                <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
-                    <thead>
-                        <tr>
-                            <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
-                            <th class="text-center">จำนวนเงินที่ใช้ไป </th>
-                            <th class="text-center">วัน/เดือน/ปี </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                            <td>{{rowNo}}</td>
-                            <td> </td>
-                            <td> </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-<!--End Large Modal Templates-->
 
 <script>
-
+    $(document).ready(function () {
+    
+ 
     $('#checkHistory').click(function () {
-
-        var data = {};
-        data['conditionsId'] = {{conditionsId}};
-            data['memberId'] = $(this).attr('row-index');
-    var jdata = {};
-    jdata['data'] = data;
-    $.ajax({
-    url: '{{_context_path}}/api/welfare/history/preview/history',
-            data: jsonEncode(jdata),
-            type: 'post', // 'or get'
-            success: function (result) {
-
-                var html = "";
-                var data = result.preview;
-                var free="";
-                if(data.free=="Y"){
-                    free="สวัสดิการให้เปล่า";
-                }else{
-                    free="สวัสดิการให้ยืม";
-                }
-                        html += '<p> ชื่อสวัสดิการ : ' + data.name + '</p>';
-                        html += '<p>รายละเอียด : '+ data.wfDescription +  ' </p>';
-                        html += '<p>เงื่อนไขสวัสดิการ : ' + data.description + ' </p>';
-                        html += '<p>จำนวนสวัสดิการ : '+ data.amount +' </p>';
-                        html += '<p>วันที่เริ่มสวัสดิการ : ' + data.dateStart + ' </p>';
-                        html += '<p>วันที่สิ้นสุดสวัสดิการ : ' + data.dateEnd + ' </p>';
-                        html += '<p>สวัสดิการที่มีการรีเซตทุก ๆ : ' + data.resetTime +  ' เดือน</p>';
-                        html += '<p>ประเภทสวัสดิการ : ' + free + ' </p>';
-                        $("#showDetails").html(html);
-            }
-        });
+    var data = {};
+            data['conditionsId'] = {{conditionsId}};
+            data['memberId'] = $(this).attr('row-index');;
+        var jdata = {};
+        jdata['data'] = data;
+        getHTML('content-body','{{_context_path}}/api/welfare/view/history/lists',jsonEncode(jdata))
+     
+          });
     });
-
+    
 
 </script>

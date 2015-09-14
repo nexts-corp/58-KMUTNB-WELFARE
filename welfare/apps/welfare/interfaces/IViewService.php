@@ -65,11 +65,38 @@ interface IViewService {
     public function previewsUserLists();
 
     /**
-     * @name viewTestList
-     * @uri /previews/test/lists
-     * @param apps\welfare\entity\Conditions conditions
-     * @return string previews
-     * @description เช็คเงื่อนไขผู้มีสิทธิ์ได้รับสวัสดิการ
+     * @name preview
+     * @uri /history/lists
+     * @param apps\welfare\entity\History data []
+     * @return string history
+     * @description test
+     */
+    public function historyPreview($data);
     
-    public function previewsTestLists($conditions); */
+    /**
+     * @name add
+     * @uri /history/add
+     * @param apps\welfare\entity\History data []
+     * @return string history
+     * @description test
+     */
+    public function historyAdd($data);
+    
+    /**
+     * @name add
+     * @uri /history/edit
+     * @return string history
+     * @description test
+     */
+    public function historyEdit();
+    
+    /**
+     * @name viewPrivewsList
+     * @uri /byMember/lists
+     * @return html previews
+     * @description แสดงสวัสดิการรายบุคคล
+     */
+    public function byMemberLists();
+    
+    
 }
