@@ -17,9 +17,14 @@ class Welfare extends EntityBase {
     public $welfareId;
 
     /**
-     * @Column(type="string", name="name") 
+     * @Column(type="string", name="name",length=255) 
      */
     public $name;
+
+    /**
+     * @Column(type="string",length=100, name="code") 
+     */
+    public $code;
 
     /**
      * @Column(type="string", name="description",nullable=true) 
@@ -69,6 +74,10 @@ class Welfare extends EntityBase {
         return $this->name;
     }
 
+    function getCode() {
+        return $this->code;
+    }
+
     function getDescription() {
         return $this->description;
     }
@@ -107,6 +116,10 @@ class Welfare extends EntityBase {
 
     function setName($name) {
         $this->name = $name;
+    }
+
+    function setCode($code) {
+        $this->code = $code;
     }
 
     function setDescription($description) {
