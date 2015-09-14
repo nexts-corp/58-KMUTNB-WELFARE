@@ -39,7 +39,12 @@
                         <div class="col-lg-3">
                             <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>{{#i18n}}button.search{{/i18n}}</button>
                         </div>
-
+                        
+                        <div class="pull-right">
+                            <label class="control-label"><h5>{{#i18n}}totalamount{{/i18n}}</h5></label>
+                            <label class="control-label"><h5> {{#retire}}{{total}}{{/retire}} บาท</h5></label>
+                        </div>
+                        
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -59,7 +64,7 @@
                                     {{#retire}}
                                     <tr class="selectable">
 
-                                        <td>{{academic}} {{titlename}} {{fname}}   {{lname}}</td>
+                                        <td>{{title}} {{fname}}   {{lname}}</td>
                                         <td>{{department}}</td>
                                         <td>{{faculty}}</td>
                                         <td>{{amount}}</td>
@@ -90,7 +95,7 @@
             } else {
                 retireYear -= 543; // 2017
             }
-            alert(retireYear);
+//            alert(retireYear);
 
             var jdata = {};
             var html = '';
