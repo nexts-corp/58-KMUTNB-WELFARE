@@ -32,9 +32,9 @@ class Welfare extends EntityBase {
     public $description;
 
     /**
-     * @Column(type="date", name="dateCancel",nullable=true) 
+     * @Column(type="string", name="statusActive",nullable=true,length=10) 
      */
-    public $dateCancel;
+    public $statusActive;
 
     /**
      * @Column(type="date", name="dateStart",nullable=true) 
@@ -82,8 +82,8 @@ class Welfare extends EntityBase {
         return $this->description;
     }
 
-    function getDateCancel() {
-        return $this->dateCancel;
+    function getStatusActive() {
+        return $this->statusActive;
     }
 
     function getDateStart() {
@@ -126,8 +126,8 @@ class Welfare extends EntityBase {
         $this->description = $description;
     }
 
-    function setDateCancel($dateCancel) {
-        $this->dateCancel = $dateCancel;
+    function setStatusActive($statusActive) {
+        $this->statusActive = $statusActive;
     }
 
     function setDateStart($dateStart) {
