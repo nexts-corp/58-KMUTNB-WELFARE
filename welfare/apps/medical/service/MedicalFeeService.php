@@ -54,33 +54,41 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
 //        return NULL;
 //    }
 //
-//    public function searchUser($registerIdCard) {
-//        $user = new Register();
-//        $user->setRegisterIdCard($registerIdCard);
-//        // $user->setRegisterPosision()
-//        //$user_info = ;
-//
-//        $datas = $this->datacontext->getObject($user);
-//
-//        $path = '\\apps\\common\\entity\\';
-//
-//        //$setting = new SettingMedicalFee();
-//        $sql = "SELECT s.amountSetting as amountSetting FROM " . $path . "SettingMedicalFee s order by s.SettingMedicalFeeId desc";
-//        $setObjAmount = $this->datacontext->getObject($sql);
-//        if ($datas) {
-//            $sql = "SELECT sum(m.amount) as aa FROM " . $path . "MedicalFee m WHERE m.registerId = '" . $datas[0]->registerId . "'";
-//            $getObjAmount = $this->datacontext->getObject($sql);
-//
-//            $arr = array(
-//                'user' => $datas[0],
-//                'amount' => $setObjAmount[0]['amountSetting'] - $getObjAmount[0]['aa']//$getObjAmount
-//            );
-//            return $arr;
-//        }
-//
-//
-//        return NULL; //$this->datacontext->getObject($user);
-//    }
+    public function searchUser($idCard) {
+        
+        $usertype = $this->getCurrentUser()->usertype;
+        $date = new \DateTime('now');
+        $sql = "call prc_date_budget(:welfareId,:date)";
+        $param = array(
+            "welfareId" => 1,
+            "date" => $date->format('Y-m-d')
+        );
+        $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
+//        print $dateBudget["startDate"]." ".$dateBudget["endDate"];
+//        exit();
+        $dateStart = $dateBudget["startDate"];
+        $dateEnd = $dateBudget["endDate"];
+
+        $sql1 = "select mem.fname,mem.lname,wh.welfareId,wh.memberId,wc.amount,sum(wh.amount) as payment,wc.amount-sum(wh.amount) as balance "
+                . "from welfarehistory wh "
+                . "inner join welfare wel "
+                . "on wel.welfareId = wh.welfareId and wel.code = 'medical001' "
+                . "inner join welfareconditions wc "
+                . "on wc.conditionsId = wh.conditionsId "
+                . "inner join member mem "
+                . "on mem.memberId = wh.memberId and mem.idCard = :idCard and wc.employeeTypeId = mem.employeeTypeId "
+                . "where wh.dateCreated between :dateStart and :dateEnd ";
+
+        $param = array(
+            "dateStart" => $dateStart,
+            "dateEnd" => $dateEnd,
+            "idCard" => $idCard
+        );
+        $budget = $this->datacontext->pdoQuery($sql1, $param)[0];
+       
+        
+        return $budget;
+    }
 //
 //    public function save() {
 //

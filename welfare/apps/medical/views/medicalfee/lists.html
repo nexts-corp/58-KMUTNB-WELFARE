@@ -93,30 +93,4 @@
 </div>
 
 
-<script>
-            $('.btn-del').click(function(){
-    var id = $(this).attr('row-index');
-            var data = {"medicalFeeId":id};
-            var msg = sendData('{{_context_path}}/api/ManagementMedicalFee/medicalfee/delete', data);
-            if (msg.deletetitleName == true){
-    getBody('{{_context_path}}/api/ManagementMedicalFee/medicalfee/list');
-    }
-    });</script>   
 
-<script>
-
-            < script >
-            $("#btnsearch").click(function () {
-    var SearchName = $("#SearchName").val();
-            if (SearchName == ""){
-    document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-    } else{
-
-    var data = {"SearchName":SearchName};
-//        sendData('{{_context_path}}/api/ManagementBasics/academic/position/view/search',data);
-
-            getBodyDiv('{{_context_path}}/api/ManagementMedicalFee/medicalfee/view/search', data);
-    }
-    });
-
-</script>

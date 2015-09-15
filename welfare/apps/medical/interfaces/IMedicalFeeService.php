@@ -17,4 +17,13 @@ interface IMedicalFeeService {
      * @description test
      */
     public function medicallist($retireYear);
+    
+    /**
+     * @name searchuser
+     * @uri /search/user
+     * @param string idCard
+     * @return string searchUser
+     * @description test
+     */
+    public function searchUser($idCard);
 }

@@ -55,8 +55,8 @@
                                 <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
 
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="f_ame" placeholder="{{#i18n}}name{{/i18n}}"
-                                           data-bv-notempty="true" id="f_ame"
+                                    <input type="text" class="form-control" name="fname" placeholder="{{#i18n}}name{{/i18n}}"
+                                           data-bv-notempty="true" id="fname"
                                            data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
                                 </div>
 
@@ -67,8 +67,8 @@
                                 <label class="col-lg-4 control-label">{{#i18n}}lastname{{/i18n}}</label>
 
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="l_name" placeholder="{{#i18n}}lastname{{/i18n}}"
-                                           data-bv-notempty="true" id="l_name"
+                                    <input type="text" class="form-control" name="lname" placeholder="{{#i18n}}lastname{{/i18n}}"
+                                           data-bv-notempty="true" id="lname"
                                            data-bv-notempty-message="{{#i18n}}lastname{{/i18n}}" disabled="disabled"/>
                                 </div>
 
@@ -153,26 +153,10 @@
     $(document).ready(function () {
 
 
-        $.ajax({
-            url: '/sdg/api/ManagementMedicalFee/medicalfee/hospital',
-            data: {},
-            type: 'post', // 'or get'
-            async: true,
-            success: function (result) {
-                var $html = '';
-                for(var i = 0; i < result.hospital.length ; i++){
-                    var data = result.hospital[i];
-                    $html += "<option value='"+data.hospitalId+"'>"+data.name+"</option>";
-                }
-                $("#hospital").html($html);
-            }
-        });
-
-
         $("#btn_search").click(function () {
 
             var data = {};
-            data['registerIdCard'] = $("#registerIdCard").val();
+            data['idCard'] = $("#registerIdCard").val();
 
             //data['amount'] = $("#amount").val();
             //data['facultyNameEn'] = $("#facultyNameEn").val();
@@ -180,20 +164,24 @@
             //  var jdata = {};
             //jdata['data'] = data;
             $.ajax({
-                url: '/sdg/api/ManagementMedicalFee/medicalfee/searchUser',
+                url: '{{_context_path}}/api/medical/medicalfee/search/user',
                 data: jsonEncode(data),
                 type: 'post', // 'or get'
-                async:true,
+                async: true,
                 success: function (result) {
-
-                    if(result.searchUser != null){
-                        $("#f_ame").val(result.searchUser.user.registerNameTh);
-                        $("#l_name").val(result.searchUser.user.registerLastNameTh);
-                        $("#total").val(result.searchUser.amount);
-                    }else{
+                    var data = result.searchUser;
+                    if (data != null) {
+                            //$.each(data,function(k,v){
+                                $("#fname").val(data.fname);
+                                $("#lname").val(data.lname);
+                                $("#total").val(data.balance);
+                            //});
+//                        $("#lname").val(result.searchUser.user.lname);
+//                        $("#total").val(result.searchUser.balance);
+                    } else {
                         alert("ไม่พบข้อมูล");
-                        $("#f_ame").val("");
-                        $("#l_name").val("");
+                        $("#fname").val("");
+                        $("#lname").val("");
                         $("#total").val("");
                     }
 
@@ -218,9 +206,9 @@
             var jdata = {};
             jdata['data'] = data;
 
-            if(parseInt($("#amount").val()) > parseInt($("#total").val())){
+            if (parseInt($("#amount").val()) > parseInt($("#total").val())) {
                 alert('จำนวนคงเหลือไม่พอตามที่ระบุ');
-            }else{
+            } else {
 
                 $.ajax({
                     url: '/sdg/api/ManagementMedicalFee/medicalfee/insert',
@@ -228,7 +216,7 @@
                     type: 'post', // 'or get'
                     async: true,
                     success: function (result) {
-                        if(result.insert == true){
+                        if (result.insert == true) {
                             alert('success');
                         }
                     }

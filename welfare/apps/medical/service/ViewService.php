@@ -35,38 +35,7 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function medicalFeeAdd() {
         $view = new CJView("medicalfee/add", CJViewType::HTML_VIEW_ENGINE);
-        $usertype = $this->getCurrentUser()->usertype;
-        $date = new \DateTime('now');
-        $sql = "call prc_date_budget(:welfareId,:date)";
-        $param = array(
-            "welfareId" => 1,
-            "date" => $date->format('Y-m-d')
-        );
-        $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
-//        print $dateBudget["startDate"]." ".$dateBudget["endDate"];
-//        exit();
-        $dateStart = $dateBudget["startDate"];
-        $dateEnd = $dateBudget["endDate"];
-
-        $sql1 = "select wh.welfareId,wh.memberId,wc.amount,sum(wh.amount),wc.amount-sum(wh.amount) as balance "
-                . "from welfarehistory wh "
-                . "inner join welfare wel "
-                . "on wel.welfareId = wh.welfareId "
-                . "inner join welfareconditions wc "
-                . "on wc.conditionsId = wh.conditionsId "
-                . "inner join member mem "
-                . "on mem.memberId = wh.memberId"
-                . "where wh.dateCreated between :dateStart and :dateEnd "
-                . "and wel.code = 'medical001' "
-                . "and wh.conditionsId = 14 "
-                . "and wh.welfareId = 1 "
-                . "and wh.memberId = 4 ";
-
-        $param = array(
-            "dateStart" => $dateStart,
-            "dateEnd" => $dateEnd
-        );
-        $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
+        
         return $view;
     }
 
