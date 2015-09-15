@@ -18,8 +18,7 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function retireList() {
         $view = new CJView("lists", CJViewType::HTML_VIEW_ENGINE);
-       
-        
+
         $retire = $this->getRequest()->retire;
         if (count($retire) > 0) {
             $view->retire = $retire;
@@ -29,6 +28,7 @@ class ViewService extends CServiceBase implements IViewService {
             $data = $reServ->preview($date->format('Y'));
             $view->retire = $data;
         }
+        
         //print_r($date->format('Y'));
         //exit();
         return $view;

@@ -20,14 +20,14 @@ class RetireService extends CServiceBase implements IRetireService {
 //        $retireYear -= 543;
         if ($retireYear == "") {
             $retireYear = date("Y");
-            print_r($retireYear); 
+            print_r($retireYear);
         }
         // กำลัง หาวิธี ดึง ชื่อ ผู้ เกษียน ขึ้นมาแสดง ยุ 
         $retireStart = ($retireYear - 61) . "-10-01";
         $retireEnd = ($retireYear - 60) . "-09-30";
         $query = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
                 . "mb.departmentId,welc.description,welc.ageWorkStart,welc.ageWorkEnd ,:retireyear-YEAR(mb.workStartDate) as ry,welc.amount, "
-//                . "sum(welc.amount) as total, "
+//                . "welc.amount as total, "
 //                . "(title.value1) As title, "
 //                . "(academic.value1) As academic,"
                 . "IFNULL(academic.value1,title.value1) title, " //IFNULL(value1,value2) select ถ้ามีค่าใดค่าหนึ่ง ,ถ้ามีค่าทั้งคู่จะ select value1 ออกมา 
@@ -58,10 +58,20 @@ class RetireService extends CServiceBase implements IRetireService {
         $param = array(
             "retireStart" => $retireStart,
             "retireEnd" => $retireEnd,
-            "retireyear"=> $retireYear
+            "retireyear" => $retireYear
         );
 //        print_r($query);
         $member = $this->datacontext->pdoQuery($query, $param);
+//        $i=0;
+//        foreach ($member as $key => $value) {
+//            if ($value['amount'] != "") {
+//               //$member[$key]['total'] = $value['amount'] ;
+//                $num = $i += $member[$key]['total'] = $value['amount'];
+//            } else {
+//                break;
+//            }
+//        }
+        //$member->countTotal=$num;
         return $member;
     }
 

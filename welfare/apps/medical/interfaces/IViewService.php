@@ -8,16 +8,16 @@ namespace apps\medical\interfaces;
  * @description แสดงผล 
  */
 interface IViewService {
-        
-    /**
-     * @name defultAdd
-     * @uri /defult/add
-     * @return html view
-     * @description view ตั้งค่าการรักษาพยาบาลเบื้องต้น 20,000 บาท  
-     */
-    public function defultAdd();
+//        
+//    /**
+//     * @name defultAdd
+//     * @uri /defult/add
+//     * @return html view
+//     * @description view ตั้งค่าการรักษาพยาบาลเบื้องต้น 20,000 บาท  
+//     */
+//    public function defultAdd();
 
-    // end view defult
+
 
     /**
      * @name medicalFeeLists
@@ -36,28 +36,27 @@ interface IViewService {
      */
     public function medicalFeeAdd();
 
-    /**
-     * @name medicalFeeEdit
-     * @uri /medicalFee/edit
-     * @param integer id
-     * @return html view
-     * @description view แก้ไขข้อมูลการเบิกค่ารักษาพยาบาล
-     */
-    public function medicalFeeEdit($id);
-     
-    // end view medicalFee
-    
-    /**
-     * @name reportLists
-     * @uri /report/lists
-     * @param integer id
-     * @return html view
-     * @description รายการภาควิชาหรือสำนักงาน
-     */
-    public function reportLists();
+//    /**
+//     * @name medicalFeeEdit
+//     * @uri /medicalFee/edit
+//     * @param integer id
+//     * @return html view
+//     * @description view แก้ไขข้อมูลการเบิกค่ารักษาพยาบาล
+//     */
+//    public function medicalFeeEdit($id);
+//     
+//
+//    
+//    /**
+//     * @name reportLists
+//     * @uri /report/lists
+//     * @param integer id
+//     * @return html view
+//     * @description รายการภาควิชาหรือสำนักงาน
+//     */
+//    public function reportLists();
 
     
-    //end view report 
    
 
 }
