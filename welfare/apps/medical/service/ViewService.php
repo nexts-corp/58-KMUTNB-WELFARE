@@ -45,8 +45,8 @@ class ViewService extends CServiceBase implements IViewService {
         $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
 //        print $dateBudget["startDate"]." ".$dateBudget["endDate"];
 //        exit();
-        $datestart = $dateBudget["startDate"];
-        $endddate = $dateBudget["endDate"];
+        $dateStart = $dateBudget["startDate"];
+        $dateEnd = $dateBudget["endDate"];
 
         $sql1 = "select wh.welfareId,wh.memberId,wc.amount,sum(wh.amount),wc.amount-sum(wh.amount) as balance "
                 . "from welfarehistory wh "
@@ -56,16 +56,15 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on wc.conditionsId = wh.conditionsId "
                 . "inner join member mem "
                 . "on mem.memberId = wh.memberId"
-                . "where wh.dateCreated between :datestart and :endddate "
+                . "where wh.dateCreated between :dateStart and :dateEnd "
                 . "and wel.code = 'medical001' "
                 . "and wh.conditionsId = 14 "
                 . "and wh.welfareId = 1 "
                 . "and wh.memberId = 4 ";
 
         $param = array(
-            "datestart" => $datestart,
-            "endddate" => $endddate,
-            "retireyear" => $retireYear
+            "dateStart" => $dateStart,
+            "dateEnd" => $dateEnd
         );
         $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
         return $view;
