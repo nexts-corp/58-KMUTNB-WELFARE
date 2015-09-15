@@ -78,7 +78,9 @@
     $(document).ready(function () {
     $.validate();
             $('#btn_submit').click(function (){
-    if ($("#amount").val() != ""){
+    var total = {{totalWf}};
+       
+    if ($("#amount").val() != "" && total > $("#amount").val()){
     var data = {};
             data['historyId'] = {{historyId}};
             data['amount'] = $("#amount").val();
@@ -95,6 +97,7 @@
                     var data = {};
                     data['conditionsId'] = {{#datasHistory}}{{conditionsId}}{{/datasHistory}};
                     data['memberId'] ={{#datasHistory}}{{memberId}}{{/datasHistory}};
+                    data['welfareId']={{#datasHistory}}{{welfareId}}{{/datasHistory}};
                     var jdata = {};
                     jdata['data'] = data;
                     getHTML('content-body','{{_context_path}}/api/welfare/view/history/lists',jsonEncode(jdata))
@@ -109,7 +112,7 @@
 
             });
     } else{
-    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    Notify('กรุณาระบุข้อมูลให้ถูกต้อง !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
             $('#amount').focus();
     }
     return false;

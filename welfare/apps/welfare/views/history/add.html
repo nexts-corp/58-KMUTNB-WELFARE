@@ -32,12 +32,14 @@
 
 
                     {{#datasWelfare}}
-                    <p> ชื่อสวัสดิการ {{name}}</p>
-                    <p>รายละเอียด {{wfDescription}}</p>
-                    <p>เงื่อนไขสวัสดิการ {{description}} / จำนวน {{amount}} {{unitvalue}}</p>
-                    <p>วันที่เริ่มสวัสดิการ {{dateStart}} / วันที่สิ้นสุดสวัสดิการ {{dateEnd}}</p>
-                    <p>สวัสดิการที่มีการรีเซตทุก {{resetTime}} เดือน / ประเภทสวัสดิการ {{freeCheck}}</p>
-                    {{/datasWelfare}}
+                        <p> ชื่อสวัสดิการ {{name}} </p>
+                        <p>รายละเอียด {{wfDescription}}</p>
+                        <p>เงื่อนไขสวัสดิการ {{description}} / จำนวน <strong id="amountWf"> {{amount}} </strong>{{unitvalue}}</p>
+                        <p>วันที่เริ่มสวัสดิการ {{dateStart}} / วันที่สิ้นสุด {{dateEnd}}</p>
+                        <p>สวัสดิการมีการรีเซต {{resetTime}} เดือน / ประเภทสวัสดิการ {{freeCheck}} </p>
+                        
+                        <p>ใช้สวัสดิการไปแล้ว {{totalBudget}} {{unitvalue}} ยอดคงเหลือที่ใช้ได้ <strong id="totalWf"> {{total}} </strong> {{unitvalue}}</p>
+                     {{/datasWelfare}}
 
                 </div>
                 
@@ -51,7 +53,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">จำนวน</label>
                                 <div class="col-lg-6">
-                                       <span class="widget-caption" id="totalAmount">ยอดเหลือที่สามารถใช้ได้  จำนวน : 100</span>
+                                       <span class="widget-caption" id="totalAmount"></span>
                                      <br>
                                     <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
                                            data-bv-notempty-message="ใส่ตัวเลข" 
@@ -91,7 +93,9 @@
     $(document).ready(function () {
     $.validate();
             $('#btn_submit').click(function (){
-    if ($("#amount").val() != ""){
+            var total = {{totalWf}};
+       
+    if ($("#amount").val() != "" && total > $("#amount").val()){
     var data = {};
             data['memberId'] = {{memberId}};
             data['conditionsId'] = {{conditionsId}};
@@ -109,6 +113,7 @@
                     var data = {};
                             data['memberId'] = {{memberId}};
                             data['conditionsId'] = {{conditionsId}};
+                            data['welfareId']={{welfareId}};
                             var jdata = {};
                             jdata['data'] = data;
                             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
@@ -123,7 +128,7 @@
 
             });
     } else{
-    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+            Notify('กรุณาระบุข้อมูลให้ถูกต้อง !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
             $('#amount').focus();
     }
     return false;

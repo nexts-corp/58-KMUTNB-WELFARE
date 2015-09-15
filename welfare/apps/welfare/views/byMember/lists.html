@@ -80,8 +80,10 @@
                                         <td>
                                             <button class="btn btn btn-default btn-xs edit"
                                                     data-id="content-body"
-                                                    id="checkHistory"
-                                                    row-index="{{memberId}}"
+                                                      data-api="{{_context_path}}/api/welfare/view/byMemberWelfare/lists"
+                                                    data-object="memberId"
+                                                    data-param="{{memberId}}"
+                                                    onclick="btnHTML(this)">
                                                 <i class="fa fa fa-eye"></i>{{#i18n}}welfare.history{{/i18n}}
                                             </button>
                                         </td>

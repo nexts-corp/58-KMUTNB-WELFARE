@@ -59,10 +59,11 @@ interface IViewService {
     /**
      * @name viewPrivewsList
      * @uri /priviews/lists
+     * @param apps\welfare\entity\Conditions data []
      * @return html previews
      * @description แสดงรายการผู้มีสิทธิได้รับสวัสดิการ
      */
-    public function previewsUserLists();
+    public function previewsUserLists($data);
 
     /**
      * @name preview
@@ -97,6 +98,14 @@ interface IViewService {
      * @description แสดงสวัสดิการรายบุคคล
      */
     public function byMemberLists();
+    
+    /**
+     * @name viewMemberWelfarePrivewsList
+     * @uri /byMemberWelfare/lists
+     * @return html previews
+     * @description แสดงสวัสดิการรายบุคคล
+     */
+    public function byMemberWfLists();
     
     
 }

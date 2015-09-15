@@ -71,9 +71,8 @@
                                         <td>ภาควิชา/สำนักงาน {{department}}  {{faculty}}  </td>
                                         <td>{{employeeType}}</td>
                                         <td>
-                                            <button class="btn btn btn-default btn-xs edit"
+                                            <button class="btn btn btn-default btn-xs edit checkHistory"
                                                     data-id="content-body"
-                                                    id="checkHistory"
                                                     row-index="{{memberId}}"
                                                 <i class="fa fa fa-eye"></i>{{#i18n}}welfare.history{{/i18n}}
                                             </button>
@@ -104,10 +103,11 @@
     $(document).ready(function () {
     
  
-    $('#checkHistory').click(function () {
+    $('.checkHistory').click(function () {
     var data = {};
             data['conditionsId'] = {{conditionsId}};
-            data['memberId'] = $(this).attr('row-index');;
+            data['memberId'] = $(this).attr('row-index');
+            data['welfareId']={{welfareId}};
         var jdata = {};
         jdata['data'] = data;
         getHTML('content-body','{{_context_path}}/api/welfare/view/history/lists',jsonEncode(jdata))
