@@ -1,12 +1,14 @@
 <?php
 
 namespace apps\welfare\entity;
+
 use apps\common\entity\EntityBase;
+
 /**
  * @Entity
  * @Table(name="WelfareConditions")
  */
-class Conditions extends EntityBase{
+class Conditions extends EntityBase {
 
     /**
      * @Id
@@ -25,9 +27,9 @@ class Conditions extends EntityBase{
     public $description;
 
     /**
-     * @Column(type="string", length=10, name="amount" ) 
+     * @Column(type="integer", length=11, name="quantity" ) 
      */
-    public $amount;
+    public $quantity;
 
     /**
      * @Column(type="string", length=10, name="returnTypeId",nullable=true)
@@ -73,8 +75,6 @@ class Conditions extends EntityBase{
      * @Column(type="string", length=10, name="employeeTypeId",nullable=true)
      */
     public $employeeTypeId; //พนักงาน
-    
-    
 
     function getConditionsId() {
         return $this->conditionsId;
@@ -88,8 +88,12 @@ class Conditions extends EntityBase{
         return $this->description;
     }
 
-    function getAmount() {
-        return $this->amount;
+    function getQuantity() {
+        return $this->quantity;
+    }
+
+    function getReturnTypeId() {
+        return $this->returnTypeId;
     }
 
     function getWorkStartDate() {
@@ -124,10 +128,6 @@ class Conditions extends EntityBase{
         return $this->employeeTypeId;
     }
 
-    function getReturnTypeId() {
-        return $this->returnTypeId;
-    }
-
     function setConditionsId($conditionsId) {
         $this->conditionsId = $conditionsId;
     }
@@ -140,8 +140,12 @@ class Conditions extends EntityBase{
         $this->description = $description;
     }
 
-    function setAmount($amount) {
-        $this->amount = $amount;
+    function setQuantity($quantity) {
+        $this->quantity = $quantity;
+    }
+
+    function setReturnTypeId($returnTypeId) {
+        $this->returnTypeId = $returnTypeId;
     }
 
     function setWorkStartDate($workStartDate) {
@@ -174,10 +178,6 @@ class Conditions extends EntityBase{
 
     function setEmployeeTypeId($employeeTypeId) {
         $this->employeeTypeId = $employeeTypeId;
-    }
-
-    function setReturnTypeId($returnTypeId) {
-        $this->returnTypeId = $returnTypeId;
     }
 
 }

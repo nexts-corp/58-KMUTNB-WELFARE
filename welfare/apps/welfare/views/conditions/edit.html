@@ -49,12 +49,12 @@
 
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}amountwelfare{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}quantitywelfare{{/i18n}}</label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
-                                           data-bv-notempty="true" id="amount"
-                                           value="{{amount}}"
-                                           data-bv-notempty-message="{{#i18n}}amountwelfare{{/i18n}}" />
+                                    <input type="text" class="form-control" name="quantity" placeholder="{{#i18n}}quantitywelfare{{/i18n}}"
+                                           data-bv-notempty="true" id="quantity"
+                                           value="{{quantity}}"
+                                           data-bv-notempty-message="{{#i18n}}quantitywelfare{{/i18n}}" />
                                 </div>
                             </div>
 
@@ -425,7 +425,7 @@
                     data['conditionsId'] = {{conditionsId}};
                     data['welfareId'] = {{#datas}}{{welfareId}}{{/datas}};
                     data['description'] = $("#description").val();
-                    data['amount'] = $("#amount").val();
+                    data['quantity'] = $("#quantity").val();
                     if ($("#workStartDate").val() != "") {
             data['workStartDate'] = $("#workStartDate").val();
             }
