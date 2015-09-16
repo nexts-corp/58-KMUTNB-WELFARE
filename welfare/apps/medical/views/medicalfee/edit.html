@@ -23,6 +23,7 @@
     </div>
     <!-- /Page Header -->
     <!-- Page Body -->
+
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -31,94 +32,100 @@
 
                     </div>
                     <div class="widget-body">
-                        <form class="form-horizontal">
-                            <div class="form-title">
-                                {{#i18n}}addmedicalfee{{/i18n}}
-                            </div>
-                            
-                            {{#edit}}
-                            
-
-
-                            <div class="form-group ">
-
-                                <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
-
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="f_ame" placeholder="{{#i18n}}name{{/i18n}}"
-                                           data-bv-notempty="true" id="registerNameTh" value="{{registerNameTh}}"
-                                           data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
+                        <form id="registerForm">
+                            <div class="form-horizontal">
+                                <div class="form-title">
+                                    {{#i18n}}addmedicalfee{{/i18n}}
                                 </div>
-
-                            </div>
-
-                            <div class="form-group ">
-
-                                <label class="col-lg-4 control-label">{{#i18n}}lastname{{/i18n}}</label>
-
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="l_name" placeholder="{{#i18n}}lastname{{/i18n}}"
-                                           data-bv-notempty="true" id="registerLastNameTh" value="{{registerLastNameTh}}"
-                                           data-bv-notempty-message="{{#i18n}}lastname{{/i18n}}" disabled="disabled"/>
-                                </div>
-
-                            </div>
-
-                            
-
-
-                            <hr>
-
-                            <div class="form-group ">
-
-                                <label class="col-lg-4 control-label">{{#i18n}}hospitalmedical{{/i18n}}</label>
-
-                                <div class="col-lg-6">
+                                <div class="form-group ">
+                                    <label class="col-lg-4 control-label">{{#i18n}}inputcardid{{/i18n}}</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control input-sm" id="idCard" value="{{#data}}{{idCard}}{{/data}}" disabled="disabled">
+                                    </div>
                                     
-                                    <select id="hospital" name="hospital">
-                                        
-                                        <option>{{name}}</option>
-                                        {{#hospital}}<option>{{name}}</option>{{/hospital}}
-                                        
-                                    </select>
+
                                 </div>
 
-                            </div>
 
-                            <div class="form-group ">
+                                <div class="form-group ">
 
-                                <label class="col-lg-4 control-label">{{#i18n}}amountneed{{/i18n}}</label>
+                                    <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
 
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountneed{{/i18n}}"
-                                           data-bv-notempty="true" id="amount" value="{{amount}}"
-                                           data-bv-notempty-message="{{#i18n}}amountneed{{/i18n}}"/>
+                                    <div class="col-lg-6">
+                                        
+                                        <input type="text" class="form-control" name="fname" placeholder="{{#i18n}}name{{/i18n}}"
+                                               data-bv-notempty="true" id="fname" value="{{#data}}{{fname}}{{/data}}"
+                                               data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
+                                    </div>
+
                                 </div>
 
-                            </div>
-                            {{/edit}}
+                                <div class="form-group ">
 
+                                    <label class="col-lg-4 control-label">{{#i18n}}lastname{{/i18n}}</label>
 
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="lname" placeholder="{{#i18n}}lastname{{/i18n}}"
+                                               data-bv-notempty="true" id="lname" value="{{#data}}{{lname}}{{/data}}"
+                                               data-bv-notempty-message="{{#i18n}}lastname{{/i18n}}" disabled="disabled"/>
+                                    </div>
 
+                                </div>
 
-                            <div class="form-group ">
-                                <div class="col-lg-12">
-                                    <div class="col-lg-7 control-label">
-                                        <button id="btn_submit" name="bn" class="btn btn-primary" type="button">{{#i18n}}button.submit{{/i18n}}</button>
-                                        <button id="bn" name="bn" class="btn btn-default" type="reset">{{#i18n}}button.cancel{{/i18n}}</button>
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">{{#i18n}}balances{{/i18n}}</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="total" placeholder="{{#i18n}}balances{{/i18n}}"
+                                               data-bv-notempty="true" id="total" value="{{#data}}{{balance}}{{/data}}"
+                                               data-bv-notempty-message="{{#i18n}}balances{{/i18n}}" disabled="disabled"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">{{#i18n}}hospitalmedical{{/i18n}}</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="hospital" placeholder="{{#i18n}}hospitalmedical{{/i18n}}"
+                                               data-validation="required" data-validation-error-msg="*กรุณากรอกชื่อโรงพยาบาล" id="hospital"
+                                               data-validation-error-msg-container="#hospital-msg-error" value="{{#data}}{{remark}}{{/data}}"/>
+                                    </div>
+                                    <div class="col-lg-offset-4" id="hospital-msg-error">
+
                                     </div>
                                 </div>
+
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">{{#i18n}}amountneed{{/i18n}}</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountneed{{/i18n}}"
+                                               data-validation="required" data-validation-error-msg="*กรุณาระบุจำนวนเงิน" id="amount"
+                                               data-validation-error-msg-container="#amount-msg-error" value="{{#data}}{{amount}}{{/data}}"/>
+                                    </div>
+                                    <div class="col-lg-offset-4" id="amount-msg-error">
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-7 control-label">
+                                            <button id="btn_submit" name="btn_submit" class="btn btn-primary" type="button">{{#i18n}}button.submit{{/i18n}}</button>
+                                            <button id="bn" name="bn" class="btn btn-default" type="reset">{{#i18n}}button.cancel{{/i18n}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
-
-
-
-
-
-
-
-
-
                         </form>
                     </div>
                 </div>
@@ -128,6 +135,7 @@
 
 
     </div>
+
     <!-- /Page Body -->
 </div>
 <!-- /Page Content -->
@@ -135,29 +143,35 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+        $.validate();
+        
+        
         $("#btn_submit").click(function () {
             var data = {};
-            data['registerId'] = $("#registerIdCard").val();
+            data['historyId'] = {{#data}}{{historyId}}{{/data}};
+            data['conditionsId'] = {{#data}}{{conditionsId}}{{/data}};
+            data['welfareId'] = {{#data}}{{welfareId}}{{/data}};
+            data['memberId'] = {{#data}}{{memberId}}{{/data}};
             data['amount'] = $("#amount").val();
-            data['hospital'] = $("#hospital").val();
+            data['remark'] = $("#hospital").val();
 
 
             var jdata = {};
             jdata['data'] = data;
 
-            if(parseInt($("#amount").val()) > parseInt($("#total").val())){
-                alert('จำนวนคงเหลือไม่พอตามที่ระบุ');
-            }else{
+            if (parseInt($("#amount").val()) >= parseInt($("#total").val())) {
+                Notify('จำนวนคงเงินเหลือไม่พอตามที่ระบุ', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+            } else {
 
                 $.ajax({
-                    url: '/sdg/api/ManagementMedicalFee/medicalfee/insert',
+                    url: '{{_context_path}}/api/medical/medicalfee/update',
                     data: jsonEncode(jdata),
                     type: 'post', // 'or get'
                     async: true,
                     success: function (result) {
-                        if(result.insert == true){
-                            alert('success');
+                        if (result.update == true) {
+                            getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/details/{{#data}}{{memberId}}{{/data}}', null);
+                            Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
                         }
                     }
                 });

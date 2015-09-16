@@ -219,11 +219,9 @@ class ViewService extends CServiceBase implements IViewService {
                 . "WHERE mem1.memberId=$id ";
 
         $member = $this->datacontext->getObject($sql);
-//            $Y=Date("Y")+543;
+
         $dob = $member[0]['dob']->format('d-m-Y');
 
-//        print_r($member);
-//        exit();
         $mem = explode("-", $dob);
         $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
 

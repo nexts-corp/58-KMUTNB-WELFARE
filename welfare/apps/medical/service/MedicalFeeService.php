@@ -55,21 +55,26 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
 //    }
 //
     public function searchUser($idCard) {
-        
-        $usertype = $this->getCurrentUser()->usertype;
+
+        $searchName = $this->getRequest()->searchName;
+        $welfare = new \apps\welfare\entity\Welfare();
+        $welfare->setCode("medical001");
+        $query = $this->datacontext->getObject($welfare)[0];
+
         $date = new \DateTime('now');
         $sql = "call prc_date_budget(:welfareId,:date)";
         $param = array(
-            "welfareId" => 1,
+            "welfareId" => $query->welfareId,
             "date" => $date->format('Y-m-d')
         );
         $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
-//        print $dateBudget["startDate"]." ".$dateBudget["endDate"];
-//        exit();
+
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-        $sql1 = "select mem.fname,mem.lname,wh.welfareId,wh.memberId,wc.amount,sum(wh.amount) as payment,wc.amount-sum(wh.amount) as balance "
+        $sql1 = "select mem.fname,mem.lname,wh.welfareId,wc.conditionsId,wh.memberId,wc.quantity,"
+                . "sum(wh.amount) as payment,wc.quantity-sum(wh.amount) as balance, "
+                . "IFNULL(academic.value1,title.value1) title "
                 . "from welfarehistory wh "
                 . "inner join welfare wel "
                 . "on wel.welfareId = wh.welfareId and wel.code = 'medical001' "
@@ -77,6 +82,10 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 . "on wc.conditionsId = wh.conditionsId "
                 . "inner join member mem "
                 . "on mem.memberId = wh.memberId and mem.idCard = :idCard and wc.employeeTypeId = mem.employeeTypeId "
+                . "Left JOIN taxonomy title "
+                . "on mem.titleId = title.id "
+                . "Left JOIN taxonomy academic "
+                . "on mem.academicId = academic.id "
                 . "where wh.dateCreated between :dateStart and :dateEnd ";
 
         $param = array(
@@ -85,24 +94,140 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
             "idCard" => $idCard
         );
         $budget = $this->datacontext->pdoQuery($sql1, $param)[0];
-       
-        
-        return $budget;
+        if ($budget['memberId'] == "") {
+
+            $sql2 = "select mb.memberId,mb.fname,mb.lname,wf.welfareId,wc.conditionsId,wc.quantity as balance "
+                    . "from welfareconditions wc "
+                    . "join welfare wf on wf.code = 'medical001' and wc.welfareId = wf.welfareId "
+                    . "join member mb on mb.idCard = :idCard and mb.employeeTypeId = wc.employeeTypeId ";
+            $param = array(
+                "idCard" => $idCard
+            );
+            $budget = $this->datacontext->pdoQuery($sql2, $param)[0];
+
+            return $budget;
+        } else {
+
+            return $budget;
+        }
     }
-//
-//    public function save() {
-//
-//        $path = '\\apps\\common\\entity\\';
-//        $sql = "SELECT r.registerId as userId FROM " . $path . "Register r WHERE r.registerIdCard = '" . $registerId->registerId . "'";
-//        $getObjAmount = $this->datacontext->getObject($sql);
-//
-//        $daoMedicalFee = new MedicalFee();
-//        $daoMedicalFee->setRegisterId($getObjAmount[0]['userId']);
-//        $daoMedicalFee->setAmount($registerId->amount);
-//        $daoMedicalFee->setHospital($registerId->hospital);
-//
-//        return $this->datacontext->saveObject($daoMedicalFee);
-//    }
+
+    public function save($data) {
+        if ($this->datacontext->saveObject($data)) {
+            $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
+            return true;
+        } else {
+            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return $data;
+        }
+    }
+
+    public function search($data) {
+        
+        $welfare = new \apps\welfare\entity\Welfare();
+        $welfare->setCode("medical001");
+        $query = $this->datacontext->getObject($welfare)[0];
+        
+        $date = new \DateTime('now');
+        $sql = "call prc_date_budget(:welfareId,:date)";
+        $param = array(
+            "welfareId" => $query->welfareId,
+            "date" => $date->format('Y-m-d')
+        );
+        $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
+
+        $dateStart = $dateBudget["startDate"];
+        $dateEnd = $dateBudget["endDate"];
+        
+       $param = array(
+           "dateStart" => $dateStart,
+            "dateEnd" => $dateEnd,
+            "name" => "%" . $data . "%"
+        );
+        $sql = "select mem.fname,mem.lname,wh.welfareId,wc.conditionsId,wh.remark,wh.memberId,wc.quantity,"
+                . "sum(wh.amount) as payment,wc.quantity-sum(wh.amount) as balance, "
+                . "IFNULL(academic.value1,title.value1) title "
+                . "from welfarehistory wh "
+                . "inner join welfare wel "
+                . "on wel.welfareId = wh.welfareId and wel.code = 'medical001' "
+                . "inner join welfareconditions wc "
+                . "on wc.conditionsId = wh.conditionsId "
+                . "inner join member mem "
+                . "on mem.memberId = wh.memberId and wc.employeeTypeId = mem.employeeTypeId "
+                . "Left JOIN taxonomy title "
+                . "on mem.titleId = title.id "
+                . "Left JOIN taxonomy academic "
+                . "on mem.academicId = academic.id "
+                . "where wh.dateCreated between :dateStart and :dateEnd "
+                . "and (mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name) "
+                . "group by wh.memberId ";
+        return $this->datacontext->pdoQuery($sql, $param);
+    }
+
+    public function update($data) {
+        if ($this->datacontext->updateObject($data)) {
+            $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
+            return true;
+        } else {
+            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return FALSE;
+        }
+    }
+
+    public function searchDetail($data) {
+        $welfare = new \apps\welfare\entity\Welfare();
+        $welfare->setCode("medical001");
+        $query = $this->datacontext->getObject($welfare)[0];
+        
+        $date = new \DateTime('now');
+        $sql = "call prc_date_budget(:welfareId,:date)";
+        $param = array(
+            "welfareId" => $query->welfareId,
+            "date" => $date->format('Y-m-d')
+        );
+        $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
+
+        $dateStart = $dateBudget["startDate"];
+        $dateEnd = $dateBudget["endDate"];
+        
+       $param = array(
+           "dateStart" => $dateStart,
+            "dateEnd" => $dateEnd,
+            "name" => "%" . $data . "%"
+        );
+        $sql = "select mem.fname,mem.lname,wh.welfareId,wc.conditionsId,wh.remark,wh.memberId,wc.quantity,"
+                . "sum(wh.amount) as payment,wc.quantity-sum(wh.amount) as balance, "
+                . "IFNULL(academic.value1,title.value1) title "
+                . "from welfarehistory wh "
+                . "inner join welfare wel "
+                . "on wel.welfareId = wh.welfareId and wel.code = 'medical001' "
+                . "inner join welfareconditions wc "
+                . "on wc.conditionsId = wh.conditionsId "
+                . "inner join member mem "
+                . "on mem.memberId = wh.memberId and wc.employeeTypeId = mem.employeeTypeId "
+                . "Left JOIN taxonomy title "
+                . "on mem.titleId = title.id "
+                . "Left JOIN taxonomy academic "
+                . "on mem.academicId = academic.id "
+                . "where wh.dateCreated between :dateStart and :dateEnd "
+                . "and (mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name) "
+                . "group by wh.memberId ";
+        return $this->datacontext->pdoQuery($sql, $param);
+    }
+
+    public function delete($historyId) {
+        if ($historyId!="") {
+            $history = new \apps\welfare\entity\History();
+            $history->setHistoryId($historyId);
+            $this->datacontext->removeObject($history);
+            $this->getResponse()->add("message", "ลบข้อมูลสำเร็จ");
+            return true;
+        } else {
+            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return FALSE;
+        }
+    }
+
 //
 //    public function edit($data) {
 //        

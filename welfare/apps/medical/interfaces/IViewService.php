@@ -35,15 +35,25 @@ interface IViewService {
      * @description view เพิ่มข้อมูลการเบิกค่ารักษาพยาบาล  
      */
     public function medicalFeeAdd();
+    
+    /**
+     * @name medicalFeedetails
+     * @uri /medicalFee/details
+     * @param string memberId Description
+     * @return string details
+     * @description รายละเอียดข้อมูลการเบิกค่ารักษาพยาบาล
+     */
+    
+    public function medicalFeedetails($memberId);
 
-//    /**
-//     * @name medicalFeeEdit
-//     * @uri /medicalFee/edit
-//     * @param integer id
-//     * @return html view
-//     * @description view แก้ไขข้อมูลการเบิกค่ารักษาพยาบาล
-//     */
-//    public function medicalFeeEdit($id);
+    /**
+     * @name medicalFeeEdit
+     * @uri /medicalFee/edit
+     * @param string memberId Description
+     * @return string details
+     * @description view แก้ไขข้อมูลการเบิกค่ารักษาพยาบาล
+     */
+    public function medicalFeeEdit($memberId);
 //     
 //
 //    
