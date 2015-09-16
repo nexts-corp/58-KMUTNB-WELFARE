@@ -163,9 +163,9 @@ class ViewService extends CServiceBase implements IViewService {
                 . "with mem1.titleId = tax1.id "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
                 . "with mem1.memberActiveId = tax2.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
+                . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
                 . "with mem1.facultyId = tax3.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
+                . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
                 . "with mem1.departmentId = tax4.id "
                 . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' ";
 
