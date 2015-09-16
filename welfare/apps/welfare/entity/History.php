@@ -40,6 +40,13 @@ class History extends EntityBase{
      */
     public $amount;
     
+      
+       /**
+     * @Column(type="string",length=255, name="remark",nullable=true)
+     */
+    public $remark;
+    
+    
     function getHistoryId() {
         return $this->historyId;
     }
@@ -64,6 +71,10 @@ class History extends EntityBase{
         return $this->amount;
     }
 
+    function getRemark() {
+        return $this->remark;
+    }
+
     function setHistoryId($historyId) {
         $this->historyId = $historyId;
     }
@@ -86,6 +97,10 @@ class History extends EntityBase{
 
     function setAmount($amount) {
         $this->amount = $amount;
+    }
+
+    function setRemark($remark) {
+        $this->remark = $remark;
     }
 
 
