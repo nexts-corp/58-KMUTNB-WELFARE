@@ -1,0 +1,174 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.insurance{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                {{#i18n}}sso.title{{/i18n}}
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--/Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}sso.manage{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <!--                        <div class="col-md-6">
+                                                    <select id="selectParent" class="col-md-12">
+                                                        <option value="0">เลือกทั้งหมด</option>
+                                                        {{#parent}}
+                                                        <option value="{{id}}">[{{pCode}}] {{value1}},{{value2}} [{{code}}]</option>
+                                                        {{/parent}}
+                                                    </select>
+                                                </div>-->
+                        <div class="col-sm-2 pull-right">
+                            <button class="btn btn-primary" 
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/insurance/view/sso/add"
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
+                        </div>
+                        <div class="col-sm-2 pull-right">
+                            <button type="button" class="btn btn-primary" 
+                                    data-toggle="modal" 
+                                    data-target="#uploadModal" 
+                                    data-whatever="@fat">
+                                <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
+                            </button>
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="rows">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}sso.rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.idCard{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.titleName{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.fname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.lname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.department{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.workStartDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.hospital{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.issuedDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.expireDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.dateCreated{{/i18n}}</th>
+                                        <!--                                        <th class="center">{{#i18n}}edit{{/i18n}}</th>
+                                                                                <th class="center">{{#i18n}}delete{{/i18n}}</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#lists}}  
+                                    <tr class="selectable">
+                                        <td>{{rowNo}}</td>
+                                        <td>{{idCard}}</td>
+                                        <td>{{titleName}}</td>
+                                        <td>{{fname}}</td>
+                                        <td>{{lname}}</td>
+                                        <td>{{department}}</td>
+                                        <td>{{workStartDate}}</td>
+                                        <td>{{hospital}}</td>
+                                        <td>{{issuedDate}}</td>
+                                        <td>{{expireDate}}</td>
+                                        <td>{{dateCreated}}</td>
+                                        <!--                                        <td class="center">
+                                                                                    <button class="btn btn-info btn-xs" 
+                                                                                            data-id="content-body"
+                                                                                            data-api="{{_context_path}}/api/taxonomy/view/edit/{{id}}"
+                                                                                            onclick="btnHTML(this)">
+                                                                                        <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
+                                                                                </td>
+                                        
+                                                                                <td class="center">
+                                                                                    <button class='btn btn-info btn-xs delete' value='{{id}}'>
+                                                                                        <i class="fa fa-edit"></i>
+                                                                                        {{#i18n}}delete{{/i18n}}
+                                                                                    </button>
+                                                                                </td>-->
+                                    </tr>
+                                    {{/lists}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">อัพโหลดไฟล์ข้อมูลผู้ประกันตนประกันสังคม</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="control-label">ไฟล์ CSV:</label>
+                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="frm_upload">
+                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ .csv เพื่ออัพโหลด</span></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{#i18n}}button.close{{/i18n}}</button>
+                <button type="button" class="btn btn-primary" id="btn_upload">{{#i18n}}button.upload{{/i18n}}</button>
+            </div>
+        </div>
+    </div>
+</div>  
+<script type="text/javascript">
+    $(document).ready(function () {
+        var myDropzone = new Dropzone("#frm_upload", {
+            url: "{{_context_path}}/api/insurance/upload/sso",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            acceptedFiles: '.csv',
+            maxFiles: 1,
+            init: function () {
+                $("#btn_upload").click(function () {
+                    myDropzone.processQueue();
+                });
+            },
+            sending: function (file, xhr, formData) {
+//                var properser_id = $.jx.state.get('properser', 'properser_id');
+//                formData.append('properser_id', properser_id);
+            },
+            success: function (file, txt) {
+                if (txt.sso == true) {
+                    $("#uploadModal").modal('hide');
+                    myDropzone.removeFile(file);
+                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                    setTimeout(function () {
+                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/lists', null);
+                    }, 5000);
+
+                } else if (txt.sso == "cantUpload") {
+                    Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
+                } else {
+                    Notify('ไม่สามารถบันทึกลงฐานข้อมูลได้', 'top-right', '4000', 'warning', 'fa-check', true);
+                }
+            }
+        });
+    });
+</script>
