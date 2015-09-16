@@ -7,7 +7,11 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}welfareadd{{/i18n}}</li>
+              <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}welfare.details{{/i18n}}</span>
+                </a>
+            </li>
+            <li class="active">{{#i18n}}welfare.add{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -30,16 +34,16 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
                     <div class="widget-header">
-                        <span class="widget-caption">{{#i18n}}welfareadd{{/i18n}}</span>
+                        <span class="widget-caption">{{#i18n}}welfare.add{{/i18n}}</span>
                     </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
                             <div class="form-title">
-                                {{#i18n}}pleaseinput{{/i18n}}
+                              
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}welfarename{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}welfare.name{{/i18n}}</label>
                                 <div class="col-lg-5">
                                     <input type="text" class="form-control" name="name" placeholder="ชื่อสวัสดิการ"
                                      id="name" data-validation="required" 
@@ -49,7 +53,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}welfaredescription{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}welfare.description{{/i18n}}</label>
                                 <div class="col-lg-9">
 
                                     <textarea rows="4" data-validation-error-msg="" id="description" cols="67" ></textarea>
@@ -57,9 +61,20 @@
 
                                 </div>
                             </div>
+                            
+                              <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}welfare.resetTime{{/i18n}}</label>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" name="name" 
+                                           placeholder="ใส่ตัวเลข" id="resetTime"
+                                           data-bv-notempty-message="ใส่ตัวเลข" 
+                                           data-validation-error-msg="*กรุณาใส่ตัวเลข"
+                                           data-validation="number" />
+                                </div>
+                            </div>
 
                             <div class="form-group">
-                                <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredatestart{{/i18n}}</label>
+                                <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfare.dateStart{{/i18n}}</label>
                                 <div class="controls col-lg-5">
                                     <div class="input-group">
                                             <input class="form-control cDate" id="dateStart"  
@@ -73,7 +88,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfaredateend{{/i18n}}</label>
+                                <label for="reservation" class="col-lg-3 control-label">{{#i18n}}welfare.dateEnd{{/i18n}}</label>
                                 <div class="controls col-lg-5">
                                     <div class="input-group">
                                         <input class="form-control cDate" id="dateEnd" style="z-index: 0;" 
@@ -86,24 +101,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">รีเซท เดือน</label>
-                                <div class="col-lg-5">
-                                    <input type="text" class="form-control" name="name" 
-                                           placeholder="ใส่ตัวเลข" id="resetTime"
-                                           data-bv-notempty-message="ใส่ตัวเลข" 
-                                           data-validation-error-msg="*กรุณาใส่ตัวเลข"
-                                           data-validation="number" />
-                                </div>
-                            </div>
+                          
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}typewelfare{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}welfare.welfareType{{/i18n}}</label>
                                 <div class="col-lg-5">
 
                                     <select class="form-control" name="country" id="free" data-bv-field="country">
-                                        <option value="N">สวัสดิการให้เปล่า</option>
-                                        <option value="Y">สวัสดิการให้กู้</option>
+                                        <option value="Y">{{#i18n}}welfare.free{{/i18n}}</option>
+                                        <option value="N">{{#i18n}}welfare.loan{{/i18n}}</option>
 
 
                                     </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
@@ -121,7 +127,7 @@
 
                                                     <input type="checkbox" class="inverted" id="willing" name="willing" value="" >
 
-                                                    <span class="text">{{#i18n}}conditionconditionstatusvoluntary{{/i18n}}</span>
+                                                    <span class="text">{{#i18n}}conditions.willing{{/i18n}}</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -130,7 +136,7 @@
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="checkbox" class="inverted"  id="retire" >
-                                                    <span class="text">{{#i18n}}conditionstatusretired{{/i18n}}</span>
+                                                    <span class="text">{{#i18n}}conditions.retire{{/i18n}}</span>
                                                 </label>
                                             </div>
                                         </div>

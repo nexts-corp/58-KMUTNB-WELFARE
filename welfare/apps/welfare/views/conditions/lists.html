@@ -7,7 +7,12 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}detailWelfare{{/i18n}}</li>
+            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                        <span class="menu-text">{{#i18n}}welfare.details{{/i18n}}</span>
+                    </a>
+                </li>
+            <li class="active">{{#i18n}}conditions.lists{{/i18n}}</li>
+
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -15,7 +20,7 @@
     <div class="page-header position-relative">
         <div class="header-title">
             <h1>
-
+                
             </h1>
         </div>
         <!--Header Buttons-->
@@ -28,7 +33,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}detailWelfare{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}conditions.lists{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
@@ -67,10 +72,10 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>{{#i18n}}welfaredetailcode{{/i18n}}</th>
-                                        <th>{{#i18n}}conditionsDiscription{{/i18n}}</th>
-                                        <th>{{#i18n}}quantitymoney{{/i18n}}</th>
-                                        <th>{{#i18n}}employeeType{{/i18n}}</th>
+                                        <th>{{#i18n}}conditions.code{{/i18n}}</th>
+                                        <th>{{#i18n}}conditions.description{{/i18n}}</th>
+                                        <th>{{#i18n}}conditions.quantity{{/i18n}}</th>
+                                        <th>{{#i18n}}conditions.employeeType{{/i18n}}</th>
 
                                         <th class="center">จัดการ</th>
                                     </tr>
@@ -86,11 +91,10 @@
                                         <td class="center">
 
                                                 
-                                          <button class="btn btn-info btn-xs edit btn_preview"
-                                                 
-                                                  row-index="{{conditionsId}}" >
+                                            <button class="btn btn-info btn-xs edit btn_preview"
+                                                    row-index="{{conditionsId}}" >
                                                 <i class="fa fa fa-eye"></i>{{#i18n}}welfare.right{{/i18n}} 
-                                          </button>
+                                            </button>
 
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"

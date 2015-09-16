@@ -26,11 +26,10 @@ interface IViewService {
     /**
      * @name viewedit
      * @uri /welfare/edit
-     * @param integer id Description
      * @return html welfareEdit Description
      * @description view แก้ไขข้อมูลสวัสดิการ
      */
-    public function welfareEdit($id);
+    public function welfareEdit();
     
     /**
      * @name conditionsList

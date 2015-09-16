@@ -7,7 +7,20 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}welfareadd{{/i18n}}</li>
+             <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}detailWelfare{{/i18n}}</span>
+                </a>
+            </li>
+            <li > <a href="#" data-id="content-body"
+                     data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                     data-object='welfareId'
+                     data-param='{{welfareId}}'
+                     onclick="btnHTML(this)">รายการเงื่อนไขสวัสดิการ</a></li>
+
+            <li> <a href="#" class="btn_preview"> รายการสมาชิกผู้เข้าเงื่อนไข </a></li>
+            <li> <a href="#" class="checkListsHistory"> รายการใช้สวัสดิการ </a></li>
+
+            <li class="active"> แก้ไขการใช้สวัสดิการ </li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -34,20 +47,32 @@
                     </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
+                            {{#datasHistory}}
+                            
+                              <div class="form-group">
+                                <label class="col-lg-3 control-label">หมายเหตุ</label>
+                                <div class="col-lg-6">
+                                  
+                                    <input type="text" class="form-control" value="{{remark}}" name="remark" placeholder="ใส่ข้อมูล" data-validation="" id="remark" />
 
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">จำนวน</label>
                                 <div class="col-lg-6">
-                                    {{#datasHistory}}
+                                   
                                     <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
                                            data-bv-notempty-message="ใส่ตัวเลข" 
                                            value="{{amount}}"
                                            data-validation-error-msg="*กรุณาใส่ตัวเลข"
                                            data-validation="number" id="amount" />
-                                    {{/datasHistory}}
+                                   
                                 </div>
                             </div>
-
+                            
+                           
+                                {{/datasHistory}}
                             <div class="form-group">
                                 <label class="col-lg-3 control-label"></label>
                                 <div class="col-lg-6">
@@ -76,14 +101,35 @@
 
 <script>
     $(document).ready(function () {
+        
+      $('.btn_preview').click(function () {
+    var data = {};
+            data['conditionsId'] = "{{conditionsId}}";
+            data['welfareId'] = "{{welfareId}}";
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/priviews/lists', jsonEncode(jdata));
+    });
+    $('.checkListsHistory').click(function () {
+    var data = {};
+            data['conditionsId'] = "{{conditionsId}}";
+            data['memberId'] = "{{memberId}}";
+            data['welfareId'] = "{{welfareId}}";
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
+
+    });
+    
     $.validate();
             $('#btn_submit').click(function (){
-    var total = {{totalWf}};
-       
-    if ($("#amount").val() != "" && total > $("#amount").val()){
+//    var total = {{totalWf}};
+//    && total >= $("#amount").val()   
+    if ($("#amount").val() != ""){
     var data = {};
-            data['historyId'] = {{historyId}};
+            data['historyId'] = "{{historyId}}";
             data['amount'] = $("#amount").val();
+            data['remark'] = $("#remark").val();
             var jdata = {};
             jdata['data'] = data;
             $.ajax({

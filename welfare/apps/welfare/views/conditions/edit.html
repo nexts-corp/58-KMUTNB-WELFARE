@@ -7,7 +7,16 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}welfareadd{{/i18n}}</li>
+            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}welfare.list{{/i18n}}</span>
+                </a>
+            </li>
+            <li > <a href="#" data-id="content-body"
+                     data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                     data-object='welfareId'
+                     data-param='{{welfareId}}'
+                     onclick="btnHTML(this)">{{#i18n}}conditions.lists{{/i18n}}</a></li>
+            <li class="active">{{#i18n}}conditions.edit{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -29,7 +38,7 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
                     <div class="widget-header">
-                        <span class="widget-caption">{{#i18n}}welfareadd{{/i18n}}</span>
+                        <span class="widget-caption">{{#i18n}}conditions.edit{{/i18n}}</span>
                     </div>
                     <div class="widget-body">
                         {{#datas}}
@@ -38,28 +47,28 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}subwelfarename{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}conditions.name{{/i18n}}</label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="description" placeholder="{{#i18n}}subwelfarename{{/i18n}}"
+                                    <input type="text" class="form-control" name="description" placeholder="{{#i18n}}conditions.name{{/i18n}}"
                                            data-bv-notempty="true" id="description"
                                            value="{{description}}"
-                                           data-bv-notempty-message="{{#i18n}}subwelfarename{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}conditions.name{{/i18n}}" />
                                 </div>
                             </div>
 
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}quantitywelfare{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}conditions.quantity{{/i18n}}</label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="quantity" placeholder="{{#i18n}}quantitywelfare{{/i18n}}"
+                                    <input type="text" class="form-control" name="quantity" placeholder="{{#i18n}}conditions.quantity{{/i18n}}"
                                            data-bv-notempty="true" id="quantity"
                                            value="{{quantity}}"
-                                           data-bv-notempty-message="{{#i18n}}quantitywelfare{{/i18n}}" />
+                                           data-bv-notempty-message="{{#i18n}}conditions.quantity{{/i18n}}" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">{{#i18n}}returnType{{/i18n}}</label>
+                                <label class="col-lg-3 control-label">{{#i18n}}conditions.returnType{{/i18n}}</label>
                                 <div class="col-lg-6">
 
                                     <select class="form-control" name="country" data-bv-field="country" id="returnTypeId">
@@ -81,7 +90,7 @@
         </div>
         <div class="widget radius-bordered">
             <div class="widget-header">
-                <span class="widget-caption">กำหนดประเภทบุคลากรผู้ได้รับสวัสดิการ</span>
+                <span class="widget-caption">{{#i18n}}conditions.set{{/i18n}}</span>
             </div>
             <div class="widget-body">
                 <div class="form-horizontal">
@@ -117,7 +126,7 @@
 
         <div class="widget radius-bordered">
             <div class="widget-header">
-                <span class="widget-caption">เลือกประเภทเงื่อนไขสวัสดิการ</span>
+                <span class="widget-caption">{{#i18n}}conditions.selectType{{/i18n}}</span>
             </div>
             <div class="widget-body">
                 <div class="form-horizontal">
@@ -132,7 +141,7 @@
 
                                             <input type="checkbox" class="inverted" id="optionDateStartAndEnd" value="">
 
-                                            <span class="text">{{#i18n}}dateAdded{{/i18n}}/{{#i18n}}retirementDate{{/i18n}}</span>
+                                            <span class="text">{{#i18n}}conditions.dateAdded{{/i18n}}/{{#i18n}}conditions.retirementDate{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -141,7 +150,7 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" class="inverted" name="optionGender" id="optionGender" >
-                                            <span class="text">{{#i18n}}gender{{/i18n}}</span>
+                                            <span class="text">{{#i18n}}conditions.gender{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -150,7 +159,7 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" class="inverted" id="optionAgeOfmember"  >
-                                            <span class="text">{{#i18n}}ageOfmember{{/i18n}}</span>
+                                            <span class="text">{{#i18n}}conditions.ageOfmember{{/i18n}}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -361,7 +370,7 @@
 <!--End Large Modal Templates-->
 
 <script>
-    $(document).ready(function () {
+            $(document).ready(function () {
 
     var workStartDate = $("#workStartDate").val();
             var workEndDate = $("#workEndDate").val();

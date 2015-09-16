@@ -8,7 +8,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}listwelfare{{/i18n}}</li>
+            <li class="active">{{#i18n}}welfare.list{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -29,27 +29,19 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listwelfare{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.list{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">
+                        <div class="col-lg-5 control-label">
                             <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
                             <p id="demo" style="color:#d14"></p>
-                        </label>
+                        </div>
 
                         <div class="col-lg-3">
                             <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
-                        <div class="pull-right">
-                            <!--                            <button class="btn btn-primary"
-                                                                data-id="content-body"
-                                                                data-api="{{_context_path}}/api/insurance/view/insurance/add"
-                                                                data-param="null"
-                                                                onclick="btnHTML(this)">
-                                                            <i class="fa fa-plus"></i>{{#i18n}}print{{/i18n}} 
-                                                        </button>-->
-                        </div>
+
 
                         <div class="pull-right">
 
@@ -66,16 +58,16 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>{{#i18n}}welfarecode{{/i18n}}</th>
-                                        <th>{{#i18n}}welfarename{{/i18n}}</th>
-                                        <th>{{#i18n}}welfaredatestart{{/i18n}}</th>
-                                        <th>{{#i18n}}welfaredateend{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.Code{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.name{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.dateStart{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.dateEnd{{/i18n}}</th>
                                         <th>Reset Time  </th>
-                                        <th>สวัสดิการให้เปล่า</th>
-                                        <th>สวัสดิการสมัครใจ</th>
-                                        <th>สวัสดิการผู้เกษียณ</th>
+                                        <th>{{#i18n}}welfare.free{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.willing{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.retire{{/i18n}}</th>
 
-                                        <th class="center">จัดการ</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,7 +80,7 @@
                                         <td>{{dateEnd}}</td>
                                         <td>{{resetTime}}</td>
                                         <td>{{free}}</td>
-                                         <td>{{willing}}</td>
+                                        <td>{{willing}}</td>
                                         <td>{{retire}}</td>
                                         <td class="center">
                                             <button class="btn btn-maroon btn-xs edit"
@@ -97,13 +89,15 @@
                                                     data-object='welfareId'
                                                     data-param='{{welfareId}}'
                                                     onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}managementWelfare{{/i18n}} 
+                                                <i class="fa fa-edit"></i>{{#i18n}}welfare.management{{/i18n}} 
                                             </button>
 
 
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/welfare/edit/{{welfareId}}"
+                                                    data-api="{{_context_path}}/api/welfare/view/welfare/edit"
+                                                    data-object='welfareId'
+                                                    data-param='{{welfareId}}'
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>

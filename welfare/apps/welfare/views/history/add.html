@@ -7,7 +7,20 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}welfareadd{{/i18n}}</li>
+           <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}detailWelfare{{/i18n}}</span>
+                </a>
+            </li>
+            <li > <a href="#" data-id="content-body"
+                     data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                     data-object='welfareId'
+                     data-param='{{welfareId}}'
+                     onclick="btnHTML(this)">รายการเงื่อนไขสวัสดิการ</a></li>
+
+            <li> <a href="#" class="btn_preview"> รายการสมาชิกผู้เข้าเงื่อนไข </a></li>
+            <li> <a href="#" class="checkListsHistory"> รายการใช้สวัสดิการ </a></li>
+
+            <li class="active"> เพิ่มการใช้สวัสดิการ </li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -32,36 +45,48 @@
 
 
                     {{#datasWelfare}}
-                        <p> ชื่อสวัสดิการ {{name}} </p>
-                        <p>รายละเอียด {{wfDescription}}</p>
-                        <p>เงื่อนไขสวัสดิการ {{description}} / จำนวน <strong id="quantityWf"> {{quantity}} </strong>{{unitvalue}}</p>
-                        <p>วันที่เริ่มสวัสดิการ {{dateStart}} / วันที่สิ้นสุด {{dateEnd}}</p>
-                        <p>สวัสดิการมีการรีเซต {{resetTime}} เดือน / ประเภทสวัสดิการ {{freeCheck}} </p>
-                        
-                        <p>ใช้สวัสดิการไปแล้ว {{totalBudget}} {{unitvalue}} ยอดคงเหลือที่ใช้ได้ <strong id="totalWf"> {{total}} </strong> {{unitvalue}}</p>
-                     {{/datasWelfare}}
+                    <p> ชื่อสวัสดิการ {{name}} </p>
+                    <p>รายละเอียด {{wfDescription}}</p>
+                    <p>เงื่อนไขสวัสดิการ {{description}} / จำนวน <strong id="quantityWf"> {{quantity}} </strong>{{unitvalue}}</p>
+                    <p>วันที่เริ่มสวัสดิการ {{dateStart}} / วันที่สิ้นสุด {{dateEnd}}</p>
+                    <p>สวัสดิการมีการรีเซต {{resetTime}} เดือน / ประเภทสวัสดิการ {{freeCheck}} </p>
+
+                    <p>ใช้สวัสดิการไปแล้ว {{totalBudget}} {{unitvalue}} ยอดคงเหลือที่ใช้ได้ <strong id="totalWf"> {{total}} </strong> {{unitvalue}}</p>
+                    {{/datasWelfare}}
 
                 </div>
-                
+
                 <div class="widget radius-bordered">
                     <div class="widget-header">
                         <span class="widget-caption">เพิ่ม จำนวน/หน่วย</span>
                     </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
+                            
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">หมายเหตุ</label>
+                                <div class="col-lg-6">
 
+                                    <input type="text" class="form-control" name="remark" placeholder="ใส่ข้อมูล"
+                                           data-validation-error-msg="" id="remark" />
+
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">จำนวน</label>
                                 <div class="col-lg-6">
-                                       <span class="widget-caption" id="totalAmount"></span>
-                                     <br>
-                                    <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
+
+
+                                    <input type="text" class="form-control" name="amount" placeholder="ใส่ตัวเลข"
                                            data-bv-notempty-message="ใส่ตัวเลข" 
                                            data-validation-error-msg="*กรุณาใส่ตัวเลข"
                                            data-validation="number" id="amount" />
 
                                 </div>
                             </div>
+
+                            
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label"></label>
@@ -91,16 +116,34 @@
 
 <script>
     $(document).ready(function () {
-    $.validate();
+   $('.btn_preview').click(function () {
+    var data = {};
+            data['conditionsId'] = "{{conditionsId}}";
+            data['welfareId'] = "{{welfareId}}";
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/priviews/lists', jsonEncode(jdata));
+    });
+    $('.checkListsHistory').click(function () {
+    var data = {};
+            data['conditionsId'] = {{conditionsId}};
+            data['memberId'] = {{memberId}};
+            data['welfareId'] = {{welfareId}};
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
+
+    });
+        $.validate();
             $('#btn_submit').click(function (){
-            var total = {{totalWf}};
-       
-    if ($("#amount").val() != "" && total > $("#amount").val()){
+    var total = {{totalWf}};
+            if ($("#amount").val() != "" && total >= $("#amount").val()){
     var data = {};
             data['memberId'] = {{memberId}};
             data['conditionsId'] = {{conditionsId}};
             data['welfareId'] = {{welfareId}};
             data['amount'] = $("#amount").val();
+            data['remark'] = $("#remark").val();
             var jdata = {};
             jdata['data'] = data;
             $.ajax({
@@ -113,14 +156,14 @@
                     var data = {};
                             data['memberId'] = {{memberId}};
                             data['conditionsId'] = {{conditionsId}};
-                            data['welfareId']={{welfareId}};
+                            data['welfareId'] = {{welfareId}};
                             var jdata = {};
                             jdata['data'] = data;
                             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
 
                             Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
                     } else {
-                            Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                     }
 
 
@@ -128,7 +171,7 @@
 
             });
     } else{
-            Notify('กรุณาระบุข้อมูลให้ถูกต้อง !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    Notify('กรุณาระบุข้อมูลให้ถูกต้อง !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
             $('#amount').focus();
     }
     return false;

@@ -8,7 +8,18 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}listwelfare{{/i18n}}</li>
+            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}detailWelfare{{/i18n}}</span>
+                </a>
+            </li>
+            <li > <a href="#" data-id="content-body"
+                     data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                     data-object='welfareId'
+                     data-param='{{welfareId}}'
+                     onclick="btnHTML(this)">รายการเงื่อนไขสวัสดิการ</a></li>
+
+            <li> <a href="#" class="btn_preview"> รายการสมาชิกผู้เข้าเงื่อนไข </a></li>
+            <li class="active"> รายการใช้สวัสดิการ </li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -38,11 +49,11 @@
                         <p>เงื่อนไขสวัสดิการ {{description}} / จำนวน {{quantity}} {{unitvalue}}</p>
                         <p>วันที่เริ่มสวัสดิการ {{dateStart}} / วันที่สิ้นสุด {{dateEnd}}</p>
                         <p>สวัสดิการมีการรีเซต {{resetTime}} เดือน / ประเภทสวัสดิการ {{freeCheck}} </p>
-                        
+
                         <p>ใช้สวัสดิการไปแล้ว {{totalBudget}} {{unitvalue}} ยอดคงเหลือที่ใช้ได้ {{total}} {{unitvalue}}</p>
                         {{/datasWelfare}}
                     </div>
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listwelfare{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.list{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
@@ -77,6 +88,7 @@
                                 <thead>
                                     <tr>
                                         <th class="center">ลำดับ</th>
+                                        <th class="center">หมายเหตุ</th>
                                         <th class="center">จำนวน</th>
                                         <th class="center">วัน/เดือน/ปี</th>
                                         <th class="center">จัดการ</th>
@@ -89,6 +101,7 @@
                                     <tr class="selectable">
 
                                         <td>{{rowNo}}</td>
+                                        <td>{{remark}}</td>
                                         <td>{{amount}}</td>
                                         <td>{{dateCreated}}</td>
 
@@ -122,8 +135,16 @@
 <script>
             $(document).ready(function () {
     $.validate();
+            $('.btn_preview').click(function () {
+    var data = {};
+            data['conditionsId'] = "{{conditionsId}}";
+            data['welfareId'] = "{{welfareId}}";
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/priviews/lists', jsonEncode(jdata));
+    });
             $('#bnt_add').click(function () {
-            var data = {};
+    var data = {};
             data['conditionsId'] = "{{conditionsId}}";
             data['memberId'] = "{{memberId}}";
             data['welfareId'] = {{#datasWelfare}}{{welfareId}}{{/datasWelfare}};

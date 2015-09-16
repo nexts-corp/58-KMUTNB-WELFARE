@@ -8,7 +8,17 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}listwelfare{{/i18n}}</li>
+            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}welfare.details{{/i18n}}</span>
+                </a>
+            </li>
+            <li > <a href="#" data-id="content-body"
+                     data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                     data-object='welfareId'
+                     data-param='{{welfareId}}'
+                     onclick="btnHTML(this)">รายการเงื่อนไขสวัสดิการ</a></li>
+
+            <li class="active"> รายการสมาชิกผู้เข้าเงื่อนไข </li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -29,7 +39,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listwelfare{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.list{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
@@ -74,7 +84,7 @@
                                             <button class="btn btn btn-default btn-xs edit checkHistory"
                                                     data-id="content-body"
                                                     row-index="{{memberId}}"
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}welfare.history{{/i18n}}
+                                                    <i class="fa fa fa-eye"></i>{{#i18n}}welfare.history{{/i18n}}
                                             </button>
                                         </td>
 
@@ -100,20 +110,20 @@
 
 
 <script>
-    $(document).ready(function () {
-    
- 
+            $(document).ready(function () {
+
+
     $('.checkHistory').click(function () {
     var data = {};
             data['conditionsId'] = {{conditionsId}};
             data['memberId'] = $(this).attr('row-index');
-            data['welfareId']={{welfareId}};
-        var jdata = {};
-        jdata['data'] = data;
-        getHTML('content-body','{{_context_path}}/api/welfare/view/history/lists',jsonEncode(jdata))
-     
-          });
+            data['welfareId'] = {{welfareId}};
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
+
     });
-    
+    });
+
 
 </script>
