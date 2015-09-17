@@ -41,9 +41,12 @@
                             <button id="btnSearch" name="btnSearch" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>-->
 
-                        <div class="pull-right">
-                            <label><h5>เบิกไปแล้วทั้งสิ้น {{#totalbudget}}{{balance}}{{/totalbudget}}</h5></label>
+                        <div class="pull-right col-lg-5">
+                            <div class="col-lg-6"><label><h5>เบิกไปแล้วทั้งสิ้น {{#totalbudget}}{{payment}}{{/totalbudget}} บาท</h5></label></div>
+                            <div class="col-lg-6"><label><h5>ยอดคงเหลือ {{#totalbudget}}{{balance}}{{/totalbudget}} บาท</h5></label></div>
                         </div>
+                        
+                        
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
                             <table class="table table-hover table-striped table-bordered table-condensed" id="show">
@@ -54,7 +57,7 @@
                                         <th>&nbsp;{{#i18n}}hospitalmedical{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}dateInsert{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}dateUpdate{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,20 +69,7 @@
                                         <td>{{remark}}</td>
                                         <td>{{dateCreated}}</td>
                                         <td>{{dateUpdated}}</td>
-                                        <td class="center">
-                                            <button class="btn btn-info btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/medical/view/medicalFee/edit/{{historyId}}"
-
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
-                                            </button>
-
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{historyId}}" >
-                                                <i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}
-                                            </button> 
-
-                                        </td>
+                                        
                                     </tr>
                                     {{/lists}}
                                 </tbody>

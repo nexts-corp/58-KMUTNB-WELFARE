@@ -366,7 +366,7 @@
                 $.ajax({
                     url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
                     data: {parentId: facultyId},
-                    async:false,
+                    async: false,
                     success: function (result) {
                         var data = result["lists"];
                         var html;
@@ -381,14 +381,7 @@
                     }
                 });
             }
-//            listsAcademic();
-//            listtitleName();
-//            listgender();
-//            listemployeeTypeId();
-//            listpositionId();
-//            listfacultyId();
-//            listmatier();
-//            listuserTypeId();
+
 
 
             $("#btn_submit").click(function () {
@@ -438,180 +431,6 @@
 //    $('.date-picker').datepicker();
 
 
-//            function listsAcademic() {
-//                var academicId = '{{#datas}}{{academicId}}{{/datas}}';
-//
-//                var academic = getPCode("academic");
-//                var html = "";
-//                if (academicId == "") {
-//                    html += "<option value='' selected>ตำแหน่งทางวิชาการ</option>";
-//                } else {
-//                    html += "<option value=''>ตำแหน่งทางวิชาการ</option>";
-//                }
-//
-//                if (academic != "") {
-//                    $.each(academic, function (key, value) {
-//                        if (value.id == academicId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>ตำแหน่งทางวิชาการ</option>";
-//                }
-//                $("#academicId").html(html);
-//            }
-//
-//            function listtitleName() {
-//                var titleId = '{{#datas}}{{titleId}}{{/datas}}';
-//                var titleName = getPCode("titleName");
-//                var html = "";
-//                if (titleName != "") {
-//                    $.each(titleName, function (key, value) {
-//                        if (value.id == titleId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>คำนำหน้าชื่อ</option>";
-//                }
-//                $("#titleId").html(html);
-//            }
-//
-//            function listemployeeTypeId() {
-//                var employeeTypeId = '{{#datas}}{{employeeTypeId}}{{/datas}}';
-//                var employeeType = getPCode("employeeType");
-//                var html = "";
-//                if (employeeType != "") {
-//                    $.each(employeeType, function (key, value) {
-//                        if (value.id == employeeTypeId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>ประเภทพนักงาน</option>";
-//                }
-//                $("#employeeTypeId").html(html);
-//            }
-//
-//            function listpositionId() {
-//                var positionId = '{{#datas}}{{positionId}}{{/datas}}';
-//                var position = getPCode("position");
-//                var html = "";
-//                if (position != "") {
-//                    $.each(position, function (key, value) {
-//                        if (value.id == positionId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>ตำแหน่งงาน</option>";
-//                }
-//                $("#positionId").html(html);
-//            }
-//
-//
-//            function listuserTypeId() {
-//                var userTypeId = '{{#datas}}{{userTypeId}}{{/datas}}';
-//                //alert(userTypeId);
-//                var userType = getPCode("userType");
-//                var html = "";
-//                if (userType != "") {
-//                    $.each(userType, function (key, value) {
-//                        if (value.id == userTypeId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>ประเภทผู้ใช้งาน</option>";
-//                }
-//                $("#userTypeId").html(html);
-//            }
-//
-//            function listfacultyId() {
-//                var facultyId = '{{#datas}}{{facultyId}}{{/datas}}';
-//                var faculty = getPCode("faculty");
-//                var html = "";
-//                if (faculty != "") {
-//                    $.each(faculty, function (key, value) {
-//                        if (value.id == facultyId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>เลือกคณะวิชา/สำนัก</option>";
-//                }
-//                $("#facultyId").html(html);
-//                listdepartmentId();
-//            }
-//
-//            function listdepartmentId() {
-//                var departmentId = '{{#datas}}{{departmentId}}{{/datas}}';
-//                var facultyId = '{{#datas}}{{facultyId}}{{/datas}}';
-//                var department = getParentId(facultyId);
-//                var html = "";
-//                if (department != "") {
-//                    $.each(department, function (key, value) {
-//                        if (value.id == departmentId) {
-//                            html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        } else {
-//                            html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
-//                        }
-//                    });
-//                } else {
-//                    html = "<option value=''>เลือกคณะวิชา/สำนัก</option>";
-//                }
-//                $("#departmentId").html(html);
-//            }
-//
-//            function listgender() {
-//                var genderId = '{{#datas}}{{genderId}}{{/datas}}';
-//                var gender = getPCode("gender");
-//                var html = "";
-//                if (gender != "") {
-//                    $.each(gender, function (key, value) {
-//                        if (value.id == genderId) {
-//                            html += "<div class='radio col-lg-6'><label><input name='genderId' id='genderId' value='" + value["id"] + "' type='radio' checked='checked' /><span class='text'>" + value.value1 + "</span></label></div>";
-//
-//                        } else {
-//                            html += "<div class='radio col-lg-6'><label><input name='genderId' id='genderId' value='" + value["id"] + "' type='radio' /><span class='text'>" + value.value1 + "</span></label></div>";
-//                        }
-//                    });
-//                } else {
-//                    //  html = "<option value=''>คำนำหน้าชื่อ</option>";
-//                }
-//                $("#gender").html(html);
-//            }
-//
-//            function listmatier() {
-//                var matierId = '{{#datas}}{{matierId}}{{/datas}}';
-//                var matier = getPCode("matier");
-//                var html = "";
-//                if (matier != "") {
-//                    $.each(matier, function (key, value) {
-//                        if (value.id == matierId) {
-//                            html += "<div class='radio col-lg-6'><label><input name='matierId' id='matierId' value='" + value["id"] + "' type='radio' checked='checked' /><span class='text'>" + value.value1 + "</span></label></div>";
-//
-//                        } else {
-//                            html += "<div class='radio col-lg-6'><label><input name='matierId' id='matierId' value='" + value["id"] + "' type='radio' /><span class='text'>" + value.value1 + "</span></label></div>";
-//                        }
-//                    });
-//                } else {
-//                    //  html = "<option value=''>คำนำหน้าชื่อ</option>";
-//                }
-//                $("#matier").html(html);
-//            }
 
         });
 
