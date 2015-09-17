@@ -84,9 +84,19 @@ class AuthenService extends CServiceBase implements IAuthenService {
 
             $info = $this->datacontext->getObject($xinfo);
 
+            $taxTitleName = new \apps\taxonomy\entity\Taxonomy();
+            if($info[0]->academicId!=""){
+                $taxTitleName->id = $info[0]->academicId;
+            }else{
+                $taxTitleName->id = $info[0]->titleId;
+            }
+            $titleName = $this->datacontext->getObject($taxTitleName)[0];
+            
             $acc = new \th\co\bpg\cde\collection\CJAccount();
             $acc->code = $info[0]->memberId;
             $acc->name = $info[0]->fname . " " . $info[0]->lname;
+            $acc->titleName = $titleName->value1;
+
 
             $taxUserType = new \apps\taxonomy\entity\Taxonomy();
             $taxUserType->id = $user[0]->userTypeId;
@@ -102,12 +112,12 @@ class AuthenService extends CServiceBase implements IAuthenService {
             $taxFaculty->id = $info[0]->facultyId;
             $faculty = $this->datacontext->getObject($taxFaculty)[0];
             $acc->attribute["facultyId"] = $faculty->code;
-            
+
             $taxDepartment = new \apps\taxonomy\entity\Taxonomy();
             $taxDepartment->id = $info[0]->departmentId;
             $department = $this->datacontext->getObject($taxDepartment)[0];
             $acc->attribute["departmentId"] = $department->code;
-            
+
             $acc->attribute["memberId"] = $user[0]->memberId;
             //print $acc;
             //$acc->departmentId=$user[0]->departmentId;
