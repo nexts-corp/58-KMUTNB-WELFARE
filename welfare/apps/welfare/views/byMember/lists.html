@@ -63,9 +63,9 @@
                                         <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
 
                                         <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                        <th class="text-center">สังกัด</th>
+                                        <th class="text-center">{{#i18n}}conditions.academy{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        <th class="text-center">รายการสวัสดิการ</th>
+                                        <th class="text-center">{{#i18n}}conditions.lists{{/i18n}}</th>
 
                                     </tr>
                                 </thead>
@@ -75,7 +75,7 @@
                                         <td>{{rowNo}}</td>
                                         <td>{{title}}  {{fname}}   {{lname}}</td>
                                         <td>{{gender}}</td>
-                                        <td>ภาควิชา/สำนักงาน {{department}}  {{faculty}}  </td>
+                                        <td>{{#i18n}}conditions.FandD{{/i18n}}  {{department}}  {{faculty}}  </td>
                                         <td>{{employeeType}}</td>
                                         <td>
                                             <button class="btn btn btn-default btn-xs edit"

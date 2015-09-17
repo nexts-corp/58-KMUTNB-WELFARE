@@ -9,17 +9,17 @@
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
             <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
-                    <span class="menu-text">{{#i18n}}detailWelfare{{/i18n}}</span>
+                    <span class="menu-text">{{#i18n}}welfare.list{{/i18n}}</span>
                 </a>
             </li>
             <li > <a href="#" data-id="content-body"
                      data-api="{{_context_path}}/api/welfare/view/conditions/lists"
                      data-object='welfareId'
                      data-param='{{welfareId}}'
-                     onclick="btnHTML(this)">รายการเงื่อนไขสวัสดิการ</a></li>
+                     onclick="btnHTML(this)">{{#i18n}}conditions.lists{{/i18n}}</a></li>
 
-            <li> <a href="#" class="btn_preview"> รายการสมาชิกผู้เข้าเงื่อนไข </a></li>
-            <li class="active"> รายการใช้สวัสดิการ </li>
+            <li> <a href="#" class="btn_preview"> {{#i18n}}prewiews.list{{/i18n}} </a></li>
+            <li class="active"> {{#i18n}}conditions.setList{{/i18n}} </li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -44,13 +44,13 @@
 
 
                         {{#datasWelfare}}
-                        <p> ชื่อสวัสดิการ {{name}} </p>
-                        <p>รายละเอียด {{wfDescription}}</p>
-                        <p>เงื่อนไขสวัสดิการ {{description}} / จำนวน {{quantity}} {{unitvalue}}</p>
-                        <p>วันที่เริ่มสวัสดิการ {{dateStart}} / วันที่สิ้นสุด {{dateEnd}}</p>
-                        <p>สวัสดิการมีการรีเซต {{resetTime}} เดือน / ประเภทสวัสดิการ {{freeCheck}} </p>
+                        <p> {{#i18n}}conditions.name{{/i18n}}  {{name}} </p>
+                        <p>{{#i18n}}conditions.details{{/i18n}} {{wfDescription}}</p>
+                        <p>{{#i18n}}conditions.setConditions{{/i18n}} {{description}} / {{#i18n}}conditions.quantity{{/i18n}} {{quantity}} {{unitvalue}}</p>
+                        <p>{{#i18n}}welfare.dateStart{{/i18n}} {{dateStart}} / {{#i18n}}welfare.dateEnd{{/i18n}} {{dateEnd}}</p>
+                        <p>{{#i18n}}conditions.resetMount{{/i18n}} {{resetTime}} {{#i18n}}conditions.mount{{/i18n}} / {{#i18n}}welfare.welfareType{{/i18n}} {{freeCheck}} </p>
 
-                        <p>ใช้สวัสดิการไปแล้ว {{totalBudget}} {{unitvalue}} ยอดคงเหลือที่ใช้ได้ {{total}} {{unitvalue}}</p>
+                        <p>{{#i18n}}conditions.used{{/i18n}} {{totalBudget}} {{unitvalue}} {{#i18n}}conditions.userTotal{{/i18n}} {{total}} {{unitvalue}}</p>
                         {{/datasWelfare}}
                     </div>
                     <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.list{{/i18n}}</span>
@@ -87,11 +87,11 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th class="center">ลำดับ</th>
-                                        <th class="center">หมายเหตุ</th>
-                                        <th class="center">จำนวน</th>
-                                        <th class="center">วัน/เดือน/ปี</th>
-                                        <th class="center">จัดการ</th>
+                                        <th class="center">{{#i18n}}all.number{{/i18n}} </th>
+                                        <th class="center">{{#i18n}}conditions.remark{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}conditions.quantity{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}all.dmy{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
 
 
                                     </tr>
@@ -152,7 +152,8 @@
             jdata['data'] = data;
             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/add', jsonEncode(jdata));
     });
-    });</script>
+    });
+</script>
 <script>
 
             $('.btn-del').click(function(){

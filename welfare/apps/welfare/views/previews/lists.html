@@ -16,9 +16,9 @@
                      data-api="{{_context_path}}/api/welfare/view/conditions/lists"
                      data-object='welfareId'
                      data-param='{{welfareId}}'
-                     onclick="btnHTML(this)">รายการเงื่อนไขสวัสดิการ</a></li>
+                     onclick="btnHTML(this)">{{#i18n}}conditions.lists{{/i18n}}</a></li>
 
-            <li class="active"> รายการสมาชิกผู้เข้าเงื่อนไข </li>
+            <li class="active"> {{#i18n}}prewiews.list{{/i18n}} </li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -46,7 +46,7 @@
                         <div class="col-lg-5 control-label">
                             <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
                             <p id="demo" style="color:#d14"></p>
-                            <span>จำนวนทั้งหมด : {{maxRows}} คน</span>
+                            <span>{{#i18n}}conditions.total{{/i18n}} : {{maxRows}} {{#i18n}}all.people{{/i18n}}</span>
 
                         </div>
 
@@ -62,13 +62,13 @@
                             <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}all.number{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}all.fnamelname{{/i18n}}</th>
 
-                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                        <th class="text-center">สังกัด</th>
-                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        <th class="text-center">รายการใช้สวัสดิการ</th>
+                                        <th class="text-center">{{#i18n}}all.gender{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}all.academy{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}all.employeeType{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}conditions.setList{{/i18n}}</th>
 
                                     </tr>
                                 </thead>
@@ -78,7 +78,7 @@
                                         <td>{{rowNo}}</td>
                                         <td>{{title}}  {{fname}}{{lname}}</td>
                                         <td>{{gender}}</td>
-                                        <td>ภาควิชา/สำนักงาน {{department}}  {{faculty}}  </td>
+                                        <td>{{#i18n}}conditions.FandD{{/i18n}}  {{department}}  {{faculty}}  </td>
                                         <td>{{employeeType}}</td>
                                         <td>
                                             <button class="btn btn btn-default btn-xs edit checkHistory"
@@ -89,7 +89,7 @@
                                         </td>
 
                                     </tr>
-                                    {{/datas}}
+                                  {{/datas}}
 
                                 </tbody>
 
