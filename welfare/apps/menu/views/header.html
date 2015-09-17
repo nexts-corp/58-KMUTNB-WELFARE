@@ -29,31 +29,43 @@
                                 <img src="{{_context_path}}/assets/img/avatars/adam-jansen.jpg">
                             </div>
                             <section>
-                                <h2><span class="profile"><span>David Stevenson</span></span></h2>
+                                <h2><span class="profile" id="profile">{{titleName}} {{profile}} [{{userType}}]</span></h2>
                             </section>
                         </a>
                         <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
                             <li class="username"><a>David Stevenson</a></li>
-                            <li class="email"><a>David.Stevenson@live.com</a></li>
+                            <!--                            <li class="email"><a>David.Stevenson@live.com</a></li>-->
                             <!--Avatar Area-->
-                            <li>
-                                <div class="avatar-area">
-                                    <img src="{{_context_path}}/assets/img/avatars/adam-jansen.jpg" class="avatar">
-                                    <span class="caption">Change Photo</span>
-                                </div>
-                            </li>
+                            <!--                            <li>
+                                                            <div class="avatar-area">
+                                                                <img src="{{_context_path}}/assets/img/avatars/adam-jansen.jpg" class="avatar">
+                                                                <span class="caption">Change Photo</span>
+                                                            </div>
+                                                        </li>-->
                             <!--Avatar Area-->
+
                             <li class="edit">
-                                <a href="#" id="profile" class="pull-left">Profile</a>
-                                <a href="#" class="pull-right">Setting</a>
+                                <a href="#" 
+                                   data-id="content-body"
+                                   data-api="{{_context_path}}/api/member/view/member/show/{{code}}"
+                                   class="pull-left"
+                                   onclick="btnHTML(this)">
+                                    <span class="menu-text">ดูข้อมูลส่วนตัว</span>
+                                </a>
+                                <a href="#" 
+                                   data-id="content-body"
+                                   data-api="{{_context_path}}/api/user/view/member/password/{{code}}"
+                                   class="pull-right"
+                                   onclick="btnHTML(this)">
+                                    <span class="menu-text">แก้ไขรหัสผ่าน</span>
+                                </a>
                             </li>
                             <!--Theme Selector Area-->
 
                             <!--/Theme Selector Area-->
                             <li class="dropdown-footer">
                                 <a href="{{_context_path}}/api/root/view/logout" id="logout">
-                                    Sign out
-
+                                    <span class="menu-text">ออกจากระบบ</span>
                                 </a>
                             </li>
                         </ul>
@@ -76,7 +88,6 @@
 
 
     $(document).ready(function () {
-
         //  $("#logout").click(function () {                 
         /* localStorage.removeItem('userId');
          localStorage.removeItem('userName');

@@ -18,6 +18,10 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function header() {
         $view = new CJView("header", CJViewType::HTML_VIEW_ENGINE);
+        $view->code = $this->getCurrentUser()->code;
+        $view->profile = $this->getCurrentUser()->name;
+        $view->userType = $this->getCurrentUser()->usertype;
+        $view->titleName = $this->getCurrentUser()->titleName;
         return $view;
     }
 
