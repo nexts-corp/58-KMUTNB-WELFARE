@@ -16,9 +16,9 @@ class History extends EntityBase{
     public $historyId;
 
     /**
-     * @Column(type="integer",length=11, name="conditionsId")
+     * @Column(type="integer",length=11, name="detailsId")
      */
-    public $conditionsId;
+    public $detailsId;
     
      /**
      * @Column(type="integer",length=11, name="welfareId")
@@ -51,8 +51,8 @@ class History extends EntityBase{
         return $this->historyId;
     }
 
-    function getConditionsId() {
-        return $this->conditionsId;
+    function getDetailsId() {
+        return $this->detailsId;
     }
 
     function getWelfareId() {
@@ -79,8 +79,8 @@ class History extends EntityBase{
         $this->historyId = $historyId;
     }
 
-    function setConditionsId($conditionsId) {
-        $this->conditionsId = $conditionsId;
+    function setDetailsId($detailsId) {
+        $this->detailsId = $detailsId;
     }
 
     function setWelfareId($welfareId) {
