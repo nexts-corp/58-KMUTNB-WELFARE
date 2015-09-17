@@ -22,59 +22,24 @@ class Conditions extends EntityBase {
     public $welfareId;
 
     /**
-     * @Column(type="string", name="description",nullable=true)
+     * @Column(type="integer",length=11, name="detailsId")
      */
-    public $description;
+    public $detailsId;
 
     /**
-     * @Column(type="integer", length=11, name="quantity" ) 
+     * @Column(type="string", name="fieldMap",length=100,nullable=true)
      */
-    public $quantity;
+    public $fieldMap;
 
     /**
-     * @Column(type="string", length=10, name="returnTypeId",nullable=true)
+     * @Column(type="string", name="operations",length=10,nullable=true)
      */
-    public $returnTypeId; //หน่วยนับ
+    public $operations;
 
     /**
-     * @Column(type="date", name="workStartDate",nullable=true)
+     * @Column(type="string", name="valuex",length=20,nullable=true)
      */
-    public $workStartDate; //วันที่บรรจุ
-
-    /**
-     * @Column(type="date", name="workEndDate",nullable=true)
-     */
-    public $workEndDate; //วันที่เกษียณ
-
-    /**
-     * @Column(type="integer", length=3, name="ageStart",nullable=true)
-     */
-    public $ageStart; //อายุตั้งแต่
-
-    /**
-     * @Column(type="integer", length=3, name="ageEnd",nullable=true)
-     */
-    public $ageEnd; //อายุถึง
-
-    /**
-     * @Column(type="integer", length=3, name="ageWorkStart",nullable=true)
-     */
-    public $ageWorkStart; //อายุการปฎิบัติงานตั้งแต่
-
-    /**
-     * @Column(type="integer", length=3, name="ageWorkEnd",nullable=true)
-     */
-    public $ageWorkEnd; //อายุการปฎิบัติงานถึง
-
-    /**
-     * @Column(type="string", length=13, name="genderId",nullable=true)
-     */
-    public $genderId; //เพศ
-
-    /**
-     * @Column(type="string", length=10, name="employeeTypeId",nullable=true)
-     */
-    public $employeeTypeId; //พนักงาน
+    public $valuex;
 
     function getConditionsId() {
         return $this->conditionsId;
@@ -84,48 +49,20 @@ class Conditions extends EntityBase {
         return $this->welfareId;
     }
 
-    function getDescription() {
-        return $this->description;
+    function getDetailsId() {
+        return $this->detailsId;
     }
 
-    function getQuantity() {
-        return $this->quantity;
+    function getFieldMap() {
+        return $this->fieldMap;
     }
 
-    function getReturnTypeId() {
-        return $this->returnTypeId;
+    function getOperations() {
+        return $this->operations;
     }
 
-    function getWorkStartDate() {
-        return $this->workStartDate;
-    }
-
-    function getWorkEndDate() {
-        return $this->workEndDate;
-    }
-
-    function getAgeStart() {
-        return $this->ageStart;
-    }
-
-    function getAgeEnd() {
-        return $this->ageEnd;
-    }
-
-    function getAgeWorkStart() {
-        return $this->ageWorkStart;
-    }
-
-    function getAgeWorkEnd() {
-        return $this->ageWorkEnd;
-    }
-
-    function getGenderId() {
-        return $this->genderId;
-    }
-
-    function getEmployeeTypeId() {
-        return $this->employeeTypeId;
+    function getValuex() {
+        return $this->valuex;
     }
 
     function setConditionsId($conditionsId) {
@@ -136,48 +73,20 @@ class Conditions extends EntityBase {
         $this->welfareId = $welfareId;
     }
 
-    function setDescription($description) {
-        $this->description = $description;
+    function setDetailsId($detailsId) {
+        $this->detailsId = $detailsId;
     }
 
-    function setQuantity($quantity) {
-        $this->quantity = $quantity;
+    function setFieldMap($fieldMap) {
+        $this->fieldMap = $fieldMap;
     }
 
-    function setReturnTypeId($returnTypeId) {
-        $this->returnTypeId = $returnTypeId;
+    function setOperations($operations) {
+        $this->operations = $operations;
     }
 
-    function setWorkStartDate($workStartDate) {
-        $this->workStartDate = $workStartDate;
-    }
-
-    function setWorkEndDate($workEndDate) {
-        $this->workEndDate = $workEndDate;
-    }
-
-    function setAgeStart($ageStart) {
-        $this->ageStart = $ageStart;
-    }
-
-    function setAgeEnd($ageEnd) {
-        $this->ageEnd = $ageEnd;
-    }
-
-    function setAgeWorkStart($ageWorkStart) {
-        $this->ageWorkStart = $ageWorkStart;
-    }
-
-    function setAgeWorkEnd($ageWorkEnd) {
-        $this->ageWorkEnd = $ageWorkEnd;
-    }
-
-    function setGenderId($genderId) {
-        $this->genderId = $genderId;
-    }
-
-    function setEmployeeTypeId($employeeTypeId) {
-        $this->employeeTypeId = $employeeTypeId;
+    function setValuex($valuex) {
+        $this->valuex = $valuex;
     }
 
 }
