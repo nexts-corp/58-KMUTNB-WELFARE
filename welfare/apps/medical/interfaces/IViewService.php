@@ -65,7 +65,16 @@ interface IViewService {
 //     * @description รายการภาควิชาหรือสำนักงาน
 //     */
 //    public function reportLists();
-
+    
+    /**
+     * @name medicalFeeshow
+     * @uri /medicalFee/show
+     * @param string memberId Description
+     * @return string details
+     * @description รายละเอียดข้อมูลการเบิกค่ารักษาพยาบาล
+     */
+    
+    public function medicalFeeShow($memberId);
     
    
 
