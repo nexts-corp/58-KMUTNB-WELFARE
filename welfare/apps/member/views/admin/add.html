@@ -80,16 +80,16 @@
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
                                             <div class="col-lg-9">
-                                                <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country"  
+                                                <select class="form-control col-lg-12" id="titleNameId" name="titleNameId" data-bv-field="country"  
                                                         data-validation="required" data-validation-error-msg="*กรุณาเลือกคำนำหน้าชื่อ" 
-                                                        data-validation-error-msg-container="#titleId-msg-error">
+                                                        data-validation-error-msg-container="#titleNameId-msg-error">
                                                     <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
                                                     {{#titleName}}
                                                     <option value="{{id}}">{{value1}} , {{value2}}</option>
                                                     {{/titleName}}
                                                 </select>
                                             </div>
-                                            <div class="col-lg-offset-4" id="titleId-msg-error">
+                                            <div class="col-lg-offset-4" id="titleNameId-msg-error">
 
                                             </div>
                                         </div>
@@ -408,7 +408,7 @@
                     var data = {};
                     data['fname'] = $("#fname").val();
                     data['lname'] = $("#lname").val();
-                    data['titleId'] = $("#titleId").val();
+                    data['titleNameId'] = $("#titleNameId").val();
                     data['genderId'] = $('input[name=genderId]:checked').val();
                     data['idCard'] = $("#idCard").val();
                     data['dob'] = $("#dob").val();

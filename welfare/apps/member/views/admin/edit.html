@@ -69,9 +69,9 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
                                 <div class="col-lg-4">
                                     <div class="col-lg-12">
-                                        <select class="form-control col-lg-12" id="titleId" name="titleId" data-bv-field="country"  
+                                        <select class="form-control col-lg-12" id="titleNameId" name="titleNameId" data-bv-field="country"  
                                                 data-validation="required" data-validation-error-msg="*กรุณาเลือกคำนำหน้าชื่อ" 
-                                                data-validation-error-msg-container="#titleId-msg-error">
+                                                data-validation-error-msg-container="#titleNameId-msg-error">
                                             <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
                                             {{#titleName}}
                                             <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -338,7 +338,7 @@
             $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 
             var academic = '{{#datas}}{{academicId}}{{/datas}}';
-            var titleName = '{{#datas}}{{titleId}}{{/datas}}';
+            var titleName = '{{#datas}}{{titleNameId}}{{/datas}}';
             var gender = '{{#datas}}{{genderId}}{{/datas}}';
             var employeeType = '{{#datas}}{{employeeTypeId}}{{/datas}}';
             var position = '{{#datas}}{{positionId}}{{/datas}}';
@@ -347,7 +347,7 @@
             var userType = '{{#datas}}{{userTypeId}}{{/datas}}';
             var department = '{{#datas}}{{departmentId}}{{/datas}}';
             $("#academicId").val(academic);
-            $("#titleId").val(titleName);
+            $("#titleNameId").val(titleName);
             $("#employeeTypeId").val(employeeType);
             $("#positionId").val(position);
             $("#facultyId").val(faculty);
@@ -390,7 +390,7 @@
                 data['memberId'] = "{{#datas}}{{memberId}}{{/datas}}";
                 data['fname'] = $("#fname").val();
                 data['lname'] = $("#lname").val();
-                data['titleId'] = $("#titleId").val();
+                data['titleNameId'] = $("#titleNameId").val();
                 data['genderId'] = $('input[name=genderId]:checked').val();
                 data['idCard'] = $("#idCard").val();
                 data['dob'] = $("#dob").val();

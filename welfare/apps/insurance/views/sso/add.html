@@ -4,14 +4,14 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}insurance.add{{/i18n}}</li>
+            <li class="active">{{#i18n}}menu.insurance{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
     <!-- Page Header -->
     <div class="page-header position-relative">
         <div class="header-title">
-            <h1>{{#i18n}}insurance.add{{/i18n}}</h1>
+            <h1>{{#i18n}}sso.title{{/i18n}}</h1>
         </div>
         <!--Header Buttons--> 
 
@@ -23,36 +23,40 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}sso.add{{/i18n}}</span> </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
-
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.id{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.idCard{{/i18n}}</label>
+                                <div class="col-lg-8">
+                                    <div class="col-lg-12">
+                                        <input type="text" class="form-control" id="value1" name="value1" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button id="btn_search" class="btn btn-primary"> 
+                                        <i class="fa fa-search"></i>{{#i18n}}button.search{{/i18n}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.titleName{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" disabled id="id" name="id" value="{{id}}" />
+                                        <input type="text" class="form-control" id="value1" name="value1" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.value1{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.hospital{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="value1" name="value1" value="{{value1}}" />
+                                        <input type="text" class="form-control" id="hospital" name="hospital" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.value2{{/i18n}}</label>
-                                <div class="col-lg-10">
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="value2" name="value2" value="{{value2}}" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.optional{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.optional{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
                                         <input type="text" class="form-control" id="optional" name="optional" value="{{optional}}" />
@@ -60,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.parentId{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.parentId{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
                                         <select id="parentId" name="parentId" class="form-control">
@@ -73,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.pCode{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.pCode{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
                                         <input type="text" class="form-control" disabled id="pCode" name="pCode" value="{{pCode}}" />
@@ -81,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.parent{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.parent{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
                                         <select class="form-control" id="parent" name="parent">
@@ -93,7 +97,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}insurance.code{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.code{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
                                         <input type="text" class="form-control" id="code" name="code" value="{{code}}" />
@@ -118,51 +122,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#parentId").click(function () {
-            var value = $(this).val();
-            var pCode = $("#parentId option[value='" + value + "']").text();
-            if (value != "0") {
-                pCode = pCode.substr(pCode.indexOf('('));
-                pCode = pCode.replace("(", "");
-                pCode = pCode.replace(")", "");
-                $("#pCode").val(pCode);
-            } else {
-                $("#pCode").val("");
-            }
-        });
-        $("#btn_submit").click(function () {
-            var data = {};
-            data['id'] = $("#id").val();
-            data['parentId'] = $("#parentId").val();
-            data['parent'] = $("#parent").val();
-            data['pCode'] = $("#pCode").val();
-            data['code'] = $("#code").val();
-            data['value1'] = $('#value1').val();
-            data['value2'] = $('#value2').val();
-            data['optional'] = $('#optional').val();
-            if (data['parent'] == 'Y' && data['code'] == '') {
-                alert("กรุณาใส่ Code");
-                $("#code").focus();
-            } else if (data['parentId'] == '0' && data['parent'] == 'N') {
-                alert("Error! ไม่สามารถเป็น Child ได้");
-            } else {
-                var jdata = {};
-                jdata['insurance'] = data;
-                if (data['value1'] != "") {
-                    var result = sendData('{{_context_path}}/api/insurance/insurance/save', jsonEncode(jdata));
-                    if (result.save == true) {
-                        alert("บันทึกเรียบร้อย");
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/lists', null);
-                    } else {
-                        alert("บันทึกไม่สำเร็จ");
-                    }
-                } else {
-                    alert("กรุณาใส่ Value1");
-                    $("#value1").focus();
-                }
-            }
 
-            return false;
-        });
     });
 </script>

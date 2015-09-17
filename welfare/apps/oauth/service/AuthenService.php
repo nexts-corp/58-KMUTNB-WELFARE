@@ -88,7 +88,7 @@ class AuthenService extends CServiceBase implements IAuthenService {
             if($info[0]->academicId!=""){
                 $taxTitleName->id = $info[0]->academicId;
             }else{
-                $taxTitleName->id = $info[0]->titleId;
+                $taxTitleName->id = $info[0]->titleNameId;
             }
             $titleName = $this->datacontext->getObject($taxTitleName)[0];
             

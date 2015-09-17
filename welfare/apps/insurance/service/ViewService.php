@@ -7,6 +7,7 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\insurance\interfaces\IViewService;
+use apps\taxonomy\entity\Taxonomy;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -18,7 +19,9 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function ssoAdd() {
         $view = new CJView("sso/add", CJViewType::HTML_VIEW_ENGINE);
-
+        $taxTitleName = new Taxonomy();
+        $taxTitleName->pCode = "titleName";
+        
         return $view;
     }
 

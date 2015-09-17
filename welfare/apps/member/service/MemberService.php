@@ -175,7 +175,7 @@ class MemberService extends CServiceBase implements IMemberService {
                 . "tax4.value1 as department "
                 . "FROM apps\\member\\entity\\Member mem1 "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleId = tax1.id "
+                . "with mem1.titleNameId = tax1.id "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
                 . "with mem1.memberActiveId = tax2.id "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "

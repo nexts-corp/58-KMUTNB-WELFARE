@@ -92,7 +92,7 @@
                                     <label class="col-lg-2 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
                                     <div class="col-lg-4">
 
-                                        <input type="text" class="form-control" id="titleId" name="titleId" placeholder="{{#i18n}}academicPositionsId{{/i18n}}"
+                                        <input type="text" class="form-control" id="titleNameId" name="titleNameId" placeholder="{{#i18n}}academicPositionsId{{/i18n}}"
                                                value="{{titlename}}" disabled=""/> 
 
 
@@ -358,12 +358,12 @@
             }
 
             function listtitleName() {
-                var titleId = '{{#datas}}{{titleId}}{{/datas}}';
+                var titleNameId = '{{#datas}}{{titleNameId}}{{/datas}}';
                 var titleName = getPCode("titleName");
                 var html = "";
                 if (titleName != "") {
                     $.each(titleName, function (key, value) {
-                        if (value.id == titleId) {
+                        if (value.id == titleNameId) {
                             html += "<option value='" + value["id"] + "' selected> " + value.value1 + " , " + value["value2"] + "</option>";
                         } else {
                             html += "<option value='" + value["id"] + "'> " + value.value1 + " , " + value["value2"] + "</option>";
@@ -372,7 +372,7 @@
                 } else {
                     html = "<option value=''>คำนำหน้าชื่อ</option>";
                 }
-                $("#titleId").html(html);
+                $("#titleNameId").html(html);
             }
 
             function listemployeeTypeId() {

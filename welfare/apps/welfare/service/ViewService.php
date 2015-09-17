@@ -481,7 +481,7 @@ class ViewService extends CServiceBase implements IViewService {
     public function byMemberLists() {
         $view = new CJView("byMember/lists", CJViewType::HTML_VIEW_ENGINE);
 
-        $query = "SELECT mb.memberId,mb.fname,mb.lname,mb.employeeTypeId,mb.titleId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
+        $query = "SELECT mb.memberId,mb.fname,mb.lname,mb.employeeTypeId,mb.titleNameId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
                 . "mb.departmentId,"
 //                . "(title.value1) As title, "
 //                . "(academic.value1) As academic,"
@@ -492,7 +492,7 @@ class ViewService extends CServiceBase implements IViewService {
                 . "(department.value1) As department "
                 . "FROM member mb "
                 . "Left JOIN taxonomy title "
-                . "on mb.titleId = title.id "
+                . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
                 . "on mb.academicId = academic.id "
                 . "Left JOIN taxonomy employeeType "

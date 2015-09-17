@@ -32,7 +32,7 @@ class SSOService extends CServiceBase implements ISSOService {
                 . "order by dateCreated desc "
                 . ") tb "
                 . "join member mb on mb.memberId = tb.memberId "
-                . "join taxonomy titleName on titleName.id = mb.titleId "
+                . "join taxonomy titleName on titleName.id = mb.titleNameId "
                 . "join taxonomy dep on dep.id = mb.departmentId "
                 . "group by tb.memberId "
                 . "order by tb.dateCreated desc";

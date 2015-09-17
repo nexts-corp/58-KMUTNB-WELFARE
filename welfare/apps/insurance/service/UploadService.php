@@ -66,7 +66,7 @@ class UploadService extends CServiceBase implements IUploadService {
                     $taxFac->code = $dataDep->pCode;
                     $dataFac = $this->datacontext->getObject($taxFac)[0];
                     
-                    $member->titleId = $dataTitle->id;
+                    $member->titleNameId = $dataTitle->id;
                     $member->fname = $fname;
                     $member->lname = $lname;
                     $member->departmentId = $dataDep->id;

@@ -27,9 +27,9 @@ class Member extends EntityBase {
     public $genderId;
 
     /**
-     * @Column(type="string", length=10, name="titleId",nullable=true) 
+     * @Column(type="string", length=10, name="titleNameId",nullable=true) 
      */
-    public $titleId;
+    public $titleNameId;
 
     /**
      * @Column(type="string", length=10, name="academicId",nullable=true) 
@@ -144,8 +144,8 @@ class Member extends EntityBase {
         return $this->genderId;
     }
 
-    function getTitleId() {
-        return $this->titleId;
+    function getTitleNameId() {
+        return $this->titleNameId;
     }
 
     function getAcademicId() {
@@ -240,8 +240,8 @@ class Member extends EntityBase {
         $this->genderId = $genderId;
     }
 
-    function setTitleId($titleId) {
-        $this->titleId = $titleId;
+    function setTitleNameId($titleNameId) {
+        $this->titleNameId = $titleNameId;
     }
 
     function setAcademicId($academicId) {
