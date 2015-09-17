@@ -52,5 +52,13 @@ interface IViewService {
      */
     public function faculty();
     
+     /**
+     * @name menu/medical
+     * @uri /menu/medical
+     * @return html view
+     * @description เรียก head menu มาแสดง
+     */
+    public function medical();
+    
     
 }

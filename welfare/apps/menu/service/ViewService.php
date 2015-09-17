@@ -34,16 +34,22 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function department() {
-        
+
         $view = new CJView("menu/department", CJViewType::HTML_VIEW_ENGINE);
-        
+        $view->code = $this->getCurrentUser()->code;
         return $view;
     }
 
     public function faculty() {
-        
+
         $view = new CJView("menu/faculty", CJViewType::HTML_VIEW_ENGINE);
-       // $view->code = $this->getCurrentUser()->code;
+        $view->code = $this->getCurrentUser()->code;
+        return $view;
+    }
+
+    public function medical() {
+        $view = new CJView("menu/medical", CJViewType::HTML_VIEW_ENGINE);
+        $view->code = $this->getCurrentUser()->code;
         return $view;
     }
 

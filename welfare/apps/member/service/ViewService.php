@@ -71,6 +71,8 @@ class ViewService extends CServiceBase implements IViewService {
             $view = new CJView("department/edit", CJViewType::HTML_VIEW_ENGINE);
         } else if ($usertype == "user") {
             $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
+        }else if ($usertype == "adminMedical") {
+            $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         }
         $sql = "select mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(fac.value1) as faculty,(depart.value1) as department, "
                 . "aca.value1 as academic,mem1.titleId,title.value1 as titlename ,mem1.genderId,gende.value1 as gender,mem1.dob,mem1.employeeCode, "
