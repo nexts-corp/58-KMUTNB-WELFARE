@@ -159,16 +159,20 @@ class ViewService extends CServiceBase implements IViewService {
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
         $searchName = $this->getRequest()->searchName;
         $param = array();
-        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
-                . "FROM apps\\member\\entity\\Member mem1 "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleNameId = tax1.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
-                . "with mem1.memberActiveId = tax2.id "
-                . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
-                . "with mem1.facultyId = tax3.id "
-                . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
-                . "with mem1.departmentId = tax4.id "
+        $sql = "select mem1.fname,mem1.lname,mem1.idCard,"
+                . "mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department,"
+                . "IFNULL(tax5.value1,tax1.value1) title "
+                . "FROM member mem1 "
+                . "INNER JOIN taxonomy tax1 "
+                . "on mem1.titleNameId = tax1.id "
+                . "INNER JOIN taxonomy tax2 "
+                . "on mem1.memberActiveId = tax2.id "
+                . "LEFT JOIN taxonomy tax3 "
+                . "on mem1.facultyId = tax3.id "
+                . "LEFT JOIN taxonomy tax4 "
+                . "on mem1.departmentId = tax4.id "
+                . "left JOIN taxonomy tax5 "
+                . "on mem1.academicId = tax5.id "
                 . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' ";
 
         if ($usertype == "administrator") {
@@ -189,7 +193,7 @@ class ViewService extends CServiceBase implements IViewService {
             $search = new MemberService();
             $view->lists = $search->search($searchName);
         } else {
-            $view->lists = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
+            $view->lists = $this->datacontext->pdoQuery($sql, $param); //กรณีที่ไม่ได้ search
         }
         return $view;
     }

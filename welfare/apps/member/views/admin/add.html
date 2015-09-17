@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-12 col-sm-12 col-xs-12">
                     <div class="widget radius-bordered">
-                        <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                        <div class="widget-header"> <span class="widget-caption">ข้อมูลผู้ใช้งาน</span> </div>
                         <div class="widget-body">
                             <div  class="form-horizontal">
                                 <div class="col-lg-12">
@@ -125,6 +125,27 @@
                                         </div>
                                     </div>
                                 </div>
+
+                             
+                                <div class="form-group">
+                                    <div class="col-lg-10">
+                                        <label class="col-lg-2 control-label">เลือกประเภทผู้ใช้งาน</label>
+                                        <div class="col-lg-5 control-group ">
+
+                                            
+                                                <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
+                                                    <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
+                                                    {{#userType}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/userType}}
+                                                </select>
+                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+                                           
+
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="col-lg-6">
                                         <label class="col-lg-3 control-label">{{#i18n}}gender{{/i18n}}</label>
@@ -343,17 +364,6 @@
                                         </div>
 
 
-                                        <div class="form-group">
-                                            <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
-                                            <div class="col-lg-9">
-                                                <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country" required >
-                                                    <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
-                                                    {{#userType}}
-                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                    {{/userType}}
-                                                </select>
-                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> </div>
-                                        </div>
 
                                         <div class="form-group">
                                             <div class="col-lg-offset-6 col-lg-8">
@@ -449,7 +459,7 @@
                     });
 
                 } else {
-                   
+
                     Notify('กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
 
                     $('#idCard').focus();
