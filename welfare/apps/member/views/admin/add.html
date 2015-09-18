@@ -270,7 +270,7 @@
                                                 {{#matier}}  
                                                 <div class="radio col-lg-6">
                                                     <label>
-                                                        <input name="form-field-radio" value="{{id}}" id="matierId" type="radio"  checked="checked">
+                                                        <input name="matierId" value="{{id}}" id="matierId" type="radio"  checked="checked">
                                                         <span class="text">{{value1}}</span> </label>
                                                 </div>
                                                 {{/matier}}    
@@ -306,6 +306,25 @@
 
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="reservation" class="col-lg-3">ปรับเงินเดือนวันที่</label>
+                                            <div class="col-lg-9">
+                                                <!--<div class="controls col-lg-12">-->
+                                                <div class="input-group">
+                                                    <input class="form-control cDate" id="salaryDate" style="z-index: 9999;" 
+                                                           data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่ปรับเงินเดือน" 
+                                                           data-validation-error-msg-container="#workStartDate-msg-error" />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                                <!--</div>-->
+                                            </div>
+                                            <div class="col-lg-offset-4" id="workStartDate-msg-error">
+
+                                            </div>
+                                        </div>
+                                        
 <!--                                        <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
                                             <div class="col-lg-9">
@@ -448,6 +467,7 @@
                     data['userTypeId'] = $("#userTypeId").val();
                     salary['salary'] = $("#salary").val();
                     salary['rank'] = $("#rank").val();
+                    salary['salaryDate'] = $("#salaryDate").val();
                     contact['address'] = $("#address").val();
                     contact['internalPhone'] = $("#internalPhone").val();
                     contact['phone'] = $("#phone").val();

@@ -41,35 +41,29 @@ class MemberService extends CServiceBase implements IMemberService {
         $data->dob = new \DateTime($dob);
 
         $data->workStartDate = new \DateTime($workStartDate);
-//        
-//        $data->dob = $data->dob->format('Y-m-d');
-//        $data->workStartDate = $data->workStartDate->format('Y-m-d');
-        //print_r($data);
-//        return $data;
-//        print_r($data->userTypeId);
-//            exit();
+
         if ($this->datacontext->saveObject($data)) {
-            
+
             $memberId = $data->memberId;
             $s = new \apps\member\entity\Salary();
             $s->memberId = $memberId;
-            foreach($salary as $key => $value){
+            foreach ($salary as $key => $value) {
                 $s->$key = $value;
             }
             $p = new \apps\member\entity\Work();
             $p->memberId = $memberId;
-            foreach($work as $key => $value){
+            foreach ($work as $key => $value) {
                 $p->$key = $value;
             }
-            $c = new \apps\member\entity\Contract();
+            $c = new \apps\member\entity\Contact();
             $c->memberId = $memberId;
-            foreach($contact as $key => $value){
+            foreach ($contact as $key => $value) {
                 $c->$key = $value;
             }
             $this->datacontext->saveObject($s);
             $this->datacontext->saveObject($p);
             $this->datacontext->saveObject($c);
-            
+
             $user = new User();
             $user->setMemberId($data->memberId);
             $user->setUsername($data->idCard);
@@ -95,6 +89,9 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
+        $salary = $data->salary;
+        $contact = $data->contact;
+        $work = $data->work;
         if ($data->dob != "") {
             $dob1 = explode("-", $data->dob);
             $dob1[2] = intVal($dob1[2]) - 543;
@@ -108,7 +105,6 @@ class MemberService extends CServiceBase implements IMemberService {
             $data->workStartDate = new \DateTime($workStartDate);
         }
 
-
         $current = new Member();
         $current->memberId = $data->memberId;
         $current = $this->datacontext->getObject($current)[0];
@@ -116,9 +112,9 @@ class MemberService extends CServiceBase implements IMemberService {
             $user = new User();
             $user->memberId = $data->memberId;
             $dataUser = $this->datacontext->getObject($user)[0];
-            //   print $data->userTypeId . " " . $dataUser->userTypeId;
+//   print $data->userTypeId . " " . $dataUser->userTypeId;
             if ($data->userTypeId != $dataUser->userTypeId) {
-                // print "!=";
+// print "!=";
                 $history = new MemberHistory();
                 $history->memberId = $data->memberId;
                 $history->fieldChange = "userTypeId";
@@ -126,19 +122,45 @@ class MemberService extends CServiceBase implements IMemberService {
                 $history->valueNew = $data->userTypeId;
                 $this->datacontext->saveObject($history);
 
-                $dataUser->userTypeId = $userTypeId;
+                $dataUser->userTypeId = $data->userTypeId;
                 $this->datacontext->updateObject($dataUser);
             }
         }
+        $memberId = $data->memberId;
+        $s = new \apps\member\entity\Salary();
+        $s->memberId = $memberId;
+        if ($salary->salaryDate != "") {
+            $date1 = explode("-", $salary->salaryDate);
+            $date1[2] = intVal($date1[2]) - 543;
+            $salaryDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
+            $salary->salaryDate = new \DateTime($salaryDate);
+        }
+        foreach ($salary as $key => $value) {
+
+            $s->$key = $value;
+        }
+        $p = new \apps\member\entity\Work();
+        $p->memberId = $memberId;
+        foreach ($work as $key => $value) {
+            $p->$key = $value;
+        }
+        $c = new \apps\member\entity\Contact();
+        $c->memberId = $memberId;
+        foreach ($contact as $key => $value) {
+            $c->$key = $value;
+        }
+        unset($data->work);
+        unset($data->salary);
+        unset($data->contact);
         foreach ($data as $fieldNew => $valueNew) {
             if ($valueNew != null) {
                 foreach ($current as $filedOld => $valueOld) {
                     if ($fieldNew == $filedOld) {
-                        if ($valueNew != $valueOld || $fieldNew == "memberId") {
+                        if ($valueNew != $valueOld || $fieldNew != "memberId") {
                             $history = new MemberHistory();
                             $history->memberId = $data->memberId;
                             $history->fieldChange = $filedOld;
-                            if (is_a($valueOld, "DateTime")) { //if value is DateTime
+                            if (is_a($valueNew, "DateTime")) { //if value is DateTime
 //                            if ($filedOld == "workStartDate" || $filedOld == "workEndDate" || $filedOld == "dob") {
                                 $history->valueOld = $valueOld->format('Y-m-d');
                                 $history->valueNew = $valueNew->format('Y-m-d');
@@ -155,6 +177,12 @@ class MemberService extends CServiceBase implements IMemberService {
         }
 
         if ($this->datacontext->updateObject($data)) {
+
+
+            $this->datacontext->saveObject($s);
+            $this->datacontext->saveObject($p);
+            $this->datacontext->saveObject($c);
+
             $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
             return true;
         } else {
@@ -194,17 +222,20 @@ class MemberService extends CServiceBase implements IMemberService {
         );
         $sql = "select tax1.value1 As titlename, "
                 . "mem1.fname,mem1.lname,mem1.idCard,mem1.memberId, "
-                . "tax3.value1 as faculty, "
+                . "tax3.value1 as faculty,"
+                . "IFNULL(tax5.value1,tax1.value1) title, "
                 . "tax4.value1 as department "
-                . "FROM apps\\member\\entity\\Member mem1 "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleNameId = tax1.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
-                . "with mem1.memberActiveId = tax2.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
-                . "with mem1.facultyId = tax3.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
-                . "with mem1.departmentId = tax4.id "
+                . "FROM v_member mem1 "
+                . "INNER JOIN taxonomy tax1 "
+                . "on mem1.titleNameId = tax1.id "
+                . "INNER JOIN taxonomy tax2 "
+                . "on mem1.memberActiveId = tax2.id "
+                . "INNER JOIN taxonomy tax3 "
+                . "on mem1.facultyId = tax3.id "
+                . "INNER JOIN taxonomy tax4 "
+                . "on mem1.departmentId = tax4.id "
+                . "left JOIN taxonomy tax5 "
+                . "on mem1.academicId = tax5.id "
                 . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
                 . "and (mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name) ";
         if ($usertype == "administrator") {
@@ -216,7 +247,13 @@ class MemberService extends CServiceBase implements IMemberService {
             $sql .= " and tax4.code = :departmentId ";
             $param["departmentId"] = $departmentId;
         }
-        return $this->datacontext->getObject($sql, $param);
+        return $this->datacontext->pdoQuery($sql, $param);
+    }
+
+    public function find($field, $value) {
+        $member = new \apps\member\model\Member();
+        $member->$field = $value;
+        return $this->datacontext->getObject($member);
     }
 
 }

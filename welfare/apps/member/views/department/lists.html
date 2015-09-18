@@ -33,7 +33,7 @@
                         </label>
 
                         <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -91,7 +91,6 @@
 
         $('.btn-del').click(function () {
             var id = $(this).attr('row-index');
-
             if (confirm("คุณต้องการลบ?")) {
                 var data = {"memberId": id};
                 var msg = sendData('{{_context_path}}/api/member/member/delete', data);
@@ -105,12 +104,11 @@
                 }
             }
         });
-        $("#btnsearch").click(function () {
+        $("#btnSearch").click(function () {
             var searchName = $("#searchName").val();
             if (searchName == "") {
                 document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
             } else {
-
                 var data = {"searchName": searchName};
                 getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', data);
             }

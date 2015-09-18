@@ -47,4 +47,14 @@ interface IMemberService {
      */
     public function search($data);
     
+    /**
+     * @name find
+     * @uri /find
+     * @param string field
+     * @param string value
+     * @return string find
+     * @description ค้นหา   
+     */
+    public function find($field,$value);
+    
 }
