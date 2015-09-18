@@ -12,9 +12,9 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="insurance")
+ * @Table(name="SSO")
  */
-class Insurance extends EntityBase {
+class SSO extends EntityBase {
 
     /**
      * @Id

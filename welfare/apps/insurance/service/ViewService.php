@@ -17,33 +17,28 @@ class ViewService extends CServiceBase implements IViewService {
         $this->datacontext = new CDataContext("default");
     }
 
-    public function ssoAdd() {
-        $view = new CJView("sso/add", CJViewType::HTML_VIEW_ENGINE);
+    public function ssoAdminAdd() {
+        $view = new CJView("sso/admin/add", CJViewType::HTML_VIEW_ENGINE);
         $taxTitleName = new Taxonomy();
         $taxTitleName->pCode = "titleName";
         
         return $view;
     }
 
-    public function ssoEdit() {
-        $view = new CJView("sso/edit", CJViewType::HTML_VIEW_ENGINE);
+    public function ssoAdminEdit() {
+        $view = new CJView("sso/admin/edit", CJViewType::HTML_VIEW_ENGINE);
 
         return $view;
         
     }
 
-    public function ssoLists() {
-        $view = new CJView("sso/lists", CJViewType::HTML_VIEW_ENGINE);
+    public function ssoAdminLists() {
+        $view = new CJView("sso/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $sso = new SSOService();
         $view->lists = $sso->lists();
         return $view;
         
     }
-      public function ssoUpload() {
-        $view = new CJView("sso/upload", CJViewType::HTML_VIEW_ENGINE);
-
-        return $view;
-        
-    }
+      
 
 }

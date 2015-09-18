@@ -27,9 +27,6 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}sso.manage{{/i18n}}</span>
-                        <div class="widget-buttons"> </div>
-                    </div>
                     <div class="widget-body">
                         <!--                        <div class="col-md-6">
                                                     <select id="selectParent" class="col-md-12">
@@ -42,7 +39,7 @@
                         <div class="col-sm-2 pull-right">
                             <button class="btn btn-primary" 
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/insurance/view/sso/add"
+                                    data-api="{{_context_path}}/api/insurance/view/sso/admin/add"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
                         </div>
@@ -61,16 +58,14 @@
                                     <tr>
                                         <th class="center">{{#i18n}}sso.rowNo{{/i18n}}</th>
                                         <th class="center">{{#i18n}}sso.idCard{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.titleName{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.fname{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.lname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.fname{{/i18n}} {{#i18n}}sso.lname{{/i18n}}</th>
                                         <th class="center">{{#i18n}}sso.department{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.workStartDate{{/i18n}}</th>
+                                        <!--                                        <th class="center">{{#i18n}}sso.workStartDate{{/i18n}}</th>-->
                                         <th class="center">{{#i18n}}sso.hospital{{/i18n}}</th>
                                         <th class="center">{{#i18n}}sso.issuedDate{{/i18n}}</th>
                                         <th class="center">{{#i18n}}sso.expireDate{{/i18n}}</th>
                                         <th class="center">{{#i18n}}sso.dateCreated{{/i18n}}</th>
-                                        <!--                                        <th class="center">{{#i18n}}edit{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.details{{/i18n}}</th><!--
                                                                                 <th class="center">{{#i18n}}delete{{/i18n}}</th>-->
                                     </tr>
                                 </thead>
@@ -79,29 +74,27 @@
                                     <tr class="selectable">
                                         <td>{{rowNo}}</td>
                                         <td>{{idCard}}</td>
-                                        <td>{{titleName}}</td>
-                                        <td>{{fname}}</td>
-                                        <td>{{lname}}</td>
-                                        <td>{{department}}</td>
-                                        <td>{{workStartDate}}</td>
+                                        <td>{{titleName}} {{fname}} {{lname}}</td>
+                                        <td>{{department}} {{faculty}}</td>
+                                        <!--                                        <td>{{workStartDate}}</td>-->
                                         <td>{{hospital}}</td>
                                         <td>{{issuedDate}}</td>
                                         <td>{{expireDate}}</td>
                                         <td>{{dateCreated}}</td>
-                                        <!--                                        <td class="center">
-                                                                                    <button class="btn btn-info btn-xs" 
-                                                                                            data-id="content-body"
-                                                                                            data-api="{{_context_path}}/api/taxonomy/view/edit/{{id}}"
-                                                                                            onclick="btnHTML(this)">
-                                                                                        <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}}</button>
-                                                                                </td>
-                                        
-                                                                                <td class="center">
-                                                                                    <button class='btn btn-info btn-xs delete' value='{{id}}'>
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                        {{#i18n}}delete{{/i18n}}
-                                                                                    </button>
-                                                                                </td>-->
+                                        <td class="center">
+                                            <button class="btn btn-info btn-xs" 
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/taxonomy/view/sso/edit/{{memberId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-plus"></i>{{#i18n}}sso.details{{/i18n}}</button>
+                                        </td>
+                                        <!--     
+                                                                          <td class="center">
+                                                                              <button class='btn btn-info btn-xs delete' value='{{id}}'>
+                                                                                  <i class="fa fa-edit"></i>
+                                                                                  {{#i18n}}delete{{/i18n}}
+                                                                              </button>
+                                                                          </td>-->
                                     </tr>
                                     {{/lists}}
                                 </tbody>
@@ -135,7 +128,43 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
+<div class="modal fade" id="listsErrorModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header well bg-magenta">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">รายชื่อที่ไม่สามารถบันทึกลงระบบได้</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-striped table-bordered table-condensed">
+                    <thead>
+                    <th class="danger">{{#i18n}}sso.rowNo{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}sso.idCard{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}sso.fname{{/i18n}} {{#i18n}}sso.lname{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}sso.department{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}sso.hospital{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}sso.issuedDate{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}sso.expireDate{{/i18n}}</th>
+                    </thead>
+                    <tbody id="tableListsError">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        data-id="content-body"
+                        data-api="{{_context_path}}/api/insurance/view/sso/admin/lists"
+                        onclick="setTimeout(
+                                    function(){
+                                        btnHTML(this)
+                                    },1000)">
+                    {{#i18n}}button.close{{/i18n}}</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         var myDropzone = new Dropzone("#frm_upload", {
@@ -160,13 +189,29 @@
                     myDropzone.removeFile(file);
                     Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
                     setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/lists', null);
+                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', null);
                     }, 5000);
 
                 } else if (txt.sso == "cantUpload") {
                     Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
                 } else {
-                    Notify('ไม่สามารถบันทึกลงฐานข้อมูลได้', 'top-right', '4000', 'warning', 'fa-check', true);
+                    $("#uploadModal").modal('hide');
+                    var error = txt.sso;
+                    var html = "";
+                    $.each(error, function (k, v) {
+                        html += '<tr>'
+                                + '<td>' + (k + 1) + '</td>'
+                                + '<td>'+v.idCard+'</td>'
+                                + '<td>'+v.titleName+' '+v.fname+' '+v.lname+'</td>'
+                                + '<td>'+v.department+'</td>'
+                                + '<td>'+v.hospital+'</td>'
+                                + '<td>'+v.issuedDate+'</td>'
+                                + '<td>'+v.expireDate+'</td>'
+                                + '</tr>';
+                    });
+                    $("#tableListsError").html(html);
+                    $("#listsErrorModal").modal('show');
+                    // Notify('มีสมาชิกส่วบันทึกลงฐานข้อมูลได้', 'top-right', '4000', 'warning', 'fa-check', true);
                 }
             }
         });

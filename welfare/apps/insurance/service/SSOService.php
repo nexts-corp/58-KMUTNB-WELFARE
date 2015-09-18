@@ -16,11 +16,13 @@ class SSOService extends CServiceBase implements ISSOService {
 
     public function lists() {
         $sql = "SELECT "
+                . "mb.memberId, "
                 . "mb.idCard, "
-                . "titlename.value1 as titleName, "
+                . "ifnull(academic.value1,titlename.value1) as titleName, "
                 . "mb.fname, "
                 . "mb.lname, "
                 . "dep.value1 as department, "
+                . "fac.value1 as faculty, "
                 . "STR_TO_DATE(mb.workStartDate,'%Y-%m-%d') as workStartDate, "
                 . "tb.hospital, "
                 . "STR_TO_DATE(tb.issuedDate,'%Y-%m-%d') as issuedDate, "
@@ -28,12 +30,14 @@ class SSOService extends CServiceBase implements ISSOService {
                 . "STR_TO_DATE(tb.dateCreated,'%Y-%m-%d %H:%i:%s') as dateCreated "
                 . "FROM ( "
                 . "select * "
-                . "from kmutnb_welfare.insurance "
+                . "from kmutnb_welfare.sso "
                 . "order by dateCreated desc "
                 . ") tb "
-                . "join member mb on mb.memberId = tb.memberId "
+                . "join v_member mb on mb.memberId = tb.memberId "
                 . "join taxonomy titleName on titleName.id = mb.titleNameId "
+                . "join taxonomy academic on academic.id = mb.academicId "
                 . "join taxonomy dep on dep.id = mb.departmentId "
+                . "join taxonomy fac on fac.id = mb.facultyId "
                 . "group by tb.memberId "
                 . "order by tb.dateCreated desc";
         $datas = $this->datacontext->pdoQuery($sql);
@@ -41,14 +45,14 @@ class SSOService extends CServiceBase implements ISSOService {
         foreach ($datas as $key => $value) {
             $datas[$key]["rowNo"] = $i++;
             foreach ($value as $key2 => $value2) {
-                if (strpos($key2, "Date") || $key2=="dateCreated") {
-                    
+                if (strpos($key2, "Date") || $key2 == "dateCreated") {
+
                     $dateTime = explode(" ", $value2);
                     $date = $dateTime[0];
                     $date = explode("-", $date);
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
                     if (!empty($dateTime[1])) {
-                        $datas[$key][$key2] = $date." ".$dateTime[1];
+                        $datas[$key][$key2] = $date . " " . $dateTime[1];
                     } else {
                         $datas[$key][$key2] = $date;
                     }

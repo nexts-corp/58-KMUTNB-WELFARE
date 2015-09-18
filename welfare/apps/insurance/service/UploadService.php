@@ -5,7 +5,7 @@ namespace apps\insurance\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\insurance\interfaces\IUploadService;
-use apps\insurance\entity\Insurance;
+use apps\insurance\entity\SSO;
 use apps\taxonomy\entity\Taxonomy;
 use apps\member\entity\Member;
 
@@ -29,78 +29,60 @@ class UploadService extends CServiceBase implements IUploadService {
         array_pop($arr);
 
         $uploaddir = './uploads/';
-        $filename = 'sso' . date("YmdHis").".csv";
+        $filename = 'sso' . date("YmdHis") . ".csv";
         $uploadfile = $uploaddir . $filename;
         if (move_uploaded_file($file['tmp_name'], $uploadfile)) {
             chmod($uploadfile, 0777);
+            $error = array();
             foreach ($arr as $key => $value) {
                 $memberId = "";
-                $idCard = str_replace(" ","",$value[0]);
-                $titleName = str_replace(" ","",$value[1]);
-                $fname = str_replace(" ","",$value[2]);
-                $lname = str_replace(" ","",$value[3]);
-                $department = str_replace(" ","",$value[4]);
-                $workStartDate = str_replace(" ","",$value[5]);
-                $hospital = str_replace(" ","",$value[6]);
-                $issuedDate = str_replace(" ","",$value[7]);
-                $expireDate = str_replace(" ","",$value[8]);
+                $idCard = str_replace(" ", "", $value[0]);
+                $titleName = str_replace(" ", "", $value[1]);
+                $fname = str_replace(" ", "", $value[2]);
+                $lname = str_replace(" ", "", $value[3]);
+                $department = str_replace(" ", "", $value[4]);
+                $workStartDate = str_replace(" ", "", $value[5]);
+                $hospital = str_replace(" ", "", $value[6]);
+                $issuedDate = str_replace(" ", "", $value[7]);
+                $expireDate = str_replace(" ", "", $value[8]);
                 $member = new Member();
                 $member->idCard = $idCard;
                 $dataMember = $this->datacontext->getObject($member);
                 if ($dataMember == NULL) {
-                    $taxTitle = new Taxonomy();
-                    $taxTitle->pCode = "titleName";
-                    $taxTitle->value1 = $titleName;
-                    $dataTitle = $this->datacontext->getObject($taxTitle)[0];
-
-                    $taxActive = new Taxonomy();
-                    $taxActive->pCode = "memberActive";
-                    $taxActive->code = "working";
-                    $dataActive = $this->datacontext->getObject($taxActive)[0];
-                    
-                    $taxDep = new Taxonomy();
-                    $taxDep->value1 = $department;
-                    $dataDep = $this->datacontext->getObject($taxDep)[0];
-                    
-                    $taxFac = new Taxonomy();
-                    $taxFac->code = $dataDep->pCode;
-                    $dataFac = $this->datacontext->getObject($taxFac)[0];
-                    
-                    $member->titleNameId = $dataTitle->id;
-                    $member->fname = $fname;
-                    $member->lname = $lname;
-                    $member->departmentId = $dataDep->id;
-                    $member->facultyId = $dataFac->id;
-                    $workStartDate = explode("-", $workStartDate);
-                    $member->workStartDate = new \DateTime(intval($workStartDate[2] - 543) . "-" . $workStartDate[1] . "-" . $workStartDate[0]);
-                    $member->memberActiveId = $dataActive->id;
-                    $this->datacontext->saveObject($member);
-
-                    $memberId = $member->memberId;
+                    array_push($error, array(
+                        "idCard" => $idCard,
+                        "titleName" => $titleName,
+                        "fname" => $fname,
+                        "lname" => $lname,
+                        "department" => $department,
+                        "workStartDate" => $workStartDate,
+                        "hospital" => $hospital,
+                        "issuedDate" => $issuedDate,
+                        "expireDate" => $expireDate
+                    ));
                 } else {
-                    $memberId = $dataMember[0]->memberId;
+                    $sso = new SSO();
+                    $sso->memberId = $dataMember[0]->memberId;
+                    $sso->idCard = $idCard;
+                    $sso->hospital = $hospital;
+                    $issuedDate = explode("-", $issuedDate);
+                    $sso->issuedDate = new \DateTime(intval($issuedDate[2] - 543) . "-" . $issuedDate[1] . "-" . $issuedDate[0]);
+                    $expireDate = explode("-", $expireDate);
+                    $sso->expireDate = new \DateTime(intval($expireDate[2] - 543) . "-" . $expireDate[1] . "-" . $expireDate[0]);
+                    $sso->filename = $filename;
+                    if ($this->datacontext->saveObject($sso)) {
+                        $return = true;
+                    }
                 }
-
-                $insurance = new Insurance();
-                $insurance->memberId = $memberId;
-                $insurance->idCard = $idCard;
-                $insurance->hospital = $hospital;
-                $issuedDate = explode("-", $issuedDate);
-                $insurance->issuedDate = new \DateTime(intval($issuedDate[2] - 543) . "-" . $issuedDate[1] . "-" . $issuedDate[0]);
-                $expireDate = explode("-", $expireDate);
-                $insurance->expireDate = new \DateTime(intval($expireDate[2] - 543) . "-" . $expireDate[1] . "-" . $expireDate[0]);
-                $insurance->filename = $filename;
-                if ($this->datacontext->saveObject($insurance)) {
-                    $return = true;
-                } else {
-                    return $this->datacontext->getLastMessage();
-                }
+            }
+            if (count($error) > 0) {
+                $return = $error;
             }
         } else {
             $return = "cantUpload";
             //$return = $uploadfile;
         }
-        
+
         return $return;
     }
 
