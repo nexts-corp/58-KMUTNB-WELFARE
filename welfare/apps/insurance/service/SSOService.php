@@ -62,4 +62,25 @@ class SSOService extends CServiceBase implements ISSOService {
         return $datas;
     }
 
+    public function save($sso) {
+        if ($sso->issuedDate != "") {
+            $date = explode("-", $sso->issuedDate);
+            $date[2] = intVal($date[2]) - 543;
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+            $sso->issuedDate = new \DateTime($date);
+        }
+        if ($sso->expireDate != "") {
+            $date = explode("-", $sso->expireDate);
+            $date[2] = intVal($date[2]) - 543;
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+            $sso->expireDate = new \DateTime($date);
+        }
+        if (!$this->datacontext->saveObject($sso)) {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

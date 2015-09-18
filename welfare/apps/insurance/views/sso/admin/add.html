@@ -3,35 +3,35 @@
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
-            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}menu.insurance{{/i18n}}</li>
+            <li> <i class="fa fa-home"></i>
+                <a href="{{_context_path}}">
+                    {{#i18n}}home{{/i18n}}</a> 
+            </li>
+            <li><a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/insurance/view/sso/admin/lists"
+                   onclick="btnHTML(this)">
+                    {{#i18n}}menu.sso{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.sso.add{{/i18n}}</li>
         </ul>
     </div>
-    <!-- /Page Breadcrumb --> 
-    <!-- Page Header -->
-    <div class="page-header position-relative">
-        <div class="header-title">
-            <h1>{{#i18n}}sso.title{{/i18n}}</h1>
-        </div>
-        <!--Header Buttons--> 
-
-        <!--Header Buttons End--> 
-    </div>
-    <!-- /Page Header --> 
-    <!-- Page Body -->
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}sso.add{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}menu.sso.add{{/i18n}}</span> </div>
                     <div class="widget-body">
-                        <div  class="form-horizontal">
+                        <form  class="form-horizontal" id="formAdd">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}sso.idCard{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.idCard{{/i18n}}*</label>
                                 <div class="col-lg-8">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="idCard" name="idCard" />
+                                        <input type="text" class="form-control" id="idCard" name="idCard"
+                                               data-validation="length number" data-validation-length="13"
+                                               />
                                     </div>
+                                    <div class="col-lg-12" id="idcard-msg-error"></div>
                                 </div>
                                 <div class="col-lg-2">
                                     <button id="btn_search" class="btn btn-primary"> 
@@ -43,40 +43,34 @@
                                 <label class="col-lg-2 control-label">{{#i18n}}sso.fname{{/i18n}}-{{#i18n}}sso.lname{{/i18n}}</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="fullname" name="fullname" disabled="" />
+                                        <input type="text" class="form-control" id="fullname" name="fullname" disabled="" value="ไม่มีข้อมูล" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}sso.hospital{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.hospital{{/i18n}}*</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="hospital" name="hospital" />
+                                        <input type="text" class="form-control" id="hospital" name="hospital"
+                                               data-validation="required"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}sso.optional{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.issuedDate{{/i18n}}*</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="optional" name="optional" value="{{optional}}" />
+                                        <input type="text" class="form-control cDate" id="issuedDate" name="issuedDate"
+                                               data-validation="date" data-validation-format="dd-mm-yyyy" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}sso.pCode{{/i18n}}</label>
+                                <label class="col-lg-2 control-label">{{#i18n}}sso.expireDate{{/i18n}}*</label>
                                 <div class="col-lg-10">
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" disabled id="pCode" name="pCode" value="{{pCode}}" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">{{#i18n}}sso.code{{/i18n}}</label>
-                                <div class="col-lg-10">
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" id="code" name="code" value="{{code}}" />
+                                        <input type="text" class="form-control cDate" id="expireDate" name="expireDate"
+                                               data-validation="date" data-validation-format="dd-mm-yyyy" />
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +81,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -98,23 +92,71 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#btn_search").click(function(){
+        var memberId;
+        $.validate();
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+        $("#btn_search").click(function () {
             var idCard = $("#idCard").val();
             $.ajax({
-                url:'{{_context_path}}/api/member/member/find',
-                data:{field:"idCard",value:idCard},
-                async:false,
-                type:'post',
-                success:function(result){
-                   if(result.find!=""){
-                       $.each(result.find,function(key,value){
-                           $("#fullname").val(value.fname+" "+value.lname);
-                       });
-                   }else{
-                        $("#fullname").val("ไม่พบข้อมูล");
-                   }
+                url: '{{_context_path}}/api/member/member/find',
+                data: {field: "idCard", value: idCard},
+                async: false,
+                type: 'post',
+                success: function (result) {
+                    if (result.find != "") {
+                        $.each(result.find, function (key, value) {
+                            $("#fullname").val(value.fname + " " + value.lname);
+                            memberId = value.memberId;
+                        });
+                    } else {
+                        $("#fullname").val("ไม่มีข้อมูล");
+                        memberId = "";
+                    }
                 }
             });
+            return false;
+        });
+        $("#idCard").change(function () {
+            $("#fullname").val("ไม่มีข้อมูล");
+            memberId = "";
+        });
+        $("#btn_submit").click(function () {
+            var fullname = $("#fullname").val();
+            if (fullname == "ไม่มีข้อมูล") {
+                Notify('เลขที่บัตรประชาชนไม่ถูกต้อง', 'top-right', '4000', 'danger', 'fa-check', true);
+                $("#idCard").focus();
+            } else {
+                var data = {};
+                data['memberId'] = memberId;
+                data['idCard'] = $("#idCard").val();
+                data['hospital'] = $("#hospital").val();
+                data['issuedDate'] = $("#issuedDate").val();
+                data['expireDate'] = $("#expireDate").val();
+                var check = true;
+                $.each(data, function (k, v) {
+                    if (v == "") {
+                        $("#" + k).focus();
+                        Notify('กรุณากรอกข้อมูลให้ครบทุกช่อง', 'top-right', '4000', 'danger', 'fa-check', true);
+                        check = false;
+                        return false;
+                    }
+                });
+                if (check) {
+                    var sso = {};
+                    sso['sso'] = data;
+                    var result = sendData('{{_context_path}}/api/insurance/sso/save', jsonEncode(sso));
+                    if (result.save == true) {
+                        Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                        setTimeout(function () {
+                            getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', null);
+                        }, 1000);
+                    } else {
+                        Notify('ไม่สามารถบันทึกข้อมูลได้', 'top-right', '4000', 'danger', 'fa-check', true);
+                    }
+                }
+
+            }
+            return false;
         });
     });
 </script>

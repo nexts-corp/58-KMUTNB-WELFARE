@@ -17,4 +17,13 @@ interface ISSOService {
      * @description ลิสต์ข้อมูลผู้ประกันตนประกันสังคม
      */
     public function lists();
+    
+    /**
+     * @name save
+     * @uri /save
+     * @param apps\insurance\entity\SSO sso
+     * @return string save
+     * @description บันทึกข้อมูลประกันสังคม
+     */
+    public function save($sso);
 }
