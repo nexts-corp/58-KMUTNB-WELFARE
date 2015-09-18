@@ -108,13 +108,17 @@ class AuthenService extends CServiceBase implements IAuthenService {
             //$acc->facultyId=$user[0]->registerId;
 
             $acc->attribute = array();
+            $work = new \apps\member\entity\Work();
+            $work->memberId = $user[0]->memberId;
+            $dataWork = $this->datacontext->getObject($work)[0];
+            
             $taxFaculty = new \apps\taxonomy\entity\Taxonomy();
-            $taxFaculty->id = $info[0]->facultyId;
+            $taxFaculty->id = $dataWork->facultyId;
             $faculty = $this->datacontext->getObject($taxFaculty)[0];
             $acc->attribute["facultyId"] = $faculty->code;
 
             $taxDepartment = new \apps\taxonomy\entity\Taxonomy();
-            $taxDepartment->id = $info[0]->departmentId;
+            $taxDepartment->id = $dataWork->departmentId;
             $department = $this->datacontext->getObject($taxDepartment)[0];
             $acc->attribute["departmentId"] = $department->code;
 
