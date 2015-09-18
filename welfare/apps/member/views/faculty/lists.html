@@ -35,7 +35,7 @@
                         <div class="col-lg-3">
                             <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
-
+                        
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -53,11 +53,10 @@
                                     <tr class="selectable" >
 
                                         <td>{{idCard}}</td>
-                                        <td><div id="title"></div>{{titlename}} {{fname}}      {{lname}}</td>
+                                        <td><div id="title"></div>{{title}} {{fname}}      {{lname}}</td>
                                         <td>{{department}}</td>
                                         <td>{{faculty}}</td>
                                         <td class="center">
-
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/member/view/member/edit/{{memberId}}"
@@ -91,18 +90,20 @@
 
         $('.btn-del').click(function () {
             var id = $(this).attr('row-index');
+
             if (confirm("คุณต้องการลบ?")) {
                 var data = {"memberId": id};
                 var msg = sendData('{{_context_path}}/api/member/member/delete', data);
 
                 if (msg.delete == true) {
-
+                    
                     getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
                     Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
                 } else {
                     Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                 }
             }
+
         });
         $("#btnSearch").click(function () {
             var searchName = $("#searchName").val();

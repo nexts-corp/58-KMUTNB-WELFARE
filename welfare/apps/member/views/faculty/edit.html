@@ -24,7 +24,7 @@
 
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget radius-bordered">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">ข้อมูลผู้ใช้งาน</span> </div>
                     <div class="widget-body">
                         <div  class="form-horizontal">
 
@@ -101,6 +101,20 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">เลือกประเภทผู้ใช้งาน</label>
+                                <div class="col-lg-4">
+                                    <div class="col-lg-12">
+                                        <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
+                                            {{#userType}}
+                                            <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                            {{/userType}}
+                                        </select>
+                                        <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-lg-2 control-label">{{#i18n}}gender{{/i18n}}</label>
                                 <div class="col-lg-4 control-group " id="gender">
                                     {{#gender}}
@@ -112,16 +126,17 @@
                                     {{/gender}}
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="widget radius-bordered">
-                            <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                            <div class="widget-header"> <span class="widget-caption">ข้อมูลสมาชิก</span> </div>
                             <div class="widget-body">
                                 <div class="form-horizontal">
-                                    <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+                                    <div class="form-title"></div>
 
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
@@ -157,7 +172,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" id="facultyId" disabled="" name="facultyId" data-bv-field="country">
+                                            <select class="form-control" id="facultyId" name="facultyId" data-bv-field="country" disabled="">
                                                 <option value="">เลือกคณะวิชา/สำนัก</option>
                                                 {{#faculty}}
                                                 <option value="{{id}}">{{value1}} , {{value2}}</option>
@@ -204,27 +219,33 @@
 
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">{{#i18n}}registerSalaryAdded{{/i18n}}</label>
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="salaryStart" name="salaryStart" placeholder="{{#i18n}}registerSalaryAdded{{/i18n}}"
-                                                   data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนแรกเข้า"
-                                                   data-validation-error-msg-container="#salaryStart-msg-error" value="{{#datas}}{{salaryStart}}{{/datas}}" />
-                                        </div>
-                                        <div class="col-lg-offset-4" id="salaryStart-msg-error">
 
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="salaryPresent" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
+                                            <input type="text" class="form-control" id="salary" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
                                                    data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนปัจุบัน"
-                                                   data-validation-error-msg-container="#salaryPresent-msg-error" value="{{#datas}}{{salaryPresent}}{{/datas}}" />
+                                                   data-validation-error-msg-container="#salaryPresent-msg-error" value="{{#datas}}{{salary}}{{/datas}}" />
                                         </div>
                                         <div class="col-lg-offset-4" id="salaryPresent-msg-error">
 
                                         </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reservation" class="col-lg-3">ปรับเงินเดือนวันที่</label>
+
+                                        <div class="col-lg-9">
+                                            <!--<div class="controls col-lg-12">-->
+                                            <div class="input-group">
+                                                <input class="form-control cDate" type="text" value="{{#datas}}{{salaryDate}}{{/datas}}"  id="salaryDate" style="z-index: 9999;" />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <!--</div>-->
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -234,10 +255,10 @@
 
                     <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="widget radius-bordered">
-                            <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                            <div class="widget-header"> <span class="widget-caption">ข้อมูลผู้ติดต่อ</span> </div>
                             <div class="widget-body">
                                 <div class="form-horizontal">
-                                    <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+                                    <div class="form-title"></div>
 
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">{{#i18n}}registerAddress{{/i18n}}</label>
@@ -284,17 +305,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-3 control-label">เลือกประเภทผู้ใช้งาน</label>
-                                        <div class="col-lg-9">
-                                            <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
-                                                {{#userType}}
-                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                {{/userType}}
-                                            </select>
-                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
-                                        </div>
-                                    </div>
+
 
 
                                     <div class="form-group">
@@ -387,29 +398,37 @@
             $("#btn_submit").click(function () {
 //alert(555555555555);
                 var data = {};
-                data['memberId'] = "{{#datas}}{{memberId}}{{/datas}}";
-                data['fname'] = $("#fname").val();
-                data['lname'] = $("#lname").val();
-                data['titleNameId'] = $("#titleNameId").val();
-                data['genderId'] = $('input[name=genderId]:checked').val();
-                data['idCard'] = $("#idCard").val();
-                data['dob'] = $("#dob").val();
-                data['employeeCode'] = $("#employeeCode").val();
-                data['employeeTypeId'] = $("#employeeTypeId").val();
-                data['academicId'] = $("#academicId").val();
-                data['departmentId'] = $("#departmentId").val();
-                data['facultyId'] = $("#facultyId").val();
-                data['workStartDate'] = $("#workStartDate").val();
-                data['matierId'] = $('input[name=matierId]:checked').val();
-                data['positionId'] = $("#positionId").val();
-                data['userTypeId'] = $("#userTypeId").val();
-                data['salaryStart'] = $("#salaryStart").val();
-                data['salaryPresent'] = $("#salaryPresent").val();
-                data['address'] = $("#address").val();
-                data['internalPhone'] = $("#internalPhone").val();
-                data['phone'] = $("#phone").val();
-                data['mobile'] = $("#mobile").val();
-                data['email'] = $("#email").val();
+                    var contact = {};
+                    var work = {};
+                    var salary = {};
+                    data['memberId'] = {{#datas}}{{memberId}}{{/datas}};
+                    data['fname'] = $("#fname").val();
+                    data['lname'] = $("#lname").val();
+                    data['titleNameId'] = $("#titleNameId").val();
+                    data['genderId'] = $('input[name=genderId]:checked').val();
+                    data['idCard'] = $("#idCard").val();
+                    data['dob'] = $("#dob").val();
+                    data['employeeCode'] = $("#employeeCode").val();
+                    work['employeeTypeId'] = $("#employeeTypeId").val();
+                    work['academicId'] = $("#academicId").val();
+                    work['departmentId'] = $("#departmentId").val();
+                    work['facultyId'] = $("#facultyId").val();
+                    data['workStartDate'] = $("#workStartDate").val();
+                    work['matierId'] = $('input[name=matierId]:checked').val();
+                    work['positionId'] = $("#positionId").val();
+                    data['userTypeId'] = $("#userTypeId").val();
+                    salary['salary'] = $("#salary").val();
+                    salary['rank'] = $("#rank").val();
+                    salary['salaryDate'] = $("#salaryDate").val();
+                    contact['address'] = $("#address").val();
+                    contact['internalPhone'] = $("#internalPhone").val();
+                    contact['phone'] = $("#phone").val();
+                    contact['mobile'] = $("#mobile").val();
+                    contact['email'] = $("#email").val();
+                    
+                    data['work'] = work;
+                    data['salary'] = salary;
+                    data['contact'] = contact;
 
                 var jdata = {};
                 jdata['data'] = data;

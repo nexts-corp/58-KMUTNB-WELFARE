@@ -89,6 +89,9 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
+        $usertype = $this->getCurrentUser()->usertype;
+        $facultyId = $this->getCurrentUser()->attribute->facultyId;
+        $departmentId = $this->getCurrentUser()->attribute->departmentId;
         $salary = $data->salary;
         $contact = $data->contact;
         $work = $data->work;
@@ -127,67 +130,139 @@ class MemberService extends CServiceBase implements IMemberService {
             }
         }
         $memberId = $data->memberId;
-        $s = new \apps\member\entity\Salary();
-        $s->memberId = $memberId;
-        if ($salary->salaryDate != "") {
-            $date1 = explode("-", $salary->salaryDate);
-            $date1[2] = intVal($date1[2]) - 543;
-            $salaryDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
-            $salary->salaryDate = new \DateTime($salaryDate);
-        }
-        foreach ($salary as $key => $value) {
+        if ($usertype == "user") {
+            if ($salary != "") {
+                $s = new \apps\member\entity\Salary();
+                $s->memberId = $memberId;
+                if ($salary->salaryDate != "") {
+                    $date1 = explode("-", $salary->salaryDate);
+                    $date1[2] = intVal($date1[2]) - 543;
+                    $salaryDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
+                    $salary->salaryDate = new \DateTime($salaryDate);
+                }
+                foreach ($salary as $key => $value) {
 
-            $s->$key = $value;
-        }
-        $p = new \apps\member\entity\Work();
-        $p->memberId = $memberId;
-        foreach ($work as $key => $value) {
-            $p->$key = $value;
-        }
-        $c = new \apps\member\entity\Contact();
-        $c->memberId = $memberId;
-        foreach ($contact as $key => $value) {
-            $c->$key = $value;
-        }
-        unset($data->work);
-        unset($data->salary);
-        unset($data->contact);
-        foreach ($data as $fieldNew => $valueNew) {
-            if ($valueNew != null) {
-                foreach ($current as $filedOld => $valueOld) {
-                    if ($fieldNew == $filedOld) {
-                        if ($valueNew != $valueOld || $fieldNew != "memberId") {
-                            $history = new MemberHistory();
-                            $history->memberId = $data->memberId;
-                            $history->fieldChange = $filedOld;
-                            if (is_a($valueNew, "DateTime")) { //if value is DateTime
+                    $s->$key = $value;
+                }
+                unset($data->salary);
+            } elseif ($work != "") {
+                $p = new \apps\member\entity\Work();
+                $p->memberId = $memberId;
+                foreach ($work as $key => $value) {
+                    $p->$key = $value;
+                }
+                unset($data->work);
+            } elseif ($contact != "") {
+                $c = new \apps\member\entity\Contact();
+                $c->memberId = $memberId;
+                foreach ($contact as $key => $value) {
+                    $c->$key = $value;
+                }
+                unset($data->contact);
+            }
+
+            foreach ($data as $fieldNew => $valueNew) {
+                if ($valueNew != null) {
+                    foreach ($current as $filedOld => $valueOld) {
+                        if ($fieldNew == $filedOld) {
+                            if ($valueNew != $valueOld || $fieldNew != "memberId") {
+                                $history = new MemberHistory();
+                                $history->memberId = $data->memberId;
+                                $history->fieldChange = $filedOld;
+                                if (is_a($valueNew, "DateTime")) { //if value is DateTime
 //                            if ($filedOld == "workStartDate" || $filedOld == "workEndDate" || $filedOld == "dob") {
-                                $history->valueOld = $valueOld->format('Y-m-d');
-                                $history->valueNew = $valueNew->format('Y-m-d');
-                                $this->datacontext->saveObject($history);
-                            } elseif ($filedOld != "userTypeId") {
-                                $history->valueOld = $valueOld;
-                                $history->valueNew = $valueNew;
-                                $this->datacontext->saveObject($history);
+                                    $history->valueOld = $valueOld->format('Y-m-d');
+                                    $history->valueNew = $valueNew->format('Y-m-d');
+                                    $this->datacontext->saveObject($history);
+                                } elseif ($filedOld != "userTypeId") {
+                                    $history->valueOld = $valueOld;
+                                    $history->valueNew = $valueNew;
+                                    $this->datacontext->saveObject($history);
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        if ($this->datacontext->updateObject($data)) {
+            if ($this->datacontext->updateObject($data)) {
 
-
-            $this->datacontext->saveObject($s);
-            $this->datacontext->saveObject($p);
-            $this->datacontext->saveObject($c);
-
-            $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
-            return true;
+                if ($salary != "") {
+                    $this->datacontext->saveObject($s);
+                } elseif ($work != "") {
+                    $this->datacontext->saveObject($p);
+                } elseif ($contact != "") {
+                    $this->datacontext->saveObject($c);
+                }
+                $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+                return true;
+            } else {
+                $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+                return false;
+            }
         } else {
-            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
-            return false;
+            $s = new \apps\member\entity\Salary();
+            $s->memberId = $memberId;
+            if ($salary->salaryDate != "") {
+                $date1 = explode("-", $salary->salaryDate);
+                $date1[2] = intVal($date1[2]) - 543;
+                $salaryDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
+                $salary->salaryDate = new \DateTime($salaryDate);
+            }
+            foreach ($salary as $key => $value) {
+
+                $s->$key = $value;
+            }
+            $p = new \apps\member\entity\Work();
+            $p->memberId = $memberId;
+            foreach ($work as $key => $value) {
+                $p->$key = $value;
+            }
+            $c = new \apps\member\entity\Contact();
+            $c->memberId = $memberId;
+            foreach ($contact as $key => $value) {
+                $c->$key = $value;
+            }
+            unset($data->work);
+            unset($data->salary);
+            unset($data->contact);
+            foreach ($data as $fieldNew => $valueNew) {
+                if ($valueNew != null) {
+                    foreach ($current as $filedOld => $valueOld) {
+                        if ($fieldNew == $filedOld) {
+                            if ($valueNew != $valueOld || $fieldNew != "memberId") {
+                                $history = new MemberHistory();
+                                $history->memberId = $data->memberId;
+                                $history->fieldChange = $filedOld;
+                                if (is_a($valueNew, "DateTime")) { //if value is DateTime
+//                            if ($filedOld == "workStartDate" || $filedOld == "workEndDate" || $filedOld == "dob") {
+                                    $history->valueOld = $valueOld->format('Y-m-d');
+                                    $history->valueNew = $valueNew->format('Y-m-d');
+                                    $this->datacontext->saveObject($history);
+                                } elseif ($filedOld != "userTypeId") {
+                                    $history->valueOld = $valueOld;
+                                    $history->valueNew = $valueNew;
+                                    $this->datacontext->saveObject($history);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($this->datacontext->updateObject($data)) {
+
+
+                $this->datacontext->saveObject($s);
+                $this->datacontext->saveObject($p);
+                $this->datacontext->saveObject($c);
+
+                $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
+                return true;
+            } else {
+                $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+                return false;
+            }
         }
     }
 

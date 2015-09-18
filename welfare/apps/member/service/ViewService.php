@@ -105,7 +105,7 @@ class ViewService extends CServiceBase implements IViewService {
         $dob = $member[0]['dob']->format('d-m-Y');
 
 //        print_r($member);
-
+        
         $mem = explode("-", $dob);
         $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
 
