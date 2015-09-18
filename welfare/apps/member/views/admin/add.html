@@ -221,7 +221,19 @@
 
                                             </div>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">ลำดับขั้น</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="rank" name="rank" placeholder="ลำดับขั้น"
+                                                       data-validation="required" data-validation-error-msg="*กรุณาระบุลำดับขั้น"
+                                                       data-validation-error-msg-container="#rank-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="rank-msg-error">
 
+                                            </div>
+                                        </div>
+                                        
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
                                             <div class="col-lg-9">
@@ -284,17 +296,17 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-3 control-label">{{#i18n}}registerSalaryAdded{{/i18n}}</label>
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" id="salaryStart" name="salaryStart" placeholder="{{#i18n}}registerSalaryAdded{{/i18n}}"
-                                                       data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนแรกเข้า"
-                                                       data-validation-error-msg-container="#salaryStart-msg-error" />
+                                                <input type="text" class="form-control" id="salary" name="salary" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
+                                                       data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือน"
+                                                       data-validation-error-msg-container="#salary-msg-error" />
                                             </div>
-                                            <div class="col-lg-offset-4" id="salaryStart-msg-error">
+                                            <div class="col-lg-offset-4" id="salary-msg-error">
 
                                             </div>
                                         </div>
-                                        <div class="form-group">
+<!--                                        <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="salaryPresent" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
@@ -304,7 +316,7 @@
                                             <div class="col-lg-offset-4" id="salaryPresent-msg-error">
 
                                             </div>
-                                        </div>
+                                        </div>-->
 
                                     </div>
                                 </div>
@@ -416,6 +428,9 @@
             $("#btn_submit").click(function () {
                 if (formatPersonId($('#idCard').val()) != "") {
                     var data = {};
+                    var contact = {};
+                    var position = {};
+                    var salary = {};
                     data['fname'] = $("#fname").val();
                     data['lname'] = $("#lname").val();
                     data['titleNameId'] = $("#titleNameId").val();
@@ -423,22 +438,25 @@
                     data['idCard'] = $("#idCard").val();
                     data['dob'] = $("#dob").val();
                     data['employeeCode'] = $("#employeeCode").val();
-                    data['employeeTypeId'] = $("#employeeTypeId").val();
-                    data['academicId'] = $("#academicId").val();
-                    data['departmentId'] = $("#departmentId").val();
-                    data['facultyId'] = $("#facultyId").val();
+                    position['employeeTypeId'] = $("#employeeTypeId").val();
+                    position['academicId'] = $("#academicId").val();
+                    position['departmentId'] = $("#departmentId").val();
+                    position['facultyId'] = $("#facultyId").val();
                     data['workStartDate'] = $("#workStartDate").val();
-                    data['matierId'] = $('input[name=matierId]:checked').val();
-                    data['positionId'] = $("#positionId").val();
+                    position['matierId'] = $('input[name=matierId]:checked').val();
+                    position['positionId'] = $("#positionId").val();
                     data['userTypeId'] = $("#userTypeId").val();
-                    data['salaryStart'] = $("#salaryStart").val();
-                    data['salaryPresent'] = $("#salaryPresent").val();
-                    data['address'] = $("#address").val();
-                    data['internalPhone'] = $("#internalPhone").val();
-                    data['phone'] = $("#phone").val();
-                    data['mobile'] = $("#mobile").val();
-                    data['email'] = $("#email").val();
-
+                    salary['salary'] = $("#salary").val();
+                    salary['rank'] = $("#rank").val();
+                    contact['address'] = $("#address").val();
+                    contact['internalPhone'] = $("#internalPhone").val();
+                    contact['phone'] = $("#phone").val();
+                    contact['mobile'] = $("#mobile").val();
+                    contact['email'] = $("#email").val();
+                    
+                    data['position'] = position;
+                    data['salary'] = salary;
+                    data['contact'] = contact;
 
                     var jdata = {};
                     jdata['data'] = data;

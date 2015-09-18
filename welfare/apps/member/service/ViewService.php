@@ -154,6 +154,15 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function memberLists() {
+        $member = new \apps\member\entity\Member();
+        $this->datacontext->getObject($member);
+        $contact = new \apps\member\entity\Contract();
+        $this->datacontext->getObject($contact);
+        $salary = new \apps\member\entity\Salary();
+        $this->datacontext->getObject($salary);
+        $position = new \apps\member\entity\position();
+        $this->datacontext->getObject($position);
+        
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
@@ -162,7 +171,7 @@ class ViewService extends CServiceBase implements IViewService {
         $sql = "select mem1.fname,mem1.lname,mem1.idCard,"
                 . "mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department,"
                 . "IFNULL(tax5.value1,tax1.value1) title "
-                . "FROM member mem1 "
+                . "FROM v_member mem1 "
                 . "INNER JOIN taxonomy tax1 "
                 . "on mem1.titleNameId = tax1.id "
                 . "INNER JOIN taxonomy tax2 "

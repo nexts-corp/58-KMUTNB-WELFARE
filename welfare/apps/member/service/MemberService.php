@@ -20,6 +20,9 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function save($data) {
+        $salary = $data->salary;
+        $contact = $data->contact;
+        $position = $data->position;
         $taxonomy = new \apps\taxonomy\entity\Taxonomy();
         $taxonomy->pCode = "memberActive";
         $taxonomy->code = "working";
@@ -43,11 +46,31 @@ class MemberService extends CServiceBase implements IMemberService {
 //        $data->workStartDate = $data->workStartDate->format('Y-m-d');
         //print_r($data);
 //        return $data;
+//        print_r($data->userTypeId);
+//            exit();
         if ($this->datacontext->saveObject($data)) {
-
+            
+            $memberId = $data->memberId;
+            $s = new \apps\member\entity\Salary();
+            $s->memberId = $memberId;
+            foreach($salary as $key => $value){
+                $s->$key = $value;
+            }
+            $p = new \apps\member\entity\Position();
+            $p->memberId = $memberId;
+            foreach($position as $key => $value){
+                $p->$key = $value;
+            }
+            $c = new \apps\member\entity\Contract();
+            $c->memberId = $memberId;
+            foreach($contact as $key => $value){
+                $c->$key = $value;
+            }
+            $this->datacontext->saveObject($s);
+            $this->datacontext->saveObject($p);
+            $this->datacontext->saveObject($c);
+            
             $user = new User();
-
-
             $user->setMemberId($data->memberId);
             $user->setUsername($data->idCard);
             $user->setUserTypeId($data->userTypeId);

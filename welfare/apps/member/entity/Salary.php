@@ -33,9 +33,9 @@ class Salary extends EntityBase {
     public $salary;
 
     /**
-     * @Column(type="date", name="dateStart",nullable=true) 
+     * @Column(type="date", name="salaryDate",nullable=true) 
      */
-    public $dateStart;
+    public $salaryDate;
 
     function getSalaryId() {
         return $this->salaryId;

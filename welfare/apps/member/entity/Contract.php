@@ -13,9 +13,9 @@ class Contract extends EntityBase {
     /**
      * @Id
      * @GeneratedValue
-     * @Column(type="integer" , length=11, name="contractId") 
+     * @Column(type="integer" , length=11, name="contactId") 
      */
-    public $contractId;
+    public $contactId;
 
     /**
      * @Column(type="integer", length=11, name="memberId") 
@@ -47,8 +47,8 @@ class Contract extends EntityBase {
      */
     public $email;
 
-    function getContractId() {
-        return $this->contractId;
+    function getContactId() {
+        return $this->contactId;
     }
 
     function getMemberId() {
@@ -75,8 +75,8 @@ class Contract extends EntityBase {
         return $this->email;
     }
 
-    function setContractId($contractId) {
-        $this->contractId = $contractId;
+    function setContactId($contactId) {
+        $this->contactId = $ccontactId;
     }
 
     function setMemberId($memberId) {

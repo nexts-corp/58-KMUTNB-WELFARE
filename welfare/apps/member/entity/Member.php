@@ -71,7 +71,7 @@ class Member extends EntityBase {
      */
     public $memberActiveId;
     public $userTypeId;
-    public $contract;
+    public $contact;
     public $position;
     public $salary;
 
@@ -127,8 +127,8 @@ class Member extends EntityBase {
         return $this->userTypeId;
     }
 
-    function getContract() {
-        return $this->contract;
+    function getContact() {
+        return $this->contact;
     }
 
     function getPosition() {
@@ -191,8 +191,8 @@ class Member extends EntityBase {
         $this->userTypeId = $userTypeId;
     }
 
-    function setContract($contract) {
-        $this->contract = $contract;
+    function setContact($contact) {
+        $this->contact = $contact;
     }
 
     function setPosition($position) {
