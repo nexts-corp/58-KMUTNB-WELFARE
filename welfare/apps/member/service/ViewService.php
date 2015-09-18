@@ -153,16 +153,7 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function memberLists() {
-        $member = new \apps\member\entity\Member();
-        $this->datacontext->getObject($member);
-        $contact = new \apps\member\entity\Contract();
-        $this->datacontext->getObject($contact);
-        $salary = new \apps\member\entity\Salary();
-        $this->datacontext->getObject($salary);
-        $position = new \apps\member\entity\position();
-        $this->datacontext->getObject($position);
-        
+    public function memberLists() {  
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;

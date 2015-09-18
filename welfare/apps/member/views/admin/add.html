@@ -429,7 +429,7 @@
                 if (formatPersonId($('#idCard').val()) != "") {
                     var data = {};
                     var contact = {};
-                    var position = {};
+                    var work = {};
                     var salary = {};
                     data['fname'] = $("#fname").val();
                     data['lname'] = $("#lname").val();
@@ -438,13 +438,13 @@
                     data['idCard'] = $("#idCard").val();
                     data['dob'] = $("#dob").val();
                     data['employeeCode'] = $("#employeeCode").val();
-                    position['employeeTypeId'] = $("#employeeTypeId").val();
-                    position['academicId'] = $("#academicId").val();
-                    position['departmentId'] = $("#departmentId").val();
-                    position['facultyId'] = $("#facultyId").val();
+                    work['employeeTypeId'] = $("#employeeTypeId").val();
+                    work['academicId'] = $("#academicId").val();
+                    work['departmentId'] = $("#departmentId").val();
+                    work['facultyId'] = $("#facultyId").val();
                     data['workStartDate'] = $("#workStartDate").val();
-                    position['matierId'] = $('input[name=matierId]:checked').val();
-                    position['positionId'] = $("#positionId").val();
+                    work['matierId'] = $('input[name=matierId]:checked').val();
+                    work['positionId'] = $("#positionId").val();
                     data['userTypeId'] = $("#userTypeId").val();
                     salary['salary'] = $("#salary").val();
                     salary['rank'] = $("#rank").val();
@@ -454,7 +454,7 @@
                     contact['mobile'] = $("#mobile").val();
                     contact['email'] = $("#email").val();
                     
-                    data['position'] = position;
+                    data['work'] = work;
                     data['salary'] = salary;
                     data['contact'] = contact;
 

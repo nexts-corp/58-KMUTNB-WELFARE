@@ -22,7 +22,7 @@ class MemberService extends CServiceBase implements IMemberService {
     public function save($data) {
         $salary = $data->salary;
         $contact = $data->contact;
-        $position = $data->position;
+        $work = $data->work;
         $taxonomy = new \apps\taxonomy\entity\Taxonomy();
         $taxonomy->pCode = "memberActive";
         $taxonomy->code = "working";
@@ -56,9 +56,9 @@ class MemberService extends CServiceBase implements IMemberService {
             foreach($salary as $key => $value){
                 $s->$key = $value;
             }
-            $p = new \apps\member\entity\Position();
+            $p = new \apps\member\entity\Work();
             $p->memberId = $memberId;
-            foreach($position as $key => $value){
+            foreach($work as $key => $value){
                 $p->$key = $value;
             }
             $c = new \apps\member\entity\Contract();

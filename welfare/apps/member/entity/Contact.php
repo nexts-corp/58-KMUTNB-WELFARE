@@ -6,9 +6,9 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="MemberContract")
+ * @Table(name="MemberContact")
  */
-class Contract extends EntityBase {
+class Contact extends EntityBase {
 
     /**
      * @Id

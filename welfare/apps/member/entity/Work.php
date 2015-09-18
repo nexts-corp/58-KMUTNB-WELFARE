@@ -4,15 +4,15 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="MemberPosition")
+ * @Table(name="MemberWork")
  */
-class Position extends EntityBase{
+class Work extends EntityBase{
     /**
      * @Id
      * @GeneratedValue
-     * @Column(type="integer" , length=11, name="positionId") 
+     * @Column(type="integer" , length=11, name="workId") 
      */
-    public $positionId;
+    public $workId;
 
     /**
      * @Column(type="integer", length=11, name="memberId") 
@@ -35,17 +35,17 @@ class Position extends EntityBase{
     public $departmentId;
 
     /**
-     * @Column(type="string", length=10, name="positionCode",nullable=true) 
+     * @Column(type="string", length=10, name="positionId",nullable=true) 
      */
-    public $positionCode;
+    public $positionId;
 
     /**
      * @Column(type="string", length=10, name="matierId",nullable=true) 
      */
     public $matierId;
     
-    function getPositionId() {
-        return $this->positionId;
+    function getWorkId() {
+        return $this->workId;
     }
 
     function getMemberId() {
@@ -64,16 +64,16 @@ class Position extends EntityBase{
         return $this->departmentId;
     }
 
-    function getPositionCode() {
-        return $this->positionCode;
+    function getPositionId() {
+        return $this->positionId;
     }
 
     function getMatierId() {
         return $this->matierId;
     }
 
-    function setPositionId($positionId) {
-        $this->positionId = $positionId;
+    function setWorkId($workId) {
+        $this->workId = $workId;
     }
 
     function setMemberId($memberId) {
@@ -92,13 +92,15 @@ class Position extends EntityBase{
         $this->departmentId = $departmentId;
     }
 
-    function setPositionCode($positionCode) {
-        $this->positionCode = $positionCode;
+    function setPositionId($positionId) {
+        $this->positionId = $positionId;
     }
 
     function setMatierId($matierId) {
         $this->matierId = $matierId;
     }
+
+
 
 
 
