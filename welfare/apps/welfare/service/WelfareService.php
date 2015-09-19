@@ -78,8 +78,6 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $data->dateStart = new \DateTime($data->dateStart);
         $data->dateEnd = new \DateTime($data->dateEnd);
 
-
-
         if ($this->datacontext->updateObject($data)) {
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;

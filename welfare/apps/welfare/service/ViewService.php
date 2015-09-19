@@ -23,6 +23,11 @@ class ViewService extends CServiceBase implements IViewService {
     // start page welfare add
     public function welfareAdd() {
         $view = new CJView("welfare/add", CJViewType::HTML_VIEW_ENGINE);
+         
+        $unit = new Taxonomy();
+        $unit->pCode = "unit";
+        $view->unit = $this->datacontext->getObject($unit);
+        
         return $view;
     }
 

@@ -1,10 +1,4 @@
-<div id="chatbar" class="page-chatbar" style="background-color: rgba(255,255,255,0)">
-    <div class="chatbar-contacts">
-        <div class="chatbar-messages" style="display: none;">
-            ssssssssssssssssssssssssss
-        </div>
-        </div>
-    </div>
+
 <!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
@@ -182,262 +176,260 @@
 
     <!-- Page Body -->
     <div class="page-body">
-        <div class="pull-right">
-            <button class="btn btn-primary"
-                    data-id="content-body"
-                    id="optionsConditionsDetails">
-                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
-            </button>
-        </div>
-        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-
-        <!-- start check conditionsDetails -->
-        <div style="display:none" id="conditionsDetails">
-
-            <div class="widget radius-bordered">
-                <div class="widget-header">
-                    <span class="widget-caption">{{#i18n}}conditions.add{{/i18n}}</span>
-                </div>
-                <div class="widget-body">
-                    <div  class="form-horizontal">
-                        <div class="form-title">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}conditions.description{{/i18n}}</label>
-                            <div class="col-lg-6">
-                                <input type="text" class="details form-control input-xs" name="description" placeholder="{{#i18n}}conditions.description{{/i18n}}"
-                                       id="description" data-validation="required" 
-                                       data-validation-error-msg="*กรุณากรอกข้อมูล" />
-                            </div>
-                        </div>
 
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}all.quantity{{/i18n}}</label>
-                            <div class="col-lg-6">
-                                <input type="text" class="details form-control input-xs " name="quantity" placeholder="{{#i18n}}all.quantity{{/i18n}}"
-                                       data-bv-notempty-message="ใส่ตัวเลข" 
-                                       data-validation-error-msg="*กรุณาใส่ตัวเลข"
-                                       data-validation="number" id="quantity" />
-                            </div>
-                        </div>
+        <div class="detailsFix"> 
 
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">{{#i18n}}all.returnType{{/i18n}}</label>
-                            <div class="col-lg-6">
+            <div class="pull-right">
+                <button class="btn btn-primary"
+                        data-id="content-body"
+                        id="optionsConditionsDetails">
+                    <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                </button>
+                <div style="margin-bottom: 15px;"></div>
 
-                                <select class="details form-control input-xs " name="returnTypeId"  id="returnTypeId">
-
-                                    {{#unit}}
-
-                                    <option value='{{id}}'>{{value1}}</option>
-
-                                    {{/unit}}
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-lg-6"> </div>
-                            <div class="col-lg-6">
-                                <button class="btn btn-success"
-                                        data-id="content-body"
-                                        id="btnSaveDetails">
-                                    <i class="fa fa-save"></i>{{#i18n}}button.add{{/i18n}} 
-                                </button>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                </div>
             </div>
-        </div>
-        <!--end check conditionsDetails -->
+            <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+            <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
 
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <div class="widget">
+            <!-- start check conditionsDetails -->
+            <div style="display:none" id="conditionsDetails">
 
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}conditions.lists{{/i18n}}</span>
-                        <div class="widget-buttons"> </div>
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}conditions.add{{/i18n}}</span>
                     </div>
                     <div class="widget-body">
-                        <div class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-                            <p id="demo" style="color:#d14"></p>
-                        </div>
+                        <div  class="form-horizontal">
+                            <div class="form-title">
+                            </div>
 
-                        <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                        </div>
-
-                        <div class="flip-scroll">
-
-                            <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
-                                <thead>
-                                    <tr>
-                                        <th>{{#i18n}}all.number{{/i18n}}</th>
-                                        <th>{{#i18n}}conditions.description{{/i18n}}</th>
-                                        <th>{{#i18n}}all.quantity{{/i18n}}</th>
-                                        <th>{{#i18n}}all.returnType{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <!--  <tr class="selectable">
-                                    
-                                                                            <td>{{conditionsId}}</td>
-                                                                            <td>{{description}}</td>
-                                                                            <td>{{quantity}}</td>
-                                                                            <td>{{employeeType}}</td>
-                                                                            <td class="center">
-                                    
-                                    
-                                                                                <button class="btn btn-info btn-xs edit btn_preview"
-                                                                                        row-index="{{conditionsId}}" >
-                                                                                    <i class="fa fa fa-eye"></i>{{#i18n}}welfare.right{{/i18n}} 
-                                                                                </button>
-                                    
-                                                                                <button class="btn btn-info btn-xs edit"
-                                                                                        data-id="content-body"
-                                                                                        data-api="{{_context_path}}/api/welfare/view/conditions/edit"
-                                                                                        data-object="conditionsId"
-                                                                                        data-param="{{conditionsId}}"
-                                                                                        onclick="btnHTML(this)">
-                                                                                    <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
-                                                                                </button>
-                                    
-                                    
-                                    
-                                                                                <button class="btn-del btn btn-xs btn-danger" row-index="{{conditionsId}}" >{{#i18n}}deletes{{/i18n}}</button>
-                                                                            </td>
-                                                                        </tr>-->
-
-                                </tbody>
-
-                            </table>
-                            <div class="rows">
-
-                                <div id="divConditions" style="display: none;">
-                                    <div style="margin-top: 5px "></div>
-
-                                    <button class="btnAppend btn btn-sm btn-default">Append Condition</button>
-                                    <div style="margin-top: 5px "></div>
-
-                                    <table class="table table-hover table-striped table-bordered table-condensed content-conditions">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}conditions.description{{/i18n}}</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="details form-control input-xs" name="description" placeholder="{{#i18n}}conditions.description{{/i18n}}"
+                                           id="description" data-validation="required" 
+                                           data-validation-error-msg="*กรุณากรอกข้อมูล" />
+                                </div>
+                            </div>
 
 
-                                    </table>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}all.quantity{{/i18n}}</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="details form-control input-xs " name="quantity" placeholder="{{#i18n}}all.quantity{{/i18n}}"
+                                           data-bv-notempty-message="ใส่ตัวเลข" 
+                                           data-validation-error-msg="*กรุณาใส่ตัวเลข"
+                                           data-validation="number" id="quantity" />
+                                </div>
+                            </div>
 
-                                    <div style="margin-top: 5px "></div>
-                                    <button id="btnSaveConditions" class="btn btn-sm btn-success ">Save</button>
-                                    <button class="btn btn-sm btn-default "
-                                            data-id="content-body"
-                                            id="btn_preview"
-                                            data-toggle="modal"
-                                            data-target=".bs-example-modal-lg" >
-                                        <i class="fa fa fa-eye"></i>ตรวจสอบผู้มีสิทธิ์
-                                    </button>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}all.returnType{{/i18n}}</label>
+                                <div class="col-lg-6">
 
-                                    <button class="btn btn-primary" id="btnXXX">SEND</button>
+                                    <select class="details form-control input-xs " name="returnTypeId"  id="returnTypeId">
+
+                                        {{#unit}}
+
+                                        <option value='{{id}}'>{{value1}}</option>
+
+                                        {{/unit}}
+                                    </select>
 
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="form-group">
+                                <div class="col-lg-6"> </div>
+                                <div class="col-lg-6">
+                                    <button class="btn btn-success"
+                                            data-id="content-body"
+                                            id="btnSaveDetails">
+                                        <i class="fa fa-save"></i>{{#i18n}}button.add{{/i18n}} 
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <!--end check conditionsDetails -->
 
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="widget">
 
-
-</div>
-
-
-    <!-- /Page Content -->
-
-    <!--LArge Modal Templates-->
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myLargeModalLabel">รายงานการใช้งาน</h4>
-                </div>
-                <div class="modal-body">
-
-                    <div class="widget radius-bordered">
-                        <div class="widget-header">
-                            <span class="widget-caption" id="userRows"> </span>
+                        <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}conditions.lists{{/i18n}}</span>
+                            <div class="widget-buttons"> </div>
                         </div>
                         <div class="widget-body">
-                            <div class="form-horizontal">
+
+                            <div class="flip-scroll">
 
                                 <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">{{#i18n}}welfare.number{{/i18n}}</th>
-                                            <th class="text-center">{{#i18n}}welfare.fnamelname{{/i18n}}</th>
-
-                                            <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                            <th class="text-center">สังกัด</th>
-                                            <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                            <th>{{#i18n}}all.number{{/i18n}}</th>
+                                            <th>{{#i18n}}conditions.description{{/i18n}}</th>
+                                            <th>{{#i18n}}all.quantity{{/i18n}}</th>
+                                            <th>{{#i18n}}all.returnType{{/i18n}}</th>
+                                            <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
 
                                     </tbody>
 
                                 </table>
 
 
+
                             </div>
+
                         </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
 
+                        <div class="footer">
+                            <div class="pull-right">
+                                <button class="btn btn-primary" id="btnSaveAll">บันทึกข้อมูลทั้งหมด</button>
+                                <div style="margin-bottom: 15px;"></div>
 
+                            </div>                                
+                        </div>
                     </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="conditionsFix ">  
+            <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+            <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+            <div class="rows" style="background: rgba(255,255,255,0.8);padding: 2px 2px 2px 2px">
+
+                <div id="divConditions" style="display: none;">
+                    <div style="margin-top: 5px "></div>
+
+                    <button class="btnAppend btn btn-sm btn-default"><i class="fa fa fa-plus"></i> เพิ่มเงื่อนไข</button>
+
+                    <div style="margin-top: 5px "></div>
+
+                    <table class="table table-hover table-striped table-bordered table-condensed content-conditions">
+
+
+                    </table>
+
+                    <div style="margin-top: 5px "></div>
+                    <button id="btnSaveConditions" class="btn btn-sm btn-success ">Save</button>
+                    <button class="btn btn-sm btn-default "
+                            data-id="content-body"
+                            id="btn_preview"
+                            data-toggle="modal"
+                            data-target=".bs-example-modal-lg" >
+                        <i class="fa fa fa-eye"></i>ตรวจสอบผู้เข้าเงื่อนไข
+                    </button>
 
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+
+        </div>
+
+
     </div>
-    <!--End Large Modal Templates-->
+
+</div>
+
+
+<!-- /Page Content -->
+
+<!--LArge Modal Templates-->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">รายงานการใช้งาน</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption" id="userRows"> </span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+
+                            <table class="table table-hover table-striped table-bordered table-condensed" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}all.number{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}all.fnamelname{{/i18n}}</th>
+
+                                        <th class="text-center">{{#i18n}}all.gender{{/i18n}}</th>
+                                        <th class="text-center">สังกัด</th>
+                                        <th class="text-center">{{#i18n}}all.employeeType{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="showUser">
 
 
 
-    <script type="text/javascript">
+                                </tbody>
 
-        $(document).ready(function () {
-            $.validate();
+                            </table>
 
-            $('#optionsConditionsDetails').click(function () {
-                $("#conditionsDetails").slideToggle();
-            });
-            var Welfare = {};
-            var Details = [];
-            var rowConditions;
-            var rowDetails;
-            
-            $("#btnAddDetails").click(function () {
-                $(".content-details").show();
-                return false;
-            });
 
-            $("#btnSaveDetails").click(function () {
-                var details = {};
-                $(".details").each(function (key, value) {
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--End Large Modal Templates-->
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.validate();
+
+        $('#optionsConditionsDetails').click(function () {
+            $("#conditionsDetails").slideToggle();
+        });
+        var Welfare = {};
+        var Details = [];
+        var rowConditions;
+        var rowDetails;
+
+        $("#btnAddDetails").click(function () {
+            $(".content-details").show();
+            return false;
+        });
+
+        $("#btnSaveDetails").click(function () {
+            var details = {};
+            $(".details").each(function (key, value) {
+                if (this.value == "") {
+                    
+                    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    return false;
+                } else {
                     details[this.id] = this.value;
-                });
+                }
+            });
+
+            if ($("#name").val() != "" || $("#quantity").val() != "") {
+
                 Details.push(details);
                 var table = "";
                 $.each(Details, function (key, value) {
@@ -445,102 +437,174 @@
                             "<td>" + (key + 1) + "</td>";
 
                     $.each(value, function (key2, value2) {
-                        table += "<td>" + value2 + "</td>";
+                        if (key2 != "conditions") {
+                            if (key2 == "returnTypeId") {
+                                var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
+                                table += "<td>" + text + "</td>";
+                            } else {
+                                table += "<td>" + value2 + "</td>";
+                            }
+                        }
                     });
+
                     table += "<td>" +
                             "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
-                            "</tr>";
+                            "</td> </tr>";
                 });
                 $("table#showTable tbody").html(table);
-              
+
                 $(".btnConditions").click(function () {
                     rowDetails = $(this).attr("row-index");
                     rowConditions = 0;
                     $(".content-conditions").empty();
                     $("#divConditions").show();
-                    $(".page-chatbar").addClass("open");
-                    
+                    $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
+                    $(".conditionsFix").attr("class", "col-xs-6 col-md-6")
+
                     return false;
                 });
-                return false;
+            } else {
+                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                $('#name').focus();
+            }
+            return false;
+        });
+
+        $(".btnAppend").click(function () {
+            var clone = "";
+
+            clone += '<tr><td width="30%">' +
+                    '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + (rowConditions) + '">' +
+                    '<option value="salary">เงินเดือน</option>' +
+                    '<option value="employeeTypeId">ประเภทพนักงาน</option>' +
+                    '<option value="genderId">เพศ</option>' +
+                    '<option value="dob">วัน-เดือน-ปี ที่เกิด</option>' +
+                    '<option value="workStartDate">วัน-เดือน-ปี ที่บรรจุ</option>' +
+                    '<option value="workEndDate">วัน-เดือน-ปี ที่เกษียณ</option>' +
+                    '</select></td>' +
+                    '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + (rowConditions) + '">' +
+                    '<option value="=">เท่ากับ </option>' +
+                    '<option value="<">น้อยกว่า</option>' +
+                    '<option value=">">มากกว่า</option>' +
+                    '<option value="<=">น้อยกว่าหรือเท่ากับ</option>' +
+                    '<option value=">=">มากกว่าหรือเท่ากับ</option>' +
+                    '<option value="!=">ไม่เท่ากับ</option>' +
+                    '</select></td>' +
+                    '<td><div class="divValueX" row-index="' + rowConditions + '">' +
+                    '<input type="text" name="valuex" row-index="' + rowConditions++ + '" class="valuex conditions form-control input-xs" /></div></td>' +
+                    '</tr>';
+
+
+            $(".content-conditions").append(clone);
+            $(".fieldMap").change(function () {
+                var rowIndex = $(this).attr("row-index");
+                if (this.value == "employeeTypeId" || this.value == "genderId") {
+                    var pCode = this.value.substr(0, this.value.length - 2);
+                    $.ajax({
+                        url: '{{_context_path}}/api/taxonomy/taxonomy/getPCode',
+                        data: {pCode: pCode},
+                        type: 'post',
+                        async: false,
+                        success: function (result) {
+                            var html = "";
+                            html += "<select name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs'>";
+                            $.each(result.lists, function (key, value) {
+                                html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                            });
+                            html += "</select>";
+                            $(".divValueX[row-index='" + rowIndex + "']").html(html);
+                        }
+                    });
+                } else {
+                    var html = "";
+                    html = "<input type='text' name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs' />";
+                    $(".divValueX[row-index='" + rowIndex + "']").html(html);
+                }
             });
 
-            $(".btnAppend").click(function () {
-                var clone = "";
-                clone += '<tr><td width="30%">' +
-                        '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + (rowConditions) + '">' +
-                        '<option value="employeeTypeId">ประเภทพนักงาน</option>' +
-                        '<option value="genderId">เพศ</option>' +
-                        '<option value="dob">วัน-เดือน-ปี ที่เกิด</option>' +
-                        '<option value="workStartDate">วัน-เดือน-ปี ที่บรรจุ</option>' +
-                        '<option value="workEndDate">วัน-เดือน-ปี ที่เกษียณ</option>' +
-                        '<option value="salary">เงินเดือน</option>' +
-                        '</select></td>' +
-                        '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + (rowConditions) + '">' +
-                        '<option value="=">เท่ากับ </option>' +
-                        '<option value="<">น้อยกว่า</option>' +
-                        '<option value=">">มากกว่า</option>' +
-                        '<option value="<=">น้อยกว่าหรือเท่ากับ</option>' +
-                        '<option value=">=">มากกว่าหรือเท่ากับ</option>' +
-                        '<option value="!=">ไม่เท่ากับ</option>' +
-                        '</select></td>' +
-                        '<td><div class="divValueX" row-index="' + rowConditions++ + '"></div></td>' +
-                        '</tr>';
 
+            //            $(".content-conditions").clone().appendTo(".content-conditions");
 
-                $(".content-conditions").append(clone);
-                $(".fieldMap").change(function () {
-                    var rowIndex = $(this).attr("row-index");
-                    if (this.value == "employeeTypeId" || this.value == "genderId") {
-                        var pCode = this.value.substr(0, this.value.length - 2);
-                        $.ajax({
-                            url: '{{_context_path}}/api/taxonomy/taxonomy/getPCode',
-                            data: {pCode: pCode},
-                            type: 'post',
-                            async: false,
-                            success: function (result) {
-                                var html = "";
-                                html += "<select name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs'>";
-                                $.each(result.lists, function (key, value) {
-                                    html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
-                                });
-                                html += "</select>";
-                                $(".divValueX[row-index='" + rowIndex + "']").html(html);
-                            }
-                        });
-                    } else {
-                        var html = "";
-                        html = "<input type='text' name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs' />";
-                        $(".divValueX[row-index='" + rowIndex + "']").html(html);
-                    }
-                });
-
-
-                //            $(".content-conditions").clone().appendTo(".content-conditions");
-
-                return false;
-            });
+            return false;
+        });
 
 
 
-            $("#btnSaveConditions").click(function () {
-                //var Conditions = [];
-                Details[rowDetails]['conditions'] = [];
-                $(".conditions").each(function (key, value) {
+        $("#btnSaveConditions").click(function () {
+            //var Conditions = [];
+            Details[rowDetails]['conditions'] = [];
+            $(".conditions").each(function (key, value) {
+                if (this.value == "") {
+                    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    return false;
+                } else {
                     var tempRows = $(this).attr("row-index");
                     if (Details[rowDetails]['conditions'].length == tempRows) {
                         Details[rowDetails]['conditions'][tempRows] = {};
                     }
                     Details[rowDetails]['conditions'][tempRows][this.name] = this.value;
-                });
-                //  Details[rowDetails]['Conditions'] = Conditions;
-                return false;
+                }
             });
+            //  Details[rowDetails]['Conditions'] = Conditions;
+            $(".content-conditions").empty();
 
 
 
+            return false;
+        });
 
-            $("#btnXXX").click(function () {
+        $("#btn_preview").click(function () {
+
+            var conditions = [];
+            $(".conditions").each(function (key, value) {
+                if (this.value == "") {
+                    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    return false;
+                } else {
+                    var tempRows = $(this).attr("row-index");
+                    if (conditions.length == tempRows) {
+                        conditions[tempRows] = {};
+                    }
+                    conditions[tempRows][this.name] = this.value;
+
+                }
+            });
+            var datas = {};
+            datas['conditions'] = conditions;
+
+            $.ajax({
+                url: '{{_context_path}}/api/welfare/conditions/preview',
+                data: jsonEncode(datas),
+                type: 'post', // 'or get'
+                success: function (result) {
+
+                    var html = "";
+                    var countUser = 0;
+
+                    $.each(result.preview, function (key, value) {
+                        //var data = result.value;
+
+                        countUser++;
+                        html += '<tr class="selectable">';
+                        html += '<td>' + (key + 1) + '</td>';
+                        html += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                        html += '<td>' + value.gender1 + '</td>';
+                        html += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                        html += '<td>' + value.employeeType1 + '</td></tr>';
+
+
+
+                    });
+                    $("#userRows").html('จำนวนทั้งหมด ' + countUser + ' คน ');
+                    $("#showUser").html(html);
+                }
+            });
+        });
+
+        $("#btnSaveAll").click(function () {
+            if ($("#description").val() != "" || $("#name").val() != "") {
+                var retire = $("#retire").prop("checked");
+                var willing = $("#willing").prop("checked");
                 var datas = {};
                 Welfare['name'] = $("#name").val();
                 Welfare['description'] = $("#description").val();
@@ -553,6 +617,17 @@
                 Welfare['resetTime'] = $("#resetTime").val();
                 Welfare['free'] = $("#free").val();
 
+                if (willing == true) {
+                    Welfare['willing'] = "Y";
+                } else {
+                    Welfare['willing'] = "N";
+                }
+                if (retire == true) {
+                    Welfare['retire'] = "Y";
+                } else {
+                    Welfare['retire'] = "N";
+                }
+
                 Welfare['details'] = Details;
                 datas['welfare'] = Welfare;
 
@@ -561,57 +636,62 @@
                     data: jsonEncode(datas),
                     type: 'post'
                 });
-                return false;
-            });
+            } else {
+                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                $('#name').focus();
+            }
+            return false;
         });
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+    });
 
 
-        //            $("#btn_submit").click(function () {
-        //    if ($("#name").val() != "") {
-        //    var willing = $("#willing").prop("checked");
-        //            var retire = $("#retire").prop("checked");
-        //            var data = {};
-        //            data['name'] = $("#name").val();
-        //            data['description'] = $("#description").val();
-        //            data['dateStart'] = $("#dateStart").val();
-        //            data['dateEnd'] = $("#dateEnd").val();
-        //            data['resetTime'] = $("#resetTime").val();
-        //            data['free'] = $("#free").val();
-        //            if (willing == true) {
-        //    data['willing'] = "Y";
-        //    } else {
-        //    data['willing'] = "N";
-        //    }
-        //    if (retire == true) {
-        //    data['retire'] = "Y";
-        //    } else {
-        //    data['retire'] = "N";
-        //    }
-        //
-        //    var jdata = {};
-        //            jdata['data'] = data;
-        //            $.ajax({
-        //            url: '{{_context_path}}/api/welfare/welfare/save',
-        //                    data: jsonEncode(jdata),
-        //                    type: 'post', // 'or get'
-        //                    success: function (result) {
-        //                    if (result.save == true) {
-        //                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
-        //                            Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
-        //                    } else {
-        //                    Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-        //                    }
-        //
-        //                    }
-        //            });
-        //    } else {
-        //    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-        //            $('#name').focus();
-        //    }
-        //    return false;
-        //    });
-        //            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-        //    });
+    //            $("#btn_submit").click(function () {
+    //    if ($("#name").val() != "") {
+    //    var willing = $("#willing").prop("checked");
+    //            var retire = $("#retire").prop("checked");
+    //            var data = {};
+    //            data['name'] = $("#name").val();
+    //            data['description'] = $("#description").val();
+    //            data['dateStart'] = $("#dateStart").val();
+    //            data['dateEnd'] = $("#dateEnd").val();
+    //            data['resetTime'] = $("#resetTime").val();
+    //            data['free'] = $("#free").val();
+    //            if (willing == true) {
+    //    data['willing'] = "Y";
+    //    } else {
+    //    data['willing'] = "N";
+    //    }
+    //    if (retire == true) {
+    //    data['retire'] = "Y";
+    //    } else {
+    //    data['retire'] = "N";
+    //    }
+    //
+    //    var jdata = {};
+    //            jdata['data'] = data;
+    //            $.ajax({
+    //            url: '{{_context_path}}/api/welfare/welfare/save',
+    //                    data: jsonEncode(jdata),
+    //                    type: 'post', // 'or get'
+    //                    success: function (result) {
+    //                    if (result.save == true) {
+    //                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+    //                            Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+    //                    } else {
+    //                    Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    //                    }
+    //
+    //                    }
+    //            });
+    //    } else {
+    //    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    //            $('#name').focus();
+    //    }
+    //    return false;
+    //    });
+    //            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+    //    });
 
 
-    </script>
+</script>
