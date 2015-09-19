@@ -11,7 +11,7 @@
     <!-- Page Header -->
     <div class="page-header position-relative">
         <div class="header-title">
-            
+
         </div>
         <!--Header Buttons--> 
 
@@ -126,21 +126,21 @@
                                     </div>
                                 </div>
 
-                             
+
                                 <div class="form-group">
                                     <div class="col-lg-10">
                                         <label class="col-lg-2 control-label">เลือกประเภทผู้ใช้งาน</label>
                                         <div class="col-lg-5 control-group ">
 
-                                            
-                                                <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
-                                                    <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
-                                                    {{#userType}}
-                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
-                                                    {{/userType}}
-                                                </select>
-                                                <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
-                                           
+
+                                            <select class="form-control" id="userTypeId" name="userTypeId" data-bv-field="country">
+                                                <option value="" disabled="" selected="">เลือกประเภทผู้ใช้งาน</option>
+                                                {{#userType}}
+                                                <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                {{/userType}}
+                                            </select>
+                                            <i class="form-control-feedback" data-bv-field="country" style="display: none;"></i> 
+
 
                                         </div>
                                     </div>
@@ -221,7 +221,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">ลำดับขั้น</label>
                                             <div class="col-lg-9">
@@ -233,7 +233,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}facultyId{{/i18n}}</label>
                                             <div class="col-lg-9">
@@ -324,18 +324,18 @@
 
                                             </div>
                                         </div>
-                                        
-<!--                                        <div class="form-group">
-                                            <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
-                                            <div class="col-lg-9">
-                                                <input type="text" class="form-control" id="salaryPresent" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
-                                                       data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนปัจุบัน"
-                                                       data-validation-error-msg-container="#salaryPresent-msg-error" />
-                                            </div>
-                                            <div class="col-lg-offset-4" id="salaryPresent-msg-error">
 
-                                            </div>
-                                        </div>-->
+                                        <!--                                        <div class="form-group">
+                                                                                    <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
+                                                                                    <div class="col-lg-9">
+                                                                                        <input type="text" class="form-control" id="salaryPresent" name="salaryPresent" placeholder="{{#i18n}}registerSalaryNow{{/i18n}}"
+                                                                                               data-validation="required" data-validation-error-msg="*กรุณาระบุเงินเดือนปัจุบัน"
+                                                                                               data-validation-error-msg-container="#salaryPresent-msg-error" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-offset-4" id="salaryPresent-msg-error">
+                                        
+                                                                                    </div>
+                                                                                </div>-->
 
                                     </div>
                                 </div>
@@ -362,8 +362,11 @@
                                             <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
-                                                       data-bv-notempty="true"
-                                                       data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                                       data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                       data-validation-error-msg-container="#internalPhone-msg-error"/>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="internalPhone-msg-error">
+
                                             </div>
                                         </div>
 
@@ -371,8 +374,11 @@
                                             <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
-                                                       data-bv-notempty="true"
-                                                       data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                                       data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                       data-validation-error-msg-container="#phone-msg-error"/>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="phone-msg-error">
+
                                             </div>
                                         </div>
 
@@ -380,8 +386,11 @@
                                             <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
-                                                       data-bv-notempty="true"
-                                                       data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                                       data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                       data-validation-error-msg-container="#mobile-msg-error"/>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="mobile-msg-error">
+
                                             </div>
                                         </div>
 
@@ -389,8 +398,11 @@
                                             <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
-                                                       data-bv-notempty="true"
-                                                       data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                                       data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" 
+                                                       data-validation-error-msg-container="#email-msg-error"/>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="email-msg-error">
+
                                             </div>
                                         </div>
 
@@ -473,7 +485,7 @@
                     contact['phone'] = $("#phone").val();
                     contact['mobile'] = $("#mobile").val();
                     contact['email'] = $("#email").val();
-                    
+
                     data['work'] = work;
                     data['salary'] = salary;
                     data['contact'] = contact;
