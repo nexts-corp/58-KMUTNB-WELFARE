@@ -6,7 +6,14 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}addmedicalfee{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/medical/view/medicalFee/lists"
+                   onclick="btnHTML(this)">รายชื่อผู้เบิกค่ารักษาพยาบาล
+                </a>
+            </li>
+            <li class="active">เพิ่มข้อมูล</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
