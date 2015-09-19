@@ -1,15 +1,4 @@
-<script>
-  $(function() {
-    var availableTags = [
-        {{#member}}
-            "{{registerNameTh}}",      
-        {{/member}}
-    ];
-    $( "#SearchName" ).autocomplete({
-      source: availableTags
-    });
-  });
-  </script>
+
 <!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
@@ -19,7 +8,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}fundlive{{/i18n}}</li>
+            <li class="active">กองทุนสำรองเลี้ยงชีพเพื่อผู้เกษียณอายุ</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -41,7 +30,7 @@
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
                     
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}fundlive{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">รายชื่อสมาชิก</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
@@ -111,18 +100,4 @@
     <!-- /Page Body -->
 </div>
 
- <script>
-    $("#btnsearch").click(function () {
-        var SearchName = $("#SearchName").val();
-        if(SearchName==""){
-            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-        }else{
-        
-        var data = {"SearchName":SearchName};
-//       
-        
-        getBodyDiv('{{_context_path}}/api/ManagementInsurance/privilege/view/search',data);
-        }
-    });
-    
- </script>
+ 
