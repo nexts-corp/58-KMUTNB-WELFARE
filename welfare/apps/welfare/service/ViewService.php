@@ -30,21 +30,21 @@ class ViewService extends CServiceBase implements IViewService {
     // start page welfare edit
 
     public function welfareEdit() {
-        
-        $welfarId=$this->getRequest()->welfareId;
+
+        $welfarId = $this->getRequest()->welfareId;
         $view = new CJView("welfare/edit", CJViewType::HTML_VIEW_ENGINE);
         $daoWelfare = new Welfare();
         $daoWelfare->setWelfareId($welfarId);
         $obj = $this->datacontext->getObject($daoWelfare);
-            foreach ($obj as $key => $value) {
-                
-               $dsY = $value->dateStart->format('Y') + 543;
-               $deY = $value->dateEnd->format('Y') + 543;
+        foreach ($obj as $key => $value) {
 
-                $obj[$key]->dateStart = $value->dateStart->format('d-m-'.$dsY);
-                $obj[$key]->dateEnd = $value->dateEnd->format('d-m-'.$deY);
-            }
-        
+            $dsY = $value->dateStart->format('Y') + 543;
+            $deY = $value->dateEnd->format('Y') + 543;
+
+            $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $dsY);
+            $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $deY);
+        }
+
         $view->datas = $obj;
         return $view;
     }
@@ -64,12 +64,12 @@ class ViewService extends CServiceBase implements IViewService {
 
             if (count($obj) > 0) {
                 foreach ($obj as $key => $value) {
-                    
-                     $dsY = $value->dateStart->format('Y') + 543;
-                     $deY = $value->dateEnd->format('Y') + 543;
-                    
-                    $obj[$key]->dateStart = $value->dateStart->format('d-m-'.$dsY);
-                    $obj[$key]->dateEnd = $value->dateEnd->format('d-m-'.$deY);
+
+                    $dsY = $value->dateStart->format('Y') + 543;
+                    $deY = $value->dateEnd->format('Y') + 543;
+
+                    $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $dsY);
+                    $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $deY);
                 }
             }
             $view->datas = $obj;
@@ -81,12 +81,14 @@ class ViewService extends CServiceBase implements IViewService {
 
             if (count($obj) > 0) {
                 foreach ($obj as $key => $value) {
-                    
-                     $dsY = $value->dateStart->format('Y') + 543;
-                     $deY = $value->dateEnd->format('Y') + 543;
-                    
-                    $obj[$key]->dateStart = $value->dateStart->format('d-m-'.$dsY);
-                    $obj[$key]->dateEnd = $value->dateEnd->format('d-m-'.$deY);
+                    if ($value->dateStart != "") {
+                        $dsY = $value->dateStart->format('Y') + 543;
+                        $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $dsY);
+                    }
+                    if ($value->dateEnd != "") {
+                        $deY = $value->dateEnd->format('Y') + 543;
+                        $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $deY);
+                    }
                 }
             }
 
@@ -168,7 +170,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view->unit = $this->datacontext->getObject($unit);
 
         $view->conditionsId = $conditionsId;
-        $view->welfareId=$obj[0]["welfareId"];
+        $view->welfareId = $obj[0]["welfareId"];
         $view->datas = $obj;
 
 
@@ -229,18 +231,17 @@ class ViewService extends CServiceBase implements IViewService {
 
         $conServ = new ConditionsService();
         $data = $conServ->preview($dataConditions);
-       
-        if($data > 0){
-        $i = 1;
-        foreach ($data as $key => $value) {
-            $data[$key]["rowNo"] = $i++;
-        }
-        
-        $view->datas = $data;
-        $view->maxRows = --$i;
+
+        if ($data > 0) {
+            $i = 1;
+            foreach ($data as $key => $value) {
+                $data[$key]["rowNo"] = $i++;
+            }
+
+            $view->datas = $data;
+            $view->maxRows = --$i;
         }
         $view->conditionsId = $conditionsId;
-        
 
         return $view;
     }
@@ -252,8 +253,8 @@ class ViewService extends CServiceBase implements IViewService {
         $conditionsId = $data->conditionsId;
         $memberId = $data->memberId;
         $welfareId = $data->welfareId;
-        
-        $view->welfareId=$welfareId;
+
+        $view->welfareId = $welfareId;
         $date = new \DateTime('now');
         $sql = "call prc_date_budget(:welfareId,:date)";
         $param = array(
@@ -286,7 +287,7 @@ class ViewService extends CServiceBase implements IViewService {
         $objWelfare["dateStart"] = $year543[2] . "-" . $year543[1] . "-" . intval($year543[0] + 543);
         $year543 = explode("-", $dateBudget["endDate"]);
         $objWelfare["dateEnd"] = $year543[2] . "-" . $year543[1] . "-" . intval($year543[0] + 543);
-        
+
         if ($objWelfare['free'] == "Y" || $objWelfare['free'] == null) {
             $view->freeCheck = "สวัสดิการให้เปล่า";
         } else {
@@ -339,9 +340,9 @@ class ViewService extends CServiceBase implements IViewService {
             $total += $value['amount'];
         }
         $view->totalBudget = number_format($total);
-       
+
         $view->total = number_format($objWelfare['quantity'] - $total);
-        
+
         return $view;
     }
 
@@ -351,7 +352,7 @@ class ViewService extends CServiceBase implements IViewService {
         $conditionsId = $data->conditionsId;
         $memberId = $data->memberId;
         $welfareId = $data->welfareId;
-        
+
         $conditionsId = $data->conditionsId;
         $memberId = $data->memberId;
 
@@ -469,11 +470,11 @@ class ViewService extends CServiceBase implements IViewService {
         $objHistory = $this->datacontext->getObject($sqlHistory, array("historyId" => $historyId));
 
         $view->historyId = $historyId;
-        
+
         $view->memberId = $objHistory[0]["memberId"];
         $view->conditionsId = $objHistory[0]["conditionsId"];
         $view->welfareId = $objHistory[0]["welfareId"];
-        
+
         $view->datasHistory = $objHistory;
         return $view;
     }
@@ -511,44 +512,44 @@ class ViewService extends CServiceBase implements IViewService {
         foreach ($member as $key => $value) {
             $member[$key]["rowNo"] = $i++;
         }
-        
-        
+
+
         $view->datasMember = $member;
-        
+
         return $view;
     }
 
     public function byMemberWfLists() {
         $view = new CJView("byMember/wfLists", CJViewType::HTML_VIEW_ENGINE);
-        
-        $memberId=$this->getRequest()->memberId;
-         $path = '\\apps\\taxonomy\\entity\\';
-         $parthWelfare = '\\apps\\welfare\\entity\\';
+
+        $memberId = $this->getRequest()->memberId;
+        $path = '\\apps\\taxonomy\\entity\\';
+        $parthWelfare = '\\apps\\welfare\\entity\\';
 
         $sqlHistory = "SELECT htr.conditionsId, htr.welfareId, htr.memberId , "
-        ." cdt.employeeTypeId, cdt.description, cdt.quantity, " 
-        ." emt.id AS employeeTypeId, emt.value1 AS employeeValue "
-        ." FROM  ".$parthWelfare."History htr "
-        ."LEFT JOIN ".$parthWelfare."Conditions cdt "
-        ."with htr.conditionsId = cdt.conditionsId "
-        ."LEFT JOIN ".$path."Taxonomy emt "
-        ."with cdt.employeeTypeId = emt.id "
-        ."WHERE htr.memberId = :memberId "
-        ." group by htr.conditionsId";
-        
-        $param=array("memberId" => $memberId);
-        $objHistory = $this->datacontext->getObject($sqlHistory,$param);
-        
-        $i=1;
-        foreach($objHistory as $key => $value) {
+                . " cdt.employeeTypeId, cdt.description, cdt.quantity, "
+                . " emt.id AS employeeTypeId, emt.value1 AS employeeValue "
+                . " FROM  " . $parthWelfare . "History htr "
+                . "LEFT JOIN " . $parthWelfare . "Conditions cdt "
+                . "with htr.conditionsId = cdt.conditionsId "
+                . "LEFT JOIN " . $path . "Taxonomy emt "
+                . "with cdt.employeeTypeId = emt.id "
+                . "WHERE htr.memberId = :memberId "
+                . " group by htr.conditionsId";
+
+        $param = array("memberId" => $memberId);
+        $objHistory = $this->datacontext->getObject($sqlHistory, $param);
+
+        $i = 1;
+        foreach ($objHistory as $key => $value) {
             $objHistory[$key]["rowNo"] = $i++;
-        } 
-        
-        $view->datasConditions=$objHistory;
-        $view->memberId=$memberId;
-      
-        
-        
+        }
+
+        $view->datasConditions = $objHistory;
+        $view->memberId = $memberId;
+
+
+
         return $view;
     }
 

@@ -12,11 +12,11 @@ interface IWelfareService {
     /**
      * @name save
      * @uri /save
-     * @param apps\welfare\entity\Welfare data []
+     * @param apps\welfare\entity\Welfare welfare []
      * @return boolean save [return ture or false if don't ]
      * @description save เพิ่มข้อมูลสวัสดิการ
      */
-    public function save($data);
+    public function save($welfare);
     
     /**
      * @name updatewelfare
@@ -25,7 +25,7 @@ interface IWelfareService {
      * @return boolean update [return ture or false if don't ]
      * @description update แก้ไขข้อมูลสวัสดิการ
      */
-    public function update($data);
+    public function update($datas);
 
     /**
      * @name deletewelfare
@@ -35,5 +35,7 @@ interface IWelfareService {
      * @description delete ลบข้อมูลสวัสดิการ
      */
     public function delete($Id);
+    
+    
     
 }

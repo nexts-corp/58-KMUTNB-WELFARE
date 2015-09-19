@@ -64,7 +64,17 @@ class Welfare extends EntityBase {
     /**
      * @Column(type="integer", length=11, name="resetTime",nullable=true)
      */
-    public $resetTime; //เวลาresetสวัสดิการ (เดือน)
+    public $resetTime; // (เดือน)
+    
+    public $details;
+
+    function getDetails() {
+        return $this->details;
+    }
+
+    function setDetails($details) {
+        $this->details = $details;
+    }
 
     function getWelfareId() {
         return $this->welfareId;

@@ -35,8 +35,18 @@ class Details extends EntityBase {
      * @Column(type="string", length=10, name="returnTypeId",nullable=true)
      */
     public $returnTypeId; //หน่วยนับ
+    
+    public $conditions;
+    
+    function getConditions() {
+        return $this->conditions;
+    }
 
-    function getDetailsId() {
+    function setConditions($conditions) {
+        $this->conditions = $conditions;
+    }
+
+        function getDetailsId() {
         return $this->detailsId;
     }
 
