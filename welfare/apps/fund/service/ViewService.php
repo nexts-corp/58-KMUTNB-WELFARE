@@ -17,7 +17,8 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function cooperativeAdd() {
-        
+        $view = new CJView("cooperative/add", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
     }
 
     public function cooperativeLists() {
@@ -25,20 +26,11 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function fundAdd() {
-        
-    }
-
-    public function fundEdit($id) {
-        
-    }
-
-    public function fundLists() {
-        
-    }
+    
 
     public function liveAdd() {
-        
+        $view = new CJView("fundlive/add", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
     }
 
     public function liveEdit($id) {
