@@ -4,14 +4,21 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}addregister{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/member/view/member/lists"
+                   onclick="btnHTML(this)">รายชื่อสมาชิก
+                </a>
+            </li>
+            <li class="active">แก้ไขข้อมูล</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
     <!-- Page Header -->
     <div class="page-header position-relative">
         <div class="header-title">
-            <h1> {{#i18n}}addregister{{/i18n}} </h1>
+<!--            <h1> {{#i18n}}addregister{{/i18n}} </h1>-->
         </div>
         <!--Header Buttons--> 
 

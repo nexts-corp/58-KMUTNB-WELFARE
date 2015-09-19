@@ -4,7 +4,14 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}addregister{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/member/view/member/lists"
+                   onclick="btnHTML(this)">รายชื่อสมาชิก
+                </a>
+            </li>
+            <li class="active">เพิ่มข้อมูล</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
@@ -167,10 +174,10 @@
                     <div class="row">
                         <div class="col-lg-6 col-lg-6 col-xs-12">
                             <div class="widget radius-bordered">
-                                <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                                <div class="widget-header"> <span class="widget-caption">ข้อมูลสมาชิก</span> </div>
                                 <div class="widget-body">
                                     <div class="form-horizontal">
-                                        <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+                                        <div class="form-title"></div>
 
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}registerStaffCode{{/i18n}}</label>
@@ -344,10 +351,10 @@
 
                         <div class="col-lg-6 col-lg-6 col-xs-12">
                             <div class="widget radius-bordered">
-                                <div class="widget-header"> <span class="widget-caption">{{#i18n}}addData{{/i18n}}</span> </div>
+                                <div class="widget-header"> <span class="widget-caption">ข้อมูลผู้ติดต่อ</span> </div>
                                 <div class="widget-body">
                                     <div class="form-horizontal">
-                                        <div class="form-title"> {{#i18n}}addData{{/i18n}} </div>
+                                        <div class="form-title"></div>
 
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}registerAddress{{/i18n}}</label>

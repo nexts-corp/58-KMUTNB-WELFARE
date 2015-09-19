@@ -4,14 +4,21 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}addregister{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/member/view/member/lists"
+                   onclick="btnHTML(this)">รายชื่อสมาชิก
+                </a>
+            </li>
+            <li class="active">แก้ไขข้อมูล</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
     <!-- Page Header -->
     <div class="page-header position-relative">
         <div class="header-title">
-            
+
         </div>
         <!--Header Buttons--> 
 
@@ -273,8 +280,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{internalPhone}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                                   value="{{#datas}}{{internalPhone}}{{/datas}}" data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#internalPhone-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="internalPhone-msg-error">
+
                                         </div>
                                     </div>
 
@@ -282,8 +292,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{phone}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                                   value="{{#datas}}{{phone}}{{/datas}}" data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#phone-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="phone-msg-error">
+
                                         </div>
                                     </div>
 
@@ -291,8 +304,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{mobile}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                                   value="{{#datas}}{{mobile}}{{/datas}}" data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#mobile-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="mobile-msg-error">
+
                                         </div>
                                     </div>
 
@@ -300,8 +316,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{email}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                                   value="{{#datas}}{{email}}{{/datas}}"  data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#email-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="email-msg-error">
+
                                         </div>
                                     </div>
 
@@ -346,107 +365,102 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-
-            var academic = '{{#datas}}{{academicId}}{{/datas}}';
-            var titleName = '{{#datas}}{{titleNameId}}{{/datas}}';
-            var gender = '{{#datas}}{{genderId}}{{/datas}}';
-            var employeeType = '{{#datas}}{{employeeTypeId}}{{/datas}}';
-            var position = '{{#datas}}{{positionId}}{{/datas}}';
-            var faculty = '{{#datas}}{{facultyId}}{{/datas}}';
-            var matier = '{{#datas}}{{matierId}}{{/datas}}';
-            var userType = '{{#datas}}{{userTypeId}}{{/datas}}';
-            var department = '{{#datas}}{{departmentId}}{{/datas}}';
-            $("#academicId").val(academic);
-            $("#titleNameId").val(titleName);
-            $("#employeeTypeId").val(employeeType);
-            $("#positionId").val(position);
-            $("#facultyId").val(faculty);
-            $("#userTypeId").val(userType);
-            listsDepartment(faculty);
-            $("#departmentId").val(department);
-
-            $('input:radio[name="genderId"]').filter('[value="' + gender + '"]').attr('checked', true);
-            $('input:radio[name="matierId"]').filter('[value="' + matier + '"]').attr('checked', true);
-            $("#facultyId").change(function () {
-                var id = $("#facultyId").val();
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+                var academic = '{{#datas}}{{academicId}}{{/datas}}';
+                var titleName = '{{#datas}}{{titleNameId}}{{/datas}}';
+                var gender = '{{#datas}}{{genderId}}{{/datas}}';
+                var employeeType = '{{#datas}}{{employeeTypeId}}{{/datas}}';
+                var position = '{{#datas}}{{positionId}}{{/datas}}';
+                var faculty = '{{#datas}}{{facultyId}}{{/datas}}';
+                var matier = '{{#datas}}{{matierId}}{{/datas}}';
+                var userType = '{{#datas}}{{userTypeId}}{{/datas}}';
+                var department = '{{#datas}}{{departmentId}}{{/datas}}';
+                $("#academicId").val(academic);
+                $("#titleNameId").val(titleName);
+                $("#employeeTypeId").val(employeeType);
+                $("#positionId").val(position);
+                $("#facultyId").val(faculty);
+                $("#userTypeId").val(userType);
+                listsDepartment(faculty);
+                $("#departmentId").val(department);
+                $('input:radio[name="genderId"]').filter('[value="' + gender + '"]').attr('checked', true);
+                $('input:radio[name="matierId"]').filter('[value="' + matier + '"]').attr('checked', true);
+                $("#facultyId").change(function () {
+        var id = $("#facultyId").val();
                 listsDepartment(id);
-
-            });
-            function listsDepartment(facultyId) {
+        });
+                function listsDepartment(facultyId) {
                 $.ajax({
-                    url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
-                    data: {parentId: facultyId},
-                    async: false,
-                    success: function (result) {
+                url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
+                        data: {parentId: facultyId},
+                        async: false,
+                        success: function (result) {
                         var data = result["lists"];
-                        var html;
-                        if (data == "") {
-                            html = '<option value="">สังกัด</option>';
+                                var html;
+                                if (data == "") {
+                        html = '<option value="">สังกัด</option>';
                         } else {
-                            $.each(data, function (key, value) {
-                                html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
-                            });
+                        $.each(data, function (key, value) {
+                        html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
+                        });
                         }
                         $("#departmentId").html(html);
-                    }
+                        }
                 });
-            }
+                }
 
 
 
-            $("#btn_submit").click(function () {
+        $("#btn_submit").click(function () {
 //alert(555555555555);
-                var data = {};
-                    var contact = {};
-                    var work = {};
-                    var salary = {};
-                    data['memberId'] = {{#datas}}{{memberId}}{{/datas}};
-                    data['fname'] = $("#fname").val();
-                    data['lname'] = $("#lname").val();
-                    data['titleNameId'] = $("#titleNameId").val();
-                    data['genderId'] = $('input[name=genderId]:checked').val();
-                    data['idCard'] = $("#idCard").val();
-                    data['dob'] = $("#dob").val();
-                    data['employeeCode'] = $("#employeeCode").val();
-                    work['employeeTypeId'] = $("#employeeTypeId").val();
-                    work['academicId'] = $("#academicId").val();
-                    work['departmentId'] = $("#departmentId").val();
-                    work['facultyId'] = $("#facultyId").val();
-                    data['workStartDate'] = $("#workStartDate").val();
-                    work['matierId'] = $('input[name=matierId]:checked').val();
-                    work['positionId'] = $("#positionId").val();
-                    data['userTypeId'] = $("#userTypeId").val();
-                    salary['salary'] = $("#salary").val();
-                    salary['rank'] = $("#rank").val();
-                    salary['salaryDate'] = $("#salaryDate").val();
-                    contact['address'] = $("#address").val();
-                    contact['internalPhone'] = $("#internalPhone").val();
-                    contact['phone'] = $("#phone").val();
-                    contact['mobile'] = $("#mobile").val();
-                    contact['email'] = $("#email").val();
-                    
-                    data['work'] = work;
-                    data['salary'] = salary;
-                    data['contact'] = contact;
-
+        var data = {};
+                var contact = {};
+                var work = {};
+                var salary = {};
+                data['memberId'] = {{#datas}}{{memberId}}{{/datas}};
+                data['fname'] = $("#fname").val();
+                data['lname'] = $("#lname").val();
+                data['titleNameId'] = $("#titleNameId").val();
+                data['genderId'] = $('input[name=genderId]:checked').val();
+                data['idCard'] = $("#idCard").val();
+                data['dob'] = $("#dob").val();
+                data['employeeCode'] = $("#employeeCode").val();
+                work['employeeTypeId'] = $("#employeeTypeId").val();
+                work['academicId'] = $("#academicId").val();
+                work['departmentId'] = $("#departmentId").val();
+                work['facultyId'] = $("#facultyId").val();
+                data['workStartDate'] = $("#workStartDate").val();
+                work['matierId'] = $('input[name=matierId]:checked').val();
+                work['positionId'] = $("#positionId").val();
+                data['userTypeId'] = $("#userTypeId").val();
+                salary['salary'] = $("#salary").val();
+                salary['rank'] = $("#rank").val();
+                salary['salaryDate'] = $("#salaryDate").val();
+                contact['address'] = $("#address").val();
+                contact['internalPhone'] = $("#internalPhone").val();
+                contact['phone'] = $("#phone").val();
+                contact['mobile'] = $("#mobile").val();
+                contact['email'] = $("#email").val();
+                data['work'] = work;
+                data['salary'] = salary;
+                data['contact'] = contact;
                 var jdata = {};
                 jdata['data'] = data;
                 $.ajax({
-                    url: '{{_context_path}}/api/member/member/update',
-                    data: jsonEncode(jdata),
-                    type: 'post', // 'or get'
-                    success: function (result) {
+                url: '{{_context_path}}/api/member/member/update',
+                        data: jsonEncode(jdata),
+                        type: 'post', // 'or get'
+                        success: function (result) {
                         //alert(result.save);
                         if (result.update == true) {
-                            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
-                            Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                        getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                                Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
                         } else {
-                            Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                         }
-                    }
+                        }
                 });
-            });
+        });
 //    $('.date-picker').datepicker();
 
 

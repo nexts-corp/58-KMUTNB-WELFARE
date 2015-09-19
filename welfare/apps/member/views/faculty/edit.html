@@ -4,14 +4,21 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
-            <li class="active">{{#i18n}}addregister{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/member/view/member/lists"
+                   onclick="btnHTML(this)">รายชื่อสมาชิก
+                </a>
+            </li>
+            <li class="active">แก้ไขข้อมูล</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb --> 
     <!-- Page Header -->
     <div class="page-header position-relative">
         <div class="header-title">
-            <h1> {{#i18n}}addregister{{/i18n}} </h1>
+<!--            <h1> {{#i18n}}addregister{{/i18n}} </h1>-->
         </div>
         <!--Header Buttons--> 
 
@@ -273,8 +280,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}internalPhone{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="internalPhone" name="internalPhone" placeholder="{{#i18n}}internalPhone{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{internalPhone}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}internalPhone{{/i18n}}" />
+                                                   value="{{#datas}}{{internalPhone}}{{/datas}}" data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#internalPhone-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="internalPhone-msg-error">
+
                                         </div>
                                     </div>
 
@@ -282,8 +292,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{phone}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}familyContactPhone{{/i18n}}" />
+                                                   value="{{#datas}}{{phone}}{{/datas}}" data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#phone-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="phone-msg-error">
+
                                         </div>
                                     </div>
 
@@ -291,8 +304,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{mobile}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}familyMobile{{/i18n}}" />
+                                                   value="{{#datas}}{{mobile}}{{/datas}}" data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#mobile-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="mobile-msg-error">
+
                                         </div>
                                     </div>
 
@@ -300,8 +316,11 @@
                                         <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
-                                                   data-bv-notempty="true" value="{{#datas}}{{email}}{{/datas}}"
-                                                   data-bv-notempty-message=" {{#i18n}}familyEmail{{/i18n}}" />
+                                                   value="{{#datas}}{{email}}{{/datas}}"  data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" 
+                                                   data-validation-error-msg-container="#email-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="email-msg-error">
+
                                         </div>
                                     </div>
 
