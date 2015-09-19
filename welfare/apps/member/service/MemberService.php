@@ -326,7 +326,7 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function find($field, $value) {
-        $member = new \apps\member\model\Member();
+        $member = new \apps\member\model\FullMember();
         $member->$field = $value;
         return $this->datacontext->getObject($member);
     }
