@@ -418,9 +418,10 @@
 
         $("#btnSaveDetails").click(function () {
             var details = {};
+            var check = true;
             $(".details").each(function (key, value) {
                 if (this.value == "") {
-                    
+                    chaeck = false;
                     Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                     return false;
                 } else {
@@ -428,44 +429,46 @@
                 }
             });
 
-            if ($("#name").val() != "" || $("#quantity").val() != "") {
+            if (check) {
+                if ($("#name").val() != "" || $("#quantity").val() != "") {
 
-                Details.push(details);
-                var table = "";
-                $.each(Details, function (key, value) {
-                    table += "<tr>" +
-                            "<td>" + (key + 1) + "</td>";
+                    Details.push(details);
+                    var table = "";
+                    $.each(Details, function (key, value) {
+                        table += "<tr>" +
+                                "<td>" + (key + 1) + "</td>";
 
-                    $.each(value, function (key2, value2) {
-                        if (key2 != "conditions") {
-                            if (key2 == "returnTypeId") {
-                                var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
-                                table += "<td>" + text + "</td>";
-                            } else {
-                                table += "<td>" + value2 + "</td>";
+                        $.each(value, function (key2, value2) {
+                            if (key2 != "conditions") {
+                                if (key2 == "returnTypeId") {
+                                    var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
+                                    table += "<td>" + text + "</td>";
+                                } else {
+                                    table += "<td>" + value2 + "</td>";
+                                }
                             }
-                        }
+                        });
+
+                        table += "<td>" +
+                                "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
+                                "</td> </tr>";
                     });
+                    $("table#showTable tbody").html(table);
 
-                    table += "<td>" +
-                            "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
-                            "</td> </tr>";
-                });
-                $("table#showTable tbody").html(table);
+                    $(".btnConditions").click(function () {
+                        rowDetails = $(this).attr("row-index");
+                        rowConditions = 0;
+                        $(".content-conditions").empty();
+                        $("#divConditions").show();
+                        $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
+                        $(".conditionsFix").attr("class", "col-xs-6 col-md-6")
 
-                $(".btnConditions").click(function () {
-                    rowDetails = $(this).attr("row-index");
-                    rowConditions = 0;
-                    $(".content-conditions").empty();
-                    $("#divConditions").show();
-                    $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
-                    $(".conditionsFix").attr("class", "col-xs-6 col-md-6")
-
-                    return false;
-                });
-            } else {
-                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                $('#name').focus();
+                        return false;
+                    });
+                } else {
+                    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    $('#name').focus();
+                }
             }
             return false;
         });
