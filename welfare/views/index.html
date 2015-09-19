@@ -42,7 +42,7 @@
                 </div>
 
                 <div id="content-body">
-
+                    
                 </div>
 
             </div>
@@ -77,8 +77,10 @@ $(document).ready(function () {
 //    alert(usertype);
     if (usertype == "administrator") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/admin', null);
+        getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
     } else if (usertype == "user") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/member', null);
+        getHTML('content-body', '{{_context_path}}/api/welfare/view/byMember/lists', null);
     } else if (usertype == "adminDepartment") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/department', null);
     } else if (usertype == "adminFaculty") {

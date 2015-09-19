@@ -4,11 +4,63 @@
         <!--Dashboard-->
 
 
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-smile-o"></i>
 
+                <span class="menu-text">
+                    จัดการข้อมูลสวัสดิการ
+                </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/list"
+                       
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">สวัสดิการรายบุคคล</span>
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/send"
+                       
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">ขอรับสวัสดิการ</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/wait"
+                       
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">สวัสดิการที่ขอรับแล้ว</span>
+                    </a>
+                </li>
+
+
+
+
+
+
+
+            </ul>
+        </li>
 
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-users"></i>
 
                 <span class="menu-text">
                     จัดการข้อมูลสมาชิก
@@ -46,7 +98,7 @@
 
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-heartbeat"></i>
 
                 <span class="menu-text">
                     จัดการข้อมูลประกัน
@@ -103,65 +155,13 @@
         </li>
 
 
-        <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                <span class="menu-text">
-                    จัดการข้อมูลสวัสดิการ
-                </span>
-
-                <i class="menu-expand"></i>
-            </a>
-
-            <ul class="submenu">
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/list"
-                       
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">สวัสดิการรายบุคคล</span>
-                    </a>
-                </li>
-
-
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/send"
-                       
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">ขอรับสวัสดิการ</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/wait"
-                       
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">สวัสดิการที่ขอรับแล้ว</span>
-                    </a>
-                </li>
-
-
-
-
-
-
-
-            </ul>
-        </li>
+        
 
 
 
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-usd"></i>
 
                 <span class="menu-text">
                     จัดการข้อมูลกองทุน
@@ -211,6 +211,7 @@
 
             </ul>
         </li>
+        
         <li>
 
             <a href="#" 
@@ -218,7 +219,7 @@
                data-api="{{_context_path}}/api/medical/view/medicalFee/show/{{code}}"
 
                onclick="btnHTML(this)">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-medkit"></i>
                 <span class="menu-text">ค่ารักษาพยาบาล</span>
             </a>
 
@@ -231,6 +232,7 @@
                         </a>-->
 
         </li>
+        
 
     </ul>
     <!-- /Sidebar Menu -->

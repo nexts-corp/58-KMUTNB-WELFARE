@@ -2,9 +2,103 @@
 <div class="page-sidebar" id="sidebar">
     <ul class="nav sidebar-menu">
         <!--Dashboard-->
+
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-smile-o"></i>
+
+                <span class="menu-text">
+                    จัดการข้อมูลสวัสดิการ
+                </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/welfare/lists"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">รายการข้อมูลสวัสดิการ</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/byMember/lists"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">สวัสดิการรายบุคคล</span>
+                    </a>
+                </li>
+
+
+
+
+
+                <!--<li>-->
+                <!--<a href="#" onclick="btnHTML('content-body','api/ManagementWelfare/welfareCut/list',null)">-->
+                <!--<span class="menu-text">สวัสดิการที่ขอรับแล้ว</span>-->
+                <!--</a>-->
+                <!--</li>-->
+
+                <!-- <li>
+                     <a href="#" onclick="btnHTML('content-body','api/ManagementWelfare/welfareCut/list',null)">
+                         <span class="menu-text">สวัสดิการรายบุคคล</span>
+                     </a>
+                 </li>-->
+
+
+
+
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-users"></i>
+
+                <span class="menu-text">
+                    จัดการข้อมูลสมาชิก
+                </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/member/view/member/lists"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">รายการข้อมูลสมาชิก</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/ManagementMember/member/management/listmanagemember"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">รายงานรายชื่อสมาชิก</span>
+                    </a>
+                </li>
+
+
+
+
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-user"></i>
 
                 <span class="menu-text">
                     จัดการข้อมูลผู้ใช้งาน
@@ -98,10 +192,10 @@
 
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-medkit"></i>
 
                 <span class="menu-text">
-                    จัดการข้อมูลสมาชิก
+                    จัดการข้อมูลรักษาพยาบาล
                 </span>
 
                 <i class="menu-expand"></i>
@@ -111,25 +205,23 @@
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/member/view/member/lists"
+                       data-api="{{_context_path}}/api/medical/view/medicalFee/lists"
 
                        onclick="btnHTML(this)">
-                        <span class="menu-text">รายการข้อมูลสมาชิก</span>
+                        <span class="menu-text">การเบิกค่ารักษาพยาบาล</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementMember/member/management/listmanagemember"
+                       data-api=""
 
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายงานรายชื่อสมาชิก</span>
+                       onclick="btnHTML(this)"
+                       >
+                        <span class="menu-text">สรุปการเบิกค่ารักษาพยาบาล</span>
                     </a>
                 </li>
-
-
-
 
             </ul>
         </li>
@@ -193,66 +285,13 @@
         </li>
 
 
-        <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
 
-                <span class="menu-text">
-                    จัดการข้อมูลสวัสดิการ
-                </span>
-
-                <i class="menu-expand"></i>
-            </a>
-
-            <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/welfare/view/welfare/lists"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายการข้อมูลสวัสดิการ</span>
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/welfare/view/byMember/lists"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">สวัสดิการรายบุคคล</span>
-                    </a>
-                </li>
-
-
-
-
-
-                <!--<li>-->
-                <!--<a href="#" onclick="btnHTML('content-body','api/ManagementWelfare/welfareCut/list',null)">-->
-                <!--<span class="menu-text">สวัสดิการที่ขอรับแล้ว</span>-->
-                <!--</a>-->
-                <!--</li>-->
-
-                <!-- <li>
-                     <a href="#" onclick="btnHTML('content-body','api/ManagementWelfare/welfareCut/list',null)">
-                         <span class="menu-text">สวัสดิการรายบุคคล</span>
-                     </a>
-                 </li>-->
-
-
-
-
-            </ul>
-        </li>
 
 
 
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-usd"></i>
 
                 <span class="menu-text">
                     จัดการข้อมูลกองทุน
@@ -308,7 +347,7 @@
         <li>    
 
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-user"></i>
 
                 <span class="menu-text">
                     จัดการข้อมูลผู้เกษียนอายุ
@@ -332,7 +371,7 @@
 
         <li>
             <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
+                <i class="menu-icon fa fa-newspaper-o"></i>
 
                 <span class="menu-text">
                     จัดการข่าวสาร
@@ -354,48 +393,14 @@
             </ul>
         </li>
 
-        <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon glyphicon glyphicon-link"></i>
 
-                <span class="menu-text">
-                    จัดการข้อมูลรักษาพยาบาล
-                </span>
-
-                <i class="menu-expand"></i>
-            </a>
-
-            <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/medical/view/medicalFee/lists"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">การเบิกค่ารักษาพยาบาล</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api=""
-
-                       onclick="btnHTML(this)"
-                       >
-                        <span class="menu-text">สรุปการเบิกค่ารักษาพยาบาล</span>
-                    </a>
-                </li>
-
-            </ul>
-        </li>
         <li>
             <a href="#" 
                data-id="content-body"
                data-api="{{_context_path}}/api/taxonomy/view/lists"
 
                onclick="btnHTML(this)">
-                <i class="menu-icon glyphicon glyphicon-link"></i> <span class="menu-text">จัดการข้อมูลพื้นฐาน</span>
+                <i class="menu-icon fa fa-wrench"></i> <span class="menu-text">จัดการข้อมูลพื้นฐาน</span>
             </a>
         </li>
 
