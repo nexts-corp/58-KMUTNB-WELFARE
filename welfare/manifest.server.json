@@ -8,11 +8,11 @@
             "contextType": "data",
             "propertys": [
                 {"name": "driver","value": "pdo_mysql"},
-                {"name": "host","value": "db.codeunbug.com"},
+                {"name": "host","value": "127.0.0.1"},
                 {"name": "port","value": "3306"},
-                {"name": "dbname","value": "kmutnb_welfare"},
-                {"name": "user","value": "kmutnb_welfare"},
-                {"name": "password","value": "budxQSnAYtMSZmPN"},
+                {"name": "dbname","value": "db_welfare"},
+                {"name": "user","value": "root"},
+                {"name": "password","value": "dd1234"},
                 {"name":"charset","value":"utf8"}
             ]
         }
