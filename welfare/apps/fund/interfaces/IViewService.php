@@ -110,33 +110,8 @@ interface IViewService {
     
     //end view policy 
       
-    /**
-     * @name fundLists
-     * @uri /fund/lists
-     * @return html view
-     * @description รายการพนักงาน
-     */
-    public function fundLists();
-
-    /**
-     * @name fundAdd
-     * @uri /fund/add
-     * @return html view
-     * @description view เพิ่มพนักงาน
-     */
-    public function fundAdd();
-
-    /**
-     * @name fundEdit
-     * @uri /fund/edit
-     * @param integer id
-     * @return html view
-     * @description view แก้ไขพนักงาน 
-     */
-    public function fundEdit($id);
-    
-    //end view fund 
-    
+   
+   
     
 
 }
