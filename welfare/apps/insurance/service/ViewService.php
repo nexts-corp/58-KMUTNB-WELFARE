@@ -40,12 +40,12 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function ssoUserLists() {
         $view = new CJView("sso/user/lists", CJViewType::HTML_VIEW_ENGINE);
-
+        $memberId = $this->getCurrentUser()->code;
         $sso = "select sso from apps\\insurance\\entity\\SSO sso "
                 . "where sso.memberId = :memberId "
                 . "order by sso.id desc";
         $param = array(
-            "memberId" => $this->getCurrentUser()->code
+            "memberId" => $memberId
         );
         $datas = $this->datacontext->getObject($sso, $param);
         $i = 1;
@@ -60,6 +60,16 @@ class ViewService extends CServiceBase implements IViewService {
             }
         }
         $view->hospital = $datas[0]->hospital;
+
+        $hospital = new \apps\insurance\entity\SSOHospital();
+        $hospital->memberId = $memberId;
+        $dataHospital = $this->datacontext->getObject($hospital);
+        if(count($dataHospital)>0){
+            $view->requestHospital = $dataHospital[0]->hospital;
+        }else{
+            $view->requestHospital = "-";
+        }
+        
         $view->datas = $datas;
         return $view;
     }
