@@ -83,4 +83,8 @@ class SSOService extends CServiceBase implements ISSOService {
         }
     }
 
+    public function changeHospital($ssoHospital) {
+        return true;
+    }
+
 }

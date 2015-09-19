@@ -31,6 +31,14 @@ interface IViewService {
      */
     public function ssoAdminEdit();
     
+    /**
+     * @name lists
+     * @uri /sso/user/lists
+     * @return html view
+     * @description หน้าแสดงรายการข้อมูลประกันสังคม
+     */
+    public function ssoUserLists();
+    
     
     
  

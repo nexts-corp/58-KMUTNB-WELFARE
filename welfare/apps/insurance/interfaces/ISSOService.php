@@ -26,4 +26,13 @@ interface ISSOService {
      * @description บันทึกข้อมูลประกันสังคม
      */
     public function save($sso);
+    
+    /**
+     * @name ChangeHospital
+     * @uri /change/hospital
+     * @param apps\insurance\entity\SSOHospital ssoHospital
+     * @return string change
+     * @description เปลี่ยนสถานพยาบาล
+     */
+    public function changeHospital($ssoHospital);
 }

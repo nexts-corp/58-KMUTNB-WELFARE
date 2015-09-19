@@ -1,0 +1,119 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="{{_context_path}}">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.sso{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}sso.title{{/i18n}}</span>
+
+                    </div>
+                    <div class="widget-body">
+                        <div class="col-sm-10">
+                            <h4 class="widget-caption">{{#i18n}}sso.hospital.current{{/i18n}} : {{hospital}}</h4>
+                            <h4 class="widget-caption">{{#i18n}}sso.hospital.request{{/i18n}} : {{hospital}}</h4>
+                        </div>
+                        <div class="col-sm-2 pull-right">
+                            <button type="button" class="btn btn-primary btn-sm" 
+                                    data-toggle="modal" 
+                                    data-target="#changeHospitalModal" 
+                                    data-whatever="@fat">
+                                <i class="fa fa-ambulance"></i>{{#i18n}}button.changeHospital{{/i18n}}
+                            </button>
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="rows">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}sso.rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.hospital{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.issuedDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.expireDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sso.dateCreated{{/i18n}}</th>
+                                        <!--  <th class="center">{{#i18n}}sso.details{{/i18n}}</th>
+                                                                                  <th class="center">{{#i18n}}delete{{/i18n}}</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datas}}  
+                                    <tr class="selectable">
+                                        <td>{{rowNo}}</td>
+                                        <td>{{hospital}}</td>
+                                        <td>{{issuedDate}}</td>
+                                        <td>{{expireDate}}</td>
+                                        <td>{{dateCreated}}</td>
+                                    </tr>
+                                    {{/datas}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+    <div class="modal fade" id="changeHospitalModal" tabindex="-1" role="dialog" aria-labelledby="changeHospitalModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="changeHospitalModalLabel">แจ้งเปลี่ยนสถานพยาบาล</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-lg-4">ชื่อสถานพยาบาล:</label>
+                            <div class="col-lg-8">
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" id="hospital" name="hospital"
+                                           data-validation="required"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{#i18n}}button.close{{/i18n}}</button>
+                    <button type="button" class="btn btn-primary" id="btn_save">{{#i18n}}button.save{{/i18n}}</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validate();
+        $("#btn_save").click(function () {
+            var hospital = $("#hospital").val();
+            if (hospital == "") {
+                Notify('กรุณาใส่ชื่อสถานพยาบาล', 'top-right', '4000', 'danger', 'fa-check', true);
+                $("#hospital").focus();
+            } else {
+                var data = {};
+                data['hospital'] = hospital;
+                var jdata = {};
+                jdata['ssoHospital'] = data;
+                var result = sendData('{{_context_path}}/api/insurance/sso/savexxx', jsonEncode(jdata));
+                
+            }
+            return false;
+        });
+    });
+</script>

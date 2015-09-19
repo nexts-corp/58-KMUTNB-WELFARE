@@ -21,7 +21,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("sso/admin/add", CJViewType::HTML_VIEW_ENGINE);
         $taxTitleName = new Taxonomy();
         $taxTitleName->pCode = "titleName";
-        
+
         return $view;
     }
 
@@ -29,7 +29,6 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("sso/admin/edit", CJViewType::HTML_VIEW_ENGINE);
 
         return $view;
-        
     }
 
     public function ssoAdminLists() {
@@ -37,8 +36,32 @@ class ViewService extends CServiceBase implements IViewService {
         $sso = new SSOService();
         $view->lists = $sso->lists();
         return $view;
-        
     }
-      
+
+    public function ssoUserLists() {
+        $view = new CJView("sso/user/lists", CJViewType::HTML_VIEW_ENGINE);
+
+        $sso = "select sso from apps\\insurance\\entity\\SSO sso "
+                . "where sso.memberId = :memberId "
+                . "order by sso.id desc";
+        $param = array(
+            "memberId" => $this->getCurrentUser()->code
+        );
+        $datas = $this->datacontext->getObject($sso, $param);
+        $i = 1;
+        foreach ($datas as $key => $value) {
+            $datas[$key]->rowNo = $i++;
+            foreach ($value as $key2 => $value2) {
+                if (strpos($key2, "Date") || $key2 == "dateCreated") {
+                    $date = explode("-", $value2->format("Y-m-d"));
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $datas[$key]->$key2 = $date;
+                }
+            }
+        }
+        $view->hospital = $datas[0]->hospital;
+        $view->datas = $datas;
+        return $view;
+    }
 
 }
