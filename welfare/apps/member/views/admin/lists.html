@@ -52,8 +52,8 @@
                                     <tr>
                                         <th>&nbsp;{{#i18n}}IdCard{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}registerName{{/i18n}} - {{#i18n}}registerLastName{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}departmentId{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}facultyId{{/i18n}}</th>
+                                        
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
@@ -63,8 +63,8 @@
 
                                         <td>{{idCard}}</td>
                                         <td><div id="title"></div>{{title}} {{fname}}      {{lname}}</td>
-                                        <td>{{department}}</td>
-                                        <td>{{faculty}}</td>
+                                        <td>{{department}} ( {{faculty}} )</td>
+                                      
                                         <td class="center">
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
