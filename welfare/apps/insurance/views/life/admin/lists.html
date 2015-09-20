@@ -208,52 +208,6 @@
             }
 
         });
-        var myDropzone = new Dropzone("#frm_upload", {
-            url: "{{_context_path}}/api/insurance/upload/life",
-            addRemoveLinks: true,
-            autoProcessQueue: false,
-            uploadMultiple: false,
-            acceptedFiles: '.csv',
-            maxFiles: 1,
-            init: function () {
-                $("#btn_upload").click(function () {
-                    myDropzone.processQueue();
-                });
-            },
-            sending: function (file, xhr, formData) {
-                //                var properser_id = $.jx.state.get('properser', 'properser_id');
-                //                formData.append('properser_id', properser_id);
-            },
-            success: function (file, txt) {
-                if (txt.sso == true) {
-                    $("#uploadModal").modal('hide');
-                    myDropzone.removeFile(file);
-                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                    setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', null);
-                    }, 5000);
-                } else if (txt.sso == "cantUpload") {
-                    Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
-                } else {
-                    $("#uploadModal").modal('hide');
-                    var error = txt.sso;
-                    var html = "";
-                    $.each(error, function (k, v) {
-                        html += '<tr>'
-                                + '<td>' + (k + 1) + '</td>'
-                                + '<td>' + v.idCard + '</td>'
-                                + '<td>' + v.titleName + ' ' + v.fname + ' ' + v.lname + '</td>'
-                                + '<td>' + v.department + '</td>'
-                                + '<td>' + v.hospital + '</td>'
-                                + '<td>' + v.issuedDate + '</td>'
-                                + '<td>' + v.expireDate + '</td>'
-                                + '</tr>';
-                    });
-                    $("#tableListsError").html(html);
-                    $("#listsErrorModal").modal('show');
-                    // Notify('มีสมาชิกส่วบันทึกลงฐานข้อมูลได้', 'top-right', '4000', 'warning', 'fa-check', true);
-                }
-            }
-        });
+
     });
 </script>
