@@ -25,12 +25,6 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function ssoAdminEdit() {
-        $view = new CJView("sso/admin/edit", CJViewType::HTML_VIEW_ENGINE);
-
-        return $view;
-    }
-
     public function ssoAdminLists() {
         $view = new CJView("sso/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $sso = new SSOService();
@@ -39,8 +33,13 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function ssoUserLists() {
-        $view = new CJView("sso/user/lists", CJViewType::HTML_VIEW_ENGINE);
-        $memberId = $this->getCurrentUser()->code;
+        if ($this->getRequest()->memberId != "") {
+            $memberId = $this->getRequest()->memberId;
+            $view = new CJView("sso/admin/user", CJViewType::HTML_VIEW_ENGINE);
+        } else {
+            $memberId = $this->getCurrentUser()->code;
+            $view = new CJView("sso/user/lists", CJViewType::HTML_VIEW_ENGINE);
+        }
         $sso = "select sso from apps\\insurance\\entity\\SSO sso "
                 . "where sso.memberId = :memberId "
                 . "order by sso.id desc";
@@ -60,17 +59,58 @@ class ViewService extends CServiceBase implements IViewService {
             }
         }
         $view->hospital = $datas[0]->hospital;
-
         $hospital = new \apps\insurance\entity\SSOHospital();
         $hospital->memberId = $memberId;
         $dataHospital = $this->datacontext->getObject($hospital);
-        if(count($dataHospital)>0){
+        if (count($dataHospital) > 0) {
             $view->requestHospital = $dataHospital[0]->hospital;
-        }else{
-            $view->requestHospital = "-";
+        } else {
+            $view->requestHospital = " - ";
         }
-        
+        $mb = new \apps\member\service\MemberService();
+        $view->member = $mb->find("memberId", $memberId)[0];
         $view->datas = $datas;
+        return $view;
+    }
+
+    public function lifeAdminLists() {
+
+        $view = new CJView("life/admin/lists", CJViewType::HTML_VIEW_ENGINE);
+        $life = new LifeService();
+        $view->lists = $life->lists();
+        return $view;
+    }
+
+    public function lifeUserLists() {
+
+        $view = new CJView("life/user/lists", CJViewType::HTML_VIEW_ENGINE);
+        $memberId = $this->getCurrentUser()->code;
+        $sql = "select fm.*,ifnull(fm.academic1,fm.titleName1) as titleName, "
+                . "inf.lifeId, inf.payment,inf.received,inf.protectYear  "
+                . "from v_fullmember fm "
+                . "join insurancelife inf "
+                . "on inf.memberId = fm.memberId "
+                . "where inf.memberId = :memberId "
+                . "order by inf.protectYear desc";
+        $param = array(
+            "memberId" => $memberId
+        );
+        $datas = $this->datacontext->pdoQuery($sql, $param);
+        $i = 1;
+        if (count($datas) > 0) {
+            foreach ($datas as $key => $value) {
+                $datas[$key]['rowNo'] = $i++;
+                if ($value['payment'] == "yes") {
+                    $datas[$key]['payment'] = "ชำระเงินแล้ว";
+                } else {
+                    $datas[$key]['payment'] = "ยังไม่ชำระเงิน";
+                }
+                if ($key == "protectYear") {
+                    $datas[$key]['protectYear'] = intval($datas[$key]['protectYear'])+543;
+                }
+            }
+        }
+        $view->lists = $datas;
         return $view;
     }
 

@@ -59,41 +59,48 @@
         </li>
 
         <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon fa fa-users"></i>
+            <!--            <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-users"></i>
+            
+                            <span class="menu-text">
+                                จัดการข้อมูลสมาชิก
+                            </span>
+            
+                            <i class="menu-expand"></i>
+                        </a>-->
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/member/view/member/lists"
 
-                <span class="menu-text">
-                    จัดการข้อมูลสมาชิก
-                </span>
-
-                <i class="menu-expand"></i>
+               onclick="btnHTML(this)">
+                <i class="menu-icon fa fa-users"></i><span class="menu-text">จัดการข้อมูลสมาชิก</span>
             </a>
 
-            <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/member/view/member/lists"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายการข้อมูลสมาชิก</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementMember/member/management/listmanagemember"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายงานรายชื่อสมาชิก</span>
-                    </a>
-                </li>
-
-
-
-
-            </ul>
+            <!--            <ul class="submenu">
+                            <li>
+                                <a href="#" 
+                                   data-id="content-body"
+                                   data-api="{{_context_path}}/api/member/view/member/lists"
+            
+                                   onclick="btnHTML(this)">
+                                    <span class="menu-text">รายการข้อมูลสมาชิก</span>
+                                </a>
+                            </li>
+            
+                                            <li>
+                                                <a href="#" 
+                                                   data-id="content-body"
+                                                   data-api="{{_context_path}}/api/ManagementMember/member/management/listmanagemember"
+                            
+                                                   onclick="btnHTML(this)">
+                                                    <span class="menu-text">รายงานรายชื่อสมาชิก</span>
+                                                </a>
+                                            </li>
+            
+            
+            
+            
+                        </ul>-->
         </li>
 
         <li>
@@ -238,33 +245,34 @@
             </a>
 
             <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/insurance/view/privilege/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">ผู้รับผลประโยชน์</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/insurance/view/social/security/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">ประกันสุขภาพกลุ่ม&อุบัติเหตุ</span>
-                    </a>
-                </li>
+                <!--                <li>
+                                    <a href="#" 
+                                       data-id="content-body"
+                                       data-api="{{_context_path}}/api/insurance/view/privilege/list"
+                
+                                       onclick="btnHTML(this)">
+                                        <span class="menu-text">ผู้รับผลประโยชน์</span>
+                                    </a>
+                                </li>-->
                 <li>
                     <a href="#" 
                        data-id="content-body"
                        data-api="{{_context_path}}/api/insurance/view/sso/admin/lists"
 
                        onclick="btnHTML(this)">
-                        <span class="menu-text">ข้อมูลประกันสังคม</span>
+                        <span class="menu-text">ประกันสังคม</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/insurance/view/life/admin/lists"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">ประกันสุขภาพกลุ่ม&อุบัติเหตุ</span>
+                    </a>
+                </li>
+
 
 
                 <!--<li>

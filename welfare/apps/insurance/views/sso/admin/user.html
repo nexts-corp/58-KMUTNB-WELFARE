@@ -2,11 +2,17 @@
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>
-                <a href="{{_context_path}}">{{#i18n}}home{{/i18n}}</a>
+            <li> <i class="fa fa-home"></i>
+                <a href="{{_context_path}}">
+                    {{#i18n}}home{{/i18n}}</a> 
             </li>
-            <li class="active">{{#i18n}}menu.sso{{/i18n}}</li>
+            <li><a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/insurance/view/sso/admin/lists"
+                   onclick="btnHTML(this)">
+                    {{#i18n}}menu.sso{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.sso.user{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -20,18 +26,32 @@
 
                     </div>
                     <div class="widget-body">
-                        <div class="col-sm-10">
-                            <h4 class="widget-caption">{{#i18n}}hospital.current{{/i18n}} : {{hospital}}</h4>
-                            <h4 class="widget-caption">{{#i18n}}hospital.request{{/i18n}} : {{requestHospital}}</h4>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 text-left">
+                                    <p class="h5">{{#i18n}}fname{{/i18n}} - {{#i18n}}lname{{/i18n}} : {{#member}}{{fname}} {{lname}}{{/member}}</p>
+                                </div>
+                                <div class="col-sm-6 text-left">
+                                    <p class="h5">{{#i18n}}sector{{/i18n}} : {{#member}}{{department1}} {{faculty1}}{{/member}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-6 text-left">
+                                    <p class="h5">{{#i18n}}hospital.current{{/i18n}} : {{hospital}}</p>
+                                </div>
+                                <div class="col-sm-6 text-left">
+                                    <p class="h5">{{#i18n}}hospital.request{{/i18n}} : {{requestHospital}}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-2 pull-right">
-                            <button type="button" class="btn btn-primary btn-sm" 
-                                    data-toggle="modal" 
-                                    data-target="#changeHospitalModal" 
-                                    data-whatever="@fat">
-                                <i class="fa fa-ambulance"></i>{{#i18n}}button.changeHospital{{/i18n}}
-                            </button>
-                        </div>
+                        <!--                        <div class="col-sm-2 pull-right">
+                                                    <button type="button" class="btn btn-primary btn-sm" 
+                                                            data-toggle="modal" 
+                                                            data-target="#changeHospitalModal" 
+                                                            data-whatever="@fat">
+                                                        <i class="fa fa-ambulance"></i>{{#i18n}}button.changeHospital{{/i18n}}
+                                                    </button>
+                                                </div>-->
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="rows">
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -97,32 +117,3 @@
 </div>
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $.validate();
-        $("#btn_save").click(function () {
-            var hospital = $("#hospital").val();
-            if (hospital == "") {
-                Notify('กรุณาใส่ชื่อสถานพยาบาล', 'top-right', '4000', 'danger', 'fa-check', true);
-                $("#hospital").focus();
-            } else {
-                var data = {};
-                data['hospital'] = hospital;
-                var jdata = {};
-                jdata['ssoHospital'] = data;
-                var result = sendData('{{_context_path}}/api/insurance/sso/change/hospital', jsonEncode(jdata));
-                if (result.change == true) {
-                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                    $("#changeHospitalModal").modal('hide');
-                    setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/user/lists', null);
-                    }, 1000);
-
-                } else {
-                    Notify('ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อเจ้าหน้าที่', 'top-right', '4000', 'danger', 'fa-check', true);
-                }
-            }
-            return false;
-        });
-    });
-</script>

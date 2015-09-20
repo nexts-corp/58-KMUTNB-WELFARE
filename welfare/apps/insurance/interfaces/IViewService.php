@@ -1,4 +1,5 @@
 <?php
+
 namespace apps\insurance\interfaces;
 
 /**
@@ -7,6 +8,7 @@ namespace apps\insurance\interfaces;
  * @description แสดงผล 
  */
 interface IViewService {
+
     /**
      * @name add
      * @uri /sso/admin/add
@@ -14,23 +16,15 @@ interface IViewService {
      * @description หน้าแสดงการเพิ่มข้อมูลประกันสังคม
      */
     public function ssoAdminAdd();
-    
-     /**
+
+    /**
      * @name lists
      * @uri /sso/admin/lists
      * @return html view
      * @description หน้าแสดงรายการข้อมูลประกันสังคม
      */
     public function ssoAdminLists();
-    
-     /**
-     * @name edit
-     * @uri /sso/admin/edit
-     * @return html view
-     * @description หน้าแก้ไขข้อมูลประกันสังคม
-     */
-    public function ssoAdminEdit();
-    
+
     /**
      * @name lists
      * @uri /sso/user/lists
@@ -38,9 +32,20 @@ interface IViewService {
      * @description หน้าแสดงรายการข้อมูลประกันสังคม
      */
     public function ssoUserLists();
+
+    /**
+     * @name lists
+     * @uri /life/admin/lists
+     * @return html view
+     * @description หน้าแสดงรายการข้อมูลประกันกลุ่ม
+     */
+    public function lifeAdminLists();
     
-    
-    
- 
-    
+       /**
+     * @name lists
+     * @uri /life/user/lists
+     * @return html view
+     * @description หน้าแสดงรายการข้อมูลประกันกลุ่ม
+     */
+    public function lifeUserLists();
 }

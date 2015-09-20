@@ -1,0 +1,54 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="{{_context_path}}">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.life{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.life{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="rows">
+                            <table id="tableYes" class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}idCard{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}sector{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}payment{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}protectYear{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyYes">
+                                    {{#lists}}  
+                                    <tr>
+                                        <td class="text-center">{{rowNo}}</td>
+                                        <td class="text-center">{{idCard}}</td>
+                                        <td class="text-center">{{titleName}} {{fname}} {{lname}}</td>
+                                        <td class="text-center">{{department1}} {{faculty1}}</td>
+                                        <td class="text-center">{{payment}}</td>
+                                        <td class="text-center">{{protectYear}}</td>
+                                    </tr>
+                                    {{/lists}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>

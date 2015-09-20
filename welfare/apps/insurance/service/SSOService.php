@@ -6,6 +6,7 @@ use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\insurance\interfaces\ISSOService;
 use apps\insurance\entity\SSOHospital;
+
 class SSOService extends CServiceBase implements ISSOService {
 
     public $datacontext;
@@ -51,11 +52,12 @@ class SSOService extends CServiceBase implements ISSOService {
                     $date = $dateTime[0];
                     $date = explode("-", $date);
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
-                    if (!empty($dateTime[1])) {
-                        $datas[$key][$key2] = $date . " " . $dateTime[1];
-                    } else {
-                        $datas[$key][$key2] = $date;
-                    }
+                    $datas[$key][$key2] = $date;
+//                    if (!empty($dateTime[1])) {
+//                        $datas[$key][$key2] = $date . " " . $dateTime[1];
+//                    } else {
+//                        $datas[$key][$key2] = $date;
+//                    }
                 }
             }
         }
@@ -86,16 +88,18 @@ class SSOService extends CServiceBase implements ISSOService {
     public function changeHospital($ssoHospital) {
         $mb = new \apps\member\service\MemberService();
         $member = $mb->find("memberId", $this->getCurrentUser()->code)[0];
-        
+
         $hospital = new SSOHospital();
         $hospital->memberId = $member->memberId;
-        $data = $this->datacontext->getObject($hospital)[0];
-        if(count($data)>0){
-            $data->hospital = $ssoHospital->hospital;
+        $data = $this->datacontext->getObject($hospital);
+      
+        if (count($data) > 0) {
+            $data[0]->hospital = $ssoHospital->hospital;
             $return = $this->datacontext->updateObject($data);
-        }else{
+        } else {
             $ssoHospital->idCard = $member->idCard;
-            $return =$this->datacontext->saveObject($ssoHospital);
+            $ssoHospital->memberId = $member->memberId;
+            $return = $this->datacontext->saveObject($ssoHospital);
         }
         return $return;
     }

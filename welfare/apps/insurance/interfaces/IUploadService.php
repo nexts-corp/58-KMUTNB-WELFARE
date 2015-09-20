@@ -18,4 +18,7 @@ interface IUploadService {
      * @description อัพโหลดไฟล์ csv
      */
     public function sso($file);
+
+    
+    
 }

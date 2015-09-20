@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}sso.title{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.sso{{/i18n}}</span> </div>
                     <div class="widget-body">
                         <!--                        <div class="col-md-6">
                                                     <select id="selectParent" class="col-md-12">
@@ -57,16 +57,16 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th class="center">{{#i18n}}sso.rowNo{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.idCard{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.fname{{/i18n}} {{#i18n}}sso.lname{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.department{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}idCard{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}department{{/i18n}}</th>
                                         <!--                                        <th class="center">{{#i18n}}sso.workStartDate{{/i18n}}</th>-->
-                                        <th class="center">{{#i18n}}sso.hospital{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.issuedDate{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.expireDate{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.dateCreated{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}sso.details{{/i18n}}</th><!--
+                                        <th class="center">{{#i18n}}hospital{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}issuedDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}expireDate{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}dateCreated{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}details{{/i18n}}</th><!--
                                                                                 <th class="center">{{#i18n}}delete{{/i18n}}</th>-->
                                     </tr>
                                 </thead>
@@ -85,9 +85,11 @@
                                         <td class="center">
                                             <button class="btn btn-info btn-xs" 
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/taxonomy/view/sso/edit/{{memberId}}"
+                                                    data-api="{{_context_path}}/api/insurance/view/sso/user/lists"
+                                                    data-object="memberId"
+                                                    data-param="{{memberId}}"
                                                     onclick="btnHTML(this)">
-                                                <i class="fa fa-plus"></i>{{#i18n}}sso.details{{/i18n}}</button>
+                                                <i class="fa fa-plus"></i>{{#i18n}}details{{/i18n}}</button>
                                         </td>
                                         <!--     
                                                                           <td class="center">
@@ -140,13 +142,13 @@
             <div class="modal-body">
                 <table class="table table-hover table-striped table-bordered table-condensed">
                     <thead>
-                    <th class="danger">{{#i18n}}sso.rowNo{{/i18n}}</th>
-                    <th class="danger">{{#i18n}}sso.idCard{{/i18n}}</th>
-                    <th class="danger">{{#i18n}}sso.fname{{/i18n}} {{#i18n}}sso.lname{{/i18n}}</th>
-                    <th class="danger">{{#i18n}}sso.department{{/i18n}}</th>
-                    <th class="danger">{{#i18n}}sso.hospital{{/i18n}}</th>
-                    <th class="danger">{{#i18n}}sso.issuedDate{{/i18n}}</th>
-                    <th class="danger">{{#i18n}}sso.expireDate{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}rowNo{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}idCard{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}department{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}hospital{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}issuedDate{{/i18n}}</th>
+                    <th class="danger">{{#i18n}}expireDate{{/i18n}}</th>
                     </thead>
                     <tbody id="tableListsError">
 
