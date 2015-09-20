@@ -26,7 +26,7 @@ class RetireService extends CServiceBase implements IRetireService {
         $retireStart = ($retireYear - 61) . "-10-01";
         $retireEnd = ($retireYear - 60) . "-09-30";
         $query = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleNameId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
-                . "mb.departmentId,welc.description,welc.ageWorkStart,welc.ageWorkEnd ,:retireyear-YEAR(mb.workStartDate) as ry,welc.quantity, "
+                . "mb.departmentId,weld.description,weld.ageWorkStart,weld.ageWorkEnd ,:retireyear-YEAR(mb.workStartDate) as ry,weld.quantity, "
 //                . "welc.amount as total, "
 //                . "(title.value1) As title, "
 //                . "(academic.value1) As academic,"
@@ -35,7 +35,7 @@ class RetireService extends CServiceBase implements IRetireService {
                 . "(gender.value1) As gender, "
                 . "(faculty.value1) As faculty, "
                 . "(department.value1) As department "
-                . "FROM member mb "
+                . "FROM v_member mb "
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
@@ -48,13 +48,13 @@ class RetireService extends CServiceBase implements IRetireService {
                 . "on mb.facultyId = faculty.id "
                 . "Left JOIN taxonomy department "
                 . "on mb.departmentId = department.id "
-                . "inner join welfareconditions welc "
+                . "inner join welfaredetails weld "
                 . "inner join welfare wel "
                 . "on wel.welfareId = welc.welfareId  "
                 . "where retire = 'Y' and wel.code = 'retire001' "
                 . "and mb.dob between :retireStart and :retireEnd "
-                . "and welc.ageWorkStart <= :retireyear-YEAR(mb.workStartDate) "
-                . "and :retireyear-YEAR(mb.workStartDate) <= welc.ageWorkEnd";
+                . "and weld.ageWorkStart <= :retireyear-YEAR(mb.workStartDate) "
+                . "and :retireyear-YEAR(mb.workStartDate) <= weld.ageWorkEnd";
         $param = array(
             "retireStart" => $retireStart,
             "retireEnd" => $retireEnd,

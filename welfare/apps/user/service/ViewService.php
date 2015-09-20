@@ -65,10 +65,10 @@ class ViewService extends CServiceBase implements IViewService {
 //        $member->setMemberId($id);
        $sql = "select (title.value1) As titlename,"
                . "mem.fname,mem.lname,mem.idCard,mem.memberId,mem.employeeCode,mem.internalPhone,mem.phone,mem.mobile,"
-               . "mem.email,mem.salaryStart,mem.salaryPresent,mem.address,"
+               . "mem.email,mem.salary,mem.address,"
                . "(academic.value1) As academicname,(employeeT.value1) As employeeType,(pos.value1) As position,"
                . "(fa.value1) As faculty,(dep.value1) As department,(mat.value1) As matier,(userT.value1) As userType,mem.academicId "
-                . "FROM apps\\member\\entity\\Member mem "
+                . "FROM apps\\member\\model\\Member mem "
                 . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy academic "
                 . "with mem.academicId = academic.id "
                 . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy title "
@@ -123,7 +123,7 @@ class ViewService extends CServiceBase implements IViewService {
 //                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
 //                . ")";
         $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
-                . "FROM apps\\member\\entity\\Member mem1 "
+                . "FROM apps\\member\\model\\Member mem1 "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
                 . "with mem1.titleNameId = tax1.id "
                 . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
