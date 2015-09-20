@@ -16,7 +16,7 @@ class HistoryService extends CServiceBase implements IHistoryService {
     function __construct() {
         $this->datacontext = new CDataContext();
     }
-
+    
    
 
     public function save($data) {

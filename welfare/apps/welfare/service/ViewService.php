@@ -23,11 +23,11 @@ class ViewService extends CServiceBase implements IViewService {
     // start page welfare add
     public function welfareAdd() {
         $view = new CJView("welfare/add", CJViewType::HTML_VIEW_ENGINE);
-         
+
         $unit = new Taxonomy();
         $unit->pCode = "unit";
         $view->unit = $this->datacontext->getObject($unit);
-        
+
         return $view;
     }
 
@@ -487,28 +487,8 @@ class ViewService extends CServiceBase implements IViewService {
     public function byMemberLists() {
         $view = new CJView("byMember/lists", CJViewType::HTML_VIEW_ENGINE);
 
-        $query = "SELECT mb.memberId,mb.fname,mb.lname,mb.employeeTypeId,mb.titleNameId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
-                . "mb.departmentId,"
-//                . "(title.value1) As title, "
-//                . "(academic.value1) As academic,"
-                . "IFNULL(academic.value1,title.value1) title, " //IFNULL(value1,value2) select ถ้ามีค่าใดค่าหนึ่ง ,ถ้ามีค่าทั้งคู่จะ select value1 ออกมา 
-                . "(employeeType.value1) As employeeType, "
-                . "(gender.value1) As gender, "
-                . "(faculty.value1) As faculty, "
-                . "(department.value1) As department "
-                . "FROM member mb "
-                . "Left JOIN taxonomy title "
-                . "on mb.titleNameId = title.id "
-                . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "
-                . "Left JOIN taxonomy employeeType "
-                . "on mb.employeeTypeId = employeeType.id "
-                . "Left JOIN taxonomy gender "
-                . "on mb.genderId = gender.id "
-                . "Left JOIN taxonomy faculty "
-                . "on mb.facultyId = faculty.id "
-                . "Left JOIN taxonomy department "
-                . "on mb.departmentId = department.id ";
+        $query = "SELECT *,IFNULL(academic1,titleName1) title "
+                . "FROM v_fullmember  ";
 
         $member = $this->datacontext->pdoQuery($query);
 
@@ -524,37 +504,104 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function byMemberWfLists() {
+    public function byMemberWfLists($data) {
+
         $view = new CJView("byMember/wfLists", CJViewType::HTML_VIEW_ENGINE);
 
-        $memberId = $this->getRequest()->memberId;
-        $path = '\\apps\\taxonomy\\entity\\';
+
+
+        $memberId = $data->memberId;
+        $mb = new \apps\member\service\MemberService();
+        $member = $mb->find("memberId", $memberId)[0];
+        $employeeTypeId = $data->fieldMap;
+
         $parthWelfare = '\\apps\\welfare\\entity\\';
 
-        $sqlHistory = "SELECT htr.conditionsId, htr.welfareId, htr.memberId , "
-                . " cdt.employeeTypeId, cdt.description, cdt.quantity, "
-                . " emt.id AS employeeTypeId, emt.value1 AS employeeValue "
-                . " FROM  " . $parthWelfare . "History htr "
-                . "LEFT JOIN " . $parthWelfare . "Conditions cdt "
-                . "with htr.conditionsId = cdt.conditionsId "
-                . "LEFT JOIN " . $path . "Taxonomy emt "
-                . "with cdt.employeeTypeId = emt.id "
-                . "WHERE htr.memberId = :memberId "
-                . " group by htr.conditionsId";
 
-        $param = array("memberId" => $memberId);
-        $objHistory = $this->datacontext->getObject($sqlHistory, $param);
 
-        $i = 1;
-        foreach ($objHistory as $key => $value) {
-            $objHistory[$key]["rowNo"] = $i++;
+        $sqlDetails = "select detailsId
+                              from welfareconditions where fieldMap = :fieldmap and valuex in 
+                                   ( 
+                                       select employeeTypeId from v_fullmember where memberId =:memberId
+                                    )";
+
+        $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
+        $details = $this->datacontext->pdoQuery($sqlDetails, $param);
+        $matchId = array();
+        foreach ($details as $valueId) {
+            $condition = new Conditions();
+            $condition->detailsId = $valueId['detailsId'];
+            $dataCondition = $this->datacontext->getObject($condition);
+
+            $query = "SELECT * "
+                    . "FROM v_fullmember "
+                    . "where ";
+            $field = array();
+            foreach ($dataCondition as $key => $value) {
+                $index = 0;
+                if (!empty($field[$value->fieldMap])) {
+                    $index = count($field[$value->fieldMap]);
+                }
+                $field[$value->fieldMap][$index]['operations'] = $value->operations;
+                $field[$value->fieldMap][$index]['valuex'] = $value->valuex;
+            }
+
+            $where = "";
+            foreach ($field as $key => $value) {
+                $count = count($value);
+                $sql = "";
+                if ($where != "") {
+                    $sql .= " AND ";
+                }
+                if ($count > 1 && $key == 0) {
+                    $sql .= " ( ";
+                }
+                foreach ($value as $key2 => $value2) {
+                    if ($sql != "" && $key2 > 0) {
+                        if ($value2['operations'] == "=" || $value2['operations'] == "!=") {
+                            $sql .= " OR ";
+                        } else {
+                            $sql .= " AND ";
+                        }
+                    }
+                    if (strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                        $sql .= " " . $key . " " . $value2['operations'] . " '" . $value2['valuex'] . "' ";
+                    } elseif (!strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                        $sql .= " TIMESTAMPDIFF(YEAR,'" . $member->$key->format('Y-m-d') . "', CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                    } else {
+                        $sql .= " " . $key . " " . $value2['operations'] . " '" . $value2['valuex'] . "' ";
+                    }
+                }
+                if ($count > 1) {
+                    $sql .= " ) ";
+                }
+                $where .= $sql;
+            }
+            $detailsId = $valueId['detailsId'];
+            $sql = $query . " " . $where . " and memberId = :memberId ";
+            $dataCheck = $this->datacontext->pdoQuery($sql, array("memberId" => $memberId));
+            //print_r($dataCheck);
+            if (count($dataCheck) > 0) {
+                array_push($matchId, $detailsId);
+            }
         }
 
-        $view->datasConditions = $objHistory;
-        $view->memberId = $memberId;
+        $id = "";
+        foreach ($matchId as $key => $value) {
+            if ($key != 0) {
+                $id .= ",".$value;
+            } else {
+                $id .= $value;
+            }
+        }
 
+        $sqlDetails ="SELECT * FROM welfaredetails where detailsId in ( ".$id." )";
+        
+        print_r($sqlDetails);
+        
+        $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
 
-
+        $view->datasConditions =$objDetailsId;
         return $view;
     }
 

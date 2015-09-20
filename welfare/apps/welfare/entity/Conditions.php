@@ -41,8 +41,8 @@ class Conditions extends EntityBase {
      */
     public $valuex;
     
+    public $memberId;
     
-
     function getConditionsId() {
         return $this->conditionsId;
     }

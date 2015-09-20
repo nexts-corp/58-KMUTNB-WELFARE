@@ -11,18 +11,8 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-    <!-- Page Header -->
-    <div class="page-header position-relative">
-        <div class="header-title">
-            <h1>
-
-            </h1>
-        </div>
-        <!--Header Buttons-->
-
-        <!--Header Buttons End-->
-    </div>
-    <!-- /Page Header -->
+    
+    
     <!-- Page Body -->
     <div class="page-body">
         <div class="row">
@@ -50,12 +40,11 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>{{#i18n}}welfaredetailcode{{/i18n}}</th>
-                                        <th>{{#i18n}}conditionsDiscription{{/i18n}}</th>
-                                        <th>{{#i18n}}quantitymoney{{/i18n}}</th>
-                                        <th>{{#i18n}}employeeType{{/i18n}}</th>
+                                        <th>{{#i18n}}all.number{{/i18n}}</th>
+                                        <th>{{#i18n}}welfare.description{{/i18n}}</th>
+                                        <th>{{#i18n}}all.quantity{{/i18n}}</th>
 
-                                        <th class="center">สถานะการใช้งาน</th>
+                                        <th class="center">{{#i18n}}conditions.setList{{/i18n}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,7 +54,6 @@
                                         <td>{{rowNo}}</td>
                                         <td>{{description}}</td>
                                         <td>{{quantity}}</td>
-                                        <td>{{employeeValue}}</td>
                                         <td class="center">
 
                                             <button class="btn btn-info btn-xs edit btn_history"

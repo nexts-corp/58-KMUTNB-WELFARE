@@ -152,7 +152,7 @@ class ConditionsService extends CServiceBase implements IConditionsService {
     }
 
     public function preview($conditions) {
-            $query = "SELECT *,IFNULL(academic1,titleName1) title "
+        $query = "SELECT *,IFNULL(academic1,titleName1) title "
                 . "FROM v_fullmember "
                 . "where ";
 
@@ -214,7 +214,13 @@ class ConditionsService extends CServiceBase implements IConditionsService {
                         $sql .= " AND ";
                     }
                 }
-                $sql .= "". $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                if (strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                    $sql .= " " . $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                } elseif (!strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                    $sql .= " TIMESTAMPDIFF(YEAR," . $key . ", CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                } else {
+                    $sql .= " " . $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                }
             }
             if ($count > 1) {
                 $sql .= " ) ";
@@ -222,11 +228,13 @@ class ConditionsService extends CServiceBase implements IConditionsService {
             $where .= $sql;
         }
 
-        $sql = $query.$where;
-        
-        
+        $sql = $query . $where;
+
+           print_r($sql);
+           exit();
+
         $member = $this->datacontext->pdoQuery($sql);
-        
+
 
         return $member;
     }

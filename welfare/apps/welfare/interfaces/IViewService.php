@@ -101,10 +101,11 @@ interface IViewService {
     /**
      * @name viewMemberWelfarePrivewsList
      * @uri /byMemberWelfare/lists
+     * @param apps\welfare\entity\Conditions data []
      * @return html previews
-     * @description แสดงสวัสดิการรายบุคคล
+     * @description แสดงรายการสวัสดิการที่พึงจะได้รับ
      */
-    public function byMemberWfLists();
+    public function byMemberWfLists($data);
     
     
 }
