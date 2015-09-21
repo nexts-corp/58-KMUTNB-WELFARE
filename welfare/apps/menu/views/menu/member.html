@@ -34,17 +34,19 @@
 
 
 
-                <li>
-
-                    <a href="#" onclick="getHTML('content-body','{{_context_path}}/api/member / view / welfare / info', null);">
+              <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/wfmember/view/byMemberWelfare/lists"
+                       onclick="btnHTML(this)">
                         <span class="menu-text">สวัสดิการที่พึงจะได้รับ</span>
                     </a>
                 </li>
-                <li>
+<!--                <li>
                     <a href="#" onclick="getHTML('content-body', '{{_context_path}}/api/member / view / welfare / wait', null);">
                         <span class="menu-text">สวัสดิการที่รับไปแล้ว</span>
                     </a>
-                </li>
+                </li>-->
 
 
             </ul>
