@@ -27,9 +27,6 @@ class RetireService extends CServiceBase implements IRetireService {
         $retireEnd = ($retireYear - 60) . "-09-30";
         $query = "SELECT mb.fname,mb.lname,mb.employeeTypeId,mb.titleNameId,mb.genderId,mb.dob,mb.workStartDate,mb.workEndDate , mb.facultyId , "
                 . "mb.departmentId,weld.description,weld.ageWorkStart,weld.ageWorkEnd ,:retireyear-YEAR(mb.workStartDate) as ry,weld.quantity, "
-//                . "welc.amount as total, "
-//                . "(title.value1) As title, "
-//                . "(academic.value1) As academic,"
                 . "IFNULL(academic.value1,title.value1) title, " //IFNULL(value1,value2) select ถ้ามีค่าใดค่าหนึ่ง ,ถ้ามีค่าทั้งคู่จะ select value1 ออกมา 
                 . "(employeeType.value1) As employeeType, "
                 . "(gender.value1) As gender, "

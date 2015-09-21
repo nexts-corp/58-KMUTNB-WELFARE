@@ -55,12 +55,13 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
 //    }
 //
     public function searchUser($idCard) {
-
         $searchName = $this->getRequest()->searchName;
         $welfare = new \apps\welfare\entity\Welfare();
         $welfare->setCode("medical001");
         $query = $this->datacontext->getObject($welfare)[0];
 
+        
+        
         $date = new \DateTime('now');
         $sql = "call prc_date_budget(:welfareId,:date)";
         $param = array(
@@ -68,27 +69,39 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
             "date" => $date->format('Y-m-d')
         );
         $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
-
+        
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-        $sql1 = "select mem.fname,mem.lname,wh.welfareId,wc.conditionsId,wh.memberId,weld.quantity,"
-                . "sum(wh.amount) as payment,weld.quantity-sum(wh.amount) as balance, "
+//         $sqlDetails = "select detailsId
+//                              from welfareconditions where fieldMap = :fieldmap and valuex in 
+//                                   ( 
+//                                       select employeeTypeId from v_fullmember where memberId =:memberId
+//                                    )";
+//
+//        $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
+//        $details = $this->datacontext->pdoQuery($sqlDetails, $param);
+
+
+
+        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,"
+                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance, "
                 . "IFNULL(academic.value1,title.value1) title "
-                . "from welfarehistory wh "
-                . "inner join welfare wel "
-                . "on wel.welfareId = wh.welfareId and wel.code = 'medical001' "
-                . "inner join welfareconditions wc "
-                . "on wc.welfareId = wh.welfareId "
-                . "inner join welfaredetails weld "
-                . "on weld.welfareId = wc.welfareId "
-                . "inner join v_member mem "
-                . "on mem.memberId = wh.memberId and mem.idCard = :idCard and mem.employeeTypeId = weld.returnTypeId "
+                . "from welfarehistory whis "
+                . "join welfaredetails wd "
+                . "on wd.detailsId = whis.detailsId "
+                . "join welfare wel "
+                . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
+                . "join welfareconditions wc "
+                . "on wc.detailsId = wd.detailsId "
+                . "join v_member mb "
+                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
+                . "and mb.idCard =:idCard "
                 . "Left JOIN taxonomy title "
-                . "on mem.titleNameId = title.id "
+                . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mem.academicId = academic.id "
-                . "where wh.dateCreated between :dateStart and :dateEnd ";
+                . "on mb.academicId = academic.id "
+                . "where whis.dateCreated between :dateStart and :dateEnd ";
 
         $param = array(
             "dateStart" => $dateStart,
@@ -96,19 +109,27 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
             "idCard" => $idCard
         );
         $budget = $this->datacontext->pdoQuery($sql1, $param)[0];
+        
         if ($budget['memberId'] == "") {
 
-            $sql2 = "select mb.memberId,mb.fname,mb.lname,wf.welfareId,wc.conditionsId,weld.quantity as balance "
-                    . "from welfareconditions wc "
-                    . "join welfaredetails weld "
-                    . "on weld.welfareId = wc.welfareId "
-                    . "join welfare wf on wf.code = 'medical001' and wc.welfareId = wf.welfareId "
-                    . "join v_member mb on mb.idCard = :idCard and mb.employeeTypeId = weld.returnTypeId ";
+            $sql2 = "select mb.memberId,mb.fname,mb.lname,wf.welfareId,wc.detailsId,weld.quantity as balance,mb.idCard, "
+                    . "IFNULL(academic.value1,title.value1) title "
+                    . "from welfare  wf "
+                    . "join welfaredetails weld  "
+                    . "on weld.welfareId = wf.welfareId and  wf.code = 'medical001' "
+                    . "join welfareconditions wc "
+                    . "on wc.detailsId = weld.detailsId "
+                    . "join v_member mb "
+                    . "on mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' and mb.idCard =:idCard "
+                    . "Left JOIN taxonomy title "
+                    . "on mb.titleNameId = title.id "
+                    . "Left JOIN taxonomy academic "
+                    . "on mb.academicId = academic.id ";
             $param = array(
                 "idCard" => $idCard
             );
             $budget = $this->datacontext->pdoQuery($sql2, $param)[0];
-
+            
             return $budget;
         } else {
 
@@ -148,25 +169,25 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
             "dateEnd" => $dateEnd,
             "name" => "%" . $data . "%"
         );
-        $sql = "select mem.fname,mem.lname,wh.welfareId,wc.conditionsId,wh.remark,wh.memberId,weld.quantity,"
-                . "sum(wh.amount) as payment,weld.quantity-sum(wh.amount) as balance, "
+        $sql = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity, "
+                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance, "
                 . "IFNULL(academic.value1,title.value1) title "
-                . "from welfarehistory wh "
-                . "inner join welfare wel "
-                . "on wel.welfareId = wh.welfareId and wel.code = 'medical001' "
-                . "inner join welfareconditions wc "
-                . "on wc.conditionsId = wh.conditionsId "
-                . "inner join welfaredetails weld "
-                . "on weld.welfareId = wc.welfareId "
-                . "inner join member mem "
-                . "on mem.memberId = wh.memberId and wc.employeeTypeId = mem.employeeTypeId "
+                . "from welfarehistory whis "
+                . "join welfaredetails wd "
+                . "on wd.detailsId = whis.detailsId "
+                . "join welfare wel "
+                . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
+                . "join welfareconditions wc "
+                . "on wc.detailsId = wd.detailsId "
+                . "join v_member mb "
+                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "Left JOIN taxonomy title "
-                . "on mem.titleNameId = title.id "
+                . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mem.academicId = academic.id "
-                . "where wh.dateCreated between :dateStart and :dateEnd "
-                . "and (mem.fname LIKE :name or mem.lname LIKE :name or mem.idCard LIKE :name) "
-                . "group by wh.memberId ";
+                . "on mb.academicId = academic.id "            
+                . "where whis.dateCreated between :dateStart and :dateEnd "
+                . "and (mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name) "
+                . "group by whis.memberId ";
         return $this->datacontext->pdoQuery($sql, $param);
     }
 

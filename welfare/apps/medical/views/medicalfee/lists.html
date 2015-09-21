@@ -64,29 +64,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--                                    {{#lists}}
-                                                                        <tr class="selectable">
-                                    
-                                                                            <td>{{title}} {{fname}} {{lname}}</td>
-                                                                            <td>{{payment}}</td>
-                                                                            <td class="center">
-                                                                                <button class="btn btn-maroon btn-xs "
-                                                                                        data-id="content-body"
-                                                                                        data-api="{{_context_path}}/api/medical/view/medicalFee/details/{{memberId}}"
-                                    
-                                                                                        onclick="btnHTML(this)">
-                                                                                    <i class="fa fa fa-eye"></i>{{#i18n}}detail{{/i18n}} 
-                                                                                </button>
-                                    
-                                    
-                                    
-                                                                            </td>
-                                                                        </tr>
-                                                                        {{/lists}}-->
+                                    {{#lists}}
                                     <tr class="selectable">
 
-                                        <td>ศาสตร์จารย์ นวชัย พฤกษา</td>
-                                        <td>20000</td>
+                                        <td>{{title}} {{fname}} {{lname}}</td>
+                                        <td>{{payment}}</td>
                                         <td class="center">
                                             <button class="btn btn-maroon btn-xs "
                                                     data-id="content-body"
@@ -100,42 +82,11 @@
 
                                         </td>
                                     </tr>
-                                    <tr class="selectable">
-
-                                        <td>นาย สิทธิพร อยู่เอม</td>
-                                        <td>20000</td>
-                                        <td class="center">
-                                            <button class="btn btn-maroon btn-xs "
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/medical/view/medicalFee/details/{{memberId}}"
-
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}detail{{/i18n}} 
-                                            </button>
+                                    {{/lists}}
 
 
 
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr class="selectable">
 
-                                        <td>ศาสตร์จารย์ ปรีชดา ตรีกูล</td>
-                                        <td>20000</td>
-                                        <td class="center">
-                                            <button class="btn btn-maroon btn-xs "
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/medical/view/medicalFee/details/{{memberId}}"
-
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}detail{{/i18n}} 
-                                            </button>
-
-
-
-                                        </td>
-                                    </tr>
-                                    
                                 </tbody>
 
                             </table>

@@ -156,7 +156,7 @@
 
     $(document).ready(function () {
         $.validate();
-        var conditionsId;
+        var detailsId;
         var welfareId;
         $("#btn_search").click(function () {
 
@@ -181,7 +181,7 @@
                         $("#fname").val(data.fname);
                         $("#lname").val(data.lname);
                         $("#total").val(data.balance);
-                        conditionsId = data.conditionsId;
+                        detailsId = data.detailsId;
                         welfareId = data.welfareId;
                         //});
 //                        $("#lname").val(result.searchUser.user.lname);
@@ -206,7 +206,7 @@
 
         $("#btn_submit").click(function () {
             var data = {};
-            data['conditionsId'] = conditionsId;
+            data['detailsId'] = detailsId;
             data['welfareId'] = welfareId;
             data['memberId'] = $("#code").val();
             data['amount'] = $("#amount").val();
