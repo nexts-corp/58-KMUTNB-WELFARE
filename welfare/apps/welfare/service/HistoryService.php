@@ -16,35 +16,26 @@ class HistoryService extends CServiceBase implements IHistoryService {
     function __construct() {
         $this->datacontext = new CDataContext();
     }
-    
-   
 
     public function save($data) {
-        
-    if($this->datacontext->saveObject($data)){
-    return true;
-    }else{
-    return false;
-    
-    }
-    
-    
-    }
 
-   
+        if ($this->datacontext->saveObject($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function update($data) {
-        
-        
+
+
         return $this->datacontext->updateObject($data);
-        
-        
     }
-    
+
     public function delete($id) {
         $daoHistory = new History();
         $daoHistory->setHistoryId($id);
-        
+
         if ($this->datacontext->removeObject($daoHistory)) {
             return true;
         } else {

@@ -23,18 +23,7 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-    <!-- Page Header -->
-    <div class="page-header position-relative">
-        <div class="header-title">
-            <h1>
 
-            </h1>
-        </div>
-        <!--Header Buttons-->
-
-        <!--Header Buttons End-->
-    </div>
-    <!-- /Page Header -->
     <!-- Page Body -->
     <div class="page-body">
         <div class="row">
@@ -46,9 +35,9 @@
                         {{#datasWelfare}}
                         <p> {{#i18n}}conditions.name{{/i18n}}  {{name}} </p>
                         <p>{{#i18n}}conditions.details{{/i18n}} {{wfDescription}}</p>
-                        <p>{{#i18n}}conditions.setConditions{{/i18n}} {{description}} / {{#i18n}}conditions.quantity{{/i18n}} {{quantity}} {{unitvalue}}</p>
+                        <p>{{#i18n}}conditions.setConditions{{/i18n}} {{description}} / {{#i18n}}all.quantity{{/i18n}} {{quantity}} {{unitvalue}}</p>
                         <p>{{#i18n}}welfare.dateStart{{/i18n}} {{dateStart}} / {{#i18n}}welfare.dateEnd{{/i18n}} {{dateEnd}}</p>
-                        <p>{{#i18n}}conditions.resetMount{{/i18n}} {{resetTime}} {{#i18n}}conditions.mount{{/i18n}} / {{#i18n}}welfare.welfareType{{/i18n}} {{freeCheck}} </p>
+                        <p>{{#i18n}}welfare.resetTime{{/i18n}} {{resetTimeAll}}  / {{#i18n}}welfare.welfareType{{/i18n}} {{freeCheck}} </p>
 
                         <p>{{#i18n}}conditions.used{{/i18n}} {{totalBudget}} {{unitvalue}} {{#i18n}}conditions.userTotal{{/i18n}} {{total}} {{unitvalue}}</p>
                         {{/datasWelfare}}
@@ -89,7 +78,7 @@
                                     <tr>
                                         <th class="center">{{#i18n}}all.number{{/i18n}} </th>
                                         <th class="center">{{#i18n}}conditions.remark{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}conditions.quantity{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}all.quantity{{/i18n}}</th>
                                         <th class="center">{{#i18n}}all.dmy{{/i18n}}</th>
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
 
@@ -137,7 +126,7 @@
     $.validate();
             $('.btn_preview').click(function () {
     var data = {};
-            data['conditionsId'] = "{{conditionsId}}";
+            data['detailsId'] = "{{detailsId}}";
             data['welfareId'] = "{{welfareId}}";
             var jdata = {};
             jdata['data'] = data;
@@ -145,15 +134,14 @@
     });
             $('#bnt_add').click(function () {
     var data = {};
-            data['conditionsId'] = "{{conditionsId}}";
+            data['detailsId'] = "{{detailsId}}";
             data['memberId'] = "{{memberId}}";
             data['welfareId'] = {{#datasWelfare}}{{welfareId}}{{/datasWelfare}};
             var jdata = {};
             jdata['data'] = data;
             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/add', jsonEncode(jdata));
     });
-    });
-</script>
+    });</script>
 <script>
 
             $('.btn-del').click(function(){
@@ -163,8 +151,8 @@
             var result = sendData('{{_context_path}}/api/welfare/history/delete', data);
             if (result.delete == true) {
     var data = {};
-            data['memberId'] = {{memberId}};
-            data['conditionsId'] = {{conditionsId}};
+            data['memberId'] = "{memberId}";
+            data['detailsId'] = "{detailsId}";
             var jdata = {};
             jdata['data'] = data;
             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata));

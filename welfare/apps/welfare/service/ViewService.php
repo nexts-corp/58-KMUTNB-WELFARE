@@ -255,11 +255,11 @@ class ViewService extends CServiceBase implements IViewService {
 
         $view = new CJView("history/lists", CJViewType::HTML_VIEW_ENGINE);
 
-        $conditionsId = $data->conditionsId;
+        $detailsId = $data->detailsId;
         $memberId = $data->memberId;
         $welfareId = $data->welfareId;
 
-        $view->welfareId = $welfareId;
+
         $date = new \DateTime('now');
         $sql = "call prc_date_budget(:welfareId,:date)";
         $param = array(
@@ -272,26 +272,29 @@ class ViewService extends CServiceBase implements IViewService {
         $path = '\\apps\\taxonomy\\entity\\';
         $parthWelfare = '\\apps\\welfare\\entity\\';
 
-        $sqlWelfare = "SELECT cdt.quantity,cdt.conditionsId,cdt.welfareId, cdt.description ,"
-                . "wf.welfareId , wf.name , "
+        $sqlWelfare = "SELECT dt.welfareId,dt.description , dt.quantity,"
+                . "wf.welfareId , wf.name , wf.description, "
                 . "wf.description As wfDescription, wf.dateStart, "
                 . "wf.resetTime , wf.dateEnd , wf.free , "
-                . "un.id As unitId , un.value1 As unitValue  "
-                . "FROM " . $parthWelfare . "Conditions cdt "
+                . "rt.id As returnType , rt.value1 As returnTypeValue  "
+                . "FROM " . $parthWelfare . "Details dt "
                 . "Left JOIN " . $parthWelfare . "Welfare wf "
-                . "with cdt.welfareId = wf.welfareId "
-                . "Left JOIN " . $path . "Taxonomy  un  "
-                . "with cdt.returnTypeId = un.id "
-                . "where cdt.conditionsId = :conditionsId";
+                . "with dt.welfareId = wf.welfareId "
+                . "Left JOIN " . $path . "Taxonomy  rt  "
+                . "with dt.returnTypeId = rt.id "
+                . "where dt.detailsId = :detailsId";
         $param = array(
-            "conditionsId" => $conditionsId
+            "detailsId" => $detailsId
         );
         $objWelfare = $this->datacontext->getObject($sqlWelfare, $param)[0];
-
+        if($dateBudget["startDate"]){
         $year543 = explode("-", $dateBudget["startDate"]);
         $objWelfare["dateStart"] = $year543[2] . "-" . $year543[1] . "-" . intval($year543[0] + 543);
+        }
+        if($dateBudget["endDate"]){
         $year543 = explode("-", $dateBudget["endDate"]);
         $objWelfare["dateEnd"] = $year543[2] . "-" . $year543[1] . "-" . intval($year543[0] + 543);
+        }
 
         if ($objWelfare['free'] == "Y" || $objWelfare['free'] == null) {
             $view->freeCheck = "สวัสดิการให้เปล่า";
@@ -299,15 +302,22 @@ class ViewService extends CServiceBase implements IViewService {
             $view->freeCheck = "สวัสดิการให้ยืม";
         }
 
+        if ($objWelfare['resetTime'] == "0") {
+            $view->resetTimeAll = "ให้ครั้งเดียว";
+        } elseif ($objWelfare['resetTime'] == "6") {
+            $view->resetTimeAll = "ให้ทุก 6 เดือน";
+        } elseif ($objWelfare['resetTime'] == "12") {
+            $view->resetTimeAll = "ให้ทุก 1 ปี";
+        }
+
         $view->datasWelfare = $objWelfare;
 
-
-        $sqlHistory = "SELECT htr.remark,htr.historyId,htr.conditionsId,htr.welfareId , htr.amount ,"
+        $sqlHistory = "SELECT htr.remark,htr.historyId,htr.detailsId,htr.welfareId , htr.amount ,"
                 . "htr.dateCreated,htr.dateUse,htr.memberId "
                 . "FROM " . $parthWelfare . "History htr "
-                . "where htr.conditionsId = :conditionsId And htr.memberId = :memberId And htr.welfareId = :welfareId ";
+                . "where htr.detailsId = :detailsId And htr.memberId = :memberId And htr.welfareId = :welfareId ";
 
-        $param = array("conditionsId" => $conditionsId,
+        $param = array("detailsId" => $detailsId,
             "memberId" => $memberId,
             "welfareId" => $welfareId);
 
@@ -317,26 +327,28 @@ class ViewService extends CServiceBase implements IViewService {
             $param["endDate"] = $dateBudget["endDate"];
         }
 
-
-
         $objHistory = $this->datacontext->getObject($sqlHistory, $param);
-        //print_r($objHistory);
+     
         $i = 1;
         foreach ($objHistory as $key1 => $value1) {
+            
             foreach ($value1 as $key2 => $value2) {
                 $objHistory[$key1]["rowNo"] = $i;
+              
                 if (is_a($value2, "DateTime")) {
                     $Y = $value2->format('Y') + 543;
-                    $objHistory[$key1][$key2] = $objHistory[$key1][$key2]->format('d-m-' . $Y);
-//                    $objHistory[$key] = $i++;
+                    $objHistory[$key1][$key2] = $objHistory[$key1][$key2]->format('d-m-'.$Y);
+                    
                 }
             }
             $i++;
         }
+        
         $view->countRows = --$i;
+        $view->welfareId = $welfareId;
 
         $view->memberId = $memberId;
-        $view->conditionsId = $conditionsId;
+        $view->detailsId = $detailsId;
 
         $view->datasHistory = $objHistory;
 
@@ -354,12 +366,10 @@ class ViewService extends CServiceBase implements IViewService {
     public function historyAdd($data) {
         $view = new CJView("history/add", CJViewType::HTML_VIEW_ENGINE);
 
-        $conditionsId = $data->conditionsId;
+        $detailsId = $data->detailsId;
         $memberId = $data->memberId;
         $welfareId = $data->welfareId;
 
-        $conditionsId = $data->conditionsId;
-        $memberId = $data->memberId;
 
 
         $date = new \DateTime('now');
@@ -370,23 +380,23 @@ class ViewService extends CServiceBase implements IViewService {
         );
         $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
 
-
+       
         $path = '\\apps\\taxonomy\\entity\\';
         $parthWelfare = '\\apps\\welfare\\entity\\';
 
-        $sqlWelfare = "SELECT cdt.quantity,cdt.conditionsId,cdt.welfareId, cdt.description ,"
+        $sqlWelfare = "SELECT cdt.quantity,cdt.welfareId, cdt.description ,"
                 . "wf.welfareId , wf.name , "
                 . "wf.description As wfDescription, wf.dateStart, "
                 . "wf.resetTime , wf.dateEnd , wf.free , "
                 . "un.id As unitId , un.value1 As unitValue  "
-                . "FROM " . $parthWelfare . "Conditions cdt "
+                . "FROM " . $parthWelfare . "Details cdt "
                 . "Left JOIN " . $parthWelfare . "Welfare wf "
                 . "with cdt.welfareId = wf.welfareId "
                 . "Left JOIN " . $path . "Taxonomy  un  "
                 . "with cdt.returnTypeId = un.id "
-                . "where cdt.conditionsId = :conditionsId";
+                . "where cdt.detailsId = :detailsId";
         $param = array(
-            "conditionsId" => $conditionsId
+            "detailsId" => $detailsId
         );
         $objWelfare = $this->datacontext->getObject($sqlWelfare, $param)[0];
 
@@ -404,15 +414,12 @@ class ViewService extends CServiceBase implements IViewService {
         $view->datasWelfare = $objWelfare;
 
 
-
-
-
-        $sqlHistory = "SELECT htr.remark,htr.historyId,htr.conditionsId,htr.welfareId , htr.amount ,"
+        $sqlHistory = "SELECT htr.remark,htr.historyId,htr.detailsId,htr.welfareId , htr.amount ,"
                 . "htr.dateCreated,htr.dateUse,htr.memberId "
                 . "FROM " . $parthWelfare . "History htr "
-                . "where htr.conditionsId = :conditionsId And htr.memberId = :memberId And htr.welfareId = :welfareId ";
+                . "where htr.detailsId = :detailsId And htr.memberId = :memberId And htr.welfareId = :welfareId ";
 
-        $param = array("conditionsId" => $conditionsId,
+        $param = array("detailsId" => $detailsId,
             "memberId" => $memberId,
             "welfareId" => $welfareId);
 
@@ -421,8 +428,6 @@ class ViewService extends CServiceBase implements IViewService {
             $param["startDate"] = $dateBudget["startDate"];
             $param["endDate"] = $dateBudget["endDate"];
         }
-
-
 
         $objHistory = $this->datacontext->getObject($sqlHistory, $param);
         //print_r($objHistory);
@@ -440,8 +445,6 @@ class ViewService extends CServiceBase implements IViewService {
         }
         $view->countRows = --$i;
 
-        $view->memberId = $memberId;
-        $view->conditionsId = $conditionsId;
 
         $view->datasHistory = $objHistory;
 
@@ -449,12 +452,13 @@ class ViewService extends CServiceBase implements IViewService {
         foreach ($objHistory as $key => $value) {
             $total += $value['amount'];
         }
+        
         $view->totalBudget = number_format($total);
         $view->total = number_format($objWelfare['quantity'] - $total);
         $view->totalWf = $objWelfare['quantity'] - $total;
 
         $view->memberId = $memberId;
-        $view->conditionsId = $conditionsId;
+        $view->detailsId = $detailsId;
         $view->welfareId = $welfareId;
         return $view;
     }
@@ -467,7 +471,7 @@ class ViewService extends CServiceBase implements IViewService {
 
         $parthWelfare = '\\apps\\welfare\\entity\\';
 
-        $sqlHistory = "SELECT htr.remark,htr.conditionsId,htr.welfareId , htr.amount ,"
+        $sqlHistory = "SELECT htr.remark,htr.detailsId,htr.welfareId , htr.amount ,"
                 . "htr.dateCreated,htr.dateUse,htr.memberId "
                 . "FROM " . $parthWelfare . "History htr "
                 . "where htr.historyId = :historyId ";
@@ -477,7 +481,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view->historyId = $historyId;
 
         $view->memberId = $objHistory[0]["memberId"];
-        $view->conditionsId = $objHistory[0]["conditionsId"];
+        $view->detailsId = $objHistory[0]["detailsId"];
         $view->welfareId = $objHistory[0]["welfareId"];
 
         $view->datasHistory = $objHistory;
@@ -545,7 +549,7 @@ class ViewService extends CServiceBase implements IViewService {
                 $field[$value->fieldMap][$index]['operations'] = $value->operations;
                 $field[$value->fieldMap][$index]['valuex'] = $value->valuex;
             }
-
+             
             $where = "";
             foreach ($field as $key => $value) {
                 $count = count($value);
@@ -556,7 +560,9 @@ class ViewService extends CServiceBase implements IViewService {
                 if ($count > 1 && $key == 0) {
                     $sql .= " ( ";
                 }
+
                 foreach ($value as $key2 => $value2) {
+
                     if ($sql != "" && $key2 > 0) {
                         if ($value2['operations'] == "=" || $value2['operations'] == "!=") {
                             $sql .= " OR ";
@@ -567,7 +573,7 @@ class ViewService extends CServiceBase implements IViewService {
                     if (strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
                         $sql .= " " . $key . " " . $value2['operations'] . " '" . $value2['valuex'] . "' ";
                     } elseif (!strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
-                        $sql .= " TIMESTAMPDIFF(YEAR,'" . $member->$key->format('Y-m-d') . "', CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                        $sql .= " TIMESTAMPDIFF(YEAR,'" . $member->$key . "', CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
                     } else {
                         $sql .= " " . $key . " " . $value2['operations'] . " '" . $value2['valuex'] . "' ";
                     }
@@ -589,19 +595,35 @@ class ViewService extends CServiceBase implements IViewService {
         $id = "";
         foreach ($matchId as $key => $value) {
             if ($key != 0) {
-                $id .= ",".$value;
+                $id .= "," . $value;
             } else {
                 $id .= $value;
             }
         }
 
-        $sqlDetails ="SELECT * FROM welfaredetails where detailsId in ( ".$id." )";
-        
-        print_r($sqlDetails);
-        
+        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId, "
+                . "wfdt.welfareId,  "
+                . "rt.value1 As returntType,rt.id,"
+                . "wf.name,wf.statusActive,wf.description "
+                . " FROM  welfaredetails wfdt "
+                . "Left JOIN  welfare wf "
+                . "on wfdt.welfareId = wf.welfareId "
+                . "Left JOIN taxonomy rt  "
+                . "on wfdt.returnTypeId = rt.id "
+                . "where detailsId in ( " . $id . " )";
+
+
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
 
-        $view->datasConditions =$objDetailsId;
+        $i = 1;
+        foreach ($objDetailsId as $key => $value) {
+
+            $objDetailsId[$key]["rowNo"] = $i++;
+        }
+        
+        $view->memberId = $memberId;
+        
+        $view->datasConditions = $objDetailsId;
         return $view;
     }
 

@@ -53,11 +53,11 @@
 
                                         <td>{{rowNo}}</td>
                                         <td>{{description}}</td>
-                                        <td>{{quantity}}</td>
+                                        <td>{{quantity}} {{returntType}}</td>
                                         <td class="center">
-
+                                            
                                             <button class="btn btn-info btn-xs edit btn_history"
-                                                    row-index="{{conditionsId}}"
+                                                    row-index="{{detailsId}}"
                                                     row-welfareId="{{welfareId}}">
                                                 <i class="fa fa fa-eye"></i>ตรวจสอบ
                                             </button>
@@ -93,7 +93,7 @@
     });
     $('.btn_history').click(function () {
         var data = {};
-        data['conditionsId'] = $(this).attr('row-index');
+        data['detailsId'] = $(this).attr('row-index');
         data['welfareId'] = $(this).attr('row-welfareId');
         data['memberId'] = "{{memberId}}";
         var jdata = {};

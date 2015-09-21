@@ -7,7 +7,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-             <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
                     <span class="menu-text">{{#i18n}}detailWelfare{{/i18n}}</span>
                 </a>
             </li>
@@ -24,18 +24,7 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-    <!-- Page Header -->
-    <div class="page-header position-relative">
-        <div class="header-title">
-            <h1>
 
-            </h1>
-        </div>
-        <!--Header Buttons-->
-
-        <!--Header Buttons End-->
-    </div>
-    <!-- /Page Header -->
     <!-- Page Body -->
 
     <div class="page-body">
@@ -48,31 +37,30 @@
                     <div class="widget-body">
                         <div  class="form-horizontal">
                             {{#datasHistory}}
-                            
-                              <div class="form-group">
+
+                            <div class="form-group">
                                 <label class="col-lg-3 control-label">หมายเหตุ</label>
                                 <div class="col-lg-6">
-                                  
+
                                     <input type="text" class="form-control" value="{{remark}}" name="remark" placeholder="ใส่ข้อมูล" data-validation="" id="remark" />
 
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">จำนวน</label>
                                 <div class="col-lg-6">
-                                   
+
                                     <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountwelfare{{/i18n}}"
-                                           data-bv-notempty-message="ใส่ตัวเลข" 
                                            value="{{amount}}"
                                            data-validation-error-msg="*กรุณาใส่ตัวเลข"
                                            data-validation="number" id="amount" />
-                                   
+
                                 </div>
                             </div>
-                            
-                           
-                                {{/datasHistory}}
+
+
+                            {{/datasHistory}}
                             <div class="form-group">
                                 <label class="col-lg-3 control-label"></label>
                                 <div class="col-lg-6">
@@ -100,19 +88,19 @@
 
 
 <script>
-    $(document).ready(function () {
-        
-      $('.btn_preview').click(function () {
+            $(document).ready(function () {
+
+    $('.btn_preview').click(function () {
     var data = {};
-            data['conditionsId'] = "{{conditionsId}}";
+            data['detailsId'] = "{{detailsId}}";
             data['welfareId'] = "{{welfareId}}";
             var jdata = {};
             jdata['data'] = data;
             getHTML('content-body', '{{_context_path}}/api/welfare/view/priviews/lists', jsonEncode(jdata));
     });
-    $('.checkListsHistory').click(function () {
+            $('.checkListsHistory').click(function () {
     var data = {};
-            data['conditionsId'] = "{{conditionsId}}";
+            data['detailsId'] = "{{detailsId}}";
             data['memberId'] = "{{memberId}}";
             data['welfareId'] = "{{welfareId}}";
             var jdata = {};
@@ -120,8 +108,7 @@
             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
 
     });
-    
-    $.validate();
+            $.validate();
             $('#btn_submit').click(function (){
 //    var total = {{totalWf}};
 //    && total >= $("#amount").val()   
@@ -137,18 +124,18 @@
                     data: jsonEncode(jdata),
                     type: 'post', // 'or get'
                     success: function (result) {
-                        
+
                     if (result.save == true) {
-                        
+
                     var data = {};
-                    data['conditionsId'] = {{#datasHistory}}{{conditionsId}}{{/datasHistory}};
-                    data['memberId'] ={{#datasHistory}}{{memberId}}{{/datasHistory}};
-                    data['welfareId']={{#datasHistory}}{{welfareId}}{{/datasHistory}};
-                    var jdata = {};
-                    jdata['data'] = data;
-                    getHTML('content-body','{{_context_path}}/api/welfare/view/history/lists',jsonEncode(jdata))
-     
-                    Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                            data['detailsId'] = {{#datasHistory}}{{detailsId}}{{/datasHistory}};
+                            data['memberId'] = {{#datasHistory}}{{memberId}}{{/datasHistory}};
+                            data['welfareId'] = {{#datasHistory}}{{welfareId}}{{/datasHistory}};
+                            var jdata = {};
+                            jdata['data'] = data;
+                            getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
+
+                            Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
                     } else {
                     Notify('แก้ไขไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                     }
@@ -156,14 +143,14 @@
 
                     }
 
-            });
-    } else{
-    Notify('กรุณาระบุข้อมูลให้ถูกต้อง !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            $('#amount').focus();
-    }
-    return false;
-    });
-    });
+                    });
+                    } else{
+                    Notify('กรุณาระบุข้อมูลให้ถูกต้อง !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            $('#amount').focus();
+                    }
+                    return false;
+                    });
+                    });
 
 </script>
 

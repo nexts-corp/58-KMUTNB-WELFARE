@@ -118,7 +118,7 @@
     $(document).ready(function () {
    $('.btn_preview').click(function () {
     var data = {};
-            data['conditionsId'] = "{{conditionsId}}";
+            data['detailsId'] = "{{detailsId}}";
             data['welfareId'] = "{{welfareId}}";
             var jdata = {};
             jdata['data'] = data;
@@ -126,7 +126,7 @@
     });
     $('.checkListsHistory').click(function () {
     var data = {};
-            data['conditionsId'] = {{conditionsId}};
+            data['detailsId'] = {{detailsId}};
             data['memberId'] = {{memberId}};
             data['welfareId'] = {{welfareId}};
             var jdata = {};
@@ -140,7 +140,7 @@
             if ($("#amount").val() != "" && total >= $("#amount").val()){
     var data = {};
             data['memberId'] = {{memberId}};
-            data['conditionsId'] = {{conditionsId}};
+            data['detailsId'] = {{detailsId}};
             data['welfareId'] = {{welfareId}};
             data['amount'] = $("#amount").val();
             data['remark'] = $("#remark").val();
@@ -155,7 +155,7 @@
                     if (result.save == true) {
                     var data = {};
                             data['memberId'] = {{memberId}};
-                            data['conditionsId'] = {{conditionsId}};
+                            data['detailsId'] = {{detailsId}};
                             data['welfareId'] = {{welfareId}};
                             var jdata = {};
                             jdata['data'] = data;
