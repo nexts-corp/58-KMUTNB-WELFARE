@@ -24,6 +24,11 @@ class FundRetire extends EntityBase {
     public $fundEmpId;
 
     /**
+     * @Column(type="integer", length=11, name="policyId",nullable=true)
+     */
+    public $policyId;
+
+    /**
      * @Column(type="integer", length=11, name="memberId",nullable=true)
      */
     public $memberId;
@@ -44,7 +49,7 @@ class FundRetire extends EntityBase {
     public $total;
 
     /**
-     * @Column(type="string",length=10, name="dateNotice",nullable=true)
+     * @Column(type="date",name="dateNotice",nullable=true)
      */
     public $dateNotice;
 
