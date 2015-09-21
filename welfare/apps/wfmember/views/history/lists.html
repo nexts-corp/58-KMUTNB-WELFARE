@@ -1,0 +1,145 @@
+
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="welfare">
+                <a href="#" 
+                   data-id="content-body" 
+                   data-api="{{_context_path}}/api/wfmember/view/byMemberWelfare/lists" 
+                   onclick="btnHTML(this)">
+                    <span class="menu-text">{{#i18n}}welfare.list{{/i18n}}</span>
+                </a>
+            </li>
+           
+
+            <li class="active"> {{#i18n}}conditions.setList{{/i18n}} </li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="well bordered-left bordered-themeprimary" id="showDetails">
+
+
+                        {{#datasWelfare}}
+                        <p> {{#i18n}}conditions.name{{/i18n}}  {{name}} </p>
+                        <p>{{#i18n}}conditions.details{{/i18n}} {{wfDescription}}</p>
+                        <p>{{#i18n}}conditions.setConditions{{/i18n}} {{description}} / {{#i18n}}all.quantity{{/i18n}} {{quantity}} {{unitvalue}}</p>
+                        <p>{{#i18n}}welfare.dateStart{{/i18n}} {{dateStart}} / {{#i18n}}welfare.dateEnd{{/i18n}} {{dateEnd}}</p>
+                        <p>{{#i18n}}welfare.resetTime{{/i18n}} {{resetTimeAll}}  / {{#i18n}}welfare.welfareType{{/i18n}} {{freeCheck}} </p>
+
+                        <p>{{#i18n}}conditions.used{{/i18n}} {{totalBudget}} {{unitvalue}} {{#i18n}}conditions.userTotal{{/i18n}} {{total}} {{unitvalue}}</p>
+                        {{/datasWelfare}}
+                    </div>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.list{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+
+                        <div class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
+                            <p id="demo" style="color:#d14"></p>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>
+                        <div class="pull-right">
+
+                        </div>
+
+                       
+
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+
+
+
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}all.number{{/i18n}} </th>
+                                        <th class="center">{{#i18n}}conditions.remark{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}all.quantity{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}all.dmy{{/i18n}}</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datasHistory}}
+                                    <tr class="selectable">
+
+                                        <td>{{rowNo}}</td>
+                                        <td>{{remark}}</td>
+                                        <td>{{amount}}</td>
+                                        <td>{{dateCreated}}</td>
+
+                                        
+                                    </tr>
+                                    {{/datasHistory}}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+<script>
+            $(document).ready(function () {
+    $.validate();
+            $('.btn_preview').click(function () {
+    var data = {};
+            data['detailsId'] = "{{detailsId}}";
+            data['welfareId'] = "{{welfareId}}";
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/wfmember/view/priviews/lists', jsonEncode(jdata));
+    });
+            $('#bnt_add').click(function () {
+    var data = {};
+            data['detailsId'] = "{{detailsId}}";
+            data['memberId'] = "{{memberId}}";
+            data['welfareId'] = {{#datasWelfare}}{{welfareId}}{{/datasWelfare}};
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/wfmember/view/history/add', jsonEncode(jdata));
+    });
+    });</script>
+<script>
+
+            $('.btn-del').click(function(){
+    var Id = $(this).attr('row-index');
+            if (confirm("คุณต้องการลบ?")) {
+    var data = {"Id":Id};
+            var result = sendData('{{_context_path}}/api/wfmember/history/delete', data);
+            if (result.delete == true) {
+    var data = {};
+            data['memberId'] = "{memberId}";
+            data['detailsId'] = "{detailsId}";
+            var jdata = {};
+            jdata['data'] = data;
+            getHTML('content-body', '{{_context_path}}/api/wfmember/view/history/lists', jsonEncode(jdata));
+            Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+    } else{
+    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    }
+    }
+
+    });
+</script> 
