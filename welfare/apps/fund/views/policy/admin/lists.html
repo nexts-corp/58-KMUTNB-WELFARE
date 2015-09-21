@@ -1,0 +1,102 @@
+
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.fund{{/i18n}}</li>
+        </ul>
+    </div>  
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}title.policy{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
+
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="btn btn-primary"
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/fund/view/policy/admin/add"
+
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                            </button>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th>{{#i18n}}name{{/i18n}}{{#i18n}}title.policy{{/i18n}}</th>
+                                        <th>{{#i18n}}description{{/i18n}}</th>
+                                        <th>{{#i18n}}fundType{{/i18n}}</th>
+                                        <th>{{#i18n}}manage{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {{#lists}}
+                                    <tr class="selectable">
+
+                                        <td>{{rowNo}}</td>
+                                        <td>{{name}}</td>
+                                        <td>{{description}}</td>
+                                        <td>{{fundType}}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/fund/view/policy/admin/edit/{{policyId}}"
+                                                    onclick="btnHTML(this)"
+                                                    >{{#i18n}}button.edit{{/i18n}}</button>
+
+                                        </td>
+                                    </tr>
+                                    {{/lists}}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+
+<script>
+//    $("#btnsearch").click(function () {
+//        var SearchName = $("#SearchName").val();
+//        if(SearchName==""){
+//            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+//        }else{
+//        
+//        var data = {"SearchName":SearchName};
+////       
+//        
+//        getBodyDiv('{{_context_path}}/api/ManagementFund/policy/view/search',data);
+//        }
+//    });
+
+</script>

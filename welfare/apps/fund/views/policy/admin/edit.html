@@ -1,0 +1,131 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/fund/view/policy/admin/lists"
+                   onclick="btnHTML(this)">{{#i18n}}title.policy{{/i18n}}
+                </a>
+            </li>
+            <li class="active">{{#i18n}}menu.add{{/i18n}}</li>
+
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}title.policy{{/i18n}}</span>
+                    </div>
+                    <div class="widget-body">
+                        <form  class="form-horizontal">
+                            <!--                            <div class="form-title">
+                            
+                                                        </div>-->
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}name{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control"  id="name" name="name"
+                                           placeholder="{{#i18n}}title.policy{{/i18n}}"  
+                                           value="{{#datas}}{{name}}{{/datas}}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}description{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control"  id="description" name="description" placeholder="{{#i18n}}description{{/i18n}}"
+                                           value="{{#datas}}{{description}}{{/datas}}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}fundType{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="fundTypeId" name="fundTypeId">
+                                        {{#fundType}}
+                                        <option value="{{id}}">{{value1}}</option>
+                                        {{/fundType}}
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <div class="col-lg-offset-6 col-lg-8">
+                                    <button class="btn btn-palegreen" id="btn_submit">{{#i18n}}button.submit{{/i18n}}</button>
+                                    <button class="btn btn-warning"
+                                            data-id='content-body'
+                                            data-api="{{_context_path}}/api/fund/view/policy/admin/lists"
+                                            onclick="btnHTML(this)">
+                                        {{#i18n}}button.cancel{{/i18n}}
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<!-- /Page Content -->
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var fundTypeId = '{{#datas}}{{fundTypeId}}{{/datas}}';
+        $("#fundTypeId").val(fundTypeId);
+        $("#btn_submit").click(function () {
+            var data = {};
+            data['policyId'] = '{{#datas}}{{policyId}}{{/datas}}';
+            data['name'] = $("#name").val();
+            data['description'] = $("#description").val();
+            data['fundTypeId'] = $("#fundTypeId").val();
+            if (data['name'] == "") {
+                Notify('กรุณากรอกชื่อนโยบาย', 'top-right', '4000', 'danger', 'fa-check', true);
+                $("#name").focus();
+                return false;
+            } else {
+                var jdata = {};
+                jdata['policy'] = data;
+                var result = sendData('{{_context_path}}/api/fund/policy/update', jsonEncode(jdata));
+                if (result.update == true) {
+                    Notify('บันทึกเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                    setTimeout(function () {
+                        getHTML('content-body', '{{_context_path}}/api/fund/view/policy/admin/lists', null);
+                    }, 1000);
+                } else {
+                    Notify('บันทึกไม่สำเร็จ กรุณาบันทึกอีกรอบ', 'top-right', '4000', 'warning', 'fa-check', true);
+                }
+            }
+
+            return false;
+        });
+
+
+    });
+
+    $('.date-picker').datepicker();
+</script>

@@ -16,56 +16,45 @@ class ViewService extends CServiceBase implements IViewService {
         $this->datacontext = new CDataContext("default");
     }
 
-    public function cooperativeAdd() {
-        $view = new CJView("cooperative/add", CJViewType::HTML_VIEW_ENGINE);
+    public function policyAdminAdd() {
+        $view = new CJView("policy/admin/add", CJViewType::HTML_VIEW_ENGINE);
+        $fundType = new \apps\taxonomy\entity\Taxonomy();
+        $fundType->pCode = "fundType";
+        $view->fundType = $this->datacontext->getObject($fundType);
         return $view;
     }
 
-    public function cooperativeLists() {
-        $view = new CJView("cooperative/lists", CJViewType::HTML_VIEW_ENGINE);
+    public function policyAdminLists() {
+        $view = new CJView("policy/admin/lists", CJViewType::HTML_VIEW_ENGINE);
+        $sql = "select pol.policyId,pol.name,pol.description,ft.value1 as fundType "
+                . "from apps\\fund\\entity\\Policy pol "
+                . "join apps\\taxonomy\\entity\\Taxonomy ft "
+                . "with ft.id = pol.fundTypeId ";
+        $data = $this->datacontext->getObject($sql);
+        $i = 1;
+        foreach ($data as $key => $value) {
+            $data[$key]['rowNo'] = $i++;
+        }
+        $view->lists = $data;
         return $view;
     }
 
-    
+    public function policyAdminEdit($policyId) {
+        $view = new CJView("policy/admin/edit", CJViewType::HTML_VIEW_ENGINE);
+        $sql = "select pol.policyId,pol.name,pol.fundTypeId,pol.description,ft.value1 as fundType "
+                . "from apps\\fund\\entity\\Policy pol "
+                . "join apps\\taxonomy\\entity\\Taxonomy ft "
+                . "with ft.id = pol.fundTypeId "
+                . "where pol.policyId  = :policyId";
+        $param = array(
+            "policyId" => $policyId
+        );
+        $data = $this->datacontext->getObject($sql, $param);
+        $view->datas = $data;
+        $tax = new \apps\taxonomy\entity\Taxonomy();
+        $tax->pCode = "fundType";
+        $view->fundType = $this->datacontext->getObject($tax);
 
-    public function liveAdd() {
-        $view = new CJView("fundlive/add", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-
-    public function liveEdit($id) {
-        
-    }
-
-    public function liveLists() {
-        $view = new CJView("fundlive/lists", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-
-    public function policyAdd() {
-        $view = new CJView("policy/add", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-
-    public function policyEdit($id) {
-        
-    }
-
-    public function policyLists() {
-        $view = new CJView("policy/lists", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-
-    public function retireAdd($id) {
-        
-    }
-
-    public function retireEdit($id) {
-        
-    }
-
-    public function retireLists() {
-        $view = new CJView("fundretire/lists", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
