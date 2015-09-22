@@ -1,5 +1,23 @@
 //test confict file by somchit
 //somchit
+function getCode(code) {
+    var data;
+    $.ajax({
+        url: '/welfare/api/taxonomy/taxonomy/getCode',
+        type: 'post',
+        data: {code: code},
+        async: false,
+        error: function (xhr) {
+            if (xhr.status == 401) {
+                window.location.href = xhr.getResponseHeader('Location');
+            }
+        },
+        success: function (result) {
+            data = result["lists"];
+        }
+    });
+    return data;
+}
 function getPCode(pCode) {
     var data;
     $.ajax({
@@ -42,9 +60,9 @@ function btnHTML(value) {
     var object = $(value).data("object");
     var param = $(value).data("param");
     var data = {};
-    if (typeof object == 'undefined'||typeof param == 'undefined') {
-        data= null;
-    }else{
+    if (typeof object == 'undefined' || typeof param == 'undefined') {
+        data = null;
+    } else {
         data[object] = param;
     }
     getHTML(id, api, data);
