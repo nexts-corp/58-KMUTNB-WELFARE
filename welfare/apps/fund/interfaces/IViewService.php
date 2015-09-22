@@ -49,4 +49,13 @@ interface IViewService {
      * @description หน้าแสดงรายการกองทุนของ user
      */
     public function employeeUserLists();
+    
+     /**
+     * @name extraAdminLists
+     * @uri /extra/admin/lists
+     * @return html view
+     * @description รายการประเภทพนักงาน
+     */
+    public function extraAdminLists();
+
 }

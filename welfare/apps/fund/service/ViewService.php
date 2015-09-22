@@ -109,4 +109,11 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function extraAdminLists() {
+        $view = new CJView("extra/admin/lists", CJViewType::HTML_VIEW_ENGINE);
+        $ex = new ExtraService();
+        $view->lists = $ex->lists();
+        return $view;
+    }
+
 }

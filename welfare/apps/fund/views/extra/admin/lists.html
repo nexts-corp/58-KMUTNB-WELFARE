@@ -47,10 +47,7 @@
                                         <th class="center">{{#i18n}}idCard{{/i18n}}</th>
                                         <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
                                         <th class="center">{{#i18n}}department{{/i18n}}</th>
-                                        <!--                                        <th class="center">{{#i18n}}sso.workStartDate{{/i18n}}</th>-->
                                         <th class="center">{{#i18n}}saving{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}myBenefit{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}employerBenefit{{/i18n}}</th>
                                         <th class="center">{{#i18n}}grantInAid{{/i18n}}</th>
                                         <th class="center">{{#i18n}}total{{/i18n}}</th>
                                         <th class="center">{{#i18n}}dateNotice{{/i18n}}</th>
@@ -65,10 +62,7 @@
                                         <td>{{idCard}}</td>
                                         <td>{{titleName}} {{fname}} {{lname}}</td>
                                         <td>{{department1}} {{faculty1}}</td>
-                                        <!--                                        <td>{{workStartDate}}</td>-->
                                         <td>{{saving}}</td>
-                                        <td>{{myBenefit}}</td>
-                                        <td>{{employerBenefit}}</td>
                                         <td>{{grantInAid}}</td>
                                         <td>{{total}}</td>
                                         <td>{{dateNotice}}</td>
@@ -129,8 +123,6 @@
                     <th class="center">{{#i18n}}idCard{{/i18n}}</th>
                     <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
                     <th class="center">{{#i18n}}saving{{/i18n}}</th>
-                    <th class="center">{{#i18n}}myBenefit{{/i18n}}</th>
-                    <th class="center">{{#i18n}}employerBenefit{{/i18n}}</th>
                     <th class="center">{{#i18n}}grantInAid{{/i18n}}</th>
                     <th class="center">{{#i18n}}total{{/i18n}}</th>
                     <th class="center">{{#i18n}}dateNotice{{/i18n}}</th>
@@ -143,7 +135,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"
                         data-id="content-body"
-                        data-api="{{_context_path}}/api/fund/view/employee/admin/lists"
+                        data-api="{{_context_path}}/api/fund/view/extra/admin/lists"
                         onclick="setTimeout(
                                         function () {
                                             btnHTML(this)
@@ -156,7 +148,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var myDropzone = new Dropzone("#frm_upload", {
-            url: "{{_context_path}}/api/fund/upload/employee",
+            url: "{{_context_path}}/api/fund/upload/extra",
             addRemoveLinks: true,
             autoProcessQueue: false,
             uploadMultiple: false,
@@ -177,7 +169,7 @@
                     myDropzone.removeFile(file);
                     Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
                     setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/fund/view/employee/admin/lists', null);
+                        getHTML('content-body', '{{_context_path}}/api/fund/view/extra/admin/lists', null);
                     }, 1000);
 
                 } else if (txt.upload == "cantUpload") {
@@ -192,8 +184,6 @@
                                 '<td class="center">' + v.idCard + '</td>' +
                                 '<td class="center">' + v.fname + ' ' + v.lname + '</td>' +
                                 '<td class="center">' + v.saving + '</td>' +
-                                '<td class="center">' + v.myBenefit + '</td>' +
-                                '<td class="center">' + v.employerBenefit + '</td>' +
                                 '<td class="center">' + v.grantInAid + '</td>' +
                                 '<td class="center">' + v.total + '</td>' +
                                 '<td class="center">' + v.dateNotice + '</td>' +

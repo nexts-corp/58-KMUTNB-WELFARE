@@ -18,6 +18,15 @@ interface IUploadService {
      * @description อัพโหลดไฟล์ csv
      */
     public function employee($file);
+    
+    /**
+     * @name extra
+     * @uri /extra
+     * @param file file
+     * @return string upload
+     * @description อัพโหลดไฟล์ csv
+     */
+    public function extra($file);
 
     
     
