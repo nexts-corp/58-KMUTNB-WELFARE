@@ -73,17 +73,6 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-//         $sqlDetails = "select detailsId
-//                              from welfareconditions where fieldMap = :fieldmap and valuex in 
-//                                   ( 
-//                                       select employeeTypeId from v_fullmember where memberId =:memberId
-//                                    )";
-//
-//        $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
-//        $details = $this->datacontext->pdoQuery($sqlDetails, $param);
-
-
-
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,"
                 . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance, "
                 . "IFNULL(academic.value1,title.value1) title "
@@ -167,7 +156,7 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
         $param = array(
             "dateStart" => $dateStart,
             "dateEnd" => $dateEnd,
-            "name" => "%" . $data . "%"
+            
         );
         $sql = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity, "
                 . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance, "
@@ -179,15 +168,27 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
                 . "join welfareconditions wc "
                 . "on wc.detailsId = wd.detailsId "
-                . "join v_member mb "
+                . "join v_fullmember mb "
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
                 . "on mb.academicId = academic.id "            
-                . "where whis.dateCreated between :dateStart and :dateEnd "
-                . "and (mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name) "
-                . "group by whis.memberId ";
+                . "where whis.dateCreated between :dateStart and :dateEnd ";
+        
+        if ($data->searchName != "") {
+            $searchName = $data->searchName;
+            $sql .= "and mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by whis.memberId ";
+            $param = array(
+                "name" => "%" .$searchName. "%"
+            );
+            
+        } else{
+          $filtercode = $data->filterCode ; 
+          $filtervalue = $data->filtervalue;
+          $sql .= " and mb.".$filtercode."Id = :filtervalue group by whis.memberId ";
+            $param["filtervalue"] = $filtervalue;  
+        }  
         return $this->datacontext->pdoQuery($sql, $param);
     }
 

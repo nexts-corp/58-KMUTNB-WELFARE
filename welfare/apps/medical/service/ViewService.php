@@ -26,6 +26,10 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("medicalfee/lists", CJViewType::HTML_VIEW_ENGINE);
 
         $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
+        
         $welfare = new \apps\welfare\entity\Welfare();
         $welfare->setCode("medical001");
         $query = $this->datacontext->getObject($welfare)[0];
@@ -56,7 +60,7 @@ class ViewService extends CServiceBase implements IViewService {
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "            
+                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "group by whis.memberId ";
 
@@ -65,14 +69,20 @@ class ViewService extends CServiceBase implements IViewService {
             "dateEnd" => $dateEnd
         );
 
-
+        
         if ($searchName != "") {
+            
             $search = new MedicalFeeService();
-            $view->lists = $search->search($searchName);
+            $view->lists = $search->search($datafilter);
+        } else if ($filterCode != "") {
+            
+            $filter = new MedicalFeeService();
+            $view->lists = $filter->search($datafilter);
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
-            $view->lists = $budget; //กรณีที่ไม่ได้ search
+            $view->lists = $budget; //กรณีที่ไม่ได้ search //กรณีที่ไม่ได้ search
         }
+       
         return $view;
     }
 
@@ -94,7 +104,7 @@ class ViewService extends CServiceBase implements IViewService {
 
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
-        
+
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity, "
                 . "whis.amount,whis.historyId,whis.dateCreated,whis.dateUpdated,whis.remark, "
                 . "IFNULL(academic.value1,title.value1) title "
@@ -110,10 +120,10 @@ class ViewService extends CServiceBase implements IViewService {
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "            
+                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "and whis.memberId = :memberId ";
-        
+
         $param = array(
             "dateStart" => $dateStart,
             "dateEnd" => $dateEnd,
@@ -155,7 +165,7 @@ class ViewService extends CServiceBase implements IViewService {
 
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
-        
+
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.detailsId,whis.memberId,wd.quantity, "
                 . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,"
                 . "mb.idCard,whis.amount,whis.remark,whis.historyId, "
@@ -172,10 +182,10 @@ class ViewService extends CServiceBase implements IViewService {
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "            
+                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "and whis.historyId = :id ";
-        
+
 
         $param = array(
             "dateStart" => $dateStart,
@@ -184,7 +194,7 @@ class ViewService extends CServiceBase implements IViewService {
         );
         $budget = $this->datacontext->pdoQuery($sql1, $param)[0];
         $view->data = $budget;
-        
+
         return $view;
     }
 
@@ -206,7 +216,7 @@ class ViewService extends CServiceBase implements IViewService {
 
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
-        
+
         $sql = "select sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
@@ -220,10 +230,10 @@ class ViewService extends CServiceBase implements IViewService {
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "            
+                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd and whis.memberId = :memberId "
                 . "group by whis.memberId ";
-        
+
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity, "
                 . "whis.amount,whis.historyId,whis.dateCreated,whis.dateUpdated,whis.remark, "
                 . "IFNULL(academic.value1,title.value1) title "
@@ -239,7 +249,7 @@ class ViewService extends CServiceBase implements IViewService {
                 . "Left JOIN taxonomy title "
                 . "on mb.titleNameId = title.id "
                 . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "            
+                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "and whis.memberId = :memberId ";
 
@@ -254,7 +264,7 @@ class ViewService extends CServiceBase implements IViewService {
             $view->lists = $search->search($searchName);
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
-            $total = $this->datacontext->pdoQuery($sql,$param);
+            $total = $this->datacontext->pdoQuery($sql, $param);
 //            print_r($total);
 //            print_r($budget);
 //            exit();
@@ -266,7 +276,6 @@ class ViewService extends CServiceBase implements IViewService {
 //            }
             $view->totalbudget = $total;
             $view->lists = $budget; //กรณีที่ไม่ได้ search
-            
         }
         return $view;
     }
