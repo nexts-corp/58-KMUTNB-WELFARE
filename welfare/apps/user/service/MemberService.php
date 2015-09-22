@@ -137,25 +137,25 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
-        $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-        //print_r($data);
+        
+        $sql = "select *,IFNULL(mem1.academic1,mem1.titleName1) title "
+                . "FROM v_fullmember mem1 "
+                . "WHERE mem1.memberActive2 = 'Working' ";
 
-        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
-                . "FROM apps\\member\\entity\\Member mem1 "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleNameId = tax1.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
-                . "with mem1.memberActiveId = tax2.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
-                . "with mem1.facultyId = tax3.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
-                . "with mem1.departmentId = tax4.id "
-                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
-                . "and mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
-        //print_r($sql);
-        $view->lists = $this->datacontext->getObject($sql, array("name" => "%" . $data . "%"));
-        //print_r($view->list);
-        return $view;
+        if ($data->searchName != "") {
+            $searchName = $data->searchName;
+            $sql .= "and mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
+            $param = array(
+                "name" => "%" .$searchName. "%"
+            );
+            
+        } else{
+          $filtercode = $data->filterCode ; 
+          $filtervalue = $data->filtervalue;
+          $sql .= " and mem1.".$filtercode."Id = :filtervalue ";
+            $param["filtervalue"] = $filtervalue;  
+        }  
+        return $this->datacontext->pdoQuery($sql, $param);
     }
 
     public function changePassword($data) {

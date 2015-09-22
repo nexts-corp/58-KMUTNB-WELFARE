@@ -57,4 +57,8 @@ interface IMemberService {
      */
     public function find($field,$value);
     
+    
+    
+    
+    
 }

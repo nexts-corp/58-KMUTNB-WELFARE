@@ -71,7 +71,7 @@ class ViewService extends CServiceBase implements IViewService {
             $view = new CJView("department/edit", CJViewType::HTML_VIEW_ENGINE);
         } else if ($usertype == "user") {
             $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
-        }else if ($usertype == "adminMedical") {
+        } else if ($usertype == "adminMedical") {
             $view = new CJView("user/editProfile", CJViewType::HTML_VIEW_ENGINE);
         }
         $sql = "select mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(fac.value1) as faculty,(depart.value1) as department, "
@@ -105,14 +105,14 @@ class ViewService extends CServiceBase implements IViewService {
         $dob = $member[0]['dob']->format('d-m-Y');
 
 //        print_r($member);
-        
+
         $mem = explode("-", $dob);
         $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
 
         $workStartDate = $member[0]['workStartDate']->format('d-m-Y');
         $wsd = explode("-", $workStartDate);
         $member[0]['workStartDate'] = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-        
+
         $salaryDate = $member[0]['salaryDate']->format('d-m-Y');
         $wsd = explode("-", $salaryDate);
         $member[0]['salaryDate'] = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
@@ -122,7 +122,7 @@ class ViewService extends CServiceBase implements IViewService {
         $user = $this->datacontext->getObject($user)[0];
         $member[0]['userTypeId'] = $user->userTypeId;
         $view->datas = $member;
-        
+
         $academic = new Taxonomy();
         $academic->pCode = "academic";
         $view->academic = $this->datacontext->getObject($academic);
@@ -155,49 +155,47 @@ class ViewService extends CServiceBase implements IViewService {
         $matier = new Taxonomy();
         $matier->pCode = "matier";
         $view->matier = $this->datacontext->getObject($matier);
-        
+
         return $view;
     }
 
-    public function memberLists() {  
+    public function memberLists() {
+
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
         $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
+
         $param = array();
-        $sql = "select mem1.fname,mem1.lname,mem1.idCard,"
-                . "mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department,"
-                . "IFNULL(tax5.value1,tax1.value1) title "
-                . "FROM v_member mem1 "
-                . "INNER JOIN taxonomy tax1 "
-                . "on mem1.titleNameId = tax1.id "
-                . "INNER JOIN taxonomy tax2 "
-                . "on mem1.memberActiveId = tax2.id "
-                . "LEFT JOIN taxonomy tax3 "
-                . "on mem1.facultyId = tax3.id "
-                . "LEFT JOIN taxonomy tax4 "
-                . "on mem1.departmentId = tax4.id "
-                . "left JOIN taxonomy tax5 "
-                . "on mem1.academicId = tax5.id "
-                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' ";
+        $sql = "select * ,IFNULL(mem1.academic1,mem1.titleName1) title "
+                . "FROM v_fullmember mem1 "
+                . "WHERE mem1.memberActive2 = 'Working'  ";
 
         if ($usertype == "administrator") {
             $view = new CJView("admin/lists", CJViewType::HTML_VIEW_ENGINE);
         } elseif ($usertype == "adminFaculty") {
             $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
 
-            $sql .= " and tax3.code = :facultyId "; //กรณีที่ไม่ได้ search
+            $sql .= " and mem1.facultyId = :facultyId "; //กรณีที่ไม่ได้ search
             $param["facultyId"] = $facultyId;
         } elseif ($usertype == "adminDepartment") {
             $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
 
-            $sql .= " and tax4.code = :departmentId "; //กรณีที่ไม่ได้ search
+            $sql .= " and mem1.departmentId = :departmentId "; //กรณีที่ไม่ได้ search
             $param["departmentId"] = $departmentId;
         }
 
         if ($searchName != "") {
+            
             $search = new MemberService();
-            $view->lists = $search->search($searchName);
+            $view->lists = $search->search($datafilter);
+        } else if ($filterCode != "") {
+            
+            $filter = new MemberService();
+            $view->lists = $filter->search($datafilter);
         } else {
             $view->lists = $this->datacontext->pdoQuery($sql, $param); //กรณีที่ไม่ได้ search
         }
@@ -232,19 +230,18 @@ class ViewService extends CServiceBase implements IViewService {
 
         $member = $this->datacontext->getObject($sql);
 //            $Y=Date("Y")+543;
-        
 //        exit();
         $dob = $member[0]['dob']->format('d-m-Y');
-        
+
 //        print_r($member);
 
         $mem = explode("-", $dob);
         $member[0]['dob'] = $mem[0] . "-" . $mem[1] . "-" . (intval($mem[2]) + 543);
-        
+
         $workStartDate = $member[0]['workStartDate']->format('d-m-Y');
         $wsd = explode("-", $workStartDate);
         $member[0]['workStartDate'] = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-        
+
         $salaryDate = $member[0]['salaryDate']->format('d-m-Y');
         $wsd = explode("-", $salaryDate);
         $member[0]['salaryDate'] = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
@@ -254,7 +251,7 @@ class ViewService extends CServiceBase implements IViewService {
         $user->memberId = $member[0]['memberId'];
         $user = $this->datacontext->getObject($user)[0];
         $member[0]['userTypeId'] = $user->userTypeId;
-       $academic = new Taxonomy();
+        $academic = new Taxonomy();
         $academic->pCode = "academic";
         $view->academic = $this->datacontext->getObject($academic);
 

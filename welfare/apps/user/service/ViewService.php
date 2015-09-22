@@ -18,7 +18,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function memberAdd() {
-        
+
         $view = new CJView("member/add", CJViewType::HTML_VIEW_ENGINE);
         $academic = new Taxonomy();
         $academic->pCode = "academic";
@@ -63,11 +63,11 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("member/edit", CJViewType::HTML_VIEW_ENGINE);
 //        $member = new \apps\member\entity\Member();
 //        $member->setMemberId($id);
-       $sql = "select (title.value1) As titlename,"
-               . "mem.fname,mem.lname,mem.idCard,mem.memberId,mem.employeeCode,mem.internalPhone,mem.phone,mem.mobile,"
-               . "mem.email,mem.salary,mem.address,"
-               . "(academic.value1) As academicname,(employeeT.value1) As employeeType,(pos.value1) As position,"
-               . "(fa.value1) As faculty,(dep.value1) As department,(mat.value1) As matier,(userT.value1) As userType,mem.academicId "
+        $sql = "select (title.value1) As titlename,"
+                . "mem.fname,mem.lname,mem.idCard,mem.memberId,mem.employeeCode,mem.internalPhone,mem.phone,mem.mobile,"
+                . "mem.email,mem.salary,mem.address,"
+                . "(academic.value1) As academicname,(employeeT.value1) As employeeType,(pos.value1) As position,"
+                . "(fa.value1) As faculty,(dep.value1) As department,(mat.value1) As matier,(userT.value1) As userType,mem.academicId "
                 . "FROM apps\\member\\model\\Member mem "
                 . "LEFT JOIN apps\\taxonomy\\entity\\Taxonomy academic "
                 . "with mem.academicId = academic.id "
@@ -99,7 +99,6 @@ class ViewService extends CServiceBase implements IViewService {
 //        $workStartDate = $member->workStartDate->format('d-m-Y');
 //        $wsd = explode("-", $workStartDate);
 //        $member->workStartDate = $wsd[0] . "-" . $wsd[1] . "-" . (intval($wsd[2]) + 543);
-
 //        $user = new \apps\user\entity\User();
 //        $user->memberId = $member->memberId;
 //        $user = $this->datacontext->getObject($user)[0];
@@ -110,37 +109,30 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function memberLists() {
         $view = new CJView("member/lists", CJViewType::HTML_VIEW_ENGINE);
-//$listregister = new \apps\common\entity\Register();
-//        $sql = "select * "
-//                . "FROM member mem1 "
-//                . "INNER JOIN taxonomy tax1 "
-//                . "on mem1.titleNameId = tax1.id "
-//                . "WHERE mem1.memberId in ( "
-//                . "select mem2.memberId "
-//                . "FROM member mem2 "
-//                . "INNER JOIN taxonomy tax2 "
-//                . "on mem2.memberActiveId = tax2.id "
-//                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' "
-//                . ")";
-        $sql = "select (tax1.value1) As titlename,mem1.fname,mem1.lname,mem1.idCard,mem1.memberId,(tax3.value1) as faculty,(tax4.value1) as department "
-                . "FROM apps\\member\\model\\Member mem1 "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax1 "
-                . "with mem1.titleNameId = tax1.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax2 "
-                . "with mem1.memberActiveId = tax2.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax3 "
-                . "with mem1.facultyId = tax3.id "
-                . "INNER JOIN apps\\taxonomy\\entity\\Taxonomy tax4 "
-                . "with mem1.departmentId = tax4.id "
-                . "WHERE tax2.pCode = 'memberActive' and tax2.code = 'working' ";
-        $data = $this->datacontext->getObject($sql);
-//         print_r($data);
-        $view->lists = $data;
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
+        $sql = "select * ,IFNULL(mem1.academic1,mem1.titleName1) title "
+                . "FROM v_fullmember mem1 "
+                . "WHERE mem1.memberActive2 = 'Working'  ";
+        
+        if ($searchName != "") {
+            
+            $search = new MemberService();
+            $view->lists = $search->search($datafilter);
+        } else if ($filterCode != "") {
+            
+            $filter = new MemberService();
+            $view->lists = $filter->search($datafilter);
+        } else {
+            $view->lists = $this->datacontext->pdoQuery($sql); //กรณีที่ไม่ได้ search
+        }
         return $view;
     }
 
-     public function memberPassword($id) {
-         $view = new CJView("member/password", CJViewType::HTML_VIEW_ENGINE);
+    public function memberPassword($id) {
+        $view = new CJView("member/password", CJViewType::HTML_VIEW_ENGINE);
         $member = new \apps\member\entity\Member();
         $member->setMemberId($id);
         $member = $this->datacontext->getObject($member)[0];
