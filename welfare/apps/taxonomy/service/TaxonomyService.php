@@ -93,4 +93,12 @@ class TaxonomyService extends CServiceBase implements ITaxonomyService {
         return $this->datacontext->getObject($tax);
     }
 
+    public function getCode($code) {
+        $sql = "select tax "
+                . "from apps\\taxonomy\\entity\\Taxonomy tax "
+                . "where tax.code like :code ";
+        $param = array("code" => $code."%");
+        return $this->datacontext->getObject($sql,$param);
+    }
+
 }
