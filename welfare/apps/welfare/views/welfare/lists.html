@@ -12,7 +12,7 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-    
+
     <!-- Page Body -->
     <div class="page-body">
         <div class="row">
@@ -47,14 +47,15 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
+                                        <th>views</th>
                                         <th>{{#i18n}}all.number{{/i18n}}</th>
                                         <th>{{#i18n}}welfare.name{{/i18n}}</th>
                                         <th>{{#i18n}}welfare.dateStart{{/i18n}}</th>
                                         <th>{{#i18n}}welfare.dateEnd{{/i18n}}</th>
                                         <th>Reset Time  </th>
-<!--                                        <th>{{#i18n}}welfare.free{{/i18n}}</th>
-                                        <th>{{#i18n}}welfare.willing{{/i18n}}</th>
-                                        <th>{{#i18n}}welfare.retire{{/i18n}}</th>-->
+                                        <!--                                        <th>{{#i18n}}welfare.free{{/i18n}}</th>
+                                                                                <th>{{#i18n}}welfare.willing{{/i18n}}</th>
+                                                                                <th>{{#i18n}}welfare.retire{{/i18n}}</th>-->
 
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
@@ -62,24 +63,30 @@
                                 <tbody>
                                     {{#datas}}
                                     <tr class="selectable">
-
+                                        <td>
+                                            <a class="totalHistory btn btn-default btn-xs shiny icon-only success" 
+                                               row-index="{{detailsId}}"
+                                               row-welfareId="{{welfareId}}" 
+                                               href="javascript:void(0);">
+                                                <i class="fa fa-plus-square-o"></i></a>   
+                                        </td>
                                         <td>{{welfareId}}</td>
                                         <td>{{name}}</td>
                                         <td>{{dateStart}}</td>
                                         <td>{{dateEnd}}</td>
                                         <td>{{resetTime}}</td>
-<!--                                        <td>{{free}}</td>
-                                        <td>{{willing}}</td>
-                                        <td>{{retire}}</td>-->
+                                        <!--                                        <td>{{free}}</td>
+                                                                                <td>{{willing}}</td>
+                                                                                <td>{{retire}}</td>-->
                                         <td class="center">
-<!--                                            <button class="btn btn-maroon btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/conditions/lists"
-                                                    data-object='welfareId'
-                                                    data-param='{{welfareId}}'
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}welfare.management{{/i18n}} 
-                                            </button>-->
+                                            <!--                                            <button class="btn btn-maroon btn-xs edit"
+                                                                                                data-id="content-body"
+                                                                                                data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                                                                                                data-object='welfareId'
+                                                                                                data-param='{{welfareId}}'
+                                                                                                onclick="btnHTML(this)">
+                                                                                            <i class="fa fa-edit"></i>{{#i18n}}welfare.management{{/i18n}} 
+                                                                                        </button>-->
 
 
                                             <button class="btn btn-info btn-xs edit"
@@ -92,6 +99,17 @@
                                             </button>
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareId}}" >{{#i18n}}deletes{{/i18n}}</button>
                                         </td>
+
+                                    <tr class="details1" style="display: none;" >
+                                        <td class="details" colspan="6">
+                                            <div class="well bordered-left bordered-themeprimary" id="showDetails"> </div> 
+
+
+
+
+                                        </td>
+                                    </tr>
+
                                     </tr>
                                     {{/datas}}
                                 </tbody>
@@ -106,7 +124,7 @@
 
     <!-- /Page Body -->
 </div>
-<script>
+<!--<script>
             $(function() {
             var availableTags = [
             {{#datas}}"{{name}}",
@@ -115,7 +133,7 @@
                     $("#SearchName").autocomplete({
             source: availableTags
             });
-            });</script>
+            });</script>-->
 
 <script>
                     $('.btn-del').click(function(){

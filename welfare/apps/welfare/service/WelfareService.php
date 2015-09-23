@@ -19,13 +19,13 @@ class WelfareService extends CServiceBase implements IWelfareService {
     }
 
     public function save($data) {
-
+       
         $details = $data->details;
         if ($data->dateStart != "") {
             $dateStart = explode("-", $data->dateStart);
             $dateStart[2] = intVal($dateStart[2]) - 543;
             $dateStart1 = $dateStart[2] . "-" . $dateStart[1] . "-" . $dateStart[0];
-
+            
             $data->dateStart = new \DateTime($dateStart1);
         }
         if ($data->dateEnd != "") {
@@ -75,8 +75,21 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
     public function update($data) {
 
-        $data->dateStart = new \DateTime($data->dateStart);
-        $data->dateEnd = new \DateTime($data->dateEnd);
+         $details = $data->details;
+        if ($data->dateStart != "") {
+            $dateStart = explode("-", $data->dateStart);
+            $dateStart[2] = intVal($dateStart[2]) - 543;
+            $dateStart1 = $dateStart[2] . "-" . $dateStart[1] . "-" . $dateStart[0];
+            
+            $data->dateStart = new \DateTime($dateStart1);
+        }
+        if ($data->dateEnd != "") {
+            $dateEnd = explode("-", $data->dateEnd);
+            $dateEnd[2] = intVal($dateEnd[2]) - 543;
+            $dateEnd1 = $dateEnd[2] . "-" . $dateEnd[1] . "-" . $dateEnd[0];
+
+            $data->dateEnd = new \DateTime($dateEnd1);
+        }
 
         if ($this->datacontext->updateObject($data)) {
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");

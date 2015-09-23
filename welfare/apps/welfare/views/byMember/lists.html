@@ -52,7 +52,7 @@
                                         <td>{{rowNo}}</td>
                                         <td>{{title}}  {{fname}}  {{lname}}</td>
                                         <td>{{gender1}}</td>
-                                        <td>{{#i18n}}conditions.FandD{{/i18n}}  {{department}}  {{faculty}}  </td>
+                                        <td>{{department1}} / {{faculty1}}  </td>
                                         <td>{{employeeType1}}</td>
                                         <td>
                                             <button class="btn btn btn-default btn-xs edit btn_history"
@@ -78,6 +78,8 @@
 
     <!-- /Page Body -->
 </div>
+
+
 <script>
     $('.btn_history').click(function () {
         var data = {};
@@ -85,7 +87,7 @@
         data['fieldMap'] = $(this).attr('row-emploryee');
         var jdata = {};
         jdata['data'] = data;
-
+        
         getHTML('content-body', '{{_context_path}}/api/welfare/view/byMemberWelfare/lists', jsonEncode(jdata))
     });
 </script>

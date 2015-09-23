@@ -9,6 +9,7 @@ use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IViewService;
 use apps\welfare\entity\Welfare;
 use apps\welfare\entity\Conditions;
+use apps\welfare\entity\Details;
 use apps\taxonomy\entity\Taxonomy;
 use apps\member\entity\Member;
 
@@ -41,16 +42,36 @@ class ViewService extends CServiceBase implements IViewService {
         $daoWelfare = new Welfare();
         $daoWelfare->setWelfareId($welfarId);
         $obj = $this->datacontext->getObject($daoWelfare);
+        
         foreach ($obj as $key => $value) {
-
+            if($value->dateStart !=""){
             $dsY = $value->dateStart->format('Y') + 543;
-            $deY = $value->dateEnd->format('Y') + 543;
-
             $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $dsY);
+            }
+            if($value->dateEnd !=""){
+            $deY = $value->dateEnd->format('Y') + 543;
             $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $deY);
+            }
+            
         }
-
-        $view->datas = $obj;
+        
+        $view->datasWelfare = $obj;
+        
+           $path = '\\apps\\welfare\\entity\\';
+           $sqlConditionsDetails = "select cdt from ".$path."Details cdt "
+                    . " where cdt.welfareId=:welfareId ";
+        $param=array("welfareId" => $welfarId);
+        $objDetails = $this->datacontext->getObject($sqlConditionsDetails,$param);
+        
+//         $i=1;
+//        foreach ($objDetails as $key => $value) {
+//            $objDetails[$key]["rowNo"] = $i;
+//            $i++;
+//        }
+        
+        print_r($objDetails);
+        $view->datasListDetails=$objDetails;
+       
         return $view;
     }
 

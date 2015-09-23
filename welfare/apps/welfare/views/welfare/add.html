@@ -16,8 +16,8 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-   
-    
+
+
     <!-- Page Body -->
     <form id="frmWelfare">
         <div class="page-body">
@@ -60,12 +60,12 @@
                                     <label class="col-lg-3 control-label">{{#i18n}}welfare.resetTime{{/i18n}}</label>
                                     <div class="col-lg-5">
 
-                                        <select class="form-control input-xs" name="resetTime" id="resetTime" data-bv-field="country">
+                                        <select class="form-control input-xs" name="resetTime" id="resetTime" >
                                             <option value="0">{{#i18n}}welfare.oneRight{{/i18n}}</option>
                                             <option value="6">{{#i18n}}welfare.6Mount{{/i18n}}</option>
                                             <option value="12">{{#i18n}}welfare.12Mount{{/i18n}}</option>
 
-                                        </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+                                        </select>
 
                                     </div>
                                 </div>
@@ -104,12 +104,12 @@
                                     <label class="col-lg-3 control-label">{{#i18n}}welfare.welfareType{{/i18n}}</label>
                                     <div class="col-lg-5">
 
-                                        <select class="form-control input-xs" name="country" id="free" data-bv-field="country">
+                                        <select class="form-control input-xs"  id="free" >
                                             <option value="Y">{{#i18n}}welfare.free{{/i18n}}</option>
                                             <option value="N">{{#i18n}}welfare.loan{{/i18n}}</option>
 
 
-                                        </select><i class="form-control-feedback" data-bv-field="country" style="display: none;"></i>
+                                        </select>
 
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@
                                                 <div class="checkbox">
                                                     <label>
 
-                                                        <input type="checkbox"  class="inverted" id="willing" name="willing" value="" >
+                                                        <input type="checkbox"  class="inverted" id="willing" name="willing"  >
 
                                                         <span class="text">{{#i18n}}conditions.willing{{/i18n}}</span>
                                                     </label>
@@ -143,14 +143,7 @@
                                 </div>
 
 
-                                <div class="form-group">
 
-                                    <!--                                    <div class="col-lg-offset-6 col-lg-8">
-                                                                            <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
-                                                                            <input class="btn btn-default" type="reset" value="{{#i18n}}button.cancel{{/i18n}}" />
-                                                                        </div>-->
-
-                                </div>
 
                             </div>
                         </div>
@@ -260,7 +253,7 @@
 
                             <div class="flip-scroll">
 
-                                <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
+                                <table class="table table-hover table-striped table-bordered table-condensed" >
                                     <thead>
                                         <tr>
                                             <th>{{#i18n}}all.number{{/i18n}}</th>
@@ -270,7 +263,7 @@
                                             <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="showTable">
 
                                     </tbody>
 
@@ -400,6 +393,8 @@
         var Details = [];
         var rowConditions;
         var rowDetails;
+        var fieldArr = {salary: "เงินเดือน", employeeTypeId: "ประเภทพนักงาน", genderId: "เพศ", dob: "อายุสมาชิก", workStartDate: "วัน-เดือน-ปี ที่บรรจุ", workEndDate: "วัน-เดือน-ปี ที่เกษียณ"};
+        var operationArr = {'=': "เท่ากับ", '<': "น้อยกว่า", '<=': "น้อยกว่าหรือเท่ากับ", '>': "มากกว่า", '>=': "มากกว่าหรือเท่ากับ", '!=': "ไม่เท่ากับ"};
 
         $("#btnAddDetails").click(function () {
             $(".content-details").show();
@@ -423,35 +418,85 @@
                 if ($("#name").val() != "" || $("#quantity").val() != "") {
 
                     Details.push(details);
-                    var table = "";
-                    $.each(Details, function (key, value) {
-                        table += "<tr>" +
-                                "<td>" + (key + 1) + "</td>";
 
-                        $.each(value, function (key2, value2) {
-                            if (key2 != "conditions") {
-                                if (key2 == "returnTypeId") {
-                                    var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
-                                    table += "<td>" + text + "</td>";
-                                } else {
-                                    table += "<td>" + value2 + "</td>";
-                                }
-                            }
-                        });
+                    $("#showTable").html(createTableDetails(Details));
 
-                        table += "<td>" +
-                                "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
-                                "</td> </tr>";
+                    $(".btnRemoveConditions").click(function () {
+                        var rowIndex = $(this).attr("row-index");
+                        Details.splice(rowIndex, 1);
+                        $("#showTable").html(createTableDetails(Details));
                     });
-                    $("table#showTable tbody").html(table);
 
                     $(".btnConditions").click(function () {
-                        rowDetails = $(this).attr("row-index");
-                        rowConditions = 0;
                         $(".content-conditions").empty();
+                        rowDetails = $(this).attr("row-index");
+
+
+                        //console.log(Details[rowDetails]['conditions'].length);
+                        if (typeof Details[rowDetails]['conditions'] !== 'undefined' && Details[rowDetails]['conditions'] !== null) {
+                            var dataCondition = Details[rowDetails]['conditions'];
+
+                            var html = "";
+                            $.each(dataCondition, function (k, v) {
+                                html += '<tr><td width="30%">' +
+                                        '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + k + '">';
+
+                                $.each(fieldArr, function (k1, v1) {
+                                    if (v.fieldMap == k1) {
+                                        html += '<option value="' + k1 + '" selected>' + v1 + '</option>';
+                                    } else {
+                                        html += '<option value="' + k1 + '">' + v1 + '</option>';
+                                    }
+                                });
+                                html += '</select></td>' +
+                                        '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + k + '">';
+                                $.each(operationArr, function (k2, v2) {
+                                    if (v.operations == k2) {
+                                        html += '<option value="' + k2 + '" selected>' + v2 + '</option>';
+                                    } else {
+                                        html += '<option value="' + k2 + '">' + v2 + '</option>';
+                                    }
+                                });
+                                html += '</select></td>' +
+                                        '<td>' +
+                                        '<div class="divValueX" row-index="' + k + '">' +
+                                        '</div>' +
+                                        '</td>' +
+                                        '</tr>';
+                            });
+                            $(".content-conditions").append(html);
+                            $.each(dataCondition, function (k, v) {
+                                if (v.fieldMap == "employeeTypeId" || v.fieldMap == "genderId") {
+                                    var pCode = v.fieldMap.substr(0, v.fieldMap.length - 2);
+                                    var result = getPCode(pCode);
+                                    var html2 = "";
+                                    html2 += "<select name='valuex' row-index='" + k + "' class='valuex conditions form-control input-xs'>";
+                                    $.each(result, function (key, value) {
+                                        if (v.valuex == value.id) {
+                                            html2 += "<option value='" + value.id + "' selected>" + value.value1 + "</option>";
+                                        } else {
+                                            html2 += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                                        }
+                                    });
+                                    html2 += "</select>";
+                                    $(".divValueX[row-index='" + k + "']").html(html2);
+                                } else {
+                                    var html2 = "";
+                                    html2 = "<input type='text' name='valuex' row-index='" + k + "' class='valuex conditions form-control input-xs' value='" + v.valuex + "' />";
+                                    $(".divValueX[row-index='" + k + "']").html(html2);
+                                }
+                                rowConditions = (k + 1);
+                            });
+                            changeFieldMap();
+                        } else {
+                            rowConditions = 0;
+                        }
+
+                        //$(".content-conditions").empty();
                         $("#divConditions").show();
                         $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
                         $(".conditionsFix").attr("class", "col-xs-6 col-md-6")
+
 
                         return false;
                     });
@@ -464,31 +509,58 @@
         });
 
         $(".btnAppend").click(function () {
-            var clone = "";
+//            var clone = "";
+//
+//            clone += '<tr><td width="30%">' +
+//                    '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + (rowConditions) + '">' +
+//                    '<option value="salary">เงินเดือน</option>' +
+//                    '<option value="employeeTypeId">ประเภทพนักงาน</option>' +
+//                    '<option value="genderId">เพศ</option>' +
+//                    '<option value="dob">อายุสมาชิก</option>' +
+//                    '<option value="workStartDate">วัน-เดือน-ปี ที่บรรจุ</option>' +
+//                    '<option value="workEndDate">วัน-เดือน-ปี ที่เกษียณ</option>' +
+//                    '</select></td>' +
+//                    '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + (rowConditions) + '">' +
+//                    '<option value="=">เท่ากับ </option>' +
+//                    '<option value="<">น้อยกว่า</option>' +
+//                    '<option value=">">มากกว่า</option>' +
+//                    '<option value="<=">น้อยกว่าหรือเท่ากับ</option>' +
+//                    '<option value=">=">มากกว่าหรือเท่ากับ</option>' +
+//                    '<option value="!=">ไม่เท่ากับ</option>' +
+//                    '</select></td>' +
+//                    '<td><div class="divValueX" row-index="' + rowConditions + '">' +
+//                    '<input type="text" name="valuex" row-index="' + rowConditions++ + '" class="valuex conditions form-control input-xs" /></div></td>' +
+//                    '</tr>';
+            var html = "";
+            html += '<tr><td width="30%">' +
+                    '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + rowConditions + '">';
 
-            clone += '<tr><td width="30%">' +
-                    '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + (rowConditions) + '">' +
-                    '<option value="salary">เงินเดือน</option>' +
-                    '<option value="employeeTypeId">ประเภทพนักงาน</option>' +
-                    '<option value="genderId">เพศ</option>' +
-                    '<option value="dob">วัน-เดือน-ปี ที่เกิด</option>' +
-                    '<option value="workStartDate">วัน-เดือน-ปี ที่บรรจุ</option>' +
-                    '<option value="workEndDate">วัน-เดือน-ปี ที่เกษียณ</option>' +
-                    '</select></td>' +
-                    '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + (rowConditions) + '">' +
-                    '<option value="=">เท่ากับ </option>' +
-                    '<option value="<">น้อยกว่า</option>' +
-                    '<option value=">">มากกว่า</option>' +
-                    '<option value="<=">น้อยกว่าหรือเท่ากับ</option>' +
-                    '<option value=">=">มากกว่าหรือเท่ากับ</option>' +
-                    '<option value="!=">ไม่เท่ากับ</option>' +
-                    '</select></td>' +
-                    '<td><div class="divValueX" row-index="' + rowConditions + '">' +
+            $.each(fieldArr, function (k1, v1) {
+                html += '<option value="' + k1 + '">' + v1 + '</option>';
+            });
+            html += '</select></td>' +
+                    '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + rowConditions + '">';
+            $.each(operationArr, function (k2, v2) {
+                html += '<option value="' + k2 + '">' + v2 + '</option>';
+            });
+            html += '</select></td>' +
+                    '<td>' +
+                    '<div class="divValueX" row-index="' + rowConditions + '">' +
                     '<input type="text" name="valuex" row-index="' + rowConditions++ + '" class="valuex conditions form-control input-xs" /></div></td>' +
+                    '</div>' +
+                    '</td>' +
                     '</tr>';
 
+            $(".content-conditions").append(html);
+            changeFieldMap();
 
-            $(".content-conditions").append(clone);
+
+            //            $(".content-conditions").clone().appendTo(".content-conditions");
+
+            return false;
+        });
+
+        function changeFieldMap() {
             $(".fieldMap").change(function () {
                 var rowIndex = $(this).attr("row-index");
                 if (this.value == "employeeTypeId" || this.value == "genderId") {
@@ -514,14 +586,34 @@
                     $(".divValueX[row-index='" + rowIndex + "']").html(html);
                 }
             });
+        }
 
+        function createTableDetails(Details) {
+            var table = "";
+            $.each(Details, function (key, value) {
+                table += "<tr row-index='" + key + "'>" +
+                        "<td>" + (key + 1) + "</td>";
 
-            //            $(".content-conditions").clone().appendTo(".content-conditions");
+                $.each(value, function (key2, value2) {
+                    if (key2 != "conditions") {
+                        if (key2 == "returnTypeId") {
+                            var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
+                            table += "<td>" + text + "</td>";
+                        } else {
+                            table += "<td>" + value2 + "</td>";
+                        }
+                    }
+                });
 
-            return false;
-        });
+                table += "<td>" +
+                        "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
+                        "   <button class='btnRemoveConditions btn btn-sm btn-danger' row-index='" + key + "'>ลบ" + key + "</button>" +
+                        "</td>" +
+                        "</tr>";
 
-
+            });
+            return table;
+        }
 
         $("#btnSaveConditions").click(function () {
             //var Conditions = [];
