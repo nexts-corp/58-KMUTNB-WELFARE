@@ -60,8 +60,8 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
         $welfare->setCode("medical001");
         $query = $this->datacontext->getObject($welfare)[0];
 
-        
-        
+
+
         $date = new \DateTime('now');
         $sql = "call prc_date_budget(:welfareId,:date)";
         $param = array(
@@ -69,7 +69,7 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
             "date" => $date->format('Y-m-d')
         );
         $dateBudget = $this->datacontext->pdoQuery($sql, $param)[0];
-        
+
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
@@ -98,7 +98,7 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
             "idCard" => $idCard
         );
         $budget = $this->datacontext->pdoQuery($sql1, $param)[0];
-        
+
         if ($budget['memberId'] == "") {
 
             $sql2 = "select mb.memberId,mb.fname,mb.lname,wf.welfareId,wc.detailsId,weld.quantity as balance,mb.idCard, "
@@ -118,7 +118,7 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 "idCard" => $idCard
             );
             $budget = $this->datacontext->pdoQuery($sql2, $param)[0];
-            
+
             return $budget;
         } else {
 
@@ -153,14 +153,14 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-        $param = array(
-            "dateStart" => $dateStart,
-            "dateEnd" => $dateEnd,
-            
-        );
-        $sql = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity, "
+//        $param = array(
+//            "dateStart" => $dateStart,
+//            "dateEnd" => $dateEnd,
+//            
+//        );
+        $sql = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,mb.idCard,mb.department1,mb.faculty1, "
                 . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance, "
-                . "IFNULL(academic.value1,title.value1) title "
+                . "IFNULL(mb.academic1,mb.titleName1) title "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
                 . "on wd.detailsId = whis.detailsId "
@@ -170,25 +170,27 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 . "on wc.detailsId = wd.detailsId "
                 . "join v_fullmember mb "
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
-                . "Left JOIN taxonomy title "
-                . "on mb.titleNameId = title.id "
-                . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "            
                 . "where whis.dateCreated between :dateStart and :dateEnd ";
-        
+
         if ($data->searchName != "") {
             $searchName = $data->searchName;
             $sql .= "and mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by whis.memberId ";
             $param = array(
-                "name" => "%" .$searchName. "%"
+                "name" => "%" . $searchName . "%",
+                "dateStart" => $dateStart,
+                "dateEnd" => $dateEnd
             );
-            
-        } else{
-          $filtercode = $data->filterCode ; 
-          $filtervalue = $data->filtervalue;
-          $sql .= " and mb.".$filtercode."Id = :filtervalue group by whis.memberId ";
-            $param["filtervalue"] = $filtervalue;  
-        }  
+        } else {
+            $filtercode = $data->filterCode;
+            $filtervalue = $data->filtervalue;
+            $sql .= " and mb." . $filtercode . "Id = :filtervalue group by whis.memberId ";
+
+            $param = array(
+                "filtervalue" => $filtervalue,
+                "dateStart" => $dateStart,
+                "dateEnd" => $dateEnd
+            );
+        }
         return $this->datacontext->pdoQuery($sql, $param);
     }
 

@@ -72,8 +72,10 @@
                             <table class="table table-hover table-striped table-bordered table-condensed" id="show">
                                 <thead>
                                     <tr>
+                                        <th>&nbsp;{{#i18n}}IdCard{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}medicalfeelist{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}medicalfeeamount{{/i18n}}</th>
+                                        <th>&nbsp;{{#i18n}}facultyId{{/i18n}}</th>
 
 
 
@@ -83,9 +85,10 @@
                                 <tbody>
                                     {{#lists}}
                                     <tr class="selectable">
-
+                                        <td>{{idCard}}</td>
                                         <td>{{title}} {{fname}} {{lname}}</td>
                                         <td>{{payment}}</td>
+                                        <td>{{department1}} ( {{faculty1}} )</td>
                                         <td class="center">
                                             <button class="btn btn-maroon btn-xs "
                                                     data-id="content-body"
