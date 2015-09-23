@@ -121,25 +121,4 @@
             getHTML('content-body', '{{_context_path}}/api/wfmember/view/history/add', jsonEncode(jdata));
     });
     });</script>
-<script>
-
-            $('.btn-del').click(function(){
-    var Id = $(this).attr('row-index');
-            if (confirm("คุณต้องการลบ?")) {
-    var data = {"Id":Id};
-            var result = sendData('{{_context_path}}/api/wfmember/history/delete', data);
-            if (result.delete == true) {
-    var data = {};
-            data['memberId'] = "{memberId}";
-            data['detailsId'] = "{detailsId}";
-            var jdata = {};
-            jdata['data'] = data;
-            getHTML('content-body', '{{_context_path}}/api/wfmember/view/history/lists', jsonEncode(jdata));
-            Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-    } else{
-    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-    }
-    }
-
-    });
-</script> 
+ 

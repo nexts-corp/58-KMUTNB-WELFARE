@@ -20,36 +20,7 @@ class ViewService extends CServiceBase implements IViewService {
         $this->datacontext = new CDataContext();
     }
 
-    public function previewsUserLists($data) {
-
-        $view = new CJView("previews/lists", CJViewType::HTML_VIEW_ENGINE);
-//
-//        $detailsId = $data->detailsId;
-//        $welfareId = $data->welfareId;
-//
-//        $view->welfareId = $welfareId;
-//
-//        $condition = new Conditions();
-//        $condition->conditionsId = $conditionsId;
-//
-//        $dataConditions = $this->datacontext->getObject($condition); //get condition
-//
-//        $conServ = new ConditionsService();
-//        $data = $conServ->preview($dataConditions);
-//
-//        if ($data > 0) {
-//            $i = 1;
-//            foreach ($data as $key => $value) {
-//                $data[$key]["rowNo"] = $i++;
-//            }
-//
-//            $view->datas = $data;
-//            $view->maxRows = --$i;
-//        }
-//        $view->conditionsId = $conditionsId;
-
-        return $view;
-    }
+    
 
     public function historyPreview($data) {
 

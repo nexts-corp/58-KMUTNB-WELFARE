@@ -8,15 +8,7 @@ namespace apps\wfmember\interfaces;
  */
 interface IViewService {
     
-    /**
-     * @name viewPrivewsList
-     * @uri /priviews/lists
-     * @param apps\welfare\entity\Conditions data []
-     * @return html previews
-     * @description แสดงรายการผู้มีสิทธิได้รับสวัสดิการ
-     */
-    public function previewsUserLists($data);
-
+   
     /**
      * @name preview
      * @uri /history/lists
