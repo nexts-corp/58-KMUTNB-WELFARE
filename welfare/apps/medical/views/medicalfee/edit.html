@@ -6,7 +6,21 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}addmedicalfee{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/medical/view/medicalFee/lists"
+                   onclick="btnHTML(this)">{{#i18n}}llistmedial{{/i18n}}
+                </a>
+            </li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/medical/view/medicalFee/details/{{#data}}{{memberId}}{{/data}}"
+                   onclick="btnHTML(this)">{{#i18n}}deaillistmedial{{/i18n}}
+                </a>
+            </li>
+            <li class="active">{{#i18n}}editdata{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -42,7 +56,7 @@
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control input-sm" id="idCard" value="{{#data}}{{idCard}}{{/data}}" disabled="disabled">
                                     </div>
-                                    
+
 
                                 </div>
 
@@ -52,7 +66,7 @@
                                     <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
 
                                     <div class="col-lg-6">
-                                        
+
                                         <input type="text" class="form-control" name="fname" placeholder="{{#i18n}}name{{/i18n}}"
                                                data-bv-notempty="true" id="fname" value="{{#data}}{{fname}}{{/data}}"
                                                data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
@@ -105,7 +119,7 @@
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" name="amount" placeholder="{{#i18n}}amountneed{{/i18n}}"
                                                data-validation="required" data-validation-error-msg="*กรุณาระบุจำนวนเงิน" id="amount"
-                                               data-validation-error-msg-container="#amount-msg-error" value="{{#data}}{{amount}}{{/data}}"/>
+                                               data-validation-error-msg-container="#amount-msg-error" value="{{#data}}{{payment}}{{/data}}"/>
                                     </div>
                                     <div class="col-lg-offset-4" id="amount-msg-error">
 
@@ -144,14 +158,14 @@
 
     $(document).ready(function () {
         $.validate();
-        
-        
+
+
         $("#btn_submit").click(function () {
             var data = {};
-            data['historyId'] = {{#data}}{{historyId}}{{/data}};
-            data['detailsId '] = {{#data}}{{detailsId }}{{/data}};
-            data['welfareId'] = {{#data}}{{welfareId}}{{/data}};
-            data['memberId'] = {{#data}}{{memberId}}{{/data}};
+            data['historyId'] = '{{#data}}{{historyId}}{{/data}}';
+            data['detailsId '] = '{{#data}}{{detailsId}}{{/data}}';
+            data['welfareId'] = '{{#data}}{{welfareId}}{{/data}}';
+            data['memberId'] = '{{#data}}{{memberId}}{{/data}}';
             data['amount'] = $("#amount").val();
             data['remark'] = $("#hospital").val();
 
@@ -162,7 +176,6 @@
             if (parseInt($("#amount").val()) >= parseInt($("#total").val())) {
                 Notify('จำนวนคงเงินเหลือไม่พอตามที่ระบุ', 'top-right', '4000', 'warning', 'fa fa-warning', true);
             } else {
-
                 $.ajax({
                     url: '{{_context_path}}/api/medical/medicalfee/update',
                     data: jsonEncode(jdata),
@@ -175,8 +188,6 @@
                         }
                     }
                 });
-
-
 
             }
 

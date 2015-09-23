@@ -7,7 +7,14 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}medicalfeelist{{/i18n}}</li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/medical/view/medicalFee/lists"
+                   onclick="btnHTML(this)">{{#i18n}}llistmedial{{/i18n}}
+                </a>
+            </li>
+            <li class="active">{{#i18n}}deaillistmedial{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -28,14 +35,12 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}medicalfeelist{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#lists}}{{title}} {{fname}} {{lname}}{{/lists}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-<!--                        <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >  
-                            <p id="demo" style="color:#d14"></p>
-                        </label>
+                        <label class="col-lg-5 control-label">{{#i18n}}amountbalance{{/i18n}} : {{#lists}}{{balance}}{{/lists}}</label>
+                        <!--
 
                         <div class="col-lg-3">
                             <button id="btnSearch" name="btnSearch" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
@@ -55,7 +60,7 @@
                             <table class="table table-hover table-striped table-bordered table-condensed" id="show">
                                 <thead>
                                     <tr>
-                                        <th>&nbsp;{{#i18n}}medicalfeelist{{/i18n}}</th>
+                                        
                                         <th>&nbsp;{{#i18n}}medicalfeeamount{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}hospitalmedical{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}dateInsert{{/i18n}}</th>
@@ -67,8 +72,8 @@
                                     {{#lists}}
                                     <tr class="selectable">
                                         
-                                        <td>{{title}} {{fname}} {{lname}}</td>
-                                        <td>{{amount}}</td>
+                                       
+                                        <td>{{payment}}</td>
                                         <td>{{remark}}</td>
                                         <td>{{dateCreated}}</td>
                                         <td>{{dateUpdated}}</td>

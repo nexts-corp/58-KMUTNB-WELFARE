@@ -100,10 +100,12 @@ class ViewService extends CServiceBase implements IViewService {
 
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
+        
+        
 
-        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity, "
-                . "whis.amount,whis.historyId,whis.dateCreated,whis.dateUpdated,whis.remark, "
-                . "IFNULL(academic.value1,title.value1) title "
+        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,mb.idCard,mb.department1,mb.faculty1,"
+                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,whis.remark,whis.dateCreated,whis.dateUpdated,whis.historyId, "
+                . "IFNULL(mb.academic1,mb.titleName1) title "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
                 . "on wd.detailsId = whis.detailsId "
@@ -111,12 +113,8 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
                 . "join welfareconditions wc "
                 . "on wc.detailsId = wd.detailsId "
-                . "join v_member mb "
+                . "join v_fullmember mb "
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
-                . "Left JOIN taxonomy title "
-                . "on mb.titleNameId = title.id "
-                . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "and whis.memberId = :memberId ";
 
@@ -162,10 +160,9 @@ class ViewService extends CServiceBase implements IViewService {
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.detailsId,whis.memberId,wd.quantity, "
-                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,"
-                . "mb.idCard,whis.amount,whis.remark,whis.historyId, "
-                . "IFNULL(academic.value1,title.value1) title "
+        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,mb.idCard,mb.department1,mb.faculty1,"
+                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,whis.remark,whis.dateCreated,whis.dateUpdated,whis.historyId, "
+                . "IFNULL(mb.academic1,mb.titleName1) title "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
                 . "on wd.detailsId = whis.detailsId "
@@ -173,12 +170,8 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
                 . "join welfareconditions wc "
                 . "on wc.detailsId = wd.detailsId "
-                . "join v_member mb "
+                . "join v_fullmember mb "
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
-                . "Left JOIN taxonomy title "
-                . "on mb.titleNameId = title.id "
-                . "Left JOIN taxonomy academic "
-                . "on mb.academicId = academic.id "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "and whis.historyId = :id ";
 

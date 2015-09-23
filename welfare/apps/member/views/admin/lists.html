@@ -33,7 +33,9 @@
                                 <option value="faculty">คณะ</option>
                                 <option value="department">สาขา</option>
                                 <option value="employeeType">ประเภทพนักงาน</option>
-                                <option value="name" selected="">ชื่อขนามสกุล</option>
+                                <option value="name" selected="">ชื่อนามสกุล</option>
+                                <option value="memberActive" >สถานะพนักงาน</option>
+                                
 
                                 <!-- … -->
                             </select>
@@ -91,7 +93,7 @@
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
 
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{memberId}}" >จำหน่าย</button> 
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{memberId}}" >ลาออก</button> 
                                         </td>
                                     </tr>
                                     {{/lists}}
