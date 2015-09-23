@@ -116,4 +116,45 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function extraUserLists() {
+        if ($this->getRequest()->memberId != "") {
+            $memberId = $this->getRequest()->memberId;
+            $view = new CJView("extra/admin/user", CJViewType::HTML_VIEW_ENGINE);
+        } else {
+            $memberId = $this->getCurrentUser()->code;
+        }
+        $ex = "select "
+                . "fex.fundExId, "
+                . "plc.name, "
+                . "fex.saving, "
+                . "fex.grantInAid, "
+                . "fex.total, "
+                . "fex.dateNotice "
+                . "from apps\\fund\\entity\\FundExtra fex "
+                . "join apps\\fund\\entity\\Policy plc "
+                . "with plc.policyId = fex.policyId "
+                . "where fex.memberId = :memberId "
+                . "order by fex.fundExId desc";
+        $param = array(
+            "memberId" => $memberId
+        );
+        $datas = $this->datacontext->getObject($ex, $param);
+        $i = 1;
+        foreach ($datas as $key => $value) {
+            $datas[$key]['rowNo'] = $i++;
+            foreach ($value as $key2 => $value2) {
+                if ($key2 == "dateNotice") {
+                    $date = explode("-", $value2->format("Y-m-d"));
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $datas[$key][$key2] = $date;
+                }
+            }
+        }
+        $mb = new \apps\member\service\MemberService();
+        $view->member = $mb->find("memberId", $memberId)[0];
+        $view->lists = $datas;
+
+        return $view;
+    }
+
 }

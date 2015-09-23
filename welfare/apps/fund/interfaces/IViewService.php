@@ -54,8 +54,16 @@ interface IViewService {
      * @name extraAdminLists
      * @uri /extra/admin/lists
      * @return html view
-     * @description รายการประเภทพนักงาน
+     * @description หน้าแสดงกองทุนพนักงานข้าราชการ,ข้าราชการพิเศษฝั่งAdmin
      */
     public function extraAdminLists();
+    
+     /**
+     * @name extraUserLists
+     * @uri /extra/user/lists
+     * @return html view
+     * @description หน้าแสดงกองทุนพนักงานข้าราชการ,ข้าราชการพิเศษฝั่งUser
+     */
+    public function extraUserLists();
 
 }
