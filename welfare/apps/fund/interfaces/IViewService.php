@@ -65,5 +65,21 @@ interface IViewService {
      * @description หน้าแสดงกองทุนพนักงานข้าราชการ,ข้าราชการพิเศษฝั่งUser
      */
     public function extraUserLists();
+    
+    /**
+     * @name retireAdminLists
+     * @uri /retire/admin/lists
+     * @return html view
+     * @description หน้าแสดงกองทุนพนักงานจ้างหลังเกษียณฝั่งAdmin
+     */
+    public function retireAdminLists();
+    
+     /**
+     * @name retireUserLists
+     * @uri /retire/user/lists
+     * @return html view
+     * @description หน้าแสดงกองทุนพนักงานจ้างหลังเกษียณฝั่งUser
+     */
+    public function retireUserLists();
 
 }

@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.extra{{/i18n}}</span> </div>
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.retire{{/i18n}}</span> </div>
                     <div class="widget-body">
                         <!--                        <div class="col-md-6">
                                                     <select id="selectParent" class="col-md-12">
@@ -69,7 +69,7 @@
                                         <td class="center">
                                             <button class="btn btn-info btn-xs" 
                                                     data-id="content-body"
-                                                    data-api="{{_context_path}}/api/fund/view/extra/user/lists"
+                                                    data-api="{{_context_path}}/api/fund/view/retire/user/lists"
                                                     data-object="memberId"
                                                     data-param="{{memberId}}"
                                                     onclick="btnHTML(this)">
@@ -135,7 +135,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"
                         data-id="content-body"
-                        data-api="{{_context_path}}/api/fund/view/extra/admin/lists"
+                        data-api="{{_context_path}}/api/fund/view/retire/admin/lists"
                         onclick="setTimeout(
                                         function () {
                                             btnHTML(this)
@@ -148,7 +148,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var myDropzone = new Dropzone("#frm_upload", {
-            url: "{{_context_path}}/api/fund/upload/extra",
+            url: "{{_context_path}}/api/fund/upload/retire",
             addRemoveLinks: true,
             autoProcessQueue: false,
             uploadMultiple: false,
@@ -169,7 +169,7 @@
                     myDropzone.removeFile(file);
                     Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
                     setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/fund/view/extra/admin/lists', null);
+                        getHTML('content-body', '{{_context_path}}/api/fund/view/retire/admin/lists', null);
                     }, 1000);
 
                 } else if (txt.upload == "cantUpload") {

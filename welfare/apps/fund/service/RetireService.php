@@ -4,9 +4,9 @@ namespace apps\fund\service;
 
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
-use apps\fund\interfaces\IExtraService;
+use apps\fund\interfaces\IRetireService;
 
-class ExtraService extends CServiceBase implements IExtraService {
+class RetireService extends CServiceBase implements IRetireService {
 
     public $datacontext;
 
@@ -27,10 +27,10 @@ class ExtraService extends CServiceBase implements IExtraService {
                 . "format(tb.grantInAid,2) as grantInAid, "
                 . "format(tb.total,2) as total, "
                 . "tb.dateNotice "
-                . "FROM fundExtra tb "
+                . "FROM fundRetire tb "
                 . "join v_fullmember mb on mb.memberId = tb.memberId "
-                . "where tb.fundExId in ( "
-                . " select max(fundExId) from fundExtra group by memberId ) "
+                . "where tb.fundReId in ( "
+                . " select max(fundReId) from fundRetire group by memberId ) "
                 . "order by tb.dateCreated desc";
         $datas = $this->datacontext->pdoQuery($sql);
         $i = 1;

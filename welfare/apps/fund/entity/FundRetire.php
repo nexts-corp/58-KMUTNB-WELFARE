@@ -19,9 +19,9 @@ class FundRetire extends EntityBase {
     /**
      * @Id
      * @GeneratedValue
-     * @Column(type="integer" , length=11, name="fundEmpId") 
+     * @Column(type="integer" , length=11, name="fundReId") 
      */
-    public $fundEmpId;
+    public $fundReId;
 
     /**
      * @Column(type="integer", length=11, name="policyId",nullable=true)
@@ -58,8 +58,8 @@ class FundRetire extends EntityBase {
      */
     public $filename;
 
-    function getFundEmpId() {
-        return $this->fundEmpId;
+    function getFundReId() {
+        return $this->fundReId;
     }
 
     function getMemberId() {
@@ -86,8 +86,8 @@ class FundRetire extends EntityBase {
         return $this->filename;
     }
 
-    function setFundEmpId($fundEmpId) {
-        $this->fundEmpId = $fundEmpId;
+    function setFundReId($fundReId) {
+        $this->fundReId = $fundReId;
     }
 
     function setMemberId($memberId) {

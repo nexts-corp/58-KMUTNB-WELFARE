@@ -27,6 +27,15 @@ interface IUploadService {
      * @description อัพโหลดไฟล์ csv
      */
     public function extra($file);
+    
+     /**
+     * @name retire
+     * @uri /retire
+     * @param file file
+     * @return string upload
+     * @description อัพโหลดไฟล์ csv
+     */
+    public function retire($file);
 
     
     

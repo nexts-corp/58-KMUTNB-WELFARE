@@ -157,4 +157,52 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function retireAdminLists() {
+        $view = new CJView("retire/admin/lists", CJViewType::HTML_VIEW_ENGINE);
+        $retire = new RetireService();
+        $view->lists = $retire->lists();
+        return $view;
+    }
+
+    public function retireUserLists() {
+         if ($this->getRequest()->memberId != "") {
+            $memberId = $this->getRequest()->memberId;
+            $view = new CJView("retire/admin/user", CJViewType::HTML_VIEW_ENGINE);
+        } else {
+            $memberId = $this->getCurrentUser()->code;
+        }
+        $re = "select "
+                . "fre.fundReId, "
+                . "plc.name, "
+                . "fre.saving, "
+                . "fre.grantInAid, "
+                . "fre.total, "
+                . "fre.dateNotice "
+                . "from apps\\fund\\entity\\FundRetire fre "
+                . "join apps\\fund\\entity\\Policy plc "
+                . "with plc.policyId = fre.policyId "
+                . "where fre.memberId = :memberId "
+                . "order by fre.fundReId desc";
+        $param = array(
+            "memberId" => $memberId
+        );
+        $datas = $this->datacontext->getObject($re, $param);
+        $i = 1;
+        foreach ($datas as $key => $value) {
+            $datas[$key]['rowNo'] = $i++;
+            foreach ($value as $key2 => $value2) {
+                if ($key2 == "dateNotice") {
+                    $date = explode("-", $value2->format("Y-m-d"));
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $datas[$key][$key2] = $date;
+                }
+            }
+        }
+        $mb = new \apps\member\service\MemberService();
+        $view->member = $mb->find("memberId", $memberId)[0];
+        $view->lists = $datas;
+
+        return $view;
+    }
+
 }

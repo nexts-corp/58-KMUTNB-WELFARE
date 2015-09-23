@@ -18,6 +18,7 @@ class EmployeeService extends CServiceBase implements IEmployeeService {
         $sql = "SELECT "
                 . "mb.memberId, "
                 . "mb.idCard, "
+                . "ifnull(mb.academic1,mb.titleName1) as titleName, "
                 . "mb.fname, "
                 . "mb.lname, "
                 . "mb.department1, "
