@@ -152,40 +152,11 @@ class ConditionsService extends CServiceBase implements IConditionsService {
     }
 
     public function preview($conditions) {
+        //ตรวจสอบว่าเงื่อนไข ตรงกับบุคลากรไหนบ้าง
+        
         $query = "SELECT *,IFNULL(academic1,titleName1) title "
                 . "FROM v_fullmember "
                 . "where ";
-
-//        $query = "SELECT mb.memberId,mb.fname,mb.lname,mb.titleNameId,mb.genderId As genderId,mb.dob As dob,mb.workStartDate As workStartDate, mb.workEndDate As workEndDate , "
-//                
-//                . "IFNULL(academic.value1,title.value1) title, " //IFNULL(value1,value2) select ถ้ามีค่าใดค่าหนึ่ง ,ถ้ามีค่าทั้งคู่จะ select value1 ออกมา 
-//                . "(employeeType.value1) As employeeType, "
-//                . "(gender.value1) As gender, "
-//                . "(faculty.value1) As faculty, "
-//                . "(department.value1) As department,"
-//                . "(mbw.employeeTypeId) As employeeTypeId ,"
-//                . "(mbw.departmentId) As departmentId , "
-//                . "(mbw.facultyId) As facultyId ,"
-//                . "(mbw.positionId) As positionId "
-//                . "FROM member mb "
-//                . "Left JOIN memberwork mbw  "
-//                . "on mb.memberId = mbw.memberId "
-//                . "Left JOIN taxonomy title "
-//                . "on mb.titleNameId = title.id "
-//                . "Left JOIN taxonomy academic "
-//                . "on mb.academicId = academic.id "
-//                . "Left JOIN taxonomy employeeType "
-//                . "on mbw.employeeTypeId = employeeType.id "
-//                . "Left JOIN taxonomy gender "
-//                . "on mb.genderId = gender.id "
-//                . "Left JOIN taxonomy faculty "
-//                . "on mbw.facultyId = faculty.id "
-//                . "Left JOIN taxonomy department "
-//                . "on mbw.departmentId = department.id "
-//                . "where ";
-
-
-
 
         $field = array();
         foreach ($conditions as $key => $value) {
@@ -229,9 +200,6 @@ class ConditionsService extends CServiceBase implements IConditionsService {
         }
 
         $sql = $query . $where;
-
-           print_r($sql);
-           exit();
 
         $member = $this->datacontext->pdoQuery($sql);
 

@@ -60,7 +60,7 @@
                             <table class="table table-hover table-striped table-bordered table-condensed" id="show">
                                 <thead>
                                     <tr>
-                                        
+
                                         <th>&nbsp;{{#i18n}}medicalfeeamount{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}hospitalmedical{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}dateInsert{{/i18n}}</th>
@@ -71,8 +71,8 @@
                                 <tbody>
                                     {{#lists}}
                                     <tr class="selectable">
-                                        
-                                       
+
+
                                         <td>{{payment}}</td>
                                         <td>{{remark}}</td>
                                         <td>{{dateCreated}}</td>
@@ -113,18 +113,21 @@
 
         $('.btn-del').click(function () {
             var id = $(this).attr('row-index');
-            
+
             if (confirm("คุณต้องการลบ?")) {
                 var data = {"historyId": id};
-                var msg = sendData('{{_context_path}}/api/medical/medicalfee/delete', data);
+                sendData('{{_context_path}}/api/medical/medicalfee/delete', data,
+                        function (msg) {
+                            if (msg.delete == true) {
 
-                if (msg.delete == true) {
+                                getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/lists', null);
+                                Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                            } else {
+                                Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            }
+                        });
 
-                    getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/lists', null);
-                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-                } else {
-                    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                }
+
             }
 
         });

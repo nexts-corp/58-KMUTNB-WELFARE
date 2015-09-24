@@ -34,9 +34,9 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        
+
                         <div class="pull-right">
-                            <a href="#" onclick="getHTML('content-body','{{_context_path}}/api/user/view/type/add',null)">
+                            <a href="#" onclick="getHTML('content-body','{{_context_path}}/api/user / view / type / add',null)">
                                 <button id="bn" name="bn" class="btn btn-primary"  type="button">
                                     <i class="fa fa-plus"></i>{{#i18n}}insertbutton{{/i18n}}</button></a>
 
@@ -58,7 +58,7 @@
 
 
                                         <td class="center">
-                                            <a  href="#" onclick="getHTML('content-body','{{_context_path}}/api/user/view/type/edit/{{userTypeId}}',null)" class="btn btn-info btn-xs edit" ><i class="fa fa-edit"></i>Edit</a> 
+                                            <a  href="#" onclick="getHTML('content-body','{{_context_path}}/api/user / view / type / edit/{{userTypeId}}', null)" class="btn btn-info btn-xs edit" ><i class="fa fa-edit"></i>Edit</a> 
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{userTypeId}}" ><i class="fa fa-trash-o"></i>{{#i18n}}deletes{{/i18n}}</button>    
                                         </td>
                                     </tr>
@@ -74,14 +74,13 @@
 
     <!-- /Page Body -->
 </div>
- <script>
-                $('.btn-del').click(function(){
-        var id = $(this).attr('row-index');
-                var data = {"userTypeId":id};
-                var msg = sendData('{{_context_path}}/api/user/type/delete', data);
-                getHTML('content-body','{{_context_path}}/api/user/view/type/lists');
-                
-        });
+<script>
+                    $('.btn-del').click(function(){
+            var id = $(this).attr('row-index');
+                    var data = {"userTypeId":id};
+                    sendData('{{_context_path}}/api/user/type/delete', data, function (msg){});
+                    getHTML('content-body', '{{_context_path}}/api/user/view/type/lists');
+            });
 
 
-    </script>
+</script>

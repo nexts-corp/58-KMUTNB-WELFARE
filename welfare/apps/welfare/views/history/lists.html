@@ -12,13 +12,13 @@
                     <span class="menu-text">{{#i18n}}welfare.list{{/i18n}}</span>
                 </a>
             </li>
-<!--            <li > <a href="#" data-id="content-body"
-                     data-api="{{_context_path}}/api/welfare/view/conditions/lists"
-                     data-object='welfareId'
-                     data-param='{{welfareId}}'
-                     onclick="btnHTML(this)">{{#i18n}}conditions.lists{{/i18n}}</a></li>
-
-            <li> <a href="#" class="btn_preview"> {{#i18n}}prewiews.list{{/i18n}} </a></li>-->
+            <!--            <li > <a href="#" data-id="content-body"
+                                 data-api="{{_context_path}}/api/welfare/view/conditions/lists"
+                                 data-object='welfareId'
+                                 data-param='{{welfareId}}'
+                                 onclick="btnHTML(this)">{{#i18n}}conditions.lists{{/i18n}}</a></li>
+            
+                        <li> <a href="#" class="btn_preview"> {{#i18n}}prewiews.list{{/i18n}} </a></li>-->
             <li class="active"> {{#i18n}}conditions.setList{{/i18n}} </li>
         </ul>
     </div>
@@ -122,45 +122,46 @@
     <!-- /Page Body -->
 </div>
 <script>
-            $(document).ready(function () {
-    $.validate();
-            $('.btn_preview').click(function () {
-    var data = {};
+    $(document).ready(function () {
+        $.validate();
+        $('.btn_preview').click(function () {
+            var data = {};
             data['detailsId'] = "{{detailsId}}";
             data['welfareId'] = "{{welfareId}}";
             var jdata = {};
             jdata['data'] = data;
             getHTML('content-body', '{{_context_path}}/api/welfare/view/priviews/lists', jsonEncode(jdata));
-    });
-            $('#bnt_add').click(function () {
-    var data = {};
+        });
+        $('#bnt_add').click(function () {
+            var data = {};
             data['detailsId'] = "{{detailsId}}";
             data['memberId'] = "{{memberId}}";
-            data['welfareId'] = {{#datasWelfare}}{{welfareId}}{{/datasWelfare}};
+            data['welfareId'] = ' {{#datasWelfare}}{{welfareId}}{{/datasWelfare}}';
             var jdata = {};
             jdata['data'] = data;
             getHTML('content-body', '{{_context_path}}/api/welfare/view/history/add', jsonEncode(jdata));
-    });
-    });</script>
-<script>
+        });
 
-            $('.btn-del').click(function(){
-    var Id = $(this).attr('row-index');
+        $('.btn-del').click(function () {
+            var Id = $(this).attr('row-index');
             if (confirm("คุณต้องการลบ?")) {
-    var data = {"Id":Id};
-            var result = sendData('{{_context_path}}/api/welfare/history/delete', data);
-            if (result.delete == true) {
-    var data = {};
-            data['memberId'] = "{memberId}";
-            data['detailsId'] = "{detailsId}";
-            var jdata = {};
-            jdata['data'] = data;
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata));
-            Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-    } else{
-    Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-    }
-    }
+                var data = {"Id": Id};
+                sendData('{{_context_path}}/api/welfare/history/delete', data,
+                        function (result) {
+                            if (result.delete == true) {
+                                var data = {};
+                                data['memberId'] = "{memberId}";
+                                data['detailsId'] = "{detailsId}";
+                                var jdata = {};
+                                jdata['data'] = data;
+                                getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata));
+                                Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                            } else {
+                                Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            }
+                        });
 
+            }
+        });
     });
 </script> 

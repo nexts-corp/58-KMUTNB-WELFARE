@@ -65,16 +65,12 @@ class Welfare extends EntityBase {
      * @Column(type="integer", length=11, name="resetTime",nullable=true)
      */
     public $resetTime; // (เดือน)
-    
+
+    /**
+     * @Column(type="string", name="filename",length=100,nullable=true) 
+     */
+    public $filename;
     public $details;
-
-    function getDetails() {
-        return $this->details;
-    }
-
-    function setDetails($details) {
-        $this->details = $details;
-    }
 
     function getWelfareId() {
         return $this->welfareId;
@@ -120,6 +116,14 @@ class Welfare extends EntityBase {
         return $this->resetTime;
     }
 
+    function getFilename() {
+        return $this->filename;
+    }
+
+    function getDetails() {
+        return $this->details;
+    }
+
     function setWelfareId($welfareId) {
         $this->welfareId = $welfareId;
     }
@@ -162,6 +166,14 @@ class Welfare extends EntityBase {
 
     function setResetTime($resetTime) {
         $this->resetTime = $resetTime;
+    }
+
+    function setFilename($filename) {
+        $this->filename = $filename;
+    }
+
+    function setDetails($details) {
+        $this->details = $details;
     }
 
 }

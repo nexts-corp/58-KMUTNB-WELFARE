@@ -22,7 +22,7 @@ class Details extends EntityBase {
     public $welfareId;
 
     /**
-     * @Column(type="string", name="description",nullable=true)
+     * @Column(type="string", length=255,name="description",nullable=true)
      */
     public $description;
 
@@ -35,18 +35,14 @@ class Details extends EntityBase {
      * @Column(type="string", length=10, name="returnTypeId",nullable=true)
      */
     public $returnTypeId; //หน่วยนับ
-    
+
+    /**
+     * @Column(type="string", name="filename",length=100,nullable=true) 
+     */
+    public $filename;
     public $conditions;
-    
-    function getConditions() {
-        return $this->conditions;
-    }
 
-    function setConditions($conditions) {
-        $this->conditions = $conditions;
-    }
-
-        function getDetailsId() {
+    function getDetailsId() {
         return $this->detailsId;
     }
 
@@ -64,6 +60,14 @@ class Details extends EntityBase {
 
     function getReturnTypeId() {
         return $this->returnTypeId;
+    }
+
+    function getFilename() {
+        return $this->filename;
+    }
+
+    function getConditions() {
+        return $this->conditions;
     }
 
     function setDetailsId($detailsId) {
@@ -84,6 +88,14 @@ class Details extends EntityBase {
 
     function setReturnTypeId($returnTypeId) {
         $this->returnTypeId = $returnTypeId;
+    }
+
+    function setFilename($filename) {
+        $this->filename = $filename;
+    }
+
+    function setConditions($conditions) {
+        $this->conditions = $conditions;
     }
 
 }

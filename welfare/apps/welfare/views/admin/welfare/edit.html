@@ -394,271 +394,271 @@
 
 <script type="text/javascript">
 
-            $(document).ready(function () {
-    $.validate();
-            $('#optionsConditionsDetails').click(function () {
-    $("#conditionsDetails").slideToggle();
-    });
-            var Welfare = {};
-            var Details = [];
-            var rowConditions;
-            var rowDetails;
-            $("#btnAddDetails").click(function () {
-    $(".content-details").show();
+    $(document).ready(function () {
+        $.validate();
+        $('#optionsConditionsDetails').click(function () {
+            $("#conditionsDetails").slideToggle();
+        });
+        var Welfare = {};
+        var Details = [];
+        var rowConditions;
+        var rowDetails;
+        $("#btnAddDetails").click(function () {
+            $(".content-details").show();
             return false;
-    });
-            $("#btnSaveDetails").click(function () {
-    var details = {};
+        });
+        $("#btnSaveDetails").click(function () {
+            var details = {};
             var check = true;
             $(".details").each(function (key, value) {
-    if (this.value == "") {
-    chaeck = false;
-            Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            return false;
-    } else {
-    details[this.id] = this.value;
-    }
-    });
-            if (check) {
-    if ($("#name").val() != "" || $("#quantity").val() != "") {
-
-    Details.push(details);
-            var table = "";
-            $.each(Details, function (key, value) {
-            table += "<tr>" +
-                    "<td>" + (key + 1) + "</td>";
-                    $.each(value, function (key2, value2) {
-                    if (key2 != "conditions") {
-                    if (key2 == "returnTypeId") {
-                    var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
-                            table += "<td>" + text + "</td>";
-                    } else {
-                    table += "<td>" + value2 + "</td>";
-                    }
-                    }
-                    });
-                    table += "<td>" +
-                    "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
-                    "</td> </tr>";
+                if (this.value == "") {
+                    chaeck = false;
+                    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    return false;
+                } else {
+                    details[this.id] = this.value;
+                }
             });
-            $("table#showTable tbody").html(table);
-            $(".btnConditions").click(function () {
-    rowDetails = $(this).attr("row-index");
-            rowConditions = 0;
-            $(".content-conditions").empty();
-            $("#divConditions").show();
-            $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
-            $(".conditionsFix").attr("class", "col-xs-6 col-md-6")
+            if (check) {
+                if ($("#name").val() != "" || $("#quantity").val() != "") {
 
+                    Details.push(details);
+                    var table = "";
+                    $.each(Details, function (key, value) {
+                        table += "<tr>" +
+                                "<td>" + (key + 1) + "</td>";
+                        $.each(value, function (key2, value2) {
+                            if (key2 != "conditions") {
+                                if (key2 == "returnTypeId") {
+                                    var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
+                                    table += "<td>" + text + "</td>";
+                                } else {
+                                    table += "<td>" + value2 + "</td>";
+                                }
+                            }
+                        });
+                        table += "<td>" +
+                                "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข" + key + "</button>" +
+                                "</td> </tr>";
+                    });
+                    $("table#showTable tbody").html(table);
+                    $(".btnConditions").click(function () {
+                        rowDetails = $(this).attr("row-index");
+                        rowConditions = 0;
+                        $(".content-conditions").empty();
+                        $("#divConditions").show();
+                        $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
+                        $(".conditionsFix").attr("class", "col-xs-6 col-md-6")
+
+                        return false;
+                    });
+                } else {
+                    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    $('#name').focus();
+                }
+            }
             return false;
-    });
-    } else {
-    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            $('#name').focus();
-    }
-    }
-    return false;
-    });
-            $(".btnAppend").click(function () {
-    var clone = "";
+        });
+        $(".btnAppend").click(function () {
+            var clone = "";
             clone += '<tr><td width="30%">' +
-            '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + (rowConditions) + '">' +
-            '<option value="salary">เงินเดือน</option>' +
-            '<option value="employeeTypeId">ประเภทพนักงาน</option>' +
-            '<option value="genderId">เพศ</option>' +
-            '<option value="dob">วัน-เดือน-ปี ที่เกิด</option>' +
-            '<option value="workStartDate">วัน-เดือน-ปี ที่บรรจุ</option>' +
-            '<option value="workEndDate">วัน-เดือน-ปี ที่เกษียณ</option>' +
-            '</select></td>' +
-            '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + (rowConditions) + '">' +
-            '<option value="=">เท่ากับ </option>' +
-            '<option value="<">น้อยกว่า</option>' +
-            '<option value=">">มากกว่า</option>' +
-            '<option value="<=">น้อยกว่าหรือเท่ากับ</option>' +
-            '<option value=">=">มากกว่าหรือเท่ากับ</option>' +
-            '<option value="!=">ไม่เท่ากับ</option>' +
-            '</select></td>' +
-            '<td><div class="divValueX" row-index="' + rowConditions + '">' +
-            '<input type="text" name="valuex" row-index="' + rowConditions++ + '" class="valuex conditions form-control input-xs" /></div></td>' +
-            '</tr>';
+                    '<select class="fieldMap conditions form-control input-xs" name="fieldMap" data-bv-field="country" row-index="' + (rowConditions) + '">' +
+                    '<option value="salary">เงินเดือน</option>' +
+                    '<option value="employeeTypeId">ประเภทพนักงาน</option>' +
+                    '<option value="genderId">เพศ</option>' +
+                    '<option value="dob">วัน-เดือน-ปี ที่เกิด</option>' +
+                    '<option value="workStartDate">วัน-เดือน-ปี ที่บรรจุ</option>' +
+                    '<option value="workEndDate">วัน-เดือน-ปี ที่เกษียณ</option>' +
+                    '</select></td>' +
+                    '<td width="30%"><select class="operations conditions form-control input-xs" name="operations" data-bv-field="country" row-index="' + (rowConditions) + '">' +
+                    '<option value="=">เท่ากับ </option>' +
+                    '<option value="<">น้อยกว่า</option>' +
+                    '<option value=">">มากกว่า</option>' +
+                    '<option value="<=">น้อยกว่าหรือเท่ากับ</option>' +
+                    '<option value=">=">มากกว่าหรือเท่ากับ</option>' +
+                    '<option value="!=">ไม่เท่ากับ</option>' +
+                    '</select></td>' +
+                    '<td><div class="divValueX" row-index="' + rowConditions + '">' +
+                    '<input type="text" name="valuex" row-index="' + rowConditions++ + '" class="valuex conditions form-control input-xs" /></div></td>' +
+                    '</tr>';
             $(".content-conditions").append(clone);
             $(".fieldMap").change(function () {
-    var rowIndex = $(this).attr("row-index");
-            if (this.value == "employeeTypeId" || this.value == "genderId") {
-    var pCode = this.value.substr(0, this.value.length - 2);
-            $.ajax({
-            url: '{{_context_path}}/api/taxonomy/taxonomy/getPCode',
-                    data: {pCode: pCode},
-                    type: 'post',
-                    async: false,
-                    success: function (result) {
-                    var html = "";
+                var rowIndex = $(this).attr("row-index");
+                if (this.value == "employeeTypeId" || this.value == "genderId") {
+                    var pCode = this.value.substr(0, this.value.length - 2);
+                    $.ajax({
+                        url: '{{_context_path}}/api/taxonomy/taxonomy/getPCode',
+                        data: {pCode: pCode},
+                        type: 'post',
+                        async: false,
+                        success: function (result) {
+                            var html = "";
                             html += "<select name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs'>";
                             $.each(result.lists, function (key, value) {
-                            html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                                html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
                             });
                             html += "</select>";
                             $(".divValueX[row-index='" + rowIndex + "']").html(html);
-                    }
+                        }
+                    });
+                } else {
+                    var html = "";
+                    html = "<input type='text' name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs' />";
+                    $(".divValueX[row-index='" + rowIndex + "']").html(html);
+                }
             });
-    } else {
-    var html = "";
-            html = "<input type='text' name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control input-xs' />";
-            $(".divValueX[row-index='" + rowIndex + "']").html(html);
-    }
-    });
             //            $(".content-conditions").clone().appendTo(".content-conditions");
 
             return false;
-    });
-            $("#btnSaveConditions").click(function () {
-    //var Conditions = [];
-    Details[rowDetails]['conditions'] = [];
+        });
+        $("#btnSaveConditions").click(function () {
+            //var Conditions = [];
+            Details[rowDetails]['conditions'] = [];
             $(".conditions").each(function (key, value) {
-    if (this.value == "") {
-    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            return false;
-    } else {
-    var tempRows = $(this).attr("row-index");
-            if (Details[rowDetails]['conditions'].length == tempRows) {
-    Details[rowDetails]['conditions'][tempRows] = {};
-    }
-    Details[rowDetails]['conditions'][tempRows][this.name] = this.value;
-    }
-    });
+                if (this.value == "") {
+                    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    return false;
+                } else {
+                    var tempRows = $(this).attr("row-index");
+                    if (Details[rowDetails]['conditions'].length == tempRows) {
+                        Details[rowDetails]['conditions'][tempRows] = {};
+                    }
+                    Details[rowDetails]['conditions'][tempRows][this.name] = this.value;
+                }
+            });
             //  Details[rowDetails]['Conditions'] = Conditions;
             $(".content-conditions").empty();
             return false;
-    });
-            $("#btn_preview").click(function () {
+        });
+        $("#btn_preview").click(function () {
 
-    var conditions = [];
+            var conditions = [];
             $(".conditions").each(function (key, value) {
-    if (this.value == "") {
-    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            return false;
-    } else {
-    var tempRows = $(this).attr("row-index");
-            if (conditions.length == tempRows) {
-    conditions[tempRows] = {};
-    }
-    conditions[tempRows][this.name] = this.value;
-    }
-    });
+                if (this.value == "") {
+                    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    return false;
+                } else {
+                    var tempRows = $(this).attr("row-index");
+                    if (conditions.length == tempRows) {
+                        conditions[tempRows] = {};
+                    }
+                    conditions[tempRows][this.name] = this.value;
+                }
+            });
             var datas = {};
             datas['conditions'] = conditions;
             $.ajax({
-            url: '{{_context_path}}/api/welfare/conditions/preview',
-                    data: jsonEncode(datas),
-                    type: 'post', // 'or get'
-                    success: function (result) {
+                url: '{{_context_path}}/api/welfare/conditions/preview',
+                data: jsonEncode(datas),
+                type: 'post', // 'or get'
+                success: function (result) {
 
                     var html = "";
-                            var countUser = 0;
-                            $.each(result.preview, function (key, value) {
-                            //var data = result.value;
+                    var countUser = 0;
+                    $.each(result.preview, function (key, value) {
+                        //var data = result.value;
 
-                            countUser++;
-                                    html += '<tr class="selectable">';
-                                    html += '<td>' + (key + 1) + '</td>';
-                                    html += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
-                                    html += '<td>' + value.gender1 + '</td>';
-                                    html += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                                    html += '<td>' + value.employeeType1 + '</td></tr>';
-                            });
-                            $("#userRows").html('จำนวนทั้งหมด ' + countUser + ' คน ');
-                            $("#showUser").html(html);
-                    }
+                        countUser++;
+                        html += '<tr class="selectable">';
+                        html += '<td>' + (key + 1) + '</td>';
+                        html += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                        html += '<td>' + value.gender1 + '</td>';
+                        html += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                        html += '<td>' + value.employeeType1 + '</td></tr>';
+                    });
+                    $("#userRows").html('จำนวนทั้งหมด ' + countUser + ' คน ');
+                    $("#showUser").html(html);
+                }
             });
-    });
-            $("#btnSaveAll").click(function () {
-    if ($("#description").val() != "" || $("#name").val() != "") {
-    var retire = $("#retire").prop("checked");
-            var willing = $("#willing").prop("checked");
-            var datas = {};
-            Welfare['welfareId'] = "{{welfareId}}";
-            Welfare['name'] = $("#name").val();
-            Welfare['description'] = $("#description").val();
-            if ($("#dateStart").val() != "") {
-    Welfare['dateStart'] = $("#dateStart").val();
-    }
-    if ($("#dateEnd").val() != "") {
-    Welfare['dateEnd'] = $("#dateEnd").val();
-    }
-    Welfare['resetTime'] = $("#resetTime").val();
-            Welfare['free'] = $("#free").val();
-            if (willing == true) {
-    Welfare['willing'] = "Y";
-    } else {
-    Welfare['willing'] = "N";
-    }
-    if (retire == true) {
-    Welfare['retire'] = "Y";
-    } else {
-    Welfare['retire'] = "N";
-    }
+        });
+        $("#btnSaveAll").click(function () {
+            if ($("#description").val() != "" || $("#name").val() != "") {
+                var retire = $("#retire").prop("checked");
+                var willing = $("#willing").prop("checked");
+                var datas = {};
+                Welfare['welfareId'] = "{{welfareId}}";
+                Welfare['name'] = $("#name").val();
+                Welfare['description'] = $("#description").val();
+                if ($("#dateStart").val() != "") {
+                    Welfare['dateStart'] = $("#dateStart").val();
+                }
+                if ($("#dateEnd").val() != "") {
+                    Welfare['dateEnd'] = $("#dateEnd").val();
+                }
+                Welfare['resetTime'] = $("#resetTime").val();
+                Welfare['free'] = $("#free").val();
+                if (willing == true) {
+                    Welfare['willing'] = "Y";
+                } else {
+                    Welfare['willing'] = "N";
+                }
+                if (retire == true) {
+                    Welfare['retire'] = "Y";
+                } else {
+                    Welfare['retire'] = "N";
+                }
 
-    Welfare['details'] = Details;
-            datas['welfare'] = Welfare;
-            $.ajax({
-            url: '{{_context_path}}/api/welfare/welfare/update',
+                Welfare['details'] = Details;
+                datas['welfare'] = Welfare;
+                $.ajax({
+                    url: '{{_context_path}}/api/welfare/welfare/update',
                     data: jsonEncode(datas),
                     type: 'post'
-            });
-    } else {
-    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            $('#name').focus();
-    }
-    return false;
+                });
+            } else {
+                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                $('#name').focus();
+            }
+            return false;
+        });
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
     });
-            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-    });
-            //            $("#btn_submit").click(function () {
-            //    if ($("#name").val() != "") {
-            //    var willing = $("#willing").prop("checked");
-            //            var retire = $("#retire").prop("checked");
-            //            var data = {};
-            //            data['name'] = $("#name").val();
-            //            data['description'] = $("#description").val();
-            //            data['dateStart'] = $("#dateStart").val();
-            //            data['dateEnd'] = $("#dateEnd").val();
-            //            data['resetTime'] = $("#resetTime").val();
-            //            data['free'] = $("#free").val();
-            //            if (willing == true) {
-            //    data['willing'] = "Y";
-            //    } else {
-            //    data['willing'] = "N";
-            //    }
-            //    if (retire == true) {
-            //    data['retire'] = "Y";
-            //    } else {
-            //    data['retire'] = "N";
-            //    }
-            //
-            //    var jdata = {};
-            //            jdata['data'] = data;
-            //            $.ajax({
-            //            url: '{{_context_path}}/api/welfare/welfare/save',
-            //                    data: jsonEncode(jdata),
-            //                    type: 'post', // 'or get'
-            //                    success: function (result) {
-            //                    if (result.save == true) {
-            //                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
-            //                            Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
-            //                    } else {
-            //                    Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            //                    }
-            //
-            //                    }
-            //            });
-            //    } else {
-            //    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            //            $('#name').focus();
-            //    }
-            //    return false;
-            //    });
-            //            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-            //    });
+    //            $("#btn_submit").click(function () {
+    //    if ($("#name").val() != "") {
+    //    var willing = $("#willing").prop("checked");
+    //            var retire = $("#retire").prop("checked");
+    //            var data = {};
+    //            data['name'] = $("#name").val();
+    //            data['description'] = $("#description").val();
+    //            data['dateStart'] = $("#dateStart").val();
+    //            data['dateEnd'] = $("#dateEnd").val();
+    //            data['resetTime'] = $("#resetTime").val();
+    //            data['free'] = $("#free").val();
+    //            if (willing == true) {
+    //    data['willing'] = "Y";
+    //    } else {
+    //    data['willing'] = "N";
+    //    }
+    //    if (retire == true) {
+    //    data['retire'] = "Y";
+    //    } else {
+    //    data['retire'] = "N";
+    //    }
+    //
+    //    var jdata = {};
+    //            jdata['data'] = data;
+    //            $.ajax({
+    //            url: '{{_context_path}}/api/welfare/welfare/save',
+    //                    data: jsonEncode(jdata),
+    //                    type: 'post', // 'or get'
+    //                    success: function (result) {
+    //                    if (result.save == true) {
+    //                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+    //                            Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+    //                    } else {
+    //                    Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    //                    }
+    //
+    //                    }
+    //            });
+    //    } else {
+    //    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+    //            $('#name').focus();
+    //    }
+    //    return false;
+    //    });
+    //            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+    //    });
 
 
 </script>
@@ -672,12 +672,12 @@
 
 <script type="text/javascript">
 
-            $(document).ready(function () {
+    $(document).ready(function () {
 
-    $("#btn_submit").click(function () {
-    var data = {};
+        $("#btn_submit").click(function () {
             var data = {};
-            data['welfareId'] = {{#datas}}"{{welfareId}}"{{/datas}};
+            var data = {};
+            data['welfareId'] = "{{#datas}}{{welfareId}}{{/datas}}";
             data['name'] = $("#name").val();
             data['description'] = $("#description").val();
             data['dateStart'] = $("#dateStart").val();
@@ -685,28 +685,28 @@
             data['resetTime'] = $("#resetTime").val();
             data['free'] = $("#free").val();
             if (willing == true) {
-    data['willing'] = "Y";
-    } else {
-    data['willing'] = "N";
-    }
-    if (retire == true){
-    data['retire'] = "Y";
-    } else{
-    data['retire'] = "N";
-    }
+                data['willing'] = "Y";
+            } else {
+                data['willing'] = "N";
+            }
+            if (retire == true) {
+                data['retire'] = "Y";
+            } else {
+                data['retire'] = "N";
+            }
 
-    var jdata = {};
+            var jdata = {};
             jdata['data'] = data;
-            var result = sendData('{{_context_path}}/api/welfare/welfare/update', jsonEncode(jdata));
-            if (result.update == true) {
-    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
-            Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
-    } else{
-    Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-    }
+            sendData('{{_context_path}}/api/welfare/welfare/update', jsonEncode(jdata), function (result) {
+                if (result.update == true) {
+                    getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+                    Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                } else {
+                    Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                }
+            });
+        });
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
     });
-            return false;
-    });
-            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 
 </script>

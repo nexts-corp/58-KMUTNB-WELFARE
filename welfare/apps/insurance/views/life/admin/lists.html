@@ -110,7 +110,9 @@
             refreshYes();
         });
         function refreshNo() {
-            no = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"});
+            no = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"}, function (result) {
+                result;
+            });
             var body = "";
             $.each(no.lists, function (k, v) {
                 body += "<tr row-index='" + v.lifeId + "'>" +
@@ -132,7 +134,9 @@
         }
         function refreshYes() {
             var body = "";
-            yes = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"});
+            yes = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
+                result;
+            });
             $.each(yes.lists, function (k, v) {
                 body += "<tr>" +
                         "<td>" + v.rowNo + "</td>" +
@@ -182,17 +186,20 @@
                     confirm: function () {
                         var send = {};
                         send['life'] = data;
-                        var update = sendData('{{_context_path}}/api/insurance/life/update', jsonEncode(send));
-                        if (update.update == true) {
-                            refreshNo();
-                            setTimeout(function () {
-                                Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                                // cfm.close();
-                            }, 1000);
-                        } else {
-                            Notify('บันทึกข้อมูลไม่สำเร็จ', 'top-right', '4000', 'danger', 'fa-check', true);
-                            //cfm.close();
-                        }
+                        sendData('{{_context_path}}/api/insurance/life/update', jsonEncode(send),
+                                function (update) {
+                                    if (update.update == true) {
+                                        refreshNo();
+                                        setTimeout(function () {
+                                            Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                                            // cfm.close();
+                                        }, 1000);
+                                    } else {
+                                        Notify('บันทึกข้อมูลไม่สำเร็จ', 'top-right', '4000', 'danger', 'fa-check', true);
+                                        //cfm.close();
+                                    }
+                                });
+
 
 
                     }

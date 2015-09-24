@@ -107,7 +107,7 @@
         var child = '{{#child}}{{parentId}}{{/child}}';
         var temp1 = child.substr(0, 6);
         var temp2 = child.substr(6, 6);
-        if (temp1 == temp2 || temp2 =="") {
+        if (temp1 == temp2 || temp2 == "") {
             $("#selectParent").val(temp1);
         }
         $("#selectParent").select2();
@@ -121,15 +121,18 @@
             var jdata = {};
             jdata['taxonomy'] = data;
             if (confirm("คุณต้องการลบ?")) {
-                var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEncode(jdata));
-                if (result.delete == true) {
-                    alert("ลบเรียบร้อย");
-                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
-                } else if (result.delete == "delChildBefore") {
-                    alert("กรุณาลบ Child ก่อนที่จะเปลี่ยนตัวเองจาก Parent เป็น Child");
-                } else {
-                    alert("ลบไม่สำเร็จ");
-                }
+                sendData('{{_context_path}}/api/taxonomy/taxonomy/delete', jsonEncode(jdata),
+                        function (result) {
+                            if (result.delete == true) {
+                                alert("ลบเรียบร้อย");
+                                getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
+                            } else if (result.delete == "delChildBefore") {
+                                alert("กรุณาลบ Child ก่อนที่จะเปลี่ยนตัวเองจาก Parent เป็น Child");
+                            } else {
+                                alert("ลบไม่สำเร็จ");
+                            }
+                        });
+
             }
         });
     });

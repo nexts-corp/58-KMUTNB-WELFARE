@@ -1,13 +1,14 @@
 <?php
 
 namespace apps\welfare\entity;
+
 use apps\common\entity\EntityBase;
 
 /**
  * @Entity
  * @Table(name="WelfareHistory")
  */
-class History extends EntityBase{
+class History extends EntityBase {
 
     /**
      * @Id
@@ -19,13 +20,13 @@ class History extends EntityBase{
      * @Column(type="integer",length=11, name="detailsId")
      */
     public $detailsId;
-    
-     /**
+
+    /**
      * @Column(type="integer",length=11, name="welfareId")
      */
     public $welfareId;
-    
-       /**
+
+    /**
      * @Column(type="integer",length=11, name="memberId")
      */
     public $memberId;
@@ -34,19 +35,22 @@ class History extends EntityBase{
      * @Column(type="date", name="dateUse",nullable=true)
      */
     public $dateUse;
-    
-   /**
-     * @Column(type="string", length=11,  name="amount",nullable=true)
+
+    /**
+     * @Column(type="integer", length=11,  name="amount",nullable=true)
      */
     public $amount;
-    
-      
-       /**
+
+    /**
+     * @Column(type="string", length=10,  name="statusApprove",nullable=true)
+     */
+    public $statusApprove;
+
+    /**
      * @Column(type="string",length=255, name="remark",nullable=true)
      */
     public $remark;
-    
-    
+
     function getHistoryId() {
         return $this->historyId;
     }
@@ -69,6 +73,10 @@ class History extends EntityBase{
 
     function getAmount() {
         return $this->amount;
+    }
+
+    function getStatusApprove() {
+        return $this->statusApprove;
     }
 
     function getRemark() {
@@ -99,9 +107,12 @@ class History extends EntityBase{
         $this->amount = $amount;
     }
 
+    function setStatusApprove($statusApprove) {
+        $this->statusApprove = $statusApprove;
+    }
+
     function setRemark($remark) {
         $this->remark = $remark;
     }
-
 
 }

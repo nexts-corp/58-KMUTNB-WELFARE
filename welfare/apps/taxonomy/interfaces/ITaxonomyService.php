@@ -72,12 +72,12 @@ interface ITaxonomyService {
     public function getCode($code);
 
     /**
-     * @name getId
-     * @uri /getId
+     * @name getPCodeValue
+     * @uri /getPCodeValue
      * @param string pCode
      * @param string value
      * @return string lists
      * @description ลิสต์ข้อมูลจาก code
      */
-    public function getId($pCode, $value);
+    public function getPCodeValue($pCode, $value);
 }

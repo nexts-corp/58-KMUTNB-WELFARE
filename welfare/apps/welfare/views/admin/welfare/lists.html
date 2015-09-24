@@ -36,7 +36,7 @@
 
                             <button class="btn btn-primary"
                                     data-id="content-body"
-                                    data-api="{{_context_path}}/api/welfare/view/welfare/add"
+                                    data-api="{{_context_path}}/api/welfare/view/admin/welfare/add"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
                             </button>
@@ -136,29 +136,31 @@
             });</script>-->
 
 <script>
-                    $('.btn-del').click(function(){
-            var Id = $(this).attr('row-index');
-                    if (confirm("คุณต้องการลบ?")) {
-            var data = {"Id":Id};
-                    var result = sendData('{{_context_path}}/api/welfare/welfare/delete', data);
-                    if (result.delete == true) {
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
-                    Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-            } else{
-            Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-            }
-            }
+    $('.btn-del').click(function () {
+        var Id = $(this).attr('row-index');
+        if (confirm("คุณต้องการลบ?")) {
+            var data = {"Id": Id};
+            sendData('{{_context_path}}/api/welfare/welfare/delete', data,
+                    function (result) {
+                        if (result.delete == true) {
+                            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
+                            Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                        } else {
+                            Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        }
+                    });
 
-            });</script> 
+        }
 
-<script>
-                    $("#btnsearch").click(function () {
-            var SearchName = $("#SearchName").val();
-                    if (SearchName == ""){
+    });
+
+    $("#btnsearch").click(function () {
+        var SearchName = $("#SearchName").val();
+        if (SearchName == "") {
             document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-            } else{
+        } else {
 
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName:SearchName});
-            }
-            });
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName: SearchName});
+        }
+    });
 </script> 

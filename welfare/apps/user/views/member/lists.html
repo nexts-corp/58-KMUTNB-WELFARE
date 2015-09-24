@@ -61,7 +61,7 @@
                                     <tr>
                                         <th>&nbsp;{{#i18n}}IdCard{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}registerName{{/i18n}} - {{#i18n}}registerLastName{{/i18n}}</th>
-                                        
+
                                         <th>&nbsp;{{#i18n}}facultyId{{/i18n}}</th>
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
@@ -70,7 +70,7 @@
                                     {{#lists}}
                                     <tr class="selectable" >
 
-                                       <td>{{idCard}}</td>
+                                        <td>{{idCard}}</td>
                                         <td><div id="title"></div>{{title}} {{fname}}      {{lname}}</td>
                                         <td>{{department1}} ( {{faculty1}} )</td>
                                         <td class="center">
@@ -133,11 +133,12 @@
 
 
         });
-        
+
         $('.btn-del').click(function () {
             var id = $(this).attr('row-index');
             var data = {"memberId": id};
-            var msg = sendData('{{_context_path}}/api/user/member/delete', data);
+            sendData('{{_context_path}}/api/user/member/delete', data, function (msg) {
+            });
             getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', null);
         });
         $("#btnSearch").click(function () {
@@ -156,17 +157,11 @@
                     "filterCode": filterCode,
                     "filtervalue": filtervalue
                 };
-               
+
 
             }
             getHTML('content-body', '{{_context_path}}/api/user/view/member/lists', data);
         });
-
-
-
-
-
-
 
     });
 

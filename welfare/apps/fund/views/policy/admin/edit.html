@@ -70,7 +70,8 @@
                                     <button class="btn btn-warning"
                                             data-id='content-body'
                                             data-api="{{_context_path}}/api/fund/view/policy/admin/lists"
-                                            onclick="btnHTML(this);return false;">
+                                            onclick="btnHTML(this);
+                                                    return false;">
                                         {{#i18n}}button.cancel{{/i18n}}
                                     </button>
                                 </div>
@@ -110,15 +111,18 @@
             } else {
                 var jdata = {};
                 jdata['policy'] = data;
-                var result = sendData('{{_context_path}}/api/fund/policy/update', jsonEncode(jdata));
-                if (result.update == true) {
-                    Notify('บันทึกเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                    setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/fund/view/policy/admin/lists', null);
-                    }, 1000);
-                } else {
-                    Notify('บันทึกไม่สำเร็จ กรุณาบันทึกอีกรอบ', 'top-right', '4000', 'warning', 'fa-check', true);
-                }
+                sendData('{{_context_path}}/api/fund/policy/update', jsonEncode(jdata),
+                        function (result) {
+                            if (result.update == true) {
+                                Notify('บันทึกเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                                setTimeout(function () {
+                                    getHTML('content-body', '{{_context_path}}/api/fund/view/policy/admin/lists', null);
+                                }, 1000);
+                            } else {
+                                Notify('บันทึกไม่สำเร็จ กรุณาบันทึกอีกรอบ', 'top-right', '4000', 'warning', 'fa-check', true);
+                            }
+                        });
+
             }
 
             return false;

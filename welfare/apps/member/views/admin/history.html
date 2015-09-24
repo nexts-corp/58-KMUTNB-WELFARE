@@ -10,7 +10,7 @@
                    onclick="btnHTML(this)">รายชื่อสมาชิก
                 </a>
             </li>
-            
+
             <li class="active">ประวัติการแก้ไข</li>
         </ul>
     </div>
@@ -49,7 +49,7 @@
                                     <i class="fa fa-briefcase"></i>{{#i18n}}button.work{{/i18n}}
                                 </a>
                             </li>
-                            
+
                             <li>
                                 <a id="btnNo" href="#" role="tab" data-toggle="tab">
                                     <i class="fa fa-money"></i>{{#i18n}}button.salary{{/i18n}}
@@ -65,7 +65,7 @@
                                         <th class="center">{{#i18n}}olddata{{/i18n}}</th>
                                         <th class="center">{{#i18n}}newdata{{/i18n}}</th>
                                         <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody id="tbodyYes">
@@ -186,15 +186,18 @@
 
             if (confirm("คุณต้องการจำหน่ายบุคคลดังกล่าวใช่หรือไม่?")) {
                 var data = {"memberId": id};
-                var msg = sendData('{{_context_path}}/api/member/member/delete', data);
+                sendData('{{_context_path}}/api/member/member/delete', data,
+                        function (msg) {
+                            if (msg.delete == true) {
 
-                if (msg.delete == true) {
+                                getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                                Notify('การจำหน่ายเสร็จสิ้น!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                            } else {
+                                Notify('การจำหน่ายไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            }
+                        });
 
-                    getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
-                    Notify('การจำหน่ายเสร็จสิ้น!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-                } else {
-                    Notify('การจำหน่ายไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                }
+
             }
 
         });
@@ -247,7 +250,7 @@
 
                 } else if (txt.upload == "cantUpload") {
                     Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
-                } 
+                }
             }
         });
 

@@ -110,17 +110,20 @@
                 data['hospital'] = hospital;
                 var jdata = {};
                 jdata['ssoHospital'] = data;
-                var result = sendData('{{_context_path}}/api/insurance/sso/change/hospital', jsonEncode(jdata));
-                if (result.change == true) {
-                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                    $("#changeHospitalModal").modal('hide');
-                    setTimeout(function () {
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/user/lists', null);
-                    }, 1000);
+                sendData('{{_context_path}}/api/insurance/sso/change/hospital', jsonEncode(jdata),
+                        function (result) {
+                            if (result.change == true) {
+                                Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                                $("#changeHospitalModal").modal('hide');
+                                setTimeout(function () {
+                                    getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/user/lists', null);
+                                }, 1000);
 
-                } else {
-                    Notify('ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อเจ้าหน้าที่', 'top-right', '4000', 'danger', 'fa-check', true);
-                }
+                            } else {
+                                Notify('ไม่สามารถบันทึกข้อมูลได้ โปรดติดต่อเจ้าหน้าที่', 'top-right', '4000', 'danger', 'fa-check', true);
+                            }
+                        });
+
             }
             return false;
         });

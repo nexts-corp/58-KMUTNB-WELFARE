@@ -1,5 +1,18 @@
 //test confict file by somchit
 //somchit
+
+$(document).ajaxStart(function () {
+    //console.log("Triggered ajaxStart handler.");
+ 
+    $(".loading-container").removeClass("loading-inactive");
+});
+
+$(document).ajaxStop(function () {
+   // console.log("Triggered ajaxStop handler.");
+    $(".loading-container").addClass("loading-inactive");
+    
+});
+
 function getCode(code) {
     var data;
     $.ajax({
@@ -69,6 +82,7 @@ function btnHTML(value) {
 }
 
 function getHTML(id, link, data) {
+    
     //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
     ////have data ==> getHTML("navbar","/api/xxx/xxx/",jsonEncode(xxx));
     //dont have data ==> getHTML("navbar","/api/xxx/xxx/",null);
@@ -76,7 +90,7 @@ function getHTML(id, link, data) {
         $.ajax({
             url: link,
             type: 'post',
-            async: false,
+            async: true,
             error: function (xhr) {
                 if (xhr.status == 401) {
                     window.location.href = xhr.getResponseHeader('Location');
@@ -91,7 +105,7 @@ function getHTML(id, link, data) {
             url: link,
             data: data,
             type: 'post',
-            async: false,
+            async: true,
             error: function (xhr) {
                 if (xhr.status == 401) {
                     window.location.href = xhr.getResponseHeader('Location');
@@ -103,23 +117,24 @@ function getHTML(id, link, data) {
         });
     }
 }
-function sendData(url, data) {
-    var callback;
+function sendData(url, data,callback) {
+   // var callback;
     $.ajax({
         url: url,
         data: data,
         type: 'post',
-        async: false,
+        async: true,
         error: function (xhr) {
             if (xhr.status == 401) {
                 window.location.href = xhr.getResponseHeader('Location');
             }
         },
         success: function (result) {
-            callback = result;
+           // callback = result;
+           callback(result);
         }
     });
-    return callback;
+    //return callback;
 }
 
 function jsonEncode(data) {

@@ -105,8 +105,9 @@
             } else {
                 var jdata = {};
                 jdata['policy'] = data;
-                var result = sendData('{{_context_path}}/api/fund/policy/save', jsonEncode(jdata));
-                if (result.save == true) {
+                sendData('{{_context_path}}/api/fund/policy/save', jsonEncode(jdata),
+                function(result){
+                       if (result.save == true) {
                     Notify('บันทึกเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
                     setTimeout(function () {
                         getHTML('content-body', '{{_context_path}}/api/fund/view/policy/admin/lists', null);
@@ -114,6 +115,8 @@
                 } else {
                     Notify('บันทึกไม่สำเร็จ กรุณาบันทึกอีกรอบ', 'top-right', '4000', 'warning', 'fa-check', true);
                 }
+                });
+             
             }
 
             return false;

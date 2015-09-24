@@ -164,15 +164,18 @@
                 var jdata = {};
                 jdata['taxonomy'] = data;
                 if (data['value1'] != "") {
-                    var result = sendData('{{_context_path}}/api/taxonomy/taxonomy/update', jsonEncode(jdata));
-                    if (result.update == true) {
-                        alert("บันทึกเรียบร้อย");
-                        getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
-                    } else if (result.update == "delChildBefore") {
-                        alert("กรุณาลบ Child ก่อนที่จะเปลี่ยนตัวเองจาก Parent เป็น Child");
-                    } else {
-                        alert("บันทึกไม่สำเร็จ");
-                    }
+                    sendData('{{_context_path}}/api/taxonomy/taxonomy/update', jsonEncode(jdata),
+                            function (result) {
+                                if (result.update == true) {
+                                    alert("บันทึกเรียบร้อย");
+                                    getHTML('content-body', '{{_context_path}}/api/taxonomy/view/lists', null);
+                                } else if (result.update == "delChildBefore") {
+                                    alert("กรุณาลบ Child ก่อนที่จะเปลี่ยนตัวเองจาก Parent เป็น Child");
+                                } else {
+                                    alert("บันทึกไม่สำเร็จ");
+                                }
+                            });
+
                 } else {
                     alert("กรุณาใส่ Value1");
                     $("#value1").focus();

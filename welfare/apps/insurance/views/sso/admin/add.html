@@ -144,15 +144,18 @@
                 if (check) {
                     var sso = {};
                     sso['sso'] = data;
-                    var result = sendData('{{_context_path}}/api/insurance/sso/save', jsonEncode(sso));
-                    if (result.save == true) {
-                        Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                        setTimeout(function () {
-                            getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', null);
-                        }, 1000);
-                    } else {
-                        Notify('ไม่สามารถบันทึกข้อมูลได้', 'top-right', '4000', 'danger', 'fa-check', true);
-                    }
+                    sendData('{{_context_path}}/api/insurance/sso/save', jsonEncode(sso),
+                            function (result) {
+                                if (result.save == true) {
+                                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                                    setTimeout(function () {
+                                        getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', null);
+                                    }, 1000);
+                                } else {
+                                    Notify('ไม่สามารถบันทึกข้อมูลได้', 'top-right', '4000', 'danger', 'fa-check', true);
+                                }
+                            });
+
                 }
 
             }
