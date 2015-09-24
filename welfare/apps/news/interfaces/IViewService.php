@@ -21,5 +21,22 @@ interface IViewService {
      * @return html viewadd xxx
      * @description แสดงการเพิ่มข่าวสาร
      */
-    public function newsadd();
+    public function newsAdd();
+    
+      /**
+     * @name viewedit
+     * @uri /news/edit
+     * @return html newsEdit Description
+     * @description view แก้ไขข้อมูลข่าวสาร
+     */
+    public function newsEdit();
+    
+     /**
+     * @name fileList
+     * @uri /file/list
+     * @return html fileList 
+     * @description หน้าแสดงรายการไฟล์
+     */
+    public function fileList();
+    
 }
