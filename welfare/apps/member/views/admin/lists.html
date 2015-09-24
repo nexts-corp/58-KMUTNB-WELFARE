@@ -35,7 +35,7 @@
                                 <option value="employeeType">ประเภทพนักงาน</option>
                                 <option value="name" selected="">ชื่อนามสกุล</option>
                                 <option value="memberActive" >สถานะพนักงาน</option>
-                                
+
 
                                 <!-- … -->
                             </select>
@@ -55,6 +55,14 @@
                             <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                         </div>
                         <div class="pull-right">
+
+                            <button type="button" class="btn btn-primary" 
+                                    data-toggle="modal" 
+                                    data-target="#uploadModal" 
+                                    data-whatever="@fat">
+                                <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
+                            </button>
+
                             <button class="btn btn-primary"
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/member/view/member/add"
@@ -92,6 +100,11 @@
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
+                                            <button class="btn-del btn btn-xs btn-success"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/member/view/member/history/{{memberId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-edit"></i>ประวัติการแก้ไข</button> 
 
                                             <button class="btn-del btn btn-xs btn-danger" row-index="{{memberId}}" >ลาออก</button> 
                                         </td>
@@ -108,6 +121,28 @@
     </div>
 
     <!-- /Page Body -->
+</div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">อัพโหลดไฟล์กองทุนของพนักงานมหาวิทยาลัย</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="control-label">ไฟล์ .csv</label>
+                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="frm_upload">
+                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ .csv เพื่ออัพโหลด</span></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{#i18n}}button.close{{/i18n}}</button>
+                <button type="button" class="btn btn-primary" id="btn_upload">{{#i18n}}button.upload{{/i18n}}</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -182,10 +217,41 @@
                     "filterCode": filterCode,
                     "filtervalue": filtervalue
                 };
-               
+
 
             }
             getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', data);
+        });
+
+        var myDropzone = new Dropzone("#frm_upload", {
+            url: "{{_context_path}}/api/member/member/upload",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            acceptedFiles: '.csv',
+            maxFiles: 1,
+            init: function () {
+                $("#btn_upload").click(function () {
+                    myDropzone.processQueue();
+                });
+            },
+            sending: function (file, xhr, formData) {
+//                var properser_id = $.jx.state.get('properser', 'properser_id');
+//                formData.append('properser_id', properser_id);
+            },
+            success: function (file, txt) {
+                if (txt.upload == true) {
+                    $("#uploadModal").modal('hide');
+                    myDropzone.removeFile(file);
+                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                    setTimeout(function () {
+                        getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                    }, 1000);
+
+                } else if (txt.upload == "cantUpload") {
+                    Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
+                } 
+            }
         });
 
     });

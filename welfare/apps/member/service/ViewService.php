@@ -8,52 +8,40 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\member\interfaces\IViewService;
 use apps\taxonomy\entity\Taxonomy;
+use apps\taxonomy\service\TaxonomyService;
 
 class ViewService extends CServiceBase implements IViewService {
 
     public $datacontext;
+    public $taxonomy;
 
     function __construct() {
         $this->datacontext = new CDataContext("default");
+        $this->taxonomy = new TaxonomyService();
     }
 
     public function memberAdd() {
         $view = new CJView("admin/add", CJViewType::HTML_VIEW_ENGINE);
-        $academic = new Taxonomy();
-        $academic->pCode = "academic";
-        $view->academic = $this->datacontext->getObject($academic);
+//        $academic = new Taxonomy();
+//        $academic->pCode = "academic";
+        $view->academic = $this->taxonomy->getPCode("academic");
 
-        $titleName = new Taxonomy();
-        $titleName->pCode = "titleName";
-        $view->titleName = $this->datacontext->getObject($titleName);
 
-        $gender = new Taxonomy();
-        $gender->pCode = "gender";
-        $view->gender = $this->datacontext->getObject($gender);
+        $view->titleName = $this->taxonomy->getPCode("titleName");
 
-        $employeeType = new Taxonomy();
-        $employeeType->pCode = "employeeType";
-        $view->employeeType = $this->datacontext->getObject($employeeType);
+        $view->gender = $this->taxonomy->getPCode("gender");
 
-        $position = new Taxonomy();
-        $position->pCode = "position";
-        $view->position = $this->datacontext->getObject($position);
+        $view->employeeType = $this->taxonomy->getPCode("employeeType");
 
-        $department = new Taxonomy();
-        $department->pCode = "department";
-        $view->department = $this->datacontext->getObject($department);
+        $view->position = $this->taxonomy->getPCode("position");
 
-        $faculty = new Taxonomy();
-        $faculty->pCode = "faculty";
-        $view->faculty = $this->datacontext->getObject($faculty);
+        $view->department = $this->taxonomy->getPCode("department");
 
-        $userType = new Taxonomy();
-        $userType->pCode = "userType";
-        $view->userType = $this->datacontext->getObject($userType);
+        $view->faculty = $this->taxonomy->getPCode("faculty");
 
-        $matier = new Taxonomy();
-        $matier->pCode = "matier";
-        $view->matier = $this->datacontext->getObject($matier);
+        $view->userType = $this->taxonomy->getPCode("userType");
+
+        $view->matier = $this->taxonomy->getPCode("matier");
 
         return $view;
     }
@@ -189,11 +177,11 @@ class ViewService extends CServiceBase implements IViewService {
         }
 
         if ($searchName != "") {
-            
+
             $search = new MemberService();
             $view->lists = $search->search($datafilter);
         } else if ($filterCode != "") {
-            
+
             $filter = new MemberService();
             $view->lists = $filter->search($datafilter);
         } else {
@@ -284,6 +272,12 @@ class ViewService extends CServiceBase implements IViewService {
         $matier->pCode = "matier";
         $view->matier = $this->datacontext->getObject($matier);
         $view->datas = $member;
+        return $view;
+    }
+
+    public function historyEdit($id) {
+        $view = new CJView("user/profile", CJViewType::HTML_VIEW_ENGINE);
+        
         return $view;
     }
 

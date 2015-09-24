@@ -71,10 +71,13 @@ class Member extends EntityBase {
      */
     public $memberActiveId;
     public $userTypeId;
+    public $document;
+    public $remark;
     public $contact;
     public $work;
     public $salary;
 
+    
     function getMemberId() {
         return $this->memberId;
     }
@@ -125,6 +128,14 @@ class Member extends EntityBase {
 
     function getUserTypeId() {
         return $this->userTypeId;
+    }
+
+    function getDocument() {
+        return $this->document;
+    }
+
+    function getRemark() {
+        return $this->remark;
     }
 
     function getContact() {
@@ -191,6 +202,14 @@ class Member extends EntityBase {
         $this->userTypeId = $userTypeId;
     }
 
+    function setDocument($document) {
+        $this->document = $document;
+    }
+
+    function setRemark($remark) {
+        $this->remark = $remark;
+    }
+
     function setContact($contact) {
         $this->contact = $contact;
     }
@@ -202,6 +221,9 @@ class Member extends EntityBase {
     function setSalary($salary) {
         $this->salary = $salary;
     }
+
+
+
 
 
 

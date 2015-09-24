@@ -57,7 +57,23 @@ interface IMemberService {
      */
     public function find($field,$value);
     
+    /**
+     * @name reference
+     * @uri /reference
+     * @param file file
+     * @return string upload
+     * @description อัพโหลดไฟล์ pdf,jpg,gif
+     */
+    public function reference($file);
     
+    /**
+     * @name upload
+     * @uri /upload
+     * @param file file
+     * @return string upload
+     * @description อัพโหลดไฟล์ csv
+     */
+    public function upload($file);
     
     
     

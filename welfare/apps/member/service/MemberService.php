@@ -14,9 +14,11 @@ use apps\member\entity\MemberHistory;
 class MemberService extends CServiceBase implements IMemberService {
 
     public $datacontext;
+    public $taxonomy;
 
     function __construct() {
         $this->datacontext = new CDataContext("default");
+        $this->taxonomy = new \apps\taxonomy\service\TaxonomyService();
     }
 
     public function save($data) {
@@ -94,6 +96,8 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function update($data) {
+//        print_r($data);
+//        exit();
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
@@ -254,6 +258,12 @@ class MemberService extends CServiceBase implements IMemberService {
                     }
                 }
             }
+            $d = new \apps\member\entity\Document();
+            $d->memberId = $memberId;
+            $d->filename = $data->document;
+            $d->remark = $data->remark;
+//            print_r($data);
+//            exit();
 
             if ($this->datacontext->updateObject($data)) {
 
@@ -261,7 +271,7 @@ class MemberService extends CServiceBase implements IMemberService {
                 $this->datacontext->saveObject($s);
                 $this->datacontext->saveObject($p);
                 $this->datacontext->saveObject($c);
-
+                $this->datacontext->saveObject($d);
                 $this->getResponse()->add("message", "อัพเดทข้อมูลสำเร็จ");
                 return true;
             } else {
@@ -306,21 +316,19 @@ class MemberService extends CServiceBase implements IMemberService {
             $searchName = $data->searchName;
             $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name mem1.memberActive2 = 'Working'";
             $param = array(
-                "name" => "%" .$searchName. "%"
+                "name" => "%" . $searchName . "%"
             );
-            
-        }else if($data->filterCode =="memberActive"){
-          $filtercode = $data->filterCode ; 
-          $filtervalue = $data->filtervalue;
-          $sql .= "  mem1.".$filtercode."Id = :filtervalue ";
-            $param["filtervalue"] = $filtervalue;  
-        }  
-        else{
-          $filtercode = $data->filterCode ; 
-          $filtervalue = $data->filtervalue;
-          $sql .= "  mem1.".$filtercode."Id = :filtervalue and mem1.memberActive2 = 'Working' ";
-            $param["filtervalue"] = $filtervalue;  
-        }  
+        } else if ($data->filterCode == "memberActive") {
+            $filtercode = $data->filterCode;
+            $filtervalue = $data->filtervalue;
+            $sql .= "  mem1." . $filtercode . "Id = :filtervalue ";
+            $param["filtervalue"] = $filtervalue;
+        } else {
+            $filtercode = $data->filterCode;
+            $filtervalue = $data->filtervalue;
+            $sql .= "  mem1." . $filtercode . "Id = :filtervalue and mem1.memberActive2 = 'Working' ";
+            $param["filtervalue"] = $filtervalue;
+        }
         if ($usertype == "administrator") {
             
         } elseif ($usertype == "adminFaculty") {
@@ -338,6 +346,167 @@ class MemberService extends CServiceBase implements IMemberService {
         $member = new \apps\member\model\FullMember();
         $member->$field = $value;
         return $this->datacontext->getObject($member);
+    }
+
+    public function reference($file) {
+
+        $uploaddir = './uploads/member/' . $this->getRequest()->memberId . "/";
+//        $path = "apps/auction/files/" . $data[0]->properser_id;
+        if (!file_exists($uploaddir)) {
+            mkdir($uploaddir, 0777);
+        }
+        $filename = 'emp' . date("YmdHis");
+        $typefile = explode(".", $file["name"]);
+        $filenames = $filename . "." . $typefile[count($typefile) - 1];
+        $uploadfile = $uploaddir . $filenames;
+//            print_r($uploadfile);
+//            exit();
+
+        if (move_uploaded_file($file['tmp_name'], $uploadfile)) {
+            return $filenames;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function upload($file) {
+
+        $return = true;
+        $csv = fopen($file['tmp_name'], "r");
+        $arr = array();
+        while (!feof($csv)) {
+            array_push($arr, fgetcsv($csv));
+        }
+        fclose($csv);
+        array_splice($arr, 0, 1);
+        array_pop($arr);
+
+        $uploaddir = './uploads/';
+        $filename = 'fundEmp' . date("YmdHis") . ".csv";
+        $uploadfile = $uploaddir . $filename;
+
+
+        if (move_uploaded_file($file['tmp_name'], $uploadfile)) {
+            chmod($uploadfile, 0777);
+            $error = array();
+
+            foreach ($arr as $key => $value) {
+                print_r($value);
+               
+                $idCard = str_replace(" ", "", $value[0]);
+                $academic = str_replace(" ", "", $value[1]);
+                $titleName = str_replace(" ", "", $value[2]);
+                $fname = str_replace(" ", "", $value[3]);
+                $lname = str_replace(" ", "", $value[4]);
+                $gender = str_replace(" ", "", $value[5]);
+                $employeeCode = str_replace(" ", "", $value[6]);
+                $employeeType = str_replace(" ", "", $value[7]);
+                $position = str_replace(" ", "", $value[8]);
+                $rank = str_replace(" ", "", $value[9]);
+                $faculty = str_replace(" ", "", $value[10]);
+                $department = str_replace(" ", "", $value[11]);
+                $matier = str_replace(" ", "", $value[12]);
+                $workStartDate = str_replace(" ", "", $value[13]);
+                $workStartDate = explode("-", $workStartDate);
+                $workStartDate = new \DateTime(intval($workStartDate[2] - 543) . "-" . $workStartDate[1] . "-" . $workStartDate[0]);
+                $salary = str_replace(" ", "", $value[14]);
+                $salaryDate = str_replace(" ", "", $value[15]);
+                $salaryDate = explode("-", $salaryDate);
+                $salaryDate = new \DateTime(intval($salaryDate[2] - 543) . "-" . $salaryDate[1] . "-" . $salaryDate[0]);
+                $address = $value[16];
+                $internalPhone = str_replace(",", "", str_replace(" ", "", $value[17]));
+                $phone = str_replace(" ", "", $value[18]);
+                $mobile = str_replace(" ", "", $value[19]);
+                $email = str_replace(" ", "", $value[20]);
+                $dob = str_replace(" ", "", $value[21]);
+                $memberActiveId = str_replace(" ", "", $value[22]);
+                 exit();
+//                $dateNotice = explode("-", $dateNotice);
+//                $dateNotice = new \DateTime(intval($dateNotice[2] - 543) . "-" . $dateNotice[1] . "-" . $dateNotice[0]);
+//                $myBenefit = str_replace(",", "", str_replace(" ", "", $value[6]));
+//                $employerBenefit = str_replace(",", "", str_replace(" ", "", $value[7]));
+//                $grantInAid = str_replace(",", "", str_replace(" ", "", $value[8]));
+//                $total = str_replace(",", "", str_replace(" ", "", $value[9]));
+//                $member = new \apps\member\model\FullMember();
+//                $member->idCard = $idCard;
+//                $member->employeeTypeId = $employeeType->id;
+//                $dataMember = $this->datacontext->getObject($member);
+//                if (count($dataMember) == 0) {
+//                    array_push($error, array(
+//                        "idCard" => $idCard,
+//                        "fname" => $fname,
+//                        "lname" => $lname,
+//                        "saving" => $saving,
+//                        "myBenefit" => $myBenefit,
+//                        "employerBenefit" => $employerBenefit,
+//                        "grantInAid" => $grantInAid,
+//                        "total" => $total,
+//                        "dateNotice" => $value[3]
+//                    ));
+//                } else {}
+
+                $member = new \apps\member\entity\Member();
+                $member->idCard = $idCard;
+                $member->titleNameId = $this->taxonomy->getId("titleName", $titleName)->id;
+                $member->academicId = $this->taxonomy->getId("academic", $academic)->id;
+                $member->fname = $fname;
+                $member->lname = $lname;
+                $member->genderId = $this->taxonomy->getId("gender", $gender)->id;
+                $member->dob = $dob;
+                $member->employeeCode = $employeeCode;
+                $member->workStartDate = $workStartDate;
+//                    $employee->saving = $saving;
+//                    $employee->myBenefit = $myBenefit;
+//                    $employee->employerBenefit = $employerBenefit;
+//                    $employee->grantInAid = $grantInAid;
+//                    $employee->total = $total;
+//                    $employee->dateNotice = $dateNotice;
+//                    $employee->filename = $filename;
+                if ($this->datacontext->saveObject($member)) {
+                    $memb = new \apps\member\entity\Member();
+                    $memb->setIdCard($idCard);
+                    $mem = $this->datacontext->getObject($memb);
+                    $work = new \apps\member\entity\Work();
+                    $work->memberId = $mem->memberId;
+                    $work->employeeTypeId = $this->taxonomy->getId("employeeType", $employeeType)->id;
+                    $work->positionId = $this->taxonomy->getId("position", $position)->id;
+                    $work->facultyId = $this->taxonomy->getId("faculty", $faculty)->id;
+//                    $work->departmentId = $this->taxonomy->getId($pCode, $value)->id;
+                    $work->matierId = $this->taxonomy->getId("matier", $matier)->id;
+                    $sala = new \apps\member\entity\Salary();
+                    $sala->memberId = $mem->memberId;
+                    $sala->salary = $salary;
+                    $sala->salaryDate = $salaryDate;
+                    $sala->rank = $rank;
+                    $contact = new \apps\member\entity\Contact();
+                    $contact->memberId = $mem->memberId;
+                    $contact->address = $address;
+                    $contact->internalPhone = $internalPhone;
+                    $contact->phone = $phone;
+                    $contact->mobile = $mobile;
+                    $contact->email = $email;
+                    if ($this->datacontext->saveObject($work)) {
+                        $return = true;
+                    }
+                    if ($this->datacontext->saveObject($sala)) {
+                        $return = true;
+                    }
+                    if ($this->datacontext->saveObject($contact)) {
+                        $return = true;
+                    } else {
+                        $return = "cantUpload";
+                    }
+                }
+            }
+            if (count($error) > 0) {
+                $return = $error;
+            }
+        } else {
+            $return = "cantUpload";
+            //$return = $uploadfile;
+        }
+
+        return $return;
     }
 
 }

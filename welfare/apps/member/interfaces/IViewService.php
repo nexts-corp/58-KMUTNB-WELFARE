@@ -36,6 +36,15 @@ interface IViewService {
     public function memberEdit($id);
     
     /**
+     * @name historyEdit
+     * @uri /member/history
+     * @param integer id
+     * @return html view
+     * @description view ประวัติการแก้ไขผู้ใช้งาน   
+     */
+    public function historyEdit($id);
+    
+    /**
      * @name memberShow
      * @uri /member/show
      * @param integer id

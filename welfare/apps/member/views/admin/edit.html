@@ -1,4 +1,11 @@
-
+<style>
+    .input-group .form-control{
+        z-index: 2;
+        float: left;
+        width: 100%;
+        margin-bottom: 0;
+    }
+</style>
 <div class="page-content"> 
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
@@ -216,7 +223,7 @@
                                         <div class="col-lg-9">
                                             <!--<div class="controls col-lg-12">-->
                                             <div class="input-group">
-                                                <input class="form-control cDate" type="text" value="{{#datas}}{{workStartDate}}{{/datas}}"  id="workStartDate" style="z-index: 9999;" />
+                                                <input class="form-control cDate" type="text" value="{{#datas}}{{workStartDate}}{{/datas}}"  id="workStartDate"  />
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
@@ -245,7 +252,7 @@
                                         <div class="col-lg-9">
                                             <!--<div class="controls col-lg-12">-->
                                             <div class="input-group">
-                                                <input class="form-control cDate" type="text" value="{{#datas}}{{salaryDate}}{{/datas}}"  id="salaryDate" style="z-index: 9999;" />
+                                                <input class="form-control cDate" type="text" value="{{#datas}}{{salaryDate}}{{/datas}}"  id="salaryDate"  />
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
@@ -327,13 +334,13 @@
 
 
 
-                                    <div class="form-group">
-                                        <div class="col-lg-offset-6 col-lg-8">
-
-                                            <button id="btn_submit" name="bn" class="btn btn-primary" type="button"> {{#i18n}}button.submit{{/i18n}}</button>
-
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="form-group">
+                                                                            <div class="col-lg-offset-6 col-lg-8">
+                                    
+                                                                                <button id="btn_submit" name="bn" class="btn btn-primary" type="button"> {{#i18n}}button.submit{{/i18n}}</button>
+                                    
+                                                                            </div>
+                                                                        </div>-->
                                 </div>
                             </div>
                         </div>
@@ -344,15 +351,29 @@
                             <div class="widget-body">
                                 <div class="form-horizontal">
                                     <div class="form-title"></div>
-
+                                    
                                     <div class="form-group">
-                                        <label class="col-lg-3 control-label">ไฟล์อ้างอิง.jpg</label>
+                                        <label class="col-lg-3 control-label">ไฟล์อ้างอิง pdf/jpg/jpeg/gif</label>
                                         <div class="col-lg-9">
-                                            <input type="file" class="form-control" name="file" id="file" placeholder="ไฟล์อ้างอิง.jpg" />
+                                            
+                                            <input type="text" class="form-control" name="upload" id="upload"/>
+                                            <button type="button" class="btn btn-default" id="btnmodal"
+                                                    data-toggle="modal" 
+                                                    data-target="#uploadModal" 
+                                                    data-whatever="@fat">
+                                                <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} 
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">หมายเหตุไฟล์อ้างอิง</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" name="remark" id="remark" placeholder="หมายเหตุ"/>
+                                            
                                         </div>
                                     </div>
 
-                                    
+
 
                                     <div class="form-group">
                                         <div class="col-lg-offset-6 col-lg-8">
@@ -369,7 +390,28 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="uploadModalLabel">อัพโหลดไฟล์กองทุนของพนักงานมหาวิทยาลัย</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">ไฟล์ .pdf,.jpg,.gif:</label>
+                        <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="frm_upload">
+                            <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ .pdf,.jpg,.gif เพื่ออัพโหลด</span></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{#i18n}}button.close{{/i18n}}</button>
+                    <button type="button" class="btn btn-primary" id="btn_upload">{{#i18n}}button.upload{{/i18n}}</button>
+                </div>
+            </div>
+        </div>
+    </div> 
 
     <!--        <script type="text/javascript">
         
@@ -390,61 +432,61 @@
         
             </script>-->
     <script type="text/javascript">
-
+        $("#upload").hide();
         $(document).ready(function () {
-        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-                var academic = '{{#datas}}{{academicId}}{{/datas}}';
-                var titleName = '{{#datas}}{{titleNameId}}{{/datas}}';
-                var gender = '{{#datas}}{{genderId}}{{/datas}}';
-                var employeeType = '{{#datas}}{{employeeTypeId}}{{/datas}}';
-                var position = '{{#datas}}{{positionId}}{{/datas}}';
-                var faculty = '{{#datas}}{{facultyId}}{{/datas}}';
-                var matier = '{{#datas}}{{matierId}}{{/datas}}';
-                var userType = '{{#datas}}{{userTypeId}}{{/datas}}';
-                var department = '{{#datas}}{{departmentId}}{{/datas}}';
-                $("#academicId").val(academic);
-                $("#titleNameId").val(titleName);
-                $("#employeeTypeId").val(employeeType);
-                $("#positionId").val(position);
-                $("#facultyId").val(faculty);
-                $("#userTypeId").val(userType);
-                listsDepartment(faculty);
-                $("#departmentId").val(department);
-                $('input:radio[name="genderId"]').filter('[value="' + gender + '"]').attr('checked', true);
-                $('input:radio[name="matierId"]').filter('[value="' + matier + '"]').attr('checked', true);
-                $("#facultyId").change(function () {
-        var id = $("#facultyId").val();
+            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+            var academic = '{{#datas}}{{academicId}}{{/datas}}';
+            var titleName = '{{#datas}}{{titleNameId}}{{/datas}}';
+            var gender = '{{#datas}}{{genderId}}{{/datas}}';
+            var employeeType = '{{#datas}}{{employeeTypeId}}{{/datas}}';
+            var position = '{{#datas}}{{positionId}}{{/datas}}';
+            var faculty = '{{#datas}}{{facultyId}}{{/datas}}';
+            var matier = '{{#datas}}{{matierId}}{{/datas}}';
+            var userType = '{{#datas}}{{userTypeId}}{{/datas}}';
+            var department = '{{#datas}}{{departmentId}}{{/datas}}';
+            $("#academicId").val(academic);
+            $("#titleNameId").val(titleName);
+            $("#employeeTypeId").val(employeeType);
+            $("#positionId").val(position);
+            $("#facultyId").val(faculty);
+            $("#userTypeId").val(userType);
+            listsDepartment(faculty);
+            $("#departmentId").val(department);
+            $('input:radio[name="genderId"]').filter('[value="' + gender + '"]').attr('checked', true);
+            $('input:radio[name="matierId"]').filter('[value="' + matier + '"]').attr('checked', true);
+            $("#facultyId").change(function () {
+                var id = $("#facultyId").val();
                 listsDepartment(id);
-        });
-                function listsDepartment(facultyId) {
+            });
+            function listsDepartment(facultyId) {
                 $.ajax({
-                url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
-                        data: {parentId: facultyId},
-                        async: false,
-                        success: function (result) {
+                    url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
+                    data: {parentId: facultyId},
+                    async: false,
+                    success: function (result) {
                         var data = result["lists"];
-                                var html;
-                                if (data == "") {
-                        html = '<option value="">สังกัด</option>';
+                        var html;
+                        if (data == "") {
+                            html = '<option value="">สังกัด</option>';
                         } else {
-                        $.each(data, function (key, value) {
-                        html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
-                        });
+                            $.each(data, function (key, value) {
+                                html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
+                            });
                         }
                         $("#departmentId").html(html);
-                        }
+                    }
                 });
-                }
+            }
 
 
 
-        $("#btn_submit").click(function () {
+            $("#btn_submit").click(function () {
 //alert(555555555555);
-        var data = {};
+                var data = {};
                 var contact = {};
                 var work = {};
                 var salary = {};
-                data['memberId'] = {{#datas}}{{memberId}}{{/datas}};
+                data['memberId'] = '{{#datas}}{{memberId}}{{/datas}}';
                 data['fname'] = $("#fname").val();
                 data['lname'] = $("#lname").val();
                 data['titleNameId'] = $("#titleNameId").val();
@@ -452,6 +494,8 @@
                 data['idCard'] = $("#idCard").val();
                 data['dob'] = $("#dob").val();
                 data['employeeCode'] = $("#employeeCode").val();
+                data['document'] = $("#upload").val();
+                data['remark'] = $("#remark").val();
                 work['employeeTypeId'] = $("#employeeTypeId").val();
                 work['academicId'] = $("#academicId").val();
                 work['departmentId'] = $("#departmentId").val();
@@ -474,24 +518,50 @@
                 var jdata = {};
                 jdata['data'] = data;
                 $.ajax({
-                url: '{{_context_path}}/api/member/member/update',
-                        data: jsonEncode(jdata),
-                        type: 'post', // 'or get'
-                        success: function (result) {
+                    url: '{{_context_path}}/api/member/member/update',
+                    data: jsonEncode(jdata),
+                    type: 'post', // 'or get'
+                    success: function (result) {
                         //alert(result.save);
                         if (result.update == true) {
-                        getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
-                                Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
+                            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                            Notify('แก้ไขข้อมูลสำเร็จ', 'top-right', '4000', 'blue', 'fa fa-edit', true);
                         } else {
-                        Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            Notify('แก้ไขข้อมูลไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                         }
-                        }
+                    }
                 });
-        });
+            });
 //    $('.date-picker').datepicker();
+            var parth = "";
+            var myDropzone = new Dropzone("#frm_upload", {
+                url: "{{_context_path}}/api/member/member/reference",
+                addRemoveLinks: true,
+                autoProcessQueue: false,
+                uploadMultiple: false,
+                acceptedFiles: '.pdf,image/*',
+                maxFiles: 1,
+                init: function () {
+                    $("#btn_upload").click(function () {
+                        myDropzone.processQueue();
+                    });
+                },
+                sending: function (file, xhr, formData) {
+//                var properser_id = $.jx.state.get('properser', 'properser_id');
+                    formData.append('memberId', '{{#datas}}{{memberId}}{{/datas}}');
+                },
+                success: function (file, txt) {
+                    if (txt.upload != false) {
+                        
+                        $("#btnmodal").hide();
+                        $("#upload").show();
+                        parth = txt.upload;
+                        $("#upload").val(parth);
+                        $("#uploadModal").modal('hide');
 
-
-
+                    }
+                }
+            });
         });
 
 
