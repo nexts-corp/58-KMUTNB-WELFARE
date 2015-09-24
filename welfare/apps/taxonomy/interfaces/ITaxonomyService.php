@@ -17,8 +17,8 @@ interface ITaxonomyService {
      * @description save data to database
      */
     public function save($taxonomy);
-    
-     /**
+
+    /**
      * @name update
      * @uri /update
      * @param apps\taxonomy\entity\Taxonomy taxonomy
@@ -26,8 +26,8 @@ interface ITaxonomyService {
      * @description update data to database
      */
     public function update($taxonomy);
-    
-     /**
+
+    /**
      * @name delete
      * @uri /delete
      * @param apps\taxonomy\entity\Taxonomy taxonomy
@@ -35,7 +35,7 @@ interface ITaxonomyService {
      * @description delete data to database
      */
     public function delete($taxonomy);
-    
+
     /**
      * @name getParent
      * @uri /getParent
@@ -43,7 +43,7 @@ interface ITaxonomyService {
      * @description ลิสต์ข้อมูลพ่อ
      */
     public function getParent();
-    
+
     /**
      * @name getPCode
      * @uri /getPCode
@@ -52,7 +52,7 @@ interface ITaxonomyService {
      * @description ลิสต์ข้อมูลลูก pCode
      */
     public function getPCode($pCode);
-    
+
     /**
      * @name getParentId
      * @uri /getParentId
@@ -61,7 +61,8 @@ interface ITaxonomyService {
      * @description ลิสต์ข้อมูลลูก parentId
      */
     public function getParentId($parentId);
-      /**
+
+    /**
      * @name getCode
      * @uri /getCode
      * @param string code
@@ -69,4 +70,14 @@ interface ITaxonomyService {
      * @description ลิสต์ข้อมูลจาก code
      */
     public function getCode($code);
+
+    /**
+     * @name getId
+     * @uri /getId
+     * @param string pCode
+     * @param string value
+     * @return string lists
+     * @description ลิสต์ข้อมูลจาก code
+     */
+    public function getId($pCode, $value);
 }
