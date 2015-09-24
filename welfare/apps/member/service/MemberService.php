@@ -391,7 +391,7 @@ class MemberService extends CServiceBase implements IMemberService {
             $error = array();
 
             foreach ($arr as $key => $value) {
-                print_r($value);
+                
                
                 $idCard = str_replace(" ", "", $value[0]);
                 $academic = str_replace(" ", "", $value[1]);
@@ -407,11 +407,11 @@ class MemberService extends CServiceBase implements IMemberService {
                 $department = str_replace(" ", "", $value[11]);
                 $matier = str_replace(" ", "", $value[12]);
                 $workStartDate = str_replace(" ", "", $value[13]);
-                $workStartDate = explode("-", $workStartDate);
+                $workStartDate = explode("/", $workStartDate);
                 $workStartDate = new \DateTime(intval($workStartDate[2] - 543) . "-" . $workStartDate[1] . "-" . $workStartDate[0]);
                 $salary = str_replace(" ", "", $value[14]);
                 $salaryDate = str_replace(" ", "", $value[15]);
-                $salaryDate = explode("-", $salaryDate);
+                $salaryDate = explode("/", $salaryDate);
                 $salaryDate = new \DateTime(intval($salaryDate[2] - 543) . "-" . $salaryDate[1] . "-" . $salaryDate[0]);
                 $address = $value[16];
                 $internalPhone = str_replace(",", "", str_replace(" ", "", $value[17]));
@@ -420,7 +420,7 @@ class MemberService extends CServiceBase implements IMemberService {
                 $email = str_replace(" ", "", $value[20]);
                 $dob = str_replace(" ", "", $value[21]);
                 $memberActiveId = str_replace(" ", "", $value[22]);
-                 exit();
+                 
 //                $dateNotice = explode("-", $dateNotice);
 //                $dateNotice = new \DateTime(intval($dateNotice[2] - 543) . "-" . $dateNotice[1] . "-" . $dateNotice[0]);
 //                $myBenefit = str_replace(",", "", str_replace(" ", "", $value[6]));
@@ -471,7 +471,12 @@ class MemberService extends CServiceBase implements IMemberService {
                     $work->employeeTypeId = $this->taxonomy->getId("employeeType", $employeeType)->id;
                     $work->positionId = $this->taxonomy->getId("position", $position)->id;
                     $work->facultyId = $this->taxonomy->getId("faculty", $faculty)->id;
-//                    $work->departmentId = $this->taxonomy->getId($pCode, $value)->id;
+                    $depart= $this->taxonomy->getParentId($work->facultyId);
+                    foreach ($depart as $key2 => $value2){
+                        if ($value2->value1==$department){
+                            $work->departmentId = $value2->id;
+                        }
+                    }
                     $work->matierId = $this->taxonomy->getId("matier", $matier)->id;
                     $sala = new \apps\member\entity\Salary();
                     $sala->memberId = $mem->memberId;

@@ -1,0 +1,258 @@
+<div class="page-content">
+
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li> <i class="fa fa-home"></i> <a href="#">{{#i18n}}home{{/i18n}}</a> </li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/member/view/member/lists"
+                   onclick="btnHTML(this)">รายชื่อสมาชิก
+                </a>
+            </li>
+            
+            <li class="active">ประวัติการแก้ไข</li>
+        </ul>
+    </div>
+
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+            </h1>
+        </div>
+
+    </div>
+
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header"> <span class="widget-caption">ประวัติการแก้ไข :นายยยยยยย</span> </div>
+                    <div class="widget-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active">
+                                <a href="#" role="tab" data-toggle="tab"
+                                   data-id="content-body"
+                                   data-api="{{_context_path}}/api/member/view/member/history"
+                                   onclick="btnHTML(this)">
+                                    <i class="fa fa-folder-open-o"></i> {{#i18n}}button.history{{/i18n}}
+                                </a>
+                            </li>
+                            <li>
+                                <a id="btnYes" href="#"  role="tab" data-toggle="tab">
+                                    <i class="fa fa-phone"></i> {{#i18n}}button.contact{{/i18n}}
+                                </a>
+                            </li>
+                            <li>
+                                <a id="btnNo" href="#" role="tab" data-toggle="tab">
+                                    <i class="fa fa-briefcase"></i>{{#i18n}}button.work{{/i18n}}
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a id="btnNo" href="#" role="tab" data-toggle="tab">
+                                    <i class="fa fa-money"></i>{{#i18n}}button.salary{{/i18n}}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="rows">
+                            <table id="tableYes" class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}olddata{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}newdata{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyYes">
+                                    {{#lists}}  
+                                    <tr>
+                                        <td>{{rowNo}}</td>
+                                        <td>{{idCard}}</td>
+                                        <td>{{titleName}} {{fname}} {{lname}}</td>
+                                        <td>{{department1}} {{faculty1}}</td>
+                                        <td>{{payment}}</td>
+                                    </tr>
+                                    {{/lists}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rows" id="tableNo" style="display:none;">
+
+                            <div class="col-sm-2 pull-left">
+                                <div class="checkbox">
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="checkAll">
+                                        <span class="text">{{#i18n}}select.all{{/i18n}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-8 pull-right">
+                                <button id="btn_saveNo" class="btn btn-primary">
+                                    {{#i18n}}button.save{{/i18n}}
+                                </button>
+                            </div>
+                            <table  class="table table-bordered table-striped table-condensed mb-none" >
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}idCard{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sector{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}payment{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}select{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyNo">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">อัพโหลดไฟล์กองทุนของพนักงานมหาวิทยาลัย</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="control-label">ไฟล์ .csv</label>
+                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="frm_upload">
+                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ .csv เพื่ออัพโหลด</span></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{#i18n}}button.close{{/i18n}}</button>
+                <button type="button" class="btn btn-primary" id="btn_upload">{{#i18n}}button.upload{{/i18n}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#filtervalue").hide();
+        //titleName();
+        //listtitleName();
+        $("#filterCode").change(function () {
+            var pCode = $("#filterCode").val();
+            var data;
+            if (pCode == "department") {
+                data = getCode(pCode);
+            } else if (pCode != "name") {
+                data = getPCode(pCode);
+            }
+
+            var html;
+            if ($("#filterCode").val() == "name") {
+                $("#searchName").show();
+                $("#filtervalue").hide();
+            } else {
+                if (data == "") {
+                    html = '<option value="">โปรดเลือก</option>';
+
+                } else {
+                    $.each(data, function (key, value) {
+                        html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
+
+                    });
+                }
+                $("#searchName").hide();
+                $("#filtervalue").show();
+                $("#filtervalue").html(html);
+            }
+
+
+        });
+
+
+
+        $('.btn-del').click(function () {
+            var id = $(this).attr('row-index');
+
+            if (confirm("คุณต้องการจำหน่ายบุคคลดังกล่าวใช่หรือไม่?")) {
+                var data = {"memberId": id};
+                var msg = sendData('{{_context_path}}/api/member/member/delete', data);
+
+                if (msg.delete == true) {
+
+                    getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                    Notify('การจำหน่ายเสร็จสิ้น!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                } else {
+                    Notify('การจำหน่ายไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                }
+            }
+
+        });
+        $("#btnSearch").click(function () {
+            var searchName = $("#searchName").val();
+            var filterCode = $("#filterCode").val();
+            var filtervalue = $("#filtervalue").val();
+            if (searchName) {
+                if (searchName == "") {
+                    $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+                } else {
+                    var data = {"searchName": searchName};
+                }
+            }
+            else {
+                var data = {
+                    "filterCode": filterCode,
+                    "filtervalue": filtervalue
+                };
+
+
+            }
+            getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', data);
+        });
+
+        var myDropzone = new Dropzone("#frm_upload", {
+            url: "{{_context_path}}/api/member/member/upload",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            acceptedFiles: '.csv',
+            maxFiles: 1,
+            init: function () {
+                $("#btn_upload").click(function () {
+                    myDropzone.processQueue();
+                });
+            },
+            sending: function (file, xhr, formData) {
+//                var properser_id = $.jx.state.get('properser', 'properser_id');
+//                formData.append('properser_id', properser_id);
+            },
+            success: function (file, txt) {
+                if (txt.upload == true) {
+                    $("#uploadModal").modal('hide');
+                    myDropzone.removeFile(file);
+                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                    setTimeout(function () {
+                        getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                    }, 1000);
+
+                } else if (txt.upload == "cantUpload") {
+                    Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
+                } 
+            }
+        });
+
+    });
+
+
+
+</script>

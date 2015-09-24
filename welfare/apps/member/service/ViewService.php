@@ -276,7 +276,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function historyEdit($id) {
-        $view = new CJView("user/profile", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("admin/history", CJViewType::HTML_VIEW_ENGINE);
         
         return $view;
     }
