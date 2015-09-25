@@ -277,7 +277,13 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function historyEdit($id) {
         $view = new CJView("admin/history", CJViewType::HTML_VIEW_ENGINE);
-        
+        $sql = "select * "
+                . "FROM v_fullmember mem1 "
+                . "join memberhistory mhis "
+                . "on mhis.memberId = mem1.memberId "
+                . "WHERE mem1.memberId=$id ";
+        $member = $this->datacontext->pdoQuery($sql);
+        $view->lists = $member;
         return $view;
     }
 
