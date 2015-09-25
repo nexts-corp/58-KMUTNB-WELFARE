@@ -391,8 +391,8 @@ class MemberService extends CServiceBase implements IMemberService {
             $error = array();
 
             foreach ($arr as $key => $value) {
-                
-               
+
+
                 $idCard = str_replace(" ", "", $value[0]);
                 $academic = str_replace(" ", "", $value[1]);
                 $titleName = str_replace(" ", "", $value[2]);
@@ -419,8 +419,10 @@ class MemberService extends CServiceBase implements IMemberService {
                 $mobile = str_replace(" ", "", $value[19]);
                 $email = str_replace(" ", "", $value[20]);
                 $dob = str_replace(" ", "", $value[21]);
+                $dob = explode("/", $dob);
+                $dob = new \DateTime(intval($dob[2] - 543) . "-" . $dob[1] . "-" . $dob[0]);
                 $memberActiveId = str_replace(" ", "", $value[22]);
-                 
+
 //                $dateNotice = explode("-", $dateNotice);
 //                $dateNotice = new \DateTime(intval($dateNotice[2] - 543) . "-" . $dateNotice[1] . "-" . $dateNotice[0]);
 //                $myBenefit = str_replace(",", "", str_replace(" ", "", $value[6]));
@@ -444,18 +446,20 @@ class MemberService extends CServiceBase implements IMemberService {
 //                        "dateNotice" => $value[3]
 //                    ));
 //                } else {}
-                print_r($titleName);
-                exit();
+
                 $member = new \apps\member\entity\Member();
                 $member->idCard = $idCard;
-                $member->titleNameId = $this->taxonomy->getPCodeValue("titleName", $titleName)->id;
-                $member->academicId = $this->taxonomy->getPCodeValue("academic", $academic)->id;
+                $member->titleNameId = $this->taxonomy->getPCodeValue("titleName", $titleName)[0]->id;
+                if ($academic != "") {
+                    $member->academicId = $this->taxonomy->getPCodeValue("academic", $academic)[0]->id;
+                }
                 $member->fname = $fname;
                 $member->lname = $lname;
-                $member->genderId = $this->taxonomy->getPCodeValue("gender", $gender)->id;
+                $member->genderId = $this->taxonomy->getPCodeValue("gender", $gender)[0]->id;
                 $member->dob = $dob;
                 $member->employeeCode = $employeeCode;
                 $member->workStartDate = $workStartDate;
+                $member->memberActiveId = $this->taxonomy->getPCodeValue("memberActive", $memberActiveId)[0]->id;
 //                    $employee->saving = $saving;
 //                    $employee->myBenefit = $myBenefit;
 //                    $employee->employerBenefit = $employerBenefit;
@@ -463,29 +467,34 @@ class MemberService extends CServiceBase implements IMemberService {
 //                    $employee->total = $total;
 //                    $employee->dateNotice = $dateNotice;
 //                    $employee->filename = $filename;
+
                 if ($this->datacontext->saveObject($member)) {
-                    $memb = new \apps\member\entity\Member();
-                    $memb->setIdCard($idCard);
-                    $mem = $this->datacontext->getObject($memb);
+
+//                    $memb = new \apps\member\entity\Member();
+//                    $memb->setIdCard($idCard);
+//                    $mem = $this->datacontext->getObject($memb);
                     $work = new \apps\member\entity\Work();
-                    $work->memberId = $mem->memberId;
-                    $work->employeeTypeId = $this->taxonomy->getPCodeValue("employeeType", $employeeType)->id;
-                    $work->positionId = $this->taxonomy->getPCodeValue("position", $position)->id;
-                    $work->facultyId = $this->taxonomy->getPCodeValue("faculty", $faculty)->id;
-                    $depart= $this->taxonomy->getPCodeValue($this->taxonomy->getPCodeValue("faculty", $faculty)->pCode, $department);
-                    foreach ($depart as $key2 => $value2){
-                        if ($value2->value1==$department){
+                    $work->memberId = $member->memberId;
+                    $work->employeeTypeId = $this->taxonomy->getPCodeValue("employeeType", $employeeType)[0]->id;
+                    $work->positionId = $this->taxonomy->getPCodeValue("position", $position)[0]->id;
+                    $work->facultyId = $this->taxonomy->getPCodeValue("faculty", $faculty)[0]->id;
+                    $departCode = $this->taxonomy->getPCodeValue("faculty", $faculty)[0]->code;
+                    $depart = $this->taxonomy->getPCodeValue($departCode, $department);
+                    foreach ($depart as $key2 => $value2) {
+                        if ($value2->value1 == $department) {
                             $work->departmentId = $value2->id;
                         }
                     }
-                    $work->matierId = $this->taxonomy->getPCodeValue("matier", $matier)->id;
+//                    print_r($depart);
+//                    exit();
+                    $work->matierId = $this->taxonomy->getPCodeValue("matier", $matier)[0]->id;
                     $sala = new \apps\member\entity\Salary();
-                    $sala->memberId = $mem->memberId;
+                    $sala->memberId = $member->memberId;
                     $sala->salary = $salary;
                     $sala->salaryDate = $salaryDate;
                     $sala->rank = $rank;
                     $contact = new \apps\member\entity\Contact();
-                    $contact->memberId = $mem->memberId;
+                    $contact->memberId = $member->memberId;
                     $contact->address = $address;
                     $contact->internalPhone = $internalPhone;
                     $contact->phone = $phone;
