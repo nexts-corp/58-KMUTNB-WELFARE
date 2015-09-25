@@ -381,8 +381,8 @@ class MemberService extends CServiceBase implements IMemberService {
         array_splice($arr, 0, 1);
         array_pop($arr);
 
-        $uploaddir = './uploads/';
-        $filename = 'fundEmp' . date("YmdHis") . ".csv";
+        $uploaddir = './uploads/member/';
+        $filename = 'mem' . date("YmdHis") . ".csv";
         $uploadfile = $uploaddir . $filename;
 
 
@@ -444,14 +444,15 @@ class MemberService extends CServiceBase implements IMemberService {
 //                        "dateNotice" => $value[3]
 //                    ));
 //                } else {}
-
+                print_r($titleName);
+                exit();
                 $member = new \apps\member\entity\Member();
                 $member->idCard = $idCard;
-                $member->titleNameId = $this->taxonomy->getId("titleName", $titleName)->id;
-                $member->academicId = $this->taxonomy->getId("academic", $academic)->id;
+                $member->titleNameId = $this->taxonomy->getPCodeValue("titleName", $titleName)->id;
+                $member->academicId = $this->taxonomy->getPCodeValue("academic", $academic)->id;
                 $member->fname = $fname;
                 $member->lname = $lname;
-                $member->genderId = $this->taxonomy->getId("gender", $gender)->id;
+                $member->genderId = $this->taxonomy->getPCodeValue("gender", $gender)->id;
                 $member->dob = $dob;
                 $member->employeeCode = $employeeCode;
                 $member->workStartDate = $workStartDate;
@@ -468,16 +469,16 @@ class MemberService extends CServiceBase implements IMemberService {
                     $mem = $this->datacontext->getObject($memb);
                     $work = new \apps\member\entity\Work();
                     $work->memberId = $mem->memberId;
-                    $work->employeeTypeId = $this->taxonomy->getId("employeeType", $employeeType)->id;
-                    $work->positionId = $this->taxonomy->getId("position", $position)->id;
-                    $work->facultyId = $this->taxonomy->getId("faculty", $faculty)->id;
-                    $depart= $this->taxonomy->getParentId($work->facultyId);
+                    $work->employeeTypeId = $this->taxonomy->getPCodeValue("employeeType", $employeeType)->id;
+                    $work->positionId = $this->taxonomy->getPCodeValue("position", $position)->id;
+                    $work->facultyId = $this->taxonomy->getPCodeValue("faculty", $faculty)->id;
+                    $depart= $this->taxonomy->getPCodeValue($this->taxonomy->getPCodeValue("faculty", $faculty)->pCode, $department);
                     foreach ($depart as $key2 => $value2){
                         if ($value2->value1==$department){
                             $work->departmentId = $value2->id;
                         }
                     }
-                    $work->matierId = $this->taxonomy->getId("matier", $matier)->id;
+                    $work->matierId = $this->taxonomy->getPCodeValue("matier", $matier)->id;
                     $sala = new \apps\member\entity\Salary();
                     $sala->memberId = $mem->memberId;
                     $sala->salary = $salary;
