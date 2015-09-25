@@ -111,4 +111,10 @@ class TaxonomyService extends CServiceBase implements ITaxonomyService {
         return $this->datacontext->getObject($sql,$param);
     }
 
+    public function getId($id) {
+        $tax = new Taxonomy();
+        $tax->id = $id;
+        return $this->datacontext->getObject($tax);
+    }
+
 }
