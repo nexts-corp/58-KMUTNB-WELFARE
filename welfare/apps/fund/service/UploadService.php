@@ -30,7 +30,7 @@ class UploadService extends CServiceBase implements IUploadService {
         array_splice($arr, 0, 1);
         array_pop($arr);
 
-        $uploaddir = './uploads/';
+        $uploaddir = './uploads/fund/';
         $filename = 'fundEmp' . date("YmdHis") . ".csv";
         $uploadfile = $uploaddir . $filename;
 
@@ -126,7 +126,7 @@ class UploadService extends CServiceBase implements IUploadService {
         array_splice($arr, 0, 1);
         array_pop($arr);
 
-        $uploaddir = './uploads/';
+        $uploaddir = './uploads/fund/';
         $filename = 'fundEx' . date("YmdHis") . ".csv";
         $uploadfile = $uploaddir . $filename;
 
@@ -227,7 +227,7 @@ class UploadService extends CServiceBase implements IUploadService {
         array_splice($arr, 0, 1);
         array_pop($arr);
 
-        $uploaddir = './uploads/';
+        $uploaddir = './uploads/fund/';
         $filename = 'fundRe' . date("YmdHis") . ".csv";
         $uploadfile = $uploaddir . $filename;
 

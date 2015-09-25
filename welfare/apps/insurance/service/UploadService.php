@@ -28,7 +28,7 @@ class UploadService extends CServiceBase implements IUploadService {
         array_splice($arr, 0, 1);
         array_pop($arr);
 
-        $uploaddir = './uploads/';
+        $uploaddir = './uploads/insurance/';
         $filename = 'sso' . date("YmdHis") . ".csv";
         $uploadfile = $uploaddir . $filename;
         if (move_uploaded_file($file['tmp_name'], $uploadfile)) {

@@ -110,8 +110,15 @@
 
                             <div class="form-group">
                                 <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
-                                <div class="col-lg-8">
-                                    <input type="file" name="welfareFile" id="welfareFile" class="form-control" />
+                                <div class="col-lg-6">
+                                    <!--                                    <input type="file" name="welfareFile" id="welfareFile" class="form-control" />-->
+                                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="welfareFile">
+                                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ประกอบสวัสดิการ</span></div>
+                                    </form>
+                                    <input type="hidden" name="welfareFilename" id="welfareFilename" value="" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <button class="btn btn-info" id="btn_upload_welfare">{{#i18n}}button.upload{{/i18n}}</button>
                                 </div>
                                 <!--                                <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="frmWelfareFile">
                                                                     <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ประกอบสวัสดิการ</span></div>
@@ -385,15 +392,21 @@
         var fieldArr = {salary: "เงินเดือน", employeeTypeId: "ประเภทพนักงาน", genderId: "เพศ", dob: "อายุสมาชิก", workStartDate: "วัน-เดือน-ปี ที่บรรจุ", workEndDate: "วัน-เดือน-ปี ที่เกษียณ"};
         var operationArr = {'=': "เท่ากับ", '<': "น้อยกว่า", '<=': "น้อยกว่าหรือเท่ากับ", '>': "มากกว่า", '>=': "มากกว่าหรือเท่ากับ", '!=': "ไม่เท่ากับ"};
 
-        $("#welfareFile").unbind().dropzone({
+        var welfareFile = new Dropzone("#welfareFile", {
             url: "{{_context_path}}/api/welfare/upload/welfare",
             addRemoveLinks: true,
-            autoProcessQueue: true,
+            autoProcessQueue: false,
             uploadMultiple: false,
             acceptedFiles: '.pdf,image/*',
             maxFiles: 1,
+            init: function () {
+                $("#btn_upload_welfare").click(function () {
+                    welfareFile.processQueue();
+                });
+            },
             success: function (file, txt) {
-
+                var filename = $("#welfareFilename").val(txt.upload);
+                alert(txt.upload);
             }
         });
 
@@ -580,6 +593,8 @@
                 var i = 0;
                 for (i = (parseInt(rowIndex) + 1); i < rowConditions; i++) {
                     $(".conditions[row-index='" + i + "']").attr("row-index", i - 1);
+                    $(".removeConditions[row-index='" + i + "']").attr("row-index", i - 1);
+                    $(".divValueX[row-index='" + i + "']").attr("row-index", i - 1);
                 }
                 rowConditions = --i;
 

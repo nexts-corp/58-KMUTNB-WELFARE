@@ -176,6 +176,7 @@
             addRemoveLinks: true,
             autoProcessQueue: false,
             uploadMultiple: false,
+            paramName:"file",
             acceptedFiles: '.csv',
             maxFiles: 1,
             init: function () {
@@ -184,8 +185,8 @@
                 });
             },
             sending: function (file, xhr, formData) {
-//                var properser_id = $.jx.state.get('properser', 'properser_id');
-//                formData.append('properser_id', properser_id);
+//                var memberId = '{{#datas}}{{memberId}}{{/datas}}';
+//                formData.append('memberId', memberId);
             },
             success: function (file, txt) {
                 if (txt.sso == true) {
