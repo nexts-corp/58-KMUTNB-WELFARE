@@ -1,5 +1,7 @@
 <?php
+
 namespace apps\welfare\interfaces;
+
 /**
  * @name IViewAdminService
  * @uri /view/admin
@@ -7,6 +9,7 @@ namespace apps\welfare\interfaces;
  * 
  */
 interface IViewAdminService {
+
     /**
      * @name lists
      * @uri /welfare/lists
@@ -14,15 +17,20 @@ interface IViewAdminService {
      * @description จัดการรายการสวัสดิการ
      */
     public function welfareLists();
-    
-        /**
-     * @name lists
+
+    /**
+     * @name add
      * @uri /welfare/add
      * @return html view
      * @description จัดการรายการสวัสดิการ
      */
     public function welfareAdd();
- 
-    
-    
+
+    /**
+     * @name edit
+     * @uri /welfare/edit
+     * @return html view
+     * @description จัดการรายการสวัสดิการ
+     */
+    public function welfareEdit();
 }

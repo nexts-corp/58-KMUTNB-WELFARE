@@ -9,6 +9,8 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IViewAdminService;
 use apps\welfare\entity\Welfare;
+use apps\welfare\entity\Details;
+use apps\welfare\entity\Conditions;
 
 class ViewAdminService extends CServiceBase implements IViewAdminService {
 
@@ -44,6 +46,40 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 
     public function welfareAdd() {
         $view = new CJView("admin/welfare/add", CJViewType::HTML_VIEW_ENGINE);
+        $view->unit = $this->taxonomy->getPCode("unit");
+        return $view;
+    }
+
+    public function welfareEdit() {
+        $view = new CJView("admin/welfare/edit", CJViewType::HTML_VIEW_ENGINE);
+        $welfareId = $this->getRequest()->welfareId;
+
+        //  $wf = array();
+
+        $welfare = new Welfare();
+        $welfare->welfareId = $welfareId;
+        $welfare = $this->datacontext->getObject($welfare)[0];
+
+        $details = new Details();
+        $details->welfareId = $welfareId;
+        $details = $this->datacontext->getObject($details);
+
+        $welfare->details = $details;
+
+
+        foreach ($details as $key => $value) {
+            $conditions = new Conditions();
+            $conditions->detailsId = $value->detailsId;
+            $conditions = $this->datacontext->getObject($conditions);
+            $welfare->details[$key]->conditions = $conditions;
+        }
+        $view->welfare = $welfare;
+       
+//
+//        $conditions = new Conditions();
+//        $conditions->welfareId = $welfareId;
+//        $conditions = $this->datacontext->getObject($conditions);
+//
         $view->unit = $this->taxonomy->getPCode("unit");
         return $view;
     }

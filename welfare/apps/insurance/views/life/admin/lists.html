@@ -109,44 +109,49 @@
             $("#tableNo").hide();
             refreshYes();
         });
+
+
         function refreshNo() {
-            no = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"}, function (result) {
-                return result;
+            sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"},
+            function (result) {
+                var body = "";
+                no = result;
+                $.each(no.lists, function (k, v) {
+                    body += "<tr row-index='" + v.lifeId + "'>" +
+                            "<td class='text-center'>" + v.rowNo + "</td>" +
+                            "<td>" + v.idCard + "</td>" +
+                            "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                            "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                            "<td class='text-center'>" + v.payment + "</td>" +
+                            "<td class='text-center'><div class='checkbox'>" +
+                            "<label>" +
+                            "<input type='checkbox' class='checkboxNo' value='" + k + "' />" +
+                            "<span class='text'></span>" +
+                            '</label>' +
+                            "</div>" +
+                            "</td>" +
+                            "</tr>";
+                });
+                $("#tbodyNo").html(body);
             });
-            var body = "";
-            $.each(no.lists, function (k, v) {
-                body += "<tr row-index='" + v.lifeId + "'>" +
-                        "<td class='text-center'>" + v.rowNo + "</td>" +
-                        "<td>" + v.idCard + "</td>" +
-                        "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
-                        "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
-                        "<td class='text-center'>" + v.payment + "</td>" +
-                        "<td class='text-center'><div class='checkbox'>" +
-                        "<label>" +
-                        "<input type='checkbox' class='checkboxNo' value='" + k + "' />" +
-                        "<span class='text'></span>" +
-                        '</label>' +
-                        "</div>" +
-                        "</td>" +
-                        "</tr>";
-            });
-            $("#tbodyNo").html(body);
+
         }
         function refreshYes() {
-            var body = "";
-            yes = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
-                result;
+            sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
+                var body = "";
+                yes = result;
+                $.each(yes.lists, function (k, v) {
+                    body += "<tr>" +
+                            "<td>" + v.rowNo + "</td>" +
+                            "<td>" + v.idCard + "</td>" +
+                            "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                            "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                            "<td>" + v.payment + "</td>" +
+                            "</tr>";
+                });
+                $("#tbodyYes").html(body);
             });
-            $.each(yes.lists, function (k, v) {
-                body += "<tr>" +
-                        "<td>" + v.rowNo + "</td>" +
-                        "<td>" + v.idCard + "</td>" +
-                        "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
-                        "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
-                        "<td>" + v.payment + "</td>" +
-                        "</tr>";
-            });
-            $("#tbodyYes").html(body);
+
         }
         $("#btnNo").click(function () {
             $("#tableYes").hide();
