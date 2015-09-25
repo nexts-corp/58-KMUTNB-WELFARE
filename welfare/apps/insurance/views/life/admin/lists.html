@@ -111,7 +111,7 @@
         });
         function refreshNo() {
             no = sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"}, function (result) {
-                result;
+                return result;
             });
             var body = "";
             $.each(no.lists, function (k, v) {

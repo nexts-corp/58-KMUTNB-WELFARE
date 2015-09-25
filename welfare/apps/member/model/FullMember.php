@@ -24,12 +24,12 @@ class FullMember {
     public $genderId;
 
     /**
-     * @Column(type="string", length=10, name="gender1",nullable=true) 
+     * @Column(type="string", length=255, name="gender1",nullable=true) 
      */
     public $gender1;
 
     /**
-     * @Column(type="string", length=10, name="gender2",nullable=true) 
+     * @Column(type="string", length=255, name="gender2",nullable=true) 
      */
     public $gender2;
 
@@ -39,12 +39,12 @@ class FullMember {
     public $titleNameId;
 
     /**
-     * @Column(type="string", length=10, name="titleName1",nullable=true) 
+     * @Column(type="string", length=255, name="titleName1",nullable=true) 
      */
     public $titleName1;
 
     /**
-     * @Column(type="string", length=10, name="titleName2",nullable=true) 
+     * @Column(type="string", length=255, name="titleName2",nullable=true) 
      */
     public $titleName2;
 
@@ -54,14 +54,24 @@ class FullMember {
     public $academicId;
 
     /**
-     * @Column(type="string", length=10, name="academic1",nullable=true) 
+     * @Column(type="string", length=255, name="academic1",nullable=true) 
      */
     public $academic1;
 
     /**
-     * @Column(type="string", length=10, name="academic2",nullable=true) 
+     * @Column(type="string", length=255, name="academic2",nullable=true) 
      */
     public $academic2;
+    
+        /**
+     * @Column(type="string", length=255, name="titles1",nullable=true) 
+     */
+    public $titles1;
+
+    /**
+     * @Column(type="string", length=255, name="titles2",nullable=true) 
+     */
+    public $titles2;
 
     /**
      * @Column(type="string", length=255, name="fname",nullable=true) 
@@ -99,12 +109,12 @@ class FullMember {
     public $memberActiveId;
 
     /**
-     * @Column(type="string", length=10, name="memberActive1",nullable=true) 
+     * @Column(type="string", length=255, name="memberActive1",nullable=true) 
      */
     public $memberActive1;
 
     /**
-     * @Column(type="string", length=10, name="memberActive2",nullable=true) 
+     * @Column(type="string", length=255, name="memberActive2",nullable=true) 
      */
     public $memberActive2;
 
@@ -169,12 +179,12 @@ class FullMember {
     public $employeeTypeId;
 
     /**
-     * @Column(type="string", length=10, name="employeeType1",nullable=true) 
+     * @Column(type="string", length=255, name="employeeType1",nullable=true) 
      */
     public $employeeType1;
 
     /**
-     * @Column(type="string", length=10, name="employeeType2",nullable=true) 
+     * @Column(type="string", length=255, name="employeeType2",nullable=true) 
      */
     public $employeeType2;
 
@@ -184,12 +194,12 @@ class FullMember {
     public $facultyId;
 
     /**
-     * @Column(type="string", length=10, name="faculty1",nullable=true) 
+     * @Column(type="string", length=255, name="faculty1",nullable=true) 
      */
     public $faculty1;
 
     /**
-     * @Column(type="string", length=10, name="faculty2",nullable=true) 
+     * @Column(type="string", length=255, name="faculty2",nullable=true) 
      */
     public $faculty2;
 
@@ -199,12 +209,12 @@ class FullMember {
     public $departmentId;
 
     /**
-     * @Column(type="string", length=10, name="department1",nullable=true) 
+     * @Column(type="string", length=255, name="department1",nullable=true) 
      */
     public $department1;
 
     /**
-     * @Column(type="string", length=10, name="department2",nullable=true) 
+     * @Column(type="string", length=255, name="department2",nullable=true) 
      */
     public $department2;
 
@@ -214,12 +224,12 @@ class FullMember {
     public $positionId;
 
     /**
-     * @Column(type="string", length=10, name="position1",nullable=true) 
+     * @Column(type="string", length=255, name="position1",nullable=true) 
      */
     public $position1;
 
     /**
-     * @Column(type="string", length=10, name="position2",nullable=true) 
+     * @Column(type="string", length=255, name="position2",nullable=true) 
      */
     public $position2;
 
@@ -229,12 +239,12 @@ class FullMember {
     public $matierId;
 
     /**
-     * @Column(type="string", length=10, name="matier1",nullable=true) 
+     * @Column(type="string", length=255, name="matier1",nullable=true) 
      */
     public $matier1;
 
     /**
-     * @Column(type="string", length=10, name="matier2",nullable=true) 
+     * @Column(type="string", length=255, name="matier2",nullable=true) 
      */
     public $matier2;
 
