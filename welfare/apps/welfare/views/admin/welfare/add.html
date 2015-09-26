@@ -8,7 +8,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/welfare/lists" onclick="btnHTML(this)">
+            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/admin/welfare/lists" onclick="btnHTML(this)">
                     <span class="menu-text">{{#i18n}}welfare.list{{/i18n}}</span>
                 </a>
             </li>
@@ -96,9 +96,9 @@
                                         <div class="dz-default dz-message"><span id="txtWelfareFile">เลือกไฟล์ประกอบสวัสดิการ</span></div>
                                     </form>
                                     <input type="hidden" name="welfareFilename" id="welfareFilename" value="" />
-                                    <div class="col-lg-12 text-center">
+<!--                                    <div class="col-lg-12 text-center">
                                         <button class="btn btn-info" id="btn_upload_welfare" >{{#i18n}}button.upload{{/i18n}}</button>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -175,9 +175,9 @@
                                         <div class="dz-default dz-message"><span id="txtDetailsFile">เลือกไฟล์ประกอบรายละเอียดสวัสดิการ</span></div>
                                     </form>
                                     <input type="hidden" name="detailsFilename" id="detailsFilename" value="" />
-                                    <div class="col-lg-12 text-center">
+<!--                                    <div class="col-lg-12 text-center">
                                         <button class="btn btn-info" id="btn_upload_details" >{{#i18n}}button.upload{{/i18n}}</button>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -317,19 +317,19 @@
         var welfareFile = new Dropzone("#welfareFile", {
             url: "{{_context_path}}/api/welfare/upload/welfare",
             addRemoveLinks: true,
-            autoProcessQueue: false,
+            autoProcessQueue: true,
             uploadMultiple: false,
             acceptedFiles: '.pdf,image/*',
             maxFiles: 1,
-            init: function () {
-                $("#btn_upload_welfare").click(function () {
-                    welfareFile.processQueue();
-                });
-            },
+//            init: function () {
+//                $("#btn_upload_welfare").click(function () {
+//                    welfareFile.processQueue();
+//                });
+//            },
             success: function (file, txt) {
                 if (txt.upload != "cantUpload") {
                     $("#welfareFilename").val(txt.upload);
-                    Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'warning', 'fa fa-success', true);
+                    Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
                 } else {
                     $("#welfareFilename").val("");
                     Notify('อัพโหลดไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
@@ -340,19 +340,19 @@
         var detailsFile = new Dropzone("#detailsFile", {
             url: "{{_context_path}}/api/welfare/upload/welfare",
             addRemoveLinks: true,
-            autoProcessQueue: false,
+            autoProcessQueue: true,
             uploadMultiple: false,
             acceptedFiles: '.pdf,image/*',
             maxFiles: 1,
-            init: function () {
-                $("#btn_upload_details").click(function () {
-                    detailsFile.processQueue();
-                });
-            },
+//            init: function () {
+//                $("#btn_upload_details").click(function () {
+//                    detailsFile.processQueue();
+//                });
+//            },
             success: function (file, txt) {
                 if (txt.upload != "cantUpload") {
                     $("#detailsFilename").val(txt.upload);
-                    Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'warning', 'fa fa-success', true);
+                    Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
                 } else {
                     $("#detailsFilename").val("");
                     Notify('อัพโหลดไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
@@ -690,7 +690,7 @@
                 sendData('{{_context_path}}/api/welfare/welfare/save', jsonEncode(datas),
                         function (result) {
                             if (result.save == true) {
-                                Notify('บันทึกเรียบร้อย !', 'top-right', '4000', 'warning', 'fa fa-success', true);
+                                Notify('บันทึกเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
                                 setTimeout(function () {
                                     getHTML('content-body', '{{_context_path}}/api/welfare/welfare/save', null);
                                 }, 1000);
@@ -698,7 +698,7 @@
                             }
                         });
             } else {
-                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
                 $('#name').focus();
             }
             return false;

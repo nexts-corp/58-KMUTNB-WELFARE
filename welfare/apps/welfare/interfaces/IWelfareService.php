@@ -21,11 +21,11 @@ interface IWelfareService {
     /**
      * @name updatewelfare
      * @uri /update
-     * @param apps\welfare\entity\Welfare data []
-     * @return boolean update [return ture or false if don't ]
+     * @param apps\welfare\entity\Welfare welfare
+     * @return boolean update
      * @description update แก้ไขข้อมูลสวัสดิการ
      */
-    public function update($datas);
+    public function update($welfare);
 
     /**
      * @name deletewelfare
