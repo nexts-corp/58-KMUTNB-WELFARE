@@ -85,7 +85,7 @@ class ViewService extends CServiceBase implements IViewService {
 //        $salaryDate = $member[0]['salaryDate']->format('d-m-Y');
         $wsd = explode("-", $member[0]->salaryDate);
         $member[0]->salaryDate= $wsd[2] . "-" . $wsd[1] . "-" . (intval($wsd[0]) + 543);
-
+        
         $user = new \apps\user\entity\User();
         $user->memberId = $member[0]->memberId;
         $user = $this->datacontext->getObject($user)[0];

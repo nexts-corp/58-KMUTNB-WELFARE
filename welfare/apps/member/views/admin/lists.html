@@ -244,6 +244,7 @@
             },
             success: function (file, txt) {
                 if (txt.upload == true) {
+                    
                     $("#uploadModal").modal('hide');
                     myDropzone.removeFile(file);
                     Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);

@@ -423,9 +423,10 @@ class MemberService extends CServiceBase implements IMemberService {
                 $email = str_replace(" ", "", $value[20]);
                 $dob = str_replace(" ", "", $value[21]);
                 $dob = explode("/", $dob);
+                $pwd = md5($dob[0].$dob[1].$dob[2]);
                 $dob = new \DateTime(intval($dob[2] - 543) . "-" . $dob[1] . "-" . $dob[0]);
                 $memberActiveId = str_replace(" ", "", $value[22]);
-
+                
 //                $dateNotice = explode("-", $dateNotice);
 //                $dateNotice = new \DateTime(intval($dateNotice[2] - 543) . "-" . $dateNotice[1] . "-" . $dateNotice[0]);
 //                $myBenefit = str_replace(",", "", str_replace(" ", "", $value[6]));
@@ -476,6 +477,16 @@ class MemberService extends CServiceBase implements IMemberService {
 //                    $memb = new \apps\member\entity\Member();
 //                    $memb->setIdCard($idCard);
 //                    $mem = $this->datacontext->getObject($memb);
+                    $usertype = new \apps\taxonomy\entity\Taxonomy();
+                    $usertype->code = "user";
+                    $usertype->pCode = "userType";
+                    $usert = $this->datacontext->getObject($usertype)[0];
+                    
+                    $user = new \apps\user\entity\User();
+                    $user->memberId = $member->memberId;
+                    $user->username = $idCard;
+                    $user->userTypeId = $usert->id;
+                    $user->password = $pwd;
                     $work = new \apps\member\entity\Work();
                     $work->memberId = $member->memberId;
                     $work->employeeTypeId = $this->taxonomy->getPCodeValue("employeeType", $employeeType)[0]->id;
@@ -503,6 +514,9 @@ class MemberService extends CServiceBase implements IMemberService {
                     $contact->phone = $phone;
                     $contact->mobile = $mobile;
                     $contact->email = $email;
+                    if ($this->datacontext->saveObject($user)) {
+                        $return = true;
+                    }
                     if ($this->datacontext->saveObject($work)) {
                         $return = true;
                     }

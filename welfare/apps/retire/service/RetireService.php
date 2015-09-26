@@ -40,7 +40,7 @@ class RetireService extends CServiceBase implements IRetireService {
 
         $query = "select mb.memberId,ifnull(mb.academic1,mb.titleName1) as titleName,mb.fname,mb.lname,mb.department1, "
                 . "mb.faculty1,mb.dob,mb.workStartDate,TIMESTAMPDIFF(YEAR,mb.workStartDate,curdate()) as ageWork, "
-                . "welEmp.employeeTypeId,mb.employeeType1,welEmp.quantity,welStart.workStartDate,welEnd.workEndDate "
+                . "welEmp.employeeTypeId,mb.employeeType1,welEmp.quantity,welStart.workStartDate,welEnd.workEndDate,sum(welEmp.quantity) as total "
                 . "from v_fullmember mb "
                 . "join (select welcon.detailsId,welcon.conditionsId,welcon.valuex as employeeTypeId,welde.quantity "
                 . "from welfareconditions welcon "
