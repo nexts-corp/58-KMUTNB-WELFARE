@@ -5,25 +5,30 @@ namespace apps\welfare\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\welfare\interfaces\IWelfareService;
+use apps\common\service\CommonService;
 use apps\welfare\entity\Welfare;
+use apps\welfare\entity\Details;
+use apps\welfare\entity\Conditions;
 use apps\taxonomy\entity\Taxonomy;
 
 class WelfareService extends CServiceBase implements IWelfareService {
 
     public $datacontext;
+    public $common;
 
     function __construct() {
         $this->datacontext = new CDataContext();
+        $this->common = new CommonService();
     }
 
     public function save($data) {
-       
+
         $details = $data->details;
         if ($data->dateStart != "") {
             $dateStart = explode("-", $data->dateStart);
             $dateStart[2] = intVal($dateStart[2]) - 543;
             $dateStart1 = $dateStart[2] . "-" . $dateStart[1] . "-" . $dateStart[0];
-            
+
             $data->dateStart = new \DateTime($dateStart1);
         }
         if ($data->dateEnd != "") {
@@ -36,20 +41,20 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
 
         if ($this->datacontext->saveObject($data)) {
-
             $welfareId = $data->welfareId;
-
-
             foreach ($details as $key => $value) {
                 $wd = new \apps\welfare\entity\Details();
                 $wd->welfareId = $welfareId;
                 $wd->description = $value->description;
                 $wd->quantity = $value->quantity;
                 $wd->returnTypeId = $value->returnTypeId;
+                if ($value->filename != "") {
+                    $wd->filename = $value->filename;
+                }
                 $condition = $value->conditions;
                 if ($this->datacontext->saveObject($wd)) {
                     $detailsId = $wd->detailsId;
-                    foreach($condition as $key2 => $value2){
+                    foreach ($condition as $key2 => $value2) {
                         $cd = new \apps\welfare\entity\Conditions();
                         $cd->welfareId = $welfareId;
                         $cd->detailsId = $detailsId;
@@ -60,7 +65,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
                     }
                 }
             }
-           
+
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;
         } else {
@@ -73,12 +78,12 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
     public function update($data) {
 
-         $details = $data->details;
+        $details = $data->details;
         if ($data->dateStart != "") {
             $dateStart = explode("-", $data->dateStart);
             $dateStart[2] = intVal($dateStart[2]) - 543;
             $dateStart1 = $dateStart[2] . "-" . $dateStart[1] . "-" . $dateStart[0];
-            
+
             $data->dateStart = new \DateTime($dateStart1);
         }
         if ($data->dateEnd != "") {
@@ -110,5 +115,25 @@ class WelfareService extends CServiceBase implements IWelfareService {
         }
     }
 
-//put your code here
+    public function get($welfareId) {
+
+        $welfare = new Welfare();
+        $welfare->welfareId = $welfareId;
+        $welfare = $this->datacontext->getObject($welfare)[0];
+        $welfare = $this->common->afterGet($welfare, array("dateCreated", "dateUpdated", "createBy", "updateBy"));
+        $details = new Details();
+        $details->welfareId = $welfareId;
+        $details = $this->datacontext->getObject($details);
+        foreach ($details as $key => $object) {
+            $conditions = new Conditions();
+            $conditions->detailsId = $object->detailsId;
+            $conditions = $this->datacontext->getObject($conditions);
+            $conditions = $this->common->afterGet($conditions, array("welfareId", "detailsId", "conditionsId", "dateCreated", "dateUpdated", "createBy", "updateBy"));
+            $details[$key]->conditions = $conditions;
+        }
+        $details = $this->common->afterGet($details, array("welfareId", "detailsId", "dateCreated", "dateUpdated", "createBy", "updateBy"));
+        $welfare->details = $details;
+        return $welfare;
+    }
+
 }

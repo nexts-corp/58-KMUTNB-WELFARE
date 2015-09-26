@@ -3,7 +3,7 @@
 namespace apps\welfare\interfaces;
 
 /**
- * @name welfare
+ * @name IWelfareService
  * @uri /welfare
  * @description จัดการ เพิ่ม/ลบ/แก้ไข ข้อมูลสวัสดิการ
  */
@@ -17,7 +17,7 @@ interface IWelfareService {
      * @description save เพิ่มข้อมูลสวัสดิการ
      */
     public function save($welfare);
-    
+
     /**
      * @name updatewelfare
      * @uri /update
@@ -35,7 +35,13 @@ interface IWelfareService {
      * @description delete ลบข้อมูลสวัสดิการ
      */
     public function delete($Id);
-    
-    
-    
+
+    /**
+     * @name get
+     * @uri /get
+     * @param string welfareId
+     * @return string welfare
+     * @description getลิสต์ข้อมูล
+     */
+    public function get($welfareId);
 }

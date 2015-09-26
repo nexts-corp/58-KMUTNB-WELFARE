@@ -3,7 +3,7 @@
 namespace apps\welfare\interfaces;
 
 /**
- * @name welfare
+ * @name IHistoryService
  * @uri /history
  * @description จัดการ ตรวจสอบรายการผู้เคยใช้สิทธิ์
  */

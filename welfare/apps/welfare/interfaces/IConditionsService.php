@@ -3,7 +3,7 @@
 namespace apps\welfare\interfaces;
 
 /**
- * @name welfare
+ * @name IConditionsService
  * @uri /conditions
  * @description จัดการ เพิ่ม/ลบ/แก้ไข เงื่อนไขสวัสดิการ
  */

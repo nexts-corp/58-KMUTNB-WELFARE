@@ -28,19 +28,20 @@
                         <span class="widget-caption">{{#i18n}}welfare.edit{{/i18n}}</span>
                     </div>
                     <div class="widget-body">
+                        {{#welfare}}
                         <div  class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.name{{/i18n}}</label>
                                 <div class="col-lg-8">
                                     <input type="text" class="form-control" name="name" placeholder="ชื่อสวัสดิการ"
-                                           id="name" data-validation="required" 
+                                           id="name" data-validation="required" value="{{name}}"
                                            data-validation-error-msg="*กรุณาใส่ชื่อสวัสดิการ" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.description{{/i18n}}</label>
                                 <div class="col-lg-8">
-                                    <textarea rows="4" data-validation-error-msg="" id="description" cols="67" ></textarea>
+                                    <textarea rows="4" data-validation-error-msg="" id="description" cols="67" >{{description}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,7 +58,7 @@
                                 <label for="reservation" class="col-lg-4 control-label">{{#i18n}}welfare.dateStart{{/i18n}}</label>
                                 <div class="controls col-lg-8">
                                     <div class="input-group">
-                                        <input class="form-control cDate" id="dateStart"  
+                                        <input class="form-control cDate" id="dateStart"  value="{{dateStart}}"
                                                data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
                                                data-validation-error-msg-container="#dateStart-th-msg-error" />
                                         <span class="input-group-addon">
@@ -71,7 +72,7 @@
                                 <div class="controls col-lg-8">
                                     <div class="input-group">
                                         <input class="form-control cDate" id="dateEnd" style="z-index: 0;" 
-                                               data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
+                                               data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ"  value="{{dateEnd}}"
                                                data-validation-error-msg-container="#dateEnd-th-msg-error" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -95,7 +96,7 @@
                                     <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="welfareFile">
                                         <div class="dz-default dz-message"><span id="txtWelfareFile">เลือกไฟล์ประกอบสวัสดิการ</span></div>
                                     </form>
-                                    <input type="hidden" name="welfareFilename" id="welfareFilename" value="" />
+                                    <input type="hidden" name="welfareFilename" id="welfareFilename" value="{{filename}}" />
                                     <div class="col-lg-12 text-center">
                                         <button class="btn btn-info" id="btn_upload_welfare" >{{#i18n}}button.upload{{/i18n}}</button>
                                     </div>
@@ -125,6 +126,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{/welfare}}
                     </div>
                 </div>
             </div>
@@ -313,6 +315,14 @@
         var rowDetails;
         var fieldArr = {salary: "เงินเดือน", employeeTypeId: "ประเภทพนักงาน", genderId: "เพศ", dob: "อายุสมาชิก", workStartDate: "วัน-เดือน-ปี ที่บรรจุ", workEndDate: "วัน-เดือน-ปี ที่เกษียณ"};
         var operationArr = {'=': "เท่ากับ", '<': "น้อยกว่า", '<=': "น้อยกว่าหรือเท่ากับ", '>': "มากกว่า", '>=': "มากกว่าหรือเท่ากับ", '!=': "ไม่เท่ากับ"};
+        var welfareId = '{{#welfare}}{{welfareId}}{{/welfare}}';
+        $("#resetTime").val('{{#welfare}}{{resetTime}}{{/welfare}}');
+        $("#free").val('{{#welfare}}{{free}}{{/welfare}}');
+        sendData('{{_context_path}}/api/welfare/welfare/get', {welfareId: welfareId}, function (result) {
+            Welfare = result.welfare;
+            Details = Welfare.details;
+            $("#showTable").html(createTableDetails(Details));
+        });
 
         var welfareFile = new Dropzone("#welfareFile", {
             url: "{{_context_path}}/api/welfare/upload/welfare",
@@ -336,7 +346,6 @@
                 }
             }
         });
-
         var detailsFile = new Dropzone("#detailsFile", {
             url: "{{_context_path}}/api/welfare/upload/welfare",
             addRemoveLinks: true,
@@ -361,8 +370,6 @@
         });
 
 
-
-
         $("#btnSaveDetails").click(function () {
             var details = {};
             var check = true;
@@ -375,7 +382,6 @@
                     details[this.id] = this.value;
                 }
             });
-
             if (check) {
                 if ($("#description").val() != "" || $("#quantity").val() != "") {
                     var filename = $("#detailsFilename").val();
@@ -395,12 +401,10 @@
             }
             return false;
         });
-
         $(".btnAppend").click(function () {
             var html = "";
             html += '<tr row-index="' + rowConditions + '"><td width="30%">' +
                     '<select class="fieldMap conditions form-control" name="fieldMap" data-bv-field="country" row-index="' + rowConditions + '">';
-
             $.each(fieldArr, function (k1, v1) {
                 html += '<option value="' + k1 + '">' + v1 + '</option>';
             });
@@ -421,7 +425,6 @@
                     '</button>' +
                     '</td>' +
                     '</tr>';
-
             $(".content-conditions").append(html);
             changeFieldMap();
             removeCondition();
@@ -435,12 +438,10 @@
                 $("#nameDescription").text(Details[rowDetails]["description"]);
                 if (typeof Details[rowDetails]['conditions'] !== 'undefined' && Details[rowDetails]['conditions'] !== null) {
                     var dataCondition = Details[rowDetails]['conditions'];
-
                     var html = "";
                     $.each(dataCondition, function (k, v) {
                         html += '<tr row-index="' + k + '"><td width="30%">' +
                                 '<select class="fieldMap conditions form-control" name="fieldMap" data-bv-field="country" row-index="' + k + '">';
-
                         $.each(fieldArr, function (k1, v1) {
                             if (v.fieldMap == k1) {
                                 html += '<option value="' + k1 + '" selected>' + v1 + '</option>';
@@ -553,7 +554,6 @@
                     $(".divValueX[row-index='" + i + "']").attr("row-index", i - 1);
                 }
                 rowConditions = --i;
-
             });
         }
 
@@ -562,7 +562,6 @@
             $.each(Details, function (key, value) {
                 table += "<tr row-index='" + key + "'>" +
                         "<td>" + (key + 1) + "</td>";
-
                 $.each(value, function (key2, value2) {
                     if (key2 != "conditions" && key2 != "filename") {
                         if (key2 == "returnTypeId") {
@@ -573,13 +572,11 @@
                         }
                     }
                 });
-
                 table += "<td>" +
                         "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข</button>" +
                         "   <button class='btnRemoveConditions btn btn-sm btn-danger' row-index='" + key + "'>ลบ</button>" +
                         "</td>" +
                         "</tr>";
-
             });
             return table;
         }
@@ -608,7 +605,6 @@
 
             return false;
         });
-
         $("#btn_preview").click(function () {
             var conditions = [];
             var isnull = true;
@@ -652,7 +648,6 @@
                 });
             }
         });
-
         $("#btnSaveAll").click(function () {
             if ($("#description").val() != "" || $("#name").val() != "") {
                 var retire = $("#retire").prop("checked");
@@ -668,7 +663,6 @@
                 }
                 Welfare['resetTime'] = $("#resetTime").val();
                 Welfare['free'] = $("#free").val();
-
                 if (willing == true) {
                     Welfare['willing'] = "Y";
                 } else {
@@ -686,7 +680,6 @@
 
                 Welfare['details'] = Details;
                 datas['welfare'] = Welfare;
-
                 sendData('{{_context_path}}/api/welfare/welfare/save', jsonEncode(datas),
                         function (result) {
                             if (result.save == true) {
@@ -694,7 +687,6 @@
                                 setTimeout(function () {
                                     getHTML('content-body', '{{_context_path}}/api/welfare/welfare/save', null);
                                 }, 1000);
-
                             }
                         });
             } else {

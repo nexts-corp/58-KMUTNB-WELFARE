@@ -3,8 +3,8 @@
 namespace apps\welfare\interfaces;
 
 /**
- * @name welfare
- * @uri /member
+ * @name IByMemberService
+ * @uri /bymember
  * @description จัดการ เพิ่ม/ลบ/แก้ไข ข้อมูลสวัสดิการ
  */
 interface IByMemberService {

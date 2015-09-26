@@ -3,7 +3,7 @@
 namespace apps\welfare\interfaces;
 
 /**
- * @name upload
+ * @name IUploadService
  * @uri /upload
  * @description อัพโหลดเอกสาร
  */

@@ -53,33 +53,8 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
     public function welfareEdit() {
         $view = new CJView("admin/welfare/edit", CJViewType::HTML_VIEW_ENGINE);
         $welfareId = $this->getRequest()->welfareId;
-
-        //  $wf = array();
-
-        $welfare = new Welfare();
-        $welfare->welfareId = $welfareId;
-        $welfare = $this->datacontext->getObject($welfare)[0];
-
-        $details = new Details();
-        $details->welfareId = $welfareId;
-        $details = $this->datacontext->getObject($details);
-
-        $welfare->details = $details;
-
-
-        foreach ($details as $key => $value) {
-            $conditions = new Conditions();
-            $conditions->detailsId = $value->detailsId;
-            $conditions = $this->datacontext->getObject($conditions);
-            $welfare->details[$key]->conditions = $conditions;
-        }
-        $view->welfare = $welfare;
-       
-//
-//        $conditions = new Conditions();
-//        $conditions->welfareId = $welfareId;
-//        $conditions = $this->datacontext->getObject($conditions);
-//
+        $wel = new WelfareService();
+        $view->welfare = $wel->get($welfareId);
         $view->unit = $this->taxonomy->getPCode("unit");
         return $view;
     }
