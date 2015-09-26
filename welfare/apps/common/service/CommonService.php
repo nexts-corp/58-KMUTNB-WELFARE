@@ -14,6 +14,45 @@ class CommonService extends CServiceBase implements ICommonService {
         $this->datacontext = new CDataContext();
     }
 
+    public function str2date($date, $format, $operation = "") {
+        if ($format == "Y-m-d") {
+            $date = explode("-", $date);
+            if ($operation == "+") {
+                $date[0] = (int) $date[0] + 543;
+            } elseif ($operation == "-") {
+                $date[0] = (int) $date[0] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2];
+        } elseif ($format == "d-m-Y") {
+            $date = explode("-", $date);
+            if ($operation == "+") {
+                $date[2] = (int) $date[2] + 543;
+            } elseif ($operation == "-") {
+                $date[2] = (int) $date[2] - 543;
+            }
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+        } elseif ($format == "Y-m-d H:i:s") {
+            $datetime = explode(" ", $date);
+            $date = explode("-", $datetime[0]);
+            if ($operation == "+") {
+                $date[0] = (int) $date[0] + 543;
+            } elseif ($operation == "-") {
+                $date[0] = (int) $date[0] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2] . " " . $datetime[1];
+        } elseif ($format == "d-m-Y H:i:s") {
+            $datetime = explode(" ", $date);
+            $date = explode("-", $datetime[0]);
+            if ($operation == "+") {
+                $date[2] = (int) $date[2] + 543;
+            } elseif ($operation == "-") {
+                $date[2] = (int) $date[2] - 543;
+            }
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0] . " " . $datetime[1];
+        }
+        return new \DateTime($date);
+    }
+
     public function date2str($date, $format, $operation = "") {
         $date = $date->format($format);
         if ($format == "Y-m-d") {
