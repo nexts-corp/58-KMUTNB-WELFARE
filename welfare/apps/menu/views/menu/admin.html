@@ -376,34 +376,23 @@
         </li>
 
         <li>
-            <a href="#" class="menu-dropdown">
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/news/view/news/list"
+               onclick="btnHTML(this)">
                 <i class="menu-icon fa fa-newspaper-o"></i>
 
                 <span class="menu-text">
-                    จัดการข่าวสาร
+                    รายการข้อมูลข่าวสาร
                 </span>
 
-                <i class="menu-expand"></i>
             </a>
-
-            <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/news/view/news/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายการข้อมูลข่าวสาร</span>
-                    </a>
-                </li>
-            </ul>
         </li>
 
         <li>
             <a href="#" 
                data-id="content-body"
                data-api="{{_context_path}}/api/qa/view/questions/list"
-
                onclick="btnHTML(this)">
                 <i class="menu-icon fa fa-comments-o"></i>
 
