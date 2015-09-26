@@ -356,8 +356,8 @@
                                         <label class="col-lg-3 control-label">ไฟล์อ้างอิง pdf/jpg/jpeg/gif</label>
                                         <div class="col-lg-9">
                                             
-                                            <input type="text" class="form-control" name="upload" id="upload"/>
-                                            <button type="button" class="btn btn-default" id="btnmodal"
+                                            <input type="text" class="form-control col-lg-6" name="upload" id="upload"/>
+                                            <button type="button" class="btn btn-default col-lg-3" id="btnmodal"
                                                     data-toggle="modal" 
                                                     data-target="#uploadModal" 
                                                     data-whatever="@fat">
@@ -553,7 +553,7 @@
                 success: function (file, txt) {
                     if (txt.upload != false) {
                         
-                        $("#btnmodal").hide();
+                        
                         $("#upload").show();
                         parth = txt.upload;
                         $("#upload").val(parth);

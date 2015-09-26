@@ -242,12 +242,49 @@ class ViewService extends CServiceBase implements IViewService {
     public function historyEdit($id) {
         $view = new CJView("admin/history", CJViewType::HTML_VIEW_ENGINE);
         $sql = "select * "
-                . "FROM v_fullmember mem1 "
-                . "join memberhistory mhis "
-                . "on mhis.memberId = mem1.memberId "
-                . "WHERE mem1.memberId=$id ";
-        $member = $this->datacontext->pdoQuery($sql);
-        $view->lists = $member;
+                . "FROM memberhistory mhis "
+                . "WHERE mhis.memberId=$id ";
+        $history = $this->datacontext->pdoQuery($sql);
+        
+        $sql1 = "select * "
+                . "FROM memberhistory mhis "
+                . "WHERE mhis.entityChange = 'member' and mhis.memberId=$id ";
+        $mem = $this->datacontext->pdoQuery($sql1);
+        
+        $sql2 = "select * "
+                . "FROM memberhistory mhis "
+                . "WHERE mhis.entityChange = 'contact' and mhis.memberId=$id ";
+        $contact = $this->datacontext->pdoQuery($sql2);
+        
+        $sql3 = "select * "
+                . "FROM memberhistory mhis "
+                . "WHERE mhis.entityChange = 'salary' and mhis.memberId=$id ";
+        $salary = $this->datacontext->pdoQuery($sql3);
+        
+        $sql4 = "select *, taxo.value1 as older, taxn.value1 as newdata "
+                . "FROM memberhistory mhis "
+                . "left join taxonomy taxo "
+                . "on taxo.id = mhis.valueOld "
+                . "left join taxonomy taxn "
+                . "on taxn.id = mhis.valueNew "
+                . "WHERE mhis.entityChange = 'work' and mhis.memberId=$id ";
+        $work = $this->datacontext->pdoQuery($sql4);
+        
+        $sql5 = "select * "
+                . "FROM memberdocument mdoc "
+                . "WHERE  mdoc.memberId=$id ";
+        $ref = $this->datacontext->pdoQuery($sql5);
+        
+        $member = new \apps\member\model\FullMember();
+        $member->memberId = $id;
+        $member = $this->datacontext->getObject($member);
+        $view->member = $member;
+        $view->work = $work;
+        $view->salary = $salary;
+        $view->contact = $contact;
+        $view->memhis = $mem;
+        $view->lists = $history;
+        $view->ref = $ref;
         return $view;
     }
 

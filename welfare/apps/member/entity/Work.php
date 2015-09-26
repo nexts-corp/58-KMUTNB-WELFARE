@@ -6,7 +6,7 @@ use apps\common\entity\EntityBase;
  * @Entity
  * @Table(name="MemberWork")
  */
-class Work extends EntityBase{
+class Work {
     /**
      * @Id
      * @GeneratedValue
