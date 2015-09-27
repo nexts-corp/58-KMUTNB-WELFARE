@@ -68,6 +68,7 @@
                                 <table  class="table table-hover table-striped table-bordered table-condensed " >
                                     <thead>
                                         <tr>
+                                            <th class="center">{{#i18n}}fieldName{{/i18n}}</th>
                                             <th class="center">{{#i18n}}olddata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}newdata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
@@ -77,6 +78,7 @@
                                     <tbody id="history">
                                         {{#lists}}  
                                         <tr>
+                                            <td>{{fieldChange}}</td>
                                             <td>{{valueOld}}</td>
                                             <td>{{valueNew}}</td>
                                             <td>{{dateCreated}}</td>
@@ -90,6 +92,7 @@
                                 <table id="user" class="table table-hover table-striped table-bordered table-condensed  ">
                                     <thead>
                                         <tr>
+                                            <th class="center">{{#i18n}}fieldName{{/i18n}}</th>
                                             <th class="center">{{#i18n}}olddata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}newdata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
@@ -99,6 +102,7 @@
                                     <tbody id="tbodyYes">
                                         {{#memhis}}  
                                         <tr>
+                                            <td>{{fieldChange}}</td>
                                             <td>{{valueOld}}</td>
                                             <td>{{valueNew}}</td>
                                             <td>{{dateCreated}}</td>
@@ -112,6 +116,7 @@
                                 <table id="contact" class="table table-hover table-striped table-bordered table-condensed ">
                                     <thead>
                                         <tr>
+                                            <th class="center">{{#i18n}}fieldName{{/i18n}}</th>
                                             <th class="center">{{#i18n}}olddata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}newdata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
@@ -121,6 +126,7 @@
                                     <tbody id="tbodyYes">
                                         {{#contact}}  
                                         <tr>
+                                            <td>{{fieldChange}}</td>
                                             <td>{{valueOld}}</td>
                                             <td>{{valueNew}}</td>
                                             <td>{{dateCreated}}</td>
@@ -134,6 +140,7 @@
                                 <table id="work" class="table table-hover table-striped table-bordered table-condensed ">
                                     <thead>
                                         <tr>
+                                            <th class="center">{{#i18n}}fieldName{{/i18n}}</th>
                                             <th class="center">{{#i18n}}olddata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}newdata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
@@ -143,6 +150,8 @@
                                     <tbody id="tbodyYes">
                                         {{#work}}  
                                         <tr>
+                                            
+                                            <td>{{fieldChange}}</td>
                                             <td>{{older}}</td>
                                             <td>{{newdata}}</td>
                                             <td>{{dateCreated}}</td>
@@ -156,6 +165,7 @@
                                 <table id="salary" class="table table-hover table-striped table-bordered table-condensed ">
                                     <thead>
                                         <tr>
+                                            <th class="center">{{#i18n}}fieldName{{/i18n}}</th>
                                             <th class="center">{{#i18n}}olddata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}newdata{{/i18n}}</th>
                                             <th class="center">{{#i18n}}dayupdate{{/i18n}}</th>
@@ -165,6 +175,7 @@
                                     <tbody id="tbodyYes">
                                         {{#salary}}  
                                         <tr>
+                                            <td>{{fieldChange}}</td>
                                             <td>{{valueOld}}</td>
                                             <td>{{valueNew}}</td>
                                             <td>{{dateCreated}}</td>
