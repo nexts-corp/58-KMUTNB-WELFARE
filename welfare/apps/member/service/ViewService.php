@@ -449,9 +449,31 @@ class ViewService extends CServiceBase implements IViewService {
             if ($history[$key]['fieldChange'] == "salaryDate") {
                 $history[$key]['fieldChange'] = "วันที่ปรับเงินเดือน";
             }
-//            print_r(is_a($history[$key]['valueOld'],"DateTime"));
+            
+           //print_r($history[$key]['valueOld']);
+           
+          $xx=explode("-",$history[$key]['valueOld']);
+          if(count($xx)==3)
+          {
+              $history[$key]['valueOld'] =  $xx[2]."-".$xx[1]."-".($xx[0]+543);
+//              echo $history[$key]['valueOld'];
+          }
+          $xx=explode("-",$history[$key]['valueOld']);
+          if(count($xx)==3)
+          {
+              $history[$key]['valueOld'] =  $xx[2]."-".$xx[1]."-".($xx[0]+543);
+//              echo $history[$key]['valueOld'];
+          }
+          
+//           if($history[$key]['valueOld']=="--"){
+//           $time=explode("-",$history[$key]['valueOld']);
+//           
+//          // $hestory=$time[0]."-".$time[1]."-".$time[2];
+//           print($history[$key]['valueOld']);
+//           }
+           //exit();
 //            
-//            if (is_a($history[$key]['valueOld'], "DateTime")) {
+//            if (strstr($history[$key]['valueOld'], "-")) {
 //
 //                $history[$key]['valueOld'] = $history[$key]['valueOld']->format('Y-m-d');
 //                $history[$key]['valueNew'] = $history[$key]['valueNew']->format('Y-m-d');
