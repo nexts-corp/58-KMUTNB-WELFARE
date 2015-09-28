@@ -1,0 +1,213 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">รายการประกาศข่าวสาร</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">รายการประกาศข่าวสาร</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <!--                        <label class="col-lg-5 control-label">
+                                                    <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                                                </label>-->
+
+                        <!--                        <div class="col-lg-3">
+                                                    <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                                </div>-->
+                        <label class="col-lg-2 control-label">
+                            <select id="filterCode" class="form-control">
+
+                                <option value="name" selected="">ข่าวสาร/ประกาศ</option>
+                                <option value="employeeType">ประเภทพนักงาน</option>
+                                
+
+                                <!-- … -->
+                            </select>
+                            <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
+                            <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                            <p id="demo" style="color:#d14"></p>
+                        </label>
+                        <label class="col-lg-3 control-label">
+                            <select id="filtervalue" class="form-control">
+
+                            </select>
+                            <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >
+                            <p id="demo" style="color:#d14"></p>
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>
+                        <div class="pull-right">
+
+                            <button class="btn btn-primary"
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/news/view/news/add"
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                            </button>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>หัวข้อข่าว</th>
+                                        <th>กลุ่มผู้รับข่าวสาร</th>
+                                        <th>วันที่ประกาศ</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datasNews}}
+                                    <tr class="selectable">
+
+                                        <td>{{rowNo}}</td>
+                                        <td>{{newsName}}</td>
+                                        <td>{{employeeTypeId}}</td>
+                                        <td>{{dateCreated}}</td>
+                                        <td class="center">
+                                            <button class="btn btn-maroon btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/news/view/file/list"
+                                                    data-object="newsId"
+                                                    data-param="{{newsId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-file-pdf-o"></i>จัดการไฟล์เอกสาร
+                                            </button>
+                                            <button class="btn btn-success btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/news/user/view/news/read"
+                                                    data-object="newsId"
+                                                    data-param="{{newsId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-eye"></i>อ่านข่าวนี้
+                                            </button>
+                                            <button class="btn btn-info btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/news/view/news/edit"
+                                                    data-object="newsId"
+                                                    data-param="{{newsId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
+                                            </button>
+
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{newsId}}" >{{#i18n}}deletes{{/i18n}}</button>
+                                    </tr>
+                                    {{/datasNews}}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /Page Body -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //titleName();
+        //listtitleName();
+
+        $('.btn-del').click(function () {
+            var id = $(this).attr('row-index');
+
+            if (confirm("คุณต้องการลบ?")) {
+                var data = {"newsId": id};
+                sendData('{{_context_path}}/api/news/manage/delete', data,
+                        function (msg) {
+                            if (msg.delete == true) {
+
+                                getHTML('content-body', '{{_context_path}}/api/news/view/news/lists', null);
+                                Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                            } else {
+                                Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            }
+                        });
+
+
+            }
+
+        });
+        $("#filtervalue").hide();
+
+        $("#filterCode").change(function () {
+            var pCode = $("#filterCode").val();
+            var data;
+            if (pCode == "department") {
+                data = getCode(pCode);
+            } else if (pCode != "name") {
+                data = getPCode(pCode);
+            }
+
+
+            var html;
+            if ($("#filterCode").val() == "name") {
+                $("#searchName").show();
+                $("#filtervalue").hide();
+            } else {
+                if (data == "") {
+                    html = '<option value="">โปรดเลือก</option>';
+
+                } else {
+                    $.each(data, function (key, value) {
+                        html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
+
+                    });
+                }
+                $("#searchName").hide();
+                $("#filtervalue").show();
+                $("#filtervalue").html(html);
+            }
+
+
+        });
+//        $("#btnSearch").click(function () {
+//            var searchName = $("#searchName").val();
+//            if (searchName == "") {
+//                document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+//            } else {
+//                var data = {"searchName": searchName};
+//                getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/lists', data);
+//            }
+//        });
+
+    });
+
+
+
+</script>

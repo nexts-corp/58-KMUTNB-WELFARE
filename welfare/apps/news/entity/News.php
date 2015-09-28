@@ -23,7 +23,7 @@ class News extends EntityBase {
        public $newsDetails;
        
         /**
-        *@Column(type="integer", name="employeeTypeId") 
+        *@Column(type="string", name="employeeTypeId") 
         */
        
        public $employeeTypeId;

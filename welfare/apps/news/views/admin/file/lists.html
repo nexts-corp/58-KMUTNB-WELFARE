@@ -1,0 +1,215 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">รายการไฟล์เอกสาร ประกาศข่าวสาร</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">ไฟล์ประกอบเอกสาร</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+          
+                        <div class="pull-right">
+
+                            <button type="button" class="btn btn-primary" 
+                                    data-toggle="modal" 
+                                    data-target="#uploadModal" 
+                                    data-whatever="@fat">
+                                <i class="glyphicon glyphicon-upload"></i>PDF
+                            </button>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>ชื่อไฟล์เอกสาร</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datasNews}}
+                                    <tr class="selectable">
+
+                                        <td>{{rowNo}}</td>
+                                        <td>{{multiFileName}}</td>
+                                        <td class="center">
+
+
+                                            <a class="btn btn-info btn-xs edit" href="http://localhost/{{_context_path}}/uploads/news/file/{{multiFileName}}" target="_blank" >
+                                                <i class="fa fa-file-pdf-o"></i>  ดูไฟล์เอกสาร
+                                            </a>    
+                                            <button class="updateFile btn btn-primary btn-xs edit"
+                                                    data-toggle="modal"
+                                                    row-index="{{multiFileId}}"
+                                                    data-target="#uploadModalUpdate" 
+                                                    data-whatever="@fat">
+                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
+                                            </button>
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{newsId}}" >{{#i18n}}deletes{{/i18n}}</button>
+                                    </tr>
+                                    {{/datasNews}}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /Page Body -->
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">อัพโหลดไฟล์ประกอบข่าวสาร </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="control-label">ไฟล์ PDF</label>
+
+                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="multiFileName">
+                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์</span></div>
+                    </form>
+                    <input type="hidden" name="multiFileName" id="multiFileName" value="" />
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                <button type="button" class="btn btn-primary"  id="btn_upload">upload</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="uploadModalUpdate" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">แก้ไขไฟล์ประกอบข่าวสาร </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="control-label">ไฟล์ PDF</label>
+
+                    <form enctype="multipart/form-data" method="post"  class="dropzone dz-square" id="multiFileNameUpdate">
+                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์</span></div>
+                    </form>
+                    <input type="hidden" name="multiFileNameUpdate" id="multiFileNameUpdate" value="" />
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                <button type="button" class="btn btn-primary"   id="btn_upload_update">upload</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        
+        
+        
+        
+         var multiFileId;
+        $(".updateFile").click(function () {
+            multiFileId  = $(this).attr('row-index');
+            
+        });
+
+        var myDropzone = new Dropzone("#multiFileName", {
+            url: "{{_context_path}}/api/news/multifile/upfile",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            paramName: "file",
+            acceptedFiles: '.pdf',
+            maxFiles: 1,
+            init: function () {
+                $("#btn_upload").click(function () {
+                    myDropzone.processQueue();
+                });
+            },
+            sending: function (file, xhr, formData) {
+                var newsId = '{{newsId}}';
+                formData.append('newsId', newsId);
+            },
+            success: function (file, txt) {
+                var data = {"newsId": {{newsId}}};
+                $("#uploadModal").modal('hide');
+                getHTML('content-body', '{{_context_path}}/api/news/view/file/list', data);
+                Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+            }
+
+        });
+        
+        var myDropzoneUpdate = new Dropzone("#multiFileNameUpdate", {
+            url: "{{_context_path}}/api/news/multifile/upfile",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            paramName: "file",
+            acceptedFiles: '.pdf',
+            maxFiles: 1,
+            init: function () {
+                $("#btn_upload_update").click(function () {
+                    myDropzoneUpdate.processQueue();
+                });
+            },
+            sending: function (file, xhr, formData) {
+                            
+                formData.append('multiFileId', multiFileId);
+            },
+            success: function (file, txt) {
+               var data = {"newsId": {{newsId}}};
+                $("#uploadModalUpdate").modal('hide');
+                getHTML('content-body', '{{_context_path}}/api/news/view/file/list', data);
+                Notify('แก้ไขข้อมูลสำเร็จ ', 'top-right', '4000', 'info', 'fa-check', true);
+                
+               
+            }
+
+        });
+    });
+
+
+
+</script>

@@ -20,10 +20,11 @@
                 <div class="widget radius-bordered">
 
                     <div class="widget-body">
-                        <div id="registrationForm" method="post" class="form-horizontal">
+                        <div class="form-horizontal">
                             <div class="form-title">
                                 จัดการประกาศและข่าวสาร
                             </div>
+                            {{#datasNews}}
                             <div class="form-group ">
 
                                 <div class="col-lg-12">
@@ -31,6 +32,7 @@
 
                                     <input type="text" class="form-control" name="newsName" id="newsName" placeholder="หัวข้อประกาศ"
                                            data-bv-notempty="true"
+                                           value="{{newsName}}"
                                            data-bv-notempty-message="กรุณาระบุหัวข้อประกาศ" />
                                 </div>
 
@@ -41,7 +43,7 @@
                                 <div class="col-lg-12 control-group">
                                     <label for="exampleInputName2">รายละเอียด</label>
 
-                                    <textarea class="summernote" id="newsDetails" ></textarea>
+                                    <textarea class="summernote" id="newsDetails" >{{newsDetails}}</textarea>
 
                                 </div>
                             </div>
@@ -59,7 +61,11 @@
                                     {{/employeeType}}
                                 </div>
                             </div>
-                            
+
+
+                            {{/datasNews}}
+
+
                             <div class="form-group ">
                                 <div class="col-lg-12">
                                     <div class="col-lg-7 control-label">
@@ -80,89 +86,95 @@
     <!-- /Page Body -->
 </div>
 <!-- /Page Content -->
+
 <script type="text/javascript">
-$(document).ready(function () {
-    $("#btn_submit").click(function () {
-        var employeeTypeId = [];
-        $(".employeeType").each(function (k, v) {
-            if (this.checked) {
-                employeeTypeId.push($(this).val());
-            }
+    $(document).ready(function () {
+        $("#btn_submit").click(function () {
+            var employeeTypeId = [];
+            $(".employeeType").each(function (k, v) {
+                if (this.checked) {
+                    employeeTypeId.push($(this).val());
+                }
 
-        });
-        var data1 = [];
-
-        $.each(employeeTypeId, function (k, v) {
+            });
+            var data1 = [];
             var data = {};
+            $.each(employeeTypeId, function (k, v) {
+                data1.push(v);
+            });
+            
+            data['newsId']="{{newsId}}";
             data['newsName'] = $("#newsName").val();
             data['newsDetails'] = $("#newsDetails").val();
             data['multiFileName'] = $("#multiFileName").val();
-            data['employeeTypeId'] = v;
-            data1.push(data);
-        });
+            data['employeeTypeId'] = data1;
+            
+            var jdata = {};
+            jdata['news'] = data;
+            $.ajax({
+                url: '{{_context_path}}/api/news/manage/update',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
 
-        var jdata = {};
-        jdata['news'] = data1;
-        $.ajax({
-            url: '{{_context_path}}/api/news/manage/save',
-            data: jsonEncode(jdata),
-            type: 'post', // 'or get'
-            success: function (result) {
-                
-                 if (result.save == true) {
-                    getHTML('content-body', '{{_context_path}}/api/news/view/news/lists',null);
-                   Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                    if (result.update == true) {
+                        var data={"newsId":{{newsId}}};
+                        getHTML('content-body', '{{_context_path}}/api/news/view/news/lists', data);
+                        Notify('แก้ไขสำเร็จ', 'top-right', '4000', 'info', 'fa-check', true);
                     } else {
-                    Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                     }
-                
+
+                }
+            });
+        });
+
+        $('.summernote').summernote({
+            height: 400,
+            toolbar: [
+                ['edit', ['undo', 'redo']],
+                ['headline', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+                ['fontface', ['fontname']],
+                ['textsize', ['fontsize']],
+                ['fontclr', ['color']],
+                ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['group', ['video']]
+
+                        //['help', ['help']]
+            ],
+            onImageUpload: function (files) {
+                for (i = 0; i < files.length; i++) {
+                    sendFile(files[i]);
+                }
             }
         });
-    });
-    $('.summernote').summernote({
-        height: 400,
-        toolbar: [
-            ['edit', ['undo', 'redo']],
-            ['headline', ['style']],
-            ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
-            ['fontface', ['fontname']],
-            ['textsize', ['fontsize']],
-            ['fontclr', ['color']],
-            ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'hr']],
-            ['view', ['fullscreen', 'codeview']],
-            ['group', ['video']]
 
-                    //['help', ['help']]
-        ],
-        onImageUpload: function (files) {
-            for (i = 0; i < files.length; i++) {
-                sendFile(files[i]);
-            }
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: '{{_context_path}}/api/news/multifile/save',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var url = result.url;
+                    url = "{{_context_path}}/uploads/news/img/" + url;
+                    $('.summernote').summernote('editor.insertImage', url);
+                }
+            });
         }
     });
-    
-    function sendFile(file, editor, welEditable) {
-        data = new FormData();
-        data.append("file", file);
 
-        $.ajax({
-            data: data,
-            type: "POST",
-            url: '{{_context_path}}/api/news/multifile/save',
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                var url = result.url;
-                url = "{{_context_path}}/uploads/news/" + url;
-                $('.summernote').summernote('editor.insertImage', url);
-            }
-        });
-    }
-});
+
 
 
 </script>

@@ -7,24 +7,24 @@ namespace apps\news\interfaces;
  */
 interface IMultiFileService {
     
+    /**
+     * @name upfile
+     * @uri /upfile
+     * @param file file
+     * @return string file
+     * @description อัพโหลดไฟล์ pdf
+     */
+    public function upFile($file);
+    
      /**
      * @name save
      * @uri /save
-     * @param apps\news\common\entity\MultiFile file []
+     * @param  file file 
      * @return string url
      * @description เพิ่มภาพ
      */
     public function save($file);
     
-    /**
-     * @name update
-     * @uri /update
-     * @param apps\news\common\entity\MultiFile data []
-     * @return boolean update [return ture or false if don't ]  Description
-     * @description แก้ไขภาพ  
-     */
-    public function update($data);
-     
     /**
      * @name delete
      * @uri /delete

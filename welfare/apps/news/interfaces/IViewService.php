@@ -9,7 +9,7 @@ namespace apps\news\interfaces;
 interface IViewService {
     /**
      * @name newsList
-     * @uri /news/list
+     * @uri /news/lists
      * @return html viewList xxx
      * @description หน้าแสดงรายการข่าวสาร
      */
@@ -38,5 +38,7 @@ interface IViewService {
      * @description หน้าแสดงรายการไฟล์
      */
     public function fileList();
+    
+   
     
 }
