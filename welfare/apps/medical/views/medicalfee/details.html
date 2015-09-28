@@ -35,11 +35,11 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#lists}}{{title}} {{fname}} {{lname}}{{/lists}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#mem}}{{titles1}} {{fname}} {{lname}}{{/mem}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">{{#i18n}}amountbalance{{/i18n}} : {{#lists}}{{balance}}{{/lists}}</label>
+                        <label class="col-lg-5 control-label">{{#i18n}}amountbalance{{/i18n}} : {{#sum}}{{balance}}{{/sum}}</label>
                         <!--
 
                         <div class="col-lg-3">
@@ -73,7 +73,7 @@
                                     <tr class="selectable">
 
 
-                                        <td>{{payment}}</td>
+                                        <td>{{amount}}</td>
                                         <td>{{remark}}</td>
                                         <td>{{dateCreated}}</td>
                                         <td>{{dateUpdated}}</td>

@@ -101,10 +101,10 @@ class ViewService extends CServiceBase implements IViewService {
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-
+        
 
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,mb.idCard,mb.department1,mb.faculty1,"
-                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,whis.remark,whis.dateCreated,whis.dateUpdated,whis.historyId, "
+                . "whis.remark,whis.dateCreated,whis.dateUpdated,whis.historyId,whis.amount, "
                 . "IFNULL(mb.academic1,mb.titleName1) title "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
@@ -117,7 +117,24 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "and whis.memberId = :memberId ";
-
+        
+        $sql2 = "select sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance "
+                . "from welfarehistory whis "
+                . "join welfaredetails wd "
+                . "on wd.detailsId = whis.detailsId "
+                . "join welfare wel "
+                . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
+                . "join welfareconditions wc "
+                . "on wc.detailsId = wd.detailsId "
+                . "join v_fullmember mb "
+                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
+                . "where whis.dateCreated between :dateStart and :dateEnd "
+                . "and whis.memberId = :memberId ";
+        
+        $sql3 = "select mb.fname,mb.lname,titles1 "
+                . "from v_fullmember mb "
+                . "where  mb.memberId = $memberId ";
+        
         $param = array(
             "dateStart" => $dateStart,
             "dateEnd" => $dateEnd,
@@ -129,7 +146,8 @@ class ViewService extends CServiceBase implements IViewService {
             $view->lists = $search->search($searchName);
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
-
+            $budget2 = $this->datacontext->pdoQuery($sql2, $param);
+            $member = $this->datacontext->pdoQuery($sql3);
             foreach ($budget as $key2 => $value2) {
 
                 if ($budget[$key2]['dateCreated']!="") {
@@ -155,7 +173,9 @@ class ViewService extends CServiceBase implements IViewService {
 //            print_r($budget);
 
 
-            $view->lists = $budget; //กรณีที่ไม่ได้ search
+            $view->lists = $budget;
+            $view->sum = $budget2;
+            $view->mem = $member;//กรณีที่ไม่ได้ search
         }
         return $view;
     }

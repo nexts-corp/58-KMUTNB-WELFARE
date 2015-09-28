@@ -73,7 +73,7 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
 
-        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,"
+        $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,wd.detailsId,"
                 . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance, "
                 . "IFNULL(academic.value1,title.value1) title "
                 . "from welfarehistory whis "
