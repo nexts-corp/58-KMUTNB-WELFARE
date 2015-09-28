@@ -139,7 +139,7 @@ class ViewService extends CServiceBase implements IViewService {
         $filtervalue = $this->getRequest()->filtervalue;
         $datafilter = $this->getRequest();
 
-
+        
 
         $param = array();
         $sql = "select mem1 "

@@ -56,6 +56,13 @@
                         </div>
                         <div class="pull-right">
 
+                            <button type="button" class="btn btn-success" 
+                                    data-toggle="modal" 
+                                    data-target="#uploadModal" 
+                                    data-whatever="@fat">
+                                <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                            </button>
+
                             <button type="button" class="btn btn-primary" 
                                     data-toggle="modal" 
                                     data-target="#uploadModal" 
@@ -244,7 +251,7 @@
             },
             success: function (file, txt) {
                 if (txt.upload == true) {
-                    
+
                     $("#uploadModal").modal('hide');
                     myDropzone.removeFile(file);
                     Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
