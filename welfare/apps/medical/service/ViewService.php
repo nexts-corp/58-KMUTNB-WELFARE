@@ -29,7 +29,7 @@ class ViewService extends CServiceBase implements IViewService {
         $filterCode = $this->getRequest()->filterCode;
         $filtervalue = $this->getRequest()->filtervalue;
         $datafilter = $this->getRequest();
-        
+
         $welfare = new \apps\welfare\entity\Welfare();
         $welfare->setCode("medical001");
         $query = $this->datacontext->getObject($welfare)[0];
@@ -65,20 +65,20 @@ class ViewService extends CServiceBase implements IViewService {
             "dateEnd" => $dateEnd
         );
 
-        
+
         if ($searchName != "") {
-            
+
             $search = new MedicalFeeService();
             $view->lists = $search->search($datafilter);
         } else if ($filterCode != "") {
-            
+
             $filter = new MedicalFeeService();
             $view->lists = $filter->search($datafilter);
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
             $view->lists = $budget; //กรณีที่ไม่ได้ search //กรณีที่ไม่ได้ search
         }
-       
+
         return $view;
     }
 
@@ -100,8 +100,8 @@ class ViewService extends CServiceBase implements IViewService {
 
         $dateStart = $dateBudget["startDate"];
         $dateEnd = $dateBudget["endDate"];
-        
-        
+
+
 
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,mb.idCard,mb.department1,mb.faculty1,"
                 . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,whis.remark,whis.dateCreated,whis.dateUpdated,whis.historyId, "
@@ -129,12 +129,31 @@ class ViewService extends CServiceBase implements IViewService {
             $view->lists = $search->search($searchName);
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
+
+            foreach ($budget as $key2 => $value2) {
+
+                if ($budget[$key2]['dateCreated']!="") {
+
+                    $dateTime = explode(" ", $value2['dateCreated']);
+                    $date = $dateTime[0];
+                    $date = explode("-", $date);
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $budget[$key2]['dateCreated'] = $date;
+
+                    
+                }
+                if ($budget[$key2]['dateUpdated']!="") {
+                    
+                    $dateTime2 = explode(" ", $value2['dateUpdated']);
+                    $date2 = $dateTime2[0];
+                    $date2 = explode("-", $date2);
+                    $date2 = $date2[2] . "-" . $date2[1] . "-" . intval($date2[0] + 543);
+                    $budget[$key2]['dateUpdated'] = $date2;
+                }
+            }
+            
 //            print_r($budget);
-//            foreach ($budget as $key => $value) {
-//                foreach($value as $key2 => $value2){
-//                    if($key2=="dateCreated")
-//                }
-//            }
+
 
             $view->lists = $budget; //กรณีที่ไม่ได้ search
         }

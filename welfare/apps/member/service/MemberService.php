@@ -310,14 +310,28 @@ class MemberService extends CServiceBase implements IMemberService {
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
+        print_r($facultyId);
+        print_r($departmentId);
+        $sql = "select * "
+                . "FROM v_fullMember mem1 ";
 
-        $sql = "select *,IFNULL(mem1.academic1,mem1.titleName1) title "
-                . "FROM v_fullmember mem1 "
-                . "WHERE  ";
-
+        if ($usertype == "administrator") {
+            $sql .= "WHERE ";
+        } elseif ($usertype == "adminFaculty") {
+            $sql .= "join taxonomy tax "
+                    ."on tax.id = mem1.facultyId "
+                    ."WHERE tax.code = '$facultyId' and ";
+            
+        } elseif ($usertype == "adminDepartment") {
+            $sql .= "join taxonomy tax "
+                    ."on tax.id = mem1.departmentId "
+                    ."WHERE tax.code = '$departmentId' and ";
+            
+        }
+        
         if ($data->searchName != "") {
             $searchName = $data->searchName;
-            $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name mem1.memberActive2 = 'Working'";
+            $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name and mem1.memberActive2 = 'Working'";
             $param = array(
                 "name" => "%" . $searchName . "%"
             );
@@ -332,15 +346,7 @@ class MemberService extends CServiceBase implements IMemberService {
             $sql .= "  mem1." . $filtercode . "Id = :filtervalue and mem1.memberActive2 = 'Working' ";
             $param["filtervalue"] = $filtervalue;
         }
-        if ($usertype == "administrator") {
-            
-        } elseif ($usertype == "adminFaculty") {
-            $sql .= " and mem1.facultyId = :facultyId ";
-            $param["facultyId"] = $facultyId;
-        } elseif ($usertype == "adminDepartment") {
-            $sql .= " and mem1.departmentId = :departmentId ";
-            $param["departmentId"] = $departmentId;
-        }
+        
 
         return $this->datacontext->pdoQuery($sql, $param);
     }

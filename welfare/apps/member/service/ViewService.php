@@ -74,6 +74,7 @@ class ViewService extends CServiceBase implements IViewService {
 //        $dob = $member[0]['dob']->format('d-m-Y');
 //        print_r($member);
 
+
         $mem = explode("-", $member[0]->dob);
         $member[0]->dob = $mem[2] . "-" . $mem[1] . "-" . (intval($mem[0]) + 543);
 
@@ -90,7 +91,8 @@ class ViewService extends CServiceBase implements IViewService {
         $user = $this->datacontext->getObject($user)[0];
         $member[0]->userTypeId = $user->userTypeId;
         $view->datas = $member;
-
+//        print_r($member);
+//        exit();
         $academic = new Taxonomy();
         $academic->pCode = "academic";
         $view->academic = $this->datacontext->getObject($academic);
@@ -137,22 +139,30 @@ class ViewService extends CServiceBase implements IViewService {
         $filtervalue = $this->getRequest()->filtervalue;
         $datafilter = $this->getRequest();
 
+
+
         $param = array();
         $sql = "select mem1 "
-                . "FROM apps\\member\\model\\FullMember mem1 "
-                . "WHERE mem1.memberActive2 = 'Working'  ";
+                . "FROM apps\\member\\model\\FullMember mem1 ";
 
         if ($usertype == "administrator") {
             $view = new CJView("admin/lists", CJViewType::HTML_VIEW_ENGINE);
+            $sql .= "WHERE mem1.memberActive2 = 'Working'  ";
         } elseif ($usertype == "adminFaculty") {
             $view = new CJView("faculty/lists", CJViewType::HTML_VIEW_ENGINE);
 
-            $sql .= " and mem1.facultyId = :facultyId "; //กรณีที่ไม่ได้ search
+            $sql .= "join apps\\taxonomy\\entity\\Taxonomy "
+                    . "tax with tax.id = mem1.facultyId "
+                    . "WHERE mem1.memberActive2 = 'Working' "
+                    . "and tax.code = :facultyId "; //กรณีที่ไม่ได้ search
             $param["facultyId"] = $facultyId;
         } elseif ($usertype == "adminDepartment") {
             $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
-
-            $sql .= " and mem1.departmentId = :departmentId "; //กรณีที่ไม่ได้ search
+            
+             $sql .="join apps\\taxonomy\\entity\\Taxonomy "
+                    . "tax with tax.id = mem1.departmentId "
+                    . "WHERE mem1.memberActive2 = 'Working' "
+                    . "and tax.code = :departmentId ";  //กรณีที่ไม่ได้ search
             $param["departmentId"] = $departmentId;
         }
 
@@ -183,7 +193,7 @@ class ViewService extends CServiceBase implements IViewService {
 //        print_r($member);
 //        exit();
         //$dob = $member->dob->format('d-m-Y');
-//        print_r($member);
+
 
         $mem = explode("-", $member[0]->dob);
         $member[0]->dob = $mem[2] . "-" . $mem[1] . "-" . (intval($mem[0]) + 543);
@@ -439,8 +449,17 @@ class ViewService extends CServiceBase implements IViewService {
             if ($history[$key]['fieldChange'] == "salaryDate") {
                 $history[$key]['fieldChange'] = "วันที่ปรับเงินเดือน";
             }
+//            print_r(is_a($history[$key]['valueOld'],"DateTime"));
+//            
+//            if (is_a($history[$key]['valueOld'], "DateTime")) {
+//
+//                $history[$key]['valueOld'] = $history[$key]['valueOld']->format('Y-m-d');
+//                $history[$key]['valueNew'] = $history[$key]['valueNew']->format('Y-m-d');
+//                print_r($history[$key]['valueNew']);
+//                exit();
+//            }
         }
-        
+
         $view->member = $member;
         $view->work = $work;
         $view->salary = $salary;
