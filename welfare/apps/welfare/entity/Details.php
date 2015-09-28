@@ -40,7 +40,20 @@ class Details extends EntityBase {
      * @Column(type="string", name="filename",length=100,nullable=true) 
      */
     public $filename;
+
+    /**
+     * @Column(type="string", name="statusActive",nullable=true,length=10) 
+     */
+    public $statusActive;
     public $conditions;
+
+    function getStatusActive() {
+        return $this->statusActive;
+    }
+
+    function setStatusActive($statusActive) {
+        $this->statusActive = $statusActive;
+    }
 
     function getDetailsId() {
         return $this->detailsId;

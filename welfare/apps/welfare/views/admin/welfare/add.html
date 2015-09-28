@@ -8,7 +8,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="welfare"><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/admin/welfare/lists" onclick="btnHTML(this)">
+            <li><a href="#" data-id="content-body" data-api="/welfare/api/welfare/view/admin/welfare/lists" onclick="btnHTML(this)">
                     <span class="menu-text">{{#i18n}}welfare.list{{/i18n}}</span>
                 </a>
             </li>
@@ -16,10 +16,7 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-
-
     <!-- Page Body -->
-
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -32,21 +29,21 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.name{{/i18n}}</label>
                                 <div class="col-lg-8">
-                                    <input type="text" class="form-control" name="name" placeholder="ชื่อสวัสดิการ"
-                                           id="name" data-validation="required" 
+                                    <input type="text" class="form-control welfare" name="name" placeholder="{{#i18n}}welfare.name{{/i18n}}"
+                                           id="name" data-validation="required"
                                            data-validation-error-msg="*กรุณาใส่ชื่อสวัสดิการ" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.description{{/i18n}}</label>
                                 <div class="col-lg-8">
-                                    <textarea rows="4" data-validation-error-msg="" id="description" cols="67" ></textarea>
+                                    <textarea rows="4" data-validation-error-msg="" class="form-control welfare" id="description" name="description" cols="67" placeholder="{{#i18n}}welfare.description{{/i18n}}"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.resetTime{{/i18n}}</label>
                                 <div class="col-lg-8">
-                                    <select class="form-control" name="resetTime" id="resetTime" >
+                                    <select class="form-control welfare" name="resetTime" id="resetTime" >
                                         <option value="0">{{#i18n}}welfare.oneRight{{/i18n}}</option>
                                         <option value="6">{{#i18n}}welfare.6Mount{{/i18n}}</option>
                                         <option value="12">{{#i18n}}welfare.12Mount{{/i18n}}</option>
@@ -57,7 +54,7 @@
                                 <label for="reservation" class="col-lg-4 control-label">{{#i18n}}welfare.dateStart{{/i18n}}</label>
                                 <div class="controls col-lg-8">
                                     <div class="input-group">
-                                        <input class="form-control cDate" id="dateStart"  
+                                        <input class="form-control cDate welfare" id="dateStart" name="dateStart" placeholder="{{#i18n}}welfare.dateStart{{/i18n}}"
                                                data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
                                                data-validation-error-msg-container="#dateStart-th-msg-error" />
                                         <span class="input-group-addon">
@@ -70,7 +67,7 @@
                                 <label for="reservation" class="col-lg-4 control-label">{{#i18n}}welfare.dateEnd{{/i18n}}</label>
                                 <div class="controls col-lg-8">
                                     <div class="input-group">
-                                        <input class="form-control cDate" id="dateEnd" style="z-index: 0;" 
+                                        <input class="form-control cDate welfare" id="dateEnd" name="dateEnd" placeholder="{{#i18n}}welfare.dateEnd{{/i18n}}" 
                                                data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
                                                data-validation-error-msg-container="#dateEnd-th-msg-error" />
                                         <span class="input-group-addon">
@@ -82,41 +79,46 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.welfareType{{/i18n}}</label>
                                 <div class="col-lg-8">
-                                    <select class="form-control"  id="free" >
+                                    <select class="form-control welfare"  id="free" name="free" >
                                         <option value="Y">{{#i18n}}welfare.free{{/i18n}}</option>
                                         <option value="N">{{#i18n}}welfare.loan{{/i18n}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
-                                <div class="col-lg-6">
-                                    <!--                                    <input type="file" name="welfareFile" id="welfareFile" class="form-control" />-->
-                                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="welfareFile">
-                                        <div class="dz-default dz-message"><span id="txtWelfareFile">เลือกไฟล์ประกอบสวัสดิการ</span></div>
-                                    </form>
-                                    <input type="hidden" name="welfareFilename" id="welfareFilename" value="" />
-<!--                                    <div class="col-lg-12 text-center">
-                                        <button class="btn btn-info" id="btn_upload_welfare" >{{#i18n}}button.upload{{/i18n}}</button>
-                                    </div>-->
+                                <label class="col-lg-4 control-label">{{#i18n}}statusActive{{/i18n}}</label>
+                                <div class="col-lg-8">
+                                    <select class="form-control welfare"  id="statusActive" name="statusActive" >
+                                        <option value="Y">{{#i18n}}active{{/i18n}}</option>
+                                        <option value="N">{{#i18n}}inactive{{/i18n}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="reservation" class="col-lg-3 control-label"></label>
-                                <div class="controls col-lg-9">
+                                <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
+                                <div class="col-lg-6">
+                                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="dropzoneWelfare">
+                                        <div class="dz-default dz-message"><span id="txtWelfareFile">{{#i18n}}welfare.filename{{/i18n}}</span></div>
+                                    </form>
+                                    <input type="hidden" name="filename" class="welfare" id="filename"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservation" class="col-lg-4 control-label"></label>
+                                <div class="controls col-lg-8">
                                     <div class="row">
-                                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                                        <div class="col-lg-6">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox"  class="inverted" id="willing" name="willing"  >
+                                                    <input type="checkbox"  class="inverted welfare" id="willing" name="willing"  >
                                                     <span class="text">{{#i18n}}conditions.willing{{/i18n}}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                                        <div class="col-lg-6">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" class="inverted"  id="retire" >
+                                                    <input type="checkbox" class="inverted welfare" name="retire"  id="retire" >
                                                     <span class="text">{{#i18n}}conditions.retire{{/i18n}}</span>
                                                 </label>
                                             </div>
@@ -168,24 +170,32 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="frmDetailsFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
-                                <div class="col-lg-6">
-                                    <!--                                    <input type="file" name="welfareFile" id="welfareFile" class="form-control" />-->
-                                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="detailsFile">
-                                        <div class="dz-default dz-message"><span id="txtDetailsFile">เลือกไฟล์ประกอบรายละเอียดสวัสดิการ</span></div>
-                                    </form>
-                                    <input type="hidden" name="detailsFilename" id="detailsFilename" value="" />
-<!--                                    <div class="col-lg-12 text-center">
-                                        <button class="btn btn-info" id="btn_upload_details" >{{#i18n}}button.upload{{/i18n}}</button>
-                                    </div>-->
+                                <div class="col-lg-8">
+                                    <input type="hidden" class="form-control details"  name="statusActive" value="Y" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-12 text-center">
+                                <label for="frmDetailsFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
+                                <div class="col-lg-8">
+                                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="dropzoneDetails">
+                                        <div class="dz-default dz-message"><span id="txtDetailsFile">{{#i18n}}details.filename{{/i18n}}</span></div>
+                                    </form>
+                                    <input type="hidden" name="filename" id="filename" class="details" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9 text-center">
                                     <button class="btn btn-success"
                                             data-id="content-body"
                                             id="btnSaveDetails">
-                                        <i class="fa fa-save"></i>{{#i18n}}button.addConditions{{/i18n}} 
+                                        <i class="glyphicon glyphicon-floppy-saved"></i>{{#i18n}}button.save{{/i18n}} 
+                                    </button>
+
+                                    <button class="btn btn-info"
+                                            data-id="content-body"
+                                            id="btnCancelDetails">
+                                        <i class="glyphicon glyphicon-floppy-remove"></i>{{#i18n}}button.cancel{{/i18n}} 
                                     </button>
                                 </div>
                             </div>
@@ -197,6 +207,35 @@
 
 
             <div class="col-md-6">
+                <div id="divConditions" style="display: none;">
+                    <div class="widget radius-bordered">
+                        <div class="widget-header">
+                            <span class="widget-caption">{{#i18n}}conditions.name{{/i18n}} <span id="nameDescription"></span></span>
+                        </div>
+                        <div class="widget-body">
+                            <table class="content-conditions">
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <button class="btnAppend btn btn-sm  btn-default"><i class="fa fa fa-plus"></i> เพิ่มเงื่อนไข</button>
+
+                                <button class="btn btn-sm btn-default "
+                                        data-id="content-body"
+                                        id="btn_preview"
+                                        data-toggle="modal">
+                                    <i class="fa fa fa-eye"></i>ตรวจสอบผู้เข้าเงื่อนไข</button>
+                            </div> 
+                            <div class="col-md-6 text-right">
+                                <button id="btnSaveConditions" class="btn btn-success ">
+                                    <i class="glyphicon glyphicon-saved"></i>บันทึกเงื่อนไข</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">  
                 <div class="widget">
                     <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}conditions.lists{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
@@ -218,494 +257,498 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-12">  
-            <div id="divConditions" style="display: none;">
-                <div style="margin-top: 5px "></div>
-                <button class="btnAppend btn btn-sm btn-default"><i class="fa fa fa-plus"></i> เพิ่มเงื่อนไข</button>
-                <p>ชื่อรายละเอียด : <span id="nameDescription"></span></p>
-                <table class="table table-hover table-striped table-bordered table-condensed content-conditions">
-                </table>
-                <div style="margin-top: 5px "></div>
-                <button id="btnSaveConditions" class="btn btn-sm btn-success ">Save</button>
-                <button class="btn btn-sm btn-default "
-                        data-id="content-body"
-                        id="btn_preview"
-                        data-toggle="modal">
-                    <i class="fa fa fa-eye"></i>ตรวจสอบผู้เข้าเงื่อนไข</button>
-            </div>
+        </div>
+        <div class="footer">
+            <div class="text-center">
+                <button class="btn btn-primary btn-lg" id="btnSaveAll"><i class="glyphicon glyphicon-save"></i>{{#i18n}}button.add.welfare{{/i18n}}</button>
+                <div style="margin-bottom: 15px;"></div>
+            </div>                                
         </div>
 
     </div>
-    <div class="footer">
-        <div class="text-center">
-            <button class="btn btn-primary" id="btnSaveAll">บันทึกข้อมูลทั้งหมด</button>
-            <div style="margin-bottom: 15px;"></div>
-        </div>                                
-    </div>
-
-</div>
 
 
 
-<!-- /Page Content -->
+    <!-- /Page Content -->
 
-<!--LArge Modal Templates-->
-<div class="modal fade modalPreview" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myLargeModalLabel">รายงานการใช้งาน</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="widget radius-bordered">
-                    <div class="widget-header">
-                        <span class="widget-caption" id="userRows"> </span>
-                    </div>
-                    <div class="widget-body">
-                        <div class="form-horizontal">
-
-                            <table class="table table-hover table-striped table-bordered table-condensed" >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">{{#i18n}}all.number{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}all.fnamelname{{/i18n}}</th>
-
-                                        <th class="text-center">{{#i18n}}all.gender{{/i18n}}</th>
-                                        <th class="text-center">สังกัด</th>
-                                        <th class="text-center">{{#i18n}}all.employeeType{{/i18n}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="showUser">
-
-
-
-                                </tbody>
-
-                            </table>
-
-
+    <!--LArge Modal Templates-->
+    <div class="modal fade modalPreview" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel">รายชื่อผู้ที่เข้าเงื่อนไขสวัสดิการ</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="widget radius-bordered">
+                        <div class="widget-header">
+                            <span class="widget-caption" id="userRows"> </span>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-horizontal">
+                                <table class="table table-hover table-striped table-bordered table-condensed" >
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">{{#i18n}}all.number{{/i18n}}</th>
+                                            <th class="text-center">{{#i18n}}all.fnamelname{{/i18n}}</th>
+                                            <th class="text-center">{{#i18n}}all.gender{{/i18n}}</th>
+                                            <th class="text-center">สังกัด</th>
+                                            <th class="text-center">{{#i18n}}all.employeeType{{/i18n}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="showUser">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-<!--End Large Modal Templates-->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <!--End Large Modal Templates-->
 
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-        $.validate();
-        var Welfare = {};
-        var Details = [];
-        var rowConditions;
-        var rowDetails;
-        var fieldArr = {salary: "เงินเดือน", employeeTypeId: "ประเภทพนักงาน", genderId: "เพศ", dob: "อายุสมาชิก", workStartDate: "วัน-เดือน-ปี ที่บรรจุ", workEndDate: "วัน-เดือน-ปี ที่เกษียณ"};
-        var operationArr = {'=': "เท่ากับ", '<': "น้อยกว่า", '<=': "น้อยกว่าหรือเท่ากับ", '>': "มากกว่า", '>=': "มากกว่าหรือเท่ากับ", '!=': "ไม่เท่ากับ"};
+        $(document).ready(function () {
+            $.validate();
 
-        var welfareFile = new Dropzone("#welfareFile", {
-            url: "{{_context_path}}/api/welfare/upload/welfare",
-            addRemoveLinks: true,
-            autoProcessQueue: true,
-            uploadMultiple: false,
-            acceptedFiles: '.pdf,image/*',
-            maxFiles: 1,
-//            init: function () {
-//                $("#btn_upload_welfare").click(function () {
-//                    welfareFile.processQueue();
-//                });
-//            },
-            success: function (file, txt) {
-                if (txt.upload != "cantUpload") {
-                    $("#welfareFilename").val(txt.upload);
-                    Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
-                } else {
-                    $("#welfareFilename").val("");
-                    Notify('อัพโหลดไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
-                }
-            }
-        });
-
-        var detailsFile = new Dropzone("#detailsFile", {
-            url: "{{_context_path}}/api/welfare/upload/welfare",
-            addRemoveLinks: true,
-            autoProcessQueue: true,
-            uploadMultiple: false,
-            acceptedFiles: '.pdf,image/*',
-            maxFiles: 1,
-//            init: function () {
-//                $("#btn_upload_details").click(function () {
-//                    detailsFile.processQueue();
-//                });
-//            },
-            success: function (file, txt) {
-                if (txt.upload != "cantUpload") {
-                    $("#detailsFilename").val(txt.upload);
-                    Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
-                } else {
-                    $("#detailsFilename").val("");
-                    Notify('อัพโหลดไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
-                }
-            }
-        });
+            var Details = [];
+            var rowConditions;
+            var rowDetails = "";
+            var fieldArr = {salary: "เงินเดือน", employeeTypeId: "ประเภทพนักงาน", genderId: "เพศ", dob: "อายุสมาชิก", workStartDate: "วัน-เดือน-ปี ที่บรรจุ", workEndDate: "วัน-เดือน-ปี ที่เกษียณ"};
+            var operationArr = {'=': "เท่ากับ", '<': "น้อยกว่า", '<=': "น้อยกว่าหรือเท่ากับ", '>': "มากกว่า", '>=': "มากกว่าหรือเท่ากับ", '!=': "ไม่เท่ากับ"};
 
 
-
-
-        $("#btnSaveDetails").click(function () {
-            var details = {};
-            var check = true;
-            $(".details").each(function (key, value) {
-                if (this.value == "") {
-                    check = false;
-                    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                    return false;
-                } else {
-                    details[this.id] = this.value;
-                }
-            });
-
-            if (check) {
-                if ($("#description").val() != "" || $("#quantity").val() != "") {
-                    var filename = $("#detailsFilename").val();
-                    if (filename != "") {
-                        details['filename'] = filename;
+            var dropzoneWelfare = new Dropzone("#dropzoneWelfare", {
+                url: "{{_context_path}}/api/welfare/upload/welfare",
+                addRemoveLinks: true,
+                autoProcessQueue: true,
+                uploadMultiple: false,
+                acceptedFiles: '.pdf,image/*',
+                maxFiles: 1,
+                //            init: function () {
+                //                $("#btn_upload_welfare").click(function () {
+                //                    welfareFile.processQueue();
+                //                });
+                //            },
+                success: function (file, txt) {
+                    if (txt.upload != "cantUpload") {
+                        $(".welfare[name='filename']").val(txt.upload);
+                        Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'warning', 'fa fa-success', true);
                     } else {
-                        delete details['filename'];
+                        $(".welfare[name='filename']").val("");
+                        Notify('อัพโหลดไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
                     }
-                    Details.push(details);
-                    $("#showTable").html(createTableDetails(Details));
-                    removeDetail();
-                    createConditions();
-                } else {
-                    Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                    $('#description').focus();
                 }
-            }
-            return false;
-        });
-
-        $(".btnAppend").click(function () {
-            var html = "";
-            html += '<tr row-index="' + rowConditions + '"><td width="30%">' +
-                    '<select class="fieldMap conditions form-control" name="fieldMap" data-bv-field="country" row-index="' + rowConditions + '">';
-
-            $.each(fieldArr, function (k1, v1) {
-                html += '<option value="' + k1 + '">' + v1 + '</option>';
             });
-            html += '</select></td>' +
-                    '<td width="30%"><select class="operations conditions form-control" name="operations" data-bv-field="country" row-index="' + rowConditions + '">';
-            $.each(operationArr, function (k2, v2) {
-                html += '<option value="' + k2 + '">' + v2 + '</option>';
+            var detailsfile = {};
+            var dropzoneDetails = new Dropzone("#dropzoneDetails", {
+                url: "{{_context_path}}/api/welfare/upload/welfare",
+                addRemoveLinks: true,
+                autoProcessQueue: true,
+                uploadMultiple: false,
+                acceptedFiles: '.pdf,image/*',
+                maxFiles: 1,
+                //            init: function () {
+                //                $("#btn_upload_details").click(function () {
+                //                    detailsFile.processQueue();
+                //                });
+                //            },
+                success: function (file, txt) {
+                    if (txt.upload != "cantUpload") {
+                        $(".details[name='filename']").val(txt.upload);
+                        Notify('อัพโหลดเรียบร้อย !', 'top-right', '4000', 'warning', 'fa fa-success', true);
+                    } else {
+                        $(".details[name='filename']").val("");
+                        Notify('อัพโหลดไม่สำเร็จ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
+                    }
+                }
             });
-            html += '</select></td>' +
-                    '<td>' +
-                    '<div class="divValueX" row-index="' + rowConditions + '">' +
-                    '<input type="text" name="valuex" row-index="' + rowConditions + '" class="valuex conditions form-control" /></div></td>' +
-                    '</div>' +
-                    '</td>' +
-                    '<td class="text-center">' +
-                    '<button class="btn btn-warning btn-sm removeConditions" row-index="' + rowConditions++ + '">' +
-                    '<i class="glyphicon glyphicon-remove"></i>' +
-                    '</button>' +
-                    '</td>' +
-                    '</tr>';
+            $("#btnSaveDetails").click(function () {
+                if ($('#divConditions').is(':visible')) {
+                    rowDetails = "";
+                }
 
-            $(".content-conditions").append(html);
-            changeFieldMap();
-            removeCondition();
-            return false;
-        });
-        function createConditions() {
-            $(".btnConditions").click(function () {
+                var details = {};
+                var check = true;
+                $(".details").each(function (key, value) {
 
+                    if (this.value == "") {
+                        if (this.name != "filename") {
+                            check = false;
+                            Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            this.focus();
+                            return false;
+                        }
+                    } else {
+                        details[this.name] = this.value;
+                    }
+
+                });
+                if (check) {
+                    if ($(".details[name='description']").val() != "" || $(".details[name='quantity']").val() != "") {
+                        var filename = $(".details[name='filename']").val();
+                        if (filename != "") {
+                            details['filename'] = filename;
+                        } else {
+                            delete details['filename'];
+                        }
+                        if (rowDetails == "") {
+                            Details.push(details);
+                        } else {
+                            Details[rowDetails]['description'] = details.description;
+                            Details[rowDetails]['quantity'] = details.quantity;
+                            Details[rowDetails]['returnTypeId'] = details.returnTypeId;
+                            Details[rowDetails]['filename'] = details.filename;
+                        }
+                        $("#showTable").html(createTableDetails(Details));
+                        closeDetail();
+                        editDetail();
+                        createConditions();
+                        cancelDetails();
+                    } else {
+                        Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        $('#description').focus();
+                    }
+                }
+                return false;
+            });
+            $("#btnCancelDetails").click(function () {
+                cancelDetails();
+            });
+            function cancelDetails() {
+                rowDetails = "";
+                $(".details[name='description']").val("");
+                $(".details[name='quantity']").val("");
+                $(".details[name='filename']").val("");
+                dropzoneDetails.removeAllFiles();
                 $(".content-conditions").empty();
-                rowDetails = $(this).attr("row-index");
-                $("#nameDescription").text(Details[rowDetails]["description"]);
-                if (typeof Details[rowDetails]['conditions'] !== 'undefined' && Details[rowDetails]['conditions'] !== null) {
-                    var dataCondition = Details[rowDetails]['conditions'];
+                $("#divConditions").hide();
+            }
+            function editDetail() {
+                $(".btnEditConditions").click(function () {
+                    $(window).scrollTop($('#conditionsDetails').offset().top-50)
+                    cancelDetails();
+                    dropzoneDetails.removeAllFiles();
+                    rowDetails = $(this).attr("row-index");
+                    var filename = Details[rowDetails]['filename'];
+                    $(".details[name='description']").val(Details[rowDetails]['description']);
+                    $(".details[name='quantity']").val(Details[rowDetails]['quantity']);
+                    $(".details[name='returnTypeId']").val(Details[rowDetails]['returnTypeId']);
+                    $(".details[name='filename']").val(Details[rowDetails]['filename']);
+                    if (filename != null) {
+                        detailsfile = {
+                            name: filename,
+                            status: dropzoneDetails.ADDED,
+                            accepted: true
+                        };
+                        dropzoneDetails.emit("addedfile", detailsfile);
+                        dropzoneDetails.emit("thumbnail", detailsfile, "{{_context_path}}/uploads/welfare/" + filename);
+                        dropzoneDetails.emit("complete", detailsfile);
+                        dropzoneDetails.files.push(detailsfile);
+                    }
+                });
+            }
+            function closeDetail() {
+                $(".btnCloseConditions").click(function () {
+                    var rowIndex = $(this).attr("row-index");
+                    Details.splice(rowIndex, 1);
+                    $("#showTable").html(createTableDetails(Details));
+                    $("#divConditions").hide();
+                    createConditions();
+                    editDetail();
+                    closeDetail();
+                    cancelDetails();
+                });
+            }
 
-                    var html = "";
-                    $.each(dataCondition, function (k, v) {
-                        html += '<tr row-index="' + k + '"><td width="30%">' +
-                                '<select class="fieldMap conditions form-control" name="fieldMap" data-bv-field="country" row-index="' + k + '">';
-
-                        $.each(fieldArr, function (k1, v1) {
-                            if (v.fieldMap == k1) {
-                                html += '<option value="' + k1 + '" selected>' + v1 + '</option>';
+            function createTableDetails(Details) {
+                var table = "";
+                $.each(Details, function (key, value) {
+                    table += "<tr row-index='" + key + "'>" +
+                            "<td>" + (key + 1) + "</td>";
+                    $.each(value, function (key2, value2) {
+                        if (key2 != "conditions" && key2 != "filename" && key2 != "detailsId" && key2 != "rowNo" && key2 != "statusActive") {
+                            if (key2 == "returnTypeId") {
+                                var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
+                                table += "<td>" + text + "</td>";
                             } else {
-                                html += '<option value="' + k1 + '">' + v1 + '</option>';
+                                table += "<td>" + value2 + "</td>";
                             }
-                        });
-                        html += '</select></td>' +
-                                '<td width="30%"><select class="operations conditions form-control" name="operations" data-bv-field="country" row-index="' + k + '">';
-                        $.each(operationArr, function (k2, v2) {
-                            if (v.operations == k2) {
-                                html += '<option value="' + k2 + '" selected>' + v2 + '</option>';
-                            } else {
-                                html += '<option value="' + k2 + '">' + v2 + '</option>';
-                            }
-                        });
-                        html += '</select>' +
-                                '</td>' +
-                                '<td>' +
-                                '<div class="divValueX" row-index="' + k + '">' +
-                                '</div>' +
-                                '</td>' +
-                                '<td class="text-center">' +
-                                '<button class="btn btn-warning btn-sm removeConditions" row-index="' + k + '">' +
-                                '<i class="glyphicon glyphicon-remove"></i>' +
-                                '</button>' +
-                                '</td>' +
-                                '</tr>';
+                        }
                     });
-                    $(".content-conditions").append(html);
-                    $.each(dataCondition, function (k, v) {
-                        if (v.fieldMap == "employeeTypeId" || v.fieldMap == "genderId") {
-                            var pCode = v.fieldMap.substr(0, v.fieldMap.length - 2);
-                            var result = getPCode(pCode);
-                            var html2 = "";
-                            html2 += "<select name='valuex' row-index='" + k + "' class='valuex conditions form-control'>";
-                            $.each(result, function (key, value) {
-                                if (v.valuex == value.id) {
-                                    html2 += "<option value='" + value.id + "' selected>" + value.value1 + "</option>";
+                    table += "<td>" +
+                            "<button class='btnEditConditions btn btn-warning' row-index='" + key + "'><i class='glyphicon glyphicon-edit'></i>รายละเอียด</button>" +
+                            "<button class='btnConditions  btn btn-info' row-index='" + key + "'><i class='glyphicon glyphicon-list-alt'></i>เงื่อนไข</button>" +
+                            "<button class='btnCloseConditions btn btn-danger' row-index='" + key + "'><i class='glyphicon glyphicon-remove-circle'></i>ลบ</button>" +
+                            "</td>" +
+                            "</tr>";
+                });
+                return table;
+            }
+            $(".btnAppend").click(function () {
+                var html = "";
+                html += '<tr row-index="' + rowConditions + '"><td width="30%">' +
+                        '<select class="fieldMap conditions input-sm form-control" name="fieldMap" data-bv-field="country" row-index="' + rowConditions + '">';
+                $.each(fieldArr, function (k1, v1) {
+                    html += '<option value="' + k1 + '">' + v1 + '</option>';
+                });
+                html += '</select></td>' +
+                        '<td width="30%"><select class="operations conditions input-sm form-control" name="operations" data-bv-field="country" row-index="' + rowConditions + '">';
+                $.each(operationArr, function (k2, v2) {
+                    html += '<option value="' + k2 + '">' + v2 + '</option>';
+                });
+                html += '</select></td>' +
+                        '<td>' +
+                        '<div class="divValueX" row-index="' + rowConditions + '">' +
+                        '<input type="text" name="valuex" row-index="' + rowConditions + '" class="valuex conditions input-sm form-control" /></div></td>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td class="text-center">' +
+                        '<button class="btn btn-danger btn-sm  removeConditions" row-index="' + rowConditions++ + '">' +
+                        '<i class="glyphicon glyphicon-remove"></i>' +
+                        '</button>' +
+                        '</td>' +
+                        '</tr>';
+                $(".content-conditions").append(html);
+                changeFieldMap();
+                removeCondition();
+                return false;
+            });
+            function createConditions() {
+                $(".btnConditions").click(function () {
+                    cancelDetails();
+                    rowDetails = $(this).attr("row-index");
+                    $("#nameDescription").text(Details[rowDetails]["description"]);
+                    if (typeof Details[rowDetails]['conditions'] !== 'undefined' && Details[rowDetails]['conditions'] !== null && rowConditions != 0) {
+
+                        var dataCondition = Details[rowDetails]['conditions'];
+                        var html = "";
+                        $.each(dataCondition, function (k, v) {
+                            html += '<tr row-index="' + k + '"><td width="30%">' +
+                                    '<select class="fieldMap conditions input-sm form-control" name="fieldMap" data-bv-field="country" row-index="' + k + '">';
+                            $.each(fieldArr, function (k1, v1) {
+                                if (v.fieldMap == k1) {
+                                    html += '<option value="' + k1 + '" selected>' + v1 + '</option>';
                                 } else {
-                                    html2 += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                                    html += '<option value="' + k1 + '">' + v1 + '</option>';
                                 }
                             });
-                            html2 += "</select>";
-                            $(".divValueX[row-index='" + k + "']").html(html2);
-                        } else {
-                            var html2 = "";
-                            html2 = "<input type='text' name='valuex' row-index='" + k + "' class='valuex conditions form-control' value='" + v.valuex + "' />";
-                            $(".divValueX[row-index='" + k + "']").html(html2);
+                            html += '</select></td>' +
+                                    '<td width="30%"><select class="operations conditions input-sm form-control" name="operations" data-bv-field="country" row-index="' + k + '">';
+                            $.each(operationArr, function (k2, v2) {
+                                if (v.operations == k2) {
+                                    html += '<option value="' + k2 + '" selected>' + v2 + '</option>';
+                                } else {
+                                    html += '<option value="' + k2 + '">' + v2 + '</option>';
+                                }
+                            });
+                            html += '</select>' +
+                                    '</td>' +
+                                    '<td>' +
+                                    '<div class="divValueX" row-index="' + k + '">' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '<td class="text-center">' +
+                                    '<button class="btn btn-danger btn-sm removeConditions" row-index="' + k + '">' +
+                                    '<i class="glyphicon glyphicon-remove"></i>' +
+                                    '</button>' +
+                                    '</td>' +
+                                    '</tr>';
+                        });
+                        $(".content-conditions").append(html);
+                        $.each(dataCondition, function (k, v) {
+                            if (v.fieldMap == "employeeTypeId" || v.fieldMap == "genderId") {
+                                var pCode = v.fieldMap.substr(0, v.fieldMap.length - 2);
+                                var result = getPCode(pCode);
+                                var html2 = "";
+                                html2 += "<select name='valuex' row-index='" + k + "' class='valuex conditions input-sm form-control'>";
+                                $.each(result, function (key, value) {
+                                    if (v.valuex == value.id) {
+                                        html2 += "<option value='" + value.id + "' selected>" + value.value1 + "</option>";
+                                    } else {
+                                        html2 += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                                    }
+                                });
+                                html2 += "</select>";
+                                $(".divValueX[row-index='" + k + "']").html(html2);
+                            } else {
+                                var html2 = "";
+                                html2 = "<input type='text' name='valuex' row-index='" + k + "' class='valuex conditions input-sm form-control' value='" + v.valuex + "' />";
+                                $(".divValueX[row-index='" + k + "']").html(html2);
+                            }
+                            rowConditions = (k + 1);
+                        });
+                        changeFieldMap();
+                        removeCondition();
+                    } else {
+
+                        rowConditions = 0;
+                        $(".btnAppend").click();
+                    }
+                    $("#divConditions").show();
+                    $(window).scrollTop($('#divConditions').offset().top-50)
+                    return false;
+                });
+            }
+            function changeFieldMap() {
+                $(".fieldMap").change(function () {
+                    var rowIndex = $(this).attr("row-index");
+                    if (this.value == "employeeTypeId" || this.value == "genderId") {
+                        var pCode = this.value.substr(0, this.value.length - 2);
+                        var result = getPCode(pCode);
+                        var html = "";
+                        html += "<select name='valuex' row-index='" + rowIndex + "' class='valuex conditions input-sm form-control'>";
+                        $.each(result, function (key, value) {
+                            html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                        });
+                        html += "</select>";
+                        $(".divValueX[row-index='" + rowIndex + "']").html(html);
+                    } else {
+                        var html = "";
+                        html = "<input type='text' name='valuex' row-index='" + rowIndex + "' class='valuex conditions input-sm form-control' />";
+                        $(".divValueX[row-index='" + rowIndex + "']").html(html);
+                    }
+                });
+            }
+            function removeCondition() {
+                //.content-conditions
+                $(".removeConditions").unbind().click(function () {
+                    var rowIndex = $(this).attr("row-index");
+                    $(".content-conditions [row-index='" + rowIndex + "']").closest("tr").remove();
+                    var i = 0;
+                    for (i = (parseInt(rowIndex) + 1); i < rowConditions; i++) {
+                        $(".conditions[row-index='" + i + "']").attr("row-index", i - 1);
+                        $(".removeConditions[row-index='" + i + "']").attr("row-index", i - 1);
+                        $(".divValueX[row-index='" + i + "']").attr("row-index", i - 1);
+                    }
+                    rowConditions = --i;
+                });
+            }
+
+            $("#btnSaveConditions").click(function () {
+                Details[rowDetails]['conditions'] = [];
+                var isnull = true;
+                $(".conditions").each(function (key, value) {
+                    if (this.value == "") {
+                        Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        this.focus();
+                        isnull = false;
+                        return false;
+                    } else {
+                        var tempRows = $(this).attr("row-index");
+                        if (Details[rowDetails]['conditions'].length == tempRows) {
+                            Details[rowDetails]['conditions'][tempRows] = {};
                         }
-                        rowConditions = (k + 1);
-                    });
-                    changeFieldMap();
-                    removeCondition();
-                } else {
-                    rowConditions = 0;
+                        Details[rowDetails]['conditions'][tempRows][this.name] = this.value;
+                    }
+                });
+                if (isnull == true) {
+                    cancelDetails();
                 }
-
-                //$(".content-conditions").empty();
-                $("#divConditions").show();
-//                        $(".detailsFix").attr("class", "col-xs-12 col-sm-6 col-md-6");
-//                        $(".conditionsFix").attr("class", "col-xs-6 col-md-6");
-
 
                 return false;
             });
-        }
-        function removeDetail() {
-            $(".btnRemoveConditions").click(function () {
-                var rowIndex = $(this).attr("row-index");
-                Details.splice(rowIndex, 1);
-                $("#showTable").html(createTableDetails(Details));
-                $("#divConditions").hide();
-                createConditions();
-                removeDetail();
-            });
-        }
-
-        function changeFieldMap() {
-            $(".fieldMap").change(function () {
-                var rowIndex = $(this).attr("row-index");
-                if (this.value == "employeeTypeId" || this.value == "genderId") {
-                    var pCode = this.value.substr(0, this.value.length - 2);
-                    var result = getPCode(pCode);
-                    var html = "";
-                    html += "<select name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control'>";
-                    $.each(result, function (key, value) {
-                        html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+            $("#btn_preview").click(function () {
+                var conditions = [];
+                var isnull = true;
+                $(".conditions").each(function (key, value) {
+                    if (this.value == "") {
+                        Notify('กรุณาใส่เงื่อนไขให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        this.focus();
+                        isnull = false;
+                        return false;
+                    } else {
+                        var tempRows = $(this).attr("row-index");
+                        if (conditions.length == tempRows) {
+                            conditions[tempRows] = {};
+                        }
+                        conditions[tempRows][this.name] = this.value;
+                    }
+                });
+                if (isnull == true) {
+                    $(".modalPreview").modal('show');
+                    var datas = {};
+                    datas['conditions'] = conditions;
+                    $.ajax({
+                        url: '{{_context_path}}/api/welfare/conditions/preview',
+                        data: jsonEncode(datas),
+                        type: 'post', // 'or get'
+                        success: function (result) {
+                            var html = "";
+                            var countUser = 0;
+                            $.each(result.preview, function (key, value) {
+                                countUser++;
+                                html += '<tr class="selectable">';
+                                html += '<td>' + (key + 1) + '</td>';
+                                html += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                                html += '<td>' + value.gender1 + '</td>';
+                                html += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                                html += '<td>' + value.employeeType1 + '</td></tr>';
+                            });
+                            $("#userRows").html('จำนวนทั้งหมด ' + countUser + ' คน ');
+                            $("#showUser").html(html);
+                        }
                     });
-                    html += "</select>";
-                    $(".divValueX[row-index='" + rowIndex + "']").html(html);
-                } else {
-                    var html = "";
-                    html = "<input type='text' name='valuex' row-index='" + rowIndex + "' class='valuex conditions form-control' />";
-                    $(".divValueX[row-index='" + rowIndex + "']").html(html);
                 }
             });
-        }
-
-        function removeCondition() {
-            //.content-conditions
-            $(".removeConditions").unbind().click(function () {
-                var rowIndex = $(this).attr("row-index");
-                $(".content-conditions [row-index='" + rowIndex + "']").closest("tr").remove();
-                //  alert(rowConditions);
-                var i = 0;
-                for (i = (parseInt(rowIndex) + 1); i < rowConditions; i++) {
-                    $(".conditions[row-index='" + i + "']").attr("row-index", i - 1);
-                    $(".removeConditions[row-index='" + i + "']").attr("row-index", i - 1);
-                    $(".divValueX[row-index='" + i + "']").attr("row-index", i - 1);
-                }
-                rowConditions = --i;
-
-            });
-        }
-
-        function createTableDetails(Details) {
-            var table = "";
-            $.each(Details, function (key, value) {
-                table += "<tr row-index='" + key + "'>" +
-                        "<td>" + (key + 1) + "</td>";
-
-                $.each(value, function (key2, value2) {
-                    if (key2 != "conditions" && key2 != "filename") {
-                        if (key2 == "returnTypeId") {
-                            var text = $('#returnTypeId').find('option[value="' + value2 + '"]').text();
-                            table += "<td>" + text + "</td>";
-                        } else {
-                            table += "<td>" + value2 + "</td>";
+            $("#btnSaveAll").click(function () {
+                var dataok = "ok";
+                var welfare = {};
+                $('.welfare').each(function () {
+                    if ((this.name == "name" || this.name == "statusActive") && this.value == "") {
+                        Notify('กรุณากรอก' + this.placeholder + "!", 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        this.focus();
+                        dataok = "no";
+                        return false;
+                    }
+                    if (this.value != "") {
+                        if ((this.name == "willing" || this.name == "retire") && this.checked == true) {
+                            welfare[this.name] = 'Y';
+                        } else if ((this.name == "willing" || this.name == "retire") && this.checked == false) {
+                            welfare[this.name] = 'N';
+                        }
+                        if (this.name != "willing" && this.name != "retire") {
+                            welfare[this.name] = this.value;
                         }
                     }
                 });
-
-                table += "<td>" +
-                        "<button class='btnConditions  btn btn-sm btn-info' row-index='" + key + "'>เพิ่มเงื่อนไข</button>" +
-                        "   <button class='btnRemoveConditions btn btn-sm btn-danger' row-index='" + key + "'>ลบ</button>" +
-                        "</td>" +
-                        "</tr>";
-
-            });
-            return table;
-        }
-
-        $("#btnSaveConditions").click(function () {
-            Details[rowDetails]['conditions'] = [];
-            var isnull = true;
-            $(".conditions").each(function (key, value) {
-                if (this.value == "") {
-                    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                    this.focus();
-                    isnull = false;
-                    return false;
-                } else {
-                    var tempRows = $(this).attr("row-index");
-                    if (Details[rowDetails]['conditions'].length == tempRows) {
-                        Details[rowDetails]['conditions'][tempRows] = {};
+                if (dataok == "ok") {
+                    $.each(Details, function (key, value) {
+                        if (value.conditions == null || value.conditions.length == 0) {
+                            dataok = key;
+                            return false;
+                        }
+                    });
+                    if (dataok != "ok") {
+                        Notify('กรุณาใส่เงื่อนไขให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                        $(".btnConditions[row-index='" + dataok + "']").click();
+                        //                    $(".btnAppend").click();
+                        $(".valuex[row-index=0]").focus();
+                    } else {
+                        welfare['details'] = Details;
+                        var datas = {};
+                        datas['welfare'] = welfare;
+                        sendData('{{_context_path}}/api/welfare/welfare/save', jsonEncode(datas),
+                                function (result) {
+                                    if (result.save == true) {
+                                        Notify('บันทึกเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
+                                        setTimeout(function () {
+                                            getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/welfare/lists', null);
+                                        }, 500);
+                                    }
+                                });
                     }
-                    Details[rowDetails]['conditions'][tempRows][this.name] = this.value;
                 }
+                return false;
             });
-            if (isnull == true) {
-                $(".content-conditions").empty();
-                $("#divConditions").hide();
-            }
-
-            return false;
+            $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
         });
 
-        $("#btn_preview").click(function () {
-            var conditions = [];
-            var isnull = true;
-            $(".conditions").each(function (key, value) {
-                if (this.value == "") {
-                    Notify('กรุณากรอกให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                    this.focus();
-                    isnull = false;
-                    return false;
-                } else {
-                    var tempRows = $(this).attr("row-index");
-                    if (conditions.length == tempRows) {
-                        conditions[tempRows] = {};
-                    }
-                    conditions[tempRows][this.name] = this.value;
-                }
-            });
-            if (isnull == true) {
-                $(".modalPreview").modal('show');
-                var datas = {};
-                datas['conditions'] = conditions;
-                $.ajax({
-                    url: '{{_context_path}}/api/welfare/conditions/preview',
-                    data: jsonEncode(datas),
-                    type: 'post', // 'or get'
-                    success: function (result) {
-                        var html = "";
-                        var countUser = 0;
-                        $.each(result.preview, function (key, value) {
-                            countUser++;
-                            html += '<tr class="selectable">';
-                            html += '<td>' + (key + 1) + '</td>';
-                            html += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
-                            html += '<td>' + value.gender1 + '</td>';
-                            html += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                            html += '<td>' + value.employeeType1 + '</td></tr>';
-                        });
-                        $("#userRows").html('จำนวนทั้งหมด ' + countUser + ' คน ');
-                        $("#showUser").html(html);
-                    }
-                });
-            }
-        });
-
-        $("#btnSaveAll").click(function () {
-            if ($("#description").val() != "" || $("#name").val() != "") {
-                var retire = $("#retire").prop("checked");
-                var willing = $("#willing").prop("checked");
-                var datas = {};
-                Welfare['name'] = $("#name").val();
-                Welfare['description'] = $("#description").val();
-                if ($("#dateStart").val() != "") {
-                    Welfare['dateStart'] = $("#dateStart").val();
-                }
-                if ($("#dateEnd").val() != "") {
-                    Welfare['dateEnd'] = $("#dateEnd").val();
-                }
-                Welfare['resetTime'] = $("#resetTime").val();
-                Welfare['free'] = $("#free").val();
-
-                if (willing == true) {
-                    Welfare['willing'] = "Y";
-                } else {
-                    Welfare['willing'] = "N";
-                }
-                if (retire == true) {
-                    Welfare['retire'] = "Y";
-                } else {
-                    Welfare['retire'] = "N";
-                }
-
-                if ($("#welfareFilename").val() != "") {
-                    Welfare['filename'] = $("#welfareFilename").val();
-                }
-
-                Welfare['details'] = Details;
-                datas['welfare'] = Welfare;
-
-                sendData('{{_context_path}}/api/welfare/welfare/save', jsonEncode(datas),
-                        function (result) {
-                            if (result.save == true) {
-                                Notify('บันทึกเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
-                                setTimeout(function () {
-                                    getHTML('content-body', '{{_context_path}}/api/welfare/welfare/save', null);
-                                }, 1000);
-
-                            }
-                        });
-            } else {
-                Notify('กรุณาระบุข้อมูลให้ครบ !', 'top-right', '4000', 'warning', 'fa fa-danger', true);
-                $('#name').focus();
-            }
-            return false;
-        });
-        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
-    });
 
 
-
-</script>
+    </script>

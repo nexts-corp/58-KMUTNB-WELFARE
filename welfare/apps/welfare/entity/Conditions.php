@@ -35,12 +35,13 @@ class Conditions extends EntityBase {
      * @Column(type="string", name="operations",length=10,nullable=true)
      */
     public $operations;
-    
+
     /**
      * @Column(type="string", name="valuex",length=20,nullable=true)
      */
     public $valuex;
-    
+
+  
     function getConditionsId() {
         return $this->conditionsId;
     }

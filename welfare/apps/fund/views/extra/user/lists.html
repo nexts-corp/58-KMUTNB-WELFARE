@@ -1,0 +1,66 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li> <i class="fa fa-home"></i>
+                <a href="{{_context_path}}">
+                    {{#i18n}}home{{/i18n}}</a> 
+            </li>
+            <li><a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/fund/view/extra/admin/lists"
+                   onclick="btnHTML(this)">
+                    {{#i18n}}menu.fund{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.user{{/i18n}}</li>
+        </ul>
+    </div>
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.extra{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <div class="col-sm-12">
+                            <div class="col-sm-6 text-left">
+                                <p class="h5">{{#i18n}}fname{{/i18n}} - {{#i18n}}lname{{/i18n}} : {{#member}}{{titleName1}} {{fname}} {{lname}}{{/member}}</p>
+                            </div>
+                            <div class="col-sm-6 text-left">
+                                <p class="h5">{{#i18n}}sector{{/i18n}} : {{#member}}{{department1}} {{faculty1}}{{/member}}</p>
+                            </div>
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="rows">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}policy{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}saving{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}grantInAid{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}total{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}dateNotice{{/i18n}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#lists}}  
+                                    <tr class="selectable">
+                                        <td>{{rowNo}}</td>
+                                        <td>{{name}}</td>
+                                        <td>{{saving}}</td>
+                                        <td>{{grantInAid}}</td>
+                                        <td>{{total}}</td>
+                                        <td>{{dateNotice}}</td>
+                                    </tr>
+                                    {{/lists}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>

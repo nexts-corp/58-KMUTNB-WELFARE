@@ -94,9 +94,10 @@ class CommonService extends CServiceBase implements ICommonService {
     }
 
     public function afterGet($object, $remove = array()) {
-
+        $rowNo = 1;
         if (count($object) > 1 || is_array($object)) {
             foreach ($object as $key => $data) {
+                $object[$key]->rowNo = $rowNo++;
                 foreach ($data as $field => $value) {
                     if (in_array($field, $remove)) {
                         unset($object[$key]->$field);
@@ -108,6 +109,7 @@ class CommonService extends CServiceBase implements ICommonService {
                 }
             }
         } else {
+            $object->rowNo = $rowNo++;
             foreach ($object as $field => $value) {
                 if (in_array($field, $remove)) {
                     //   if ($field == "dateCreated" || $field == "dateUpdated" || $field == "createBy" || $field == "updateBy") {

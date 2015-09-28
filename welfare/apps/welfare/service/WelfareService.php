@@ -22,59 +22,37 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $this->common = new CommonService();
     }
 
-    public function save($data) {
+    public function save($welfare) {
 
-        $details = $data->details;
-        if ($data->dateStart != "") {
-            $dateStart = explode("-", $data->dateStart);
-            $dateStart[2] = intVal($dateStart[2]) - 543;
-            $dateStart1 = $dateStart[2] . "-" . $dateStart[1] . "-" . $dateStart[0];
-
-            $data->dateStart = new \DateTime($dateStart1);
+        $json = new CJSONDecodeImpl();
+        $details = $json->decode(new Details(), $this->getRequest()->data2->welfare, "details");
+        unset($welfare->details);
+        if ($welfare->dateStart != "") {
+            $welfare->dateStart = $this->common->str2date($welfare->dateStart, "d-m-Y", "-");
         }
-        if ($data->dateEnd != "") {
-            $dateEnd = explode("-", $data->dateEnd);
-            $dateEnd[2] = intVal($dateEnd[2]) - 543;
-            $dateEnd1 = $dateEnd[2] . "-" . $dateEnd[1] . "-" . $dateEnd[0];
-
-            $data->dateEnd = new \DateTime($dateEnd1);
+        if ($welfare->dateEnd != "") {
+            $welfare->dateEnd = $this->common->str2date($welfare->dateEnd, "d-m-Y", "-");
         }
-
-
-        if ($this->datacontext->saveObject($data)) {
-            $welfareId = $data->welfareId;
+        if ($this->datacontext->saveObject($welfare)) {
+            $welfareId = $welfare->welfareId;
             foreach ($details as $key => $value) {
-                $wd = new \apps\welfare\entity\Details();
-                $wd->welfareId = $welfareId;
-                $wd->description = $value->description;
-                $wd->quantity = $value->quantity;
-                $wd->returnTypeId = $value->returnTypeId;
-                if ($value->filename != "") {
-                    $wd->filename = $value->filename;
-                }
-                $condition = $value->conditions;
-                if ($this->datacontext->saveObject($wd)) {
-                    $detailsId = $wd->detailsId;
-                    foreach ($condition as $key2 => $value2) {
-                        $cd = new \apps\welfare\entity\Conditions();
-                        $cd->welfareId = $welfareId;
-                        $cd->detailsId = $detailsId;
-                        $cd->fieldMap = $value2->fieldMap;
-                        $cd->operations = $value2->operations;
-                        $cd->valuex = $value2->valuex;
-                        $this->datacontext->saveObject($cd);
-                    }
+                $value->welfareId = $welfareId;
+                $conditions = $json->decode(new Conditions(), $value, "conditions");
+                unset($value->conditions);
+                $this->datacontext->saveObject($value);
+                $detailsId = $value->detailsId;
+                foreach ($conditions as $key2 => $value2) {
+                    $value2->welfareId = $welfareId;
+                    $value2->detailsId = $detailsId;
+                    $this->datacontext->saveObject($value2);
                 }
             }
-
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;
         } else {
             $this->getResponse()->add("message", $this->datacontext->getLastMessage());
             return false;
         }
-
-        return $data;
     }
 
     public function update($welfare) {
@@ -82,14 +60,13 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $json = new CJSONDecodeImpl();
         $details = $json->decode(new Details(), $this->getRequest()->data2->welfare, "details");
         unset($welfare->details);
-        
+
         if ($welfare->dateStart != "") {
             $welfare->dateStart = $this->common->str2date($welfare->dateStart, "d-m-Y", "-");
         }
         if ($welfare->dateEnd != "") {
             $welfare->dateEnd = $this->common->str2date($welfare->dateEnd, "d-m-Y", "-");
         }
-
         if ($this->datacontext->updateObject($welfare)) {
             foreach ($details as $key => $value) {
                 if (empty($value->detailsId)) {
@@ -142,7 +119,6 @@ class WelfareService extends CServiceBase implements IWelfareService {
     }
 
     public function get($welfareId) {
-
         $welfare = new Welfare();
         $welfare->welfareId = $welfareId;
         $welfare = $this->datacontext->getObject($welfare)[0];
