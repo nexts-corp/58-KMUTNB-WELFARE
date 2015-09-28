@@ -34,7 +34,7 @@
 
 
 
-              <li>
+                <li>
                     <a href="#" 
                        data-id="content-body"
                        data-api="{{_context_path}}/api/wfmember/view/byMemberWelfare/lists"
@@ -42,11 +42,11 @@
                         <span class="menu-text">สวัสดิการที่พึงจะได้รับ</span>
                     </a>
                 </li>
-<!--                <li>
-                    <a href="#" onclick="getHTML('content-body', '{{_context_path}}/api/member / view / welfare / wait', null);">
-                        <span class="menu-text">สวัสดิการที่รับไปแล้ว</span>
-                    </a>
-                </li>-->
+                <!--                <li>
+                                    <a href="#" onclick="getHTML('content-body', '{{_context_path}}/api/member / view / welfare / wait', null);">
+                                        <span class="menu-text">สวัสดิการที่รับไปแล้ว</span>
+                                    </a>
+                                </li>-->
 
 
             </ul>
@@ -172,30 +172,8 @@
 
         </li>
 
-        <li>
-            <a href="#" 
-               data-id="content-body"
-               data-api="{{_context_path}}/api/user/view/member/edit/{{code}}"
-
-               onclick="btnHTML(this)">
-                <i class="menu-icon fa fa-newspaper-o"></i>
-                <span class="menu-text">ข่าวสารและประกาศ</span>
-            </a>
-            <!--            <a href="#" class="menu-dropdown">
-                            <i class="menu-icon glyphicon glyphicon-link"></i>
-            
-                            <span class="menu-text">
-                                
-                            </span>
-            
-                            <i class="menu-expand"></i>
-                        </a>-->
-
-            <ul class="submenu">
 
 
-            </ul>
-        </li>
 
         <li>    
             <a href="#" 
@@ -222,28 +200,34 @@
 
 
 
-
-        <li>    
+        <li>
             <a href="#" 
                data-id="content-body"
-               data-api="{{_context_path}}/api/member/view/member/edit/{{code}}"
-
+               data-api="{{_context_path}}/api/news/view/news/lists"
                onclick="btnHTML(this)">
-                <i class="menu-icon fa fa-comments"></i>
-                <span class="menu-text">ถาม-ตอบ</span>
+                <i class="menu-icon fa fa-newspaper-o"></i>
+
+                <span class="menu-text">
+                    ข้อมูลข่าวสาร
+                </span>
+
             </a>
-            <!--            <a href="#" >
-                            <i class="menu-icon glyphicon glyphicon-link"></i>
-            
-                            <span class="menu-text">
-                                ถาม-ตอบ
-                            </span>
-            
-                            <i class="menu-expand"></i>
-                        </a>-->
-
-
         </li>
+
+        <li>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/qa/view/questions/lists"
+               onclick="btnHTML(this)">
+                <i class="menu-icon fa fa-comments-o"></i>
+
+                <span class="menu-text">
+                    ถาม-ตอบ
+                </span>
+
+            </a>
+
+        <li>
 
         <li>    
 
