@@ -139,7 +139,7 @@ class ViewService extends CServiceBase implements IViewService {
         $filtervalue = $this->getRequest()->filtervalue;
         $datafilter = $this->getRequest();
 
-        
+
 
         $param = array();
         $sql = "select mem1 "
@@ -158,8 +158,8 @@ class ViewService extends CServiceBase implements IViewService {
             $param["facultyId"] = $facultyId;
         } elseif ($usertype == "adminDepartment") {
             $view = new CJView("department/lists", CJViewType::HTML_VIEW_ENGINE);
-            
-             $sql .="join apps\\taxonomy\\entity\\Taxonomy "
+
+            $sql .="join apps\\taxonomy\\entity\\Taxonomy "
                     . "tax with tax.id = mem1.departmentId "
                     . "WHERE mem1.memberActive2 = 'Working' "
                     . "and tax.code = :departmentId ";  //กรณีที่ไม่ได้ search
@@ -449,29 +449,53 @@ class ViewService extends CServiceBase implements IViewService {
             if ($history[$key]['fieldChange'] == "salaryDate") {
                 $history[$key]['fieldChange'] = "วันที่ปรับเงินเดือน";
             }
-            
-           //print_r($history[$key]['valueOld']);
-           
-          $xx=explode("-",$history[$key]['valueOld']);
-          if(count($xx)==3)
-          {
-              $history[$key]['valueOld'] =  $xx[2]."-".$xx[1]."-".($xx[0]+543);
-//              echo $history[$key]['valueOld'];
-          }
-          $xx=explode("-",$history[$key]['valueOld']);
-          if(count($xx)==3)
-          {
-              $history[$key]['valueOld'] =  $xx[2]."-".$xx[1]."-".($xx[0]+543);
-//              echo $history[$key]['valueOld'];
-          }
-          
+
+            //print_r($history[$key]['valueOld']);
+
+            if ($d = explode("-", $history[$key]['valueOld'])) {
+                if (count($d) == 3) {
+                    $history[$key]['valueOld'] = $d[2] . "-" . $d[1] . "-" . ($d[0] + 543);
+                }
+            }
+
+            if ($d2 = explode("-", $history[$key]['valueNew'])) {
+                if (count($d2) == 3) {
+                    $history[$key]['valueNew'] = $d2[2] . "-" . $d2[1] . "-" . ($d2[0] + 543);
+                }
+            }
+
+//
+//            if ($d3 = explode("-", $salary[$key]['valueOld'])) {
+//                if (count($d3) == 3) {
+//                    $salary[$key]['valueOld'] = $d3[2] . "-" . $d3[1] . "-" . ($d3[0] + 543);
+//                }
+//            }
+//
+//            if ($d4 = explode("-", $salary[$key]['valueNew'])) {
+//                if (count($d4) == 3) {
+//                    $salary[$key]['valueNew'] = $d4[2] . "-" . $d4[1] . "-" . ($d4[0] + 543);
+//                }
+//            }
+//
+//            if ($d5 = explode("-", $mem[$key]['valueOld'])) {
+//                if (count($d5) == 3) {
+//                    $mem[$key]['valueOld'] = $d5[2] . "-" . $d5[1] . "-" . ($d5[0] + 543);
+//                }
+//            }
+//
+//            if ($d6 = explode("-", $mem[$key]['valueNew'])) {
+//                if (count($d6) == 3) {
+//                    $mem[$key]['valueNew'] = $d6[2] . "-" . $d6[1] . "-" . ($d6[0] + 543);
+//                }
+//            }
+
 //           if($history[$key]['valueOld']=="--"){
 //           $time=explode("-",$history[$key]['valueOld']);
 //           
 //          // $hestory=$time[0]."-".$time[1]."-".$time[2];
 //           print($history[$key]['valueOld']);
 //           }
-           //exit();
+            //exit();
 //            
 //            if (strstr($history[$key]['valueOld'], "-")) {
 //

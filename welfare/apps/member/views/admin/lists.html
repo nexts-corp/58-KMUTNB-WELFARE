@@ -156,6 +156,7 @@
     $(document).ready(function () {
 
         $("#filtervalue").hide();
+        
         //titleName();
         //listtitleName();
         $("#filterCode").change(function () {
@@ -184,6 +185,7 @@
                 $("#searchName").hide();
                 $("#filtervalue").show();
                 $("#filtervalue").html(html);
+                $("#filtervalue").select2();
             }
 
 
