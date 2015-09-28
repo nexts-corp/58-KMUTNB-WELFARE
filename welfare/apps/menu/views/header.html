@@ -24,6 +24,41 @@
                 <ul class="account-area">
 
                     <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" title="Mails" href="#">
+                            <i class="icon fa fa-envelope"></i>
+                            <span class="badge">{{total}}</span>
+                        </a>
+                        <!--Messages Dropdown-->
+                        <ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
+                            {{#datasNft}}
+                            <li>
+                                <a href="#" 
+                                   data-id="content-body"
+                                   data-api="{{_context_path}}/{{nftLink}}"
+                                   data-object="{{nftAppName}}"
+                                   data-param="{{nftAppId}}"
+                                   onclick="btnHTML(this)">
+                                    <div class="message">
+                                        <span class="message-sender">
+                                            เมื่อ : {{dateCreated}}
+                                        </span>
+                                        <span class="message-time">
+                                        </span>
+                                        <span class="message-subject">
+                                            {{nftName}}
+                                        </span>
+
+                                    </div>
+                                </a>
+                            </li>
+                            {{/datasNft}}
+
+                        </ul>
+                        <!--/Messages Dropdown-->
+                    </li>
+
+
+                    <li>
                         <a class="login-area dropdown-toggle" data-toggle="dropdown">
                             <div class="avatar" title="View your public profile">
                                 <img src="{{_context_path}}/assets/img/avatars/user.png">
@@ -43,6 +78,9 @@
                                                             </div>
                                                         </li>-->
                             <!--Avatar Area-->
+
+
+
 
                             <li class="edit">
                                 <a href="#" 
