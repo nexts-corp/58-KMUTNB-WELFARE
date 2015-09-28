@@ -1,0 +1,139 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">รายการคำถามและคำตอบ</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">รายการคำถามและคำตอบ</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <!--                        <label class="col-lg-5 control-label">
+                                                    <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                                                </label>-->
+
+                        <!--                        <div class="col-lg-3">
+                                                    <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                                </div>-->
+                        <div class="pull-right">
+
+                            <button class="btn btn-primary"
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/qa/view/questions/add"
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                            </button>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>หัวข้อคำถาม</th>
+                                        <th>จำนวนคำตอบ</th>
+                                        <th>โดย</th>
+                                        <th>วันที่ตั้งคำถาม</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datasQuestions}}
+                                    <tr class="selectable">
+
+                                        <td>{{rowNo}}</td>
+                                        <td>{{questionsName}}</td>
+                                        <td>{{employeeTypeId}}</td>
+                                        <td>{{createBy}}</td>
+                                        <td>{{dateCreated}}</td>
+                                        <td class="center">
+
+                                            <button class="btn btn-success btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/qa/user/view/qa/read"
+                                                    data-object="questionsId"
+                                                    data-param="{{questionsId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-eye"></i>อ่านคำถามนี้
+                                            </button>
+                                            <button class="btn btn-info btn-xs edit"
+                                                    data-id="content-body"
+                                                    data-api="{{_context_path}}/api/qa/view/questions/edit"
+                                                    data-object="questionsId"
+                                                    data-param="{{questionsId}}"
+                                                    onclick="btnHTML(this)">
+                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
+                                            </button>
+
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{questionsId}}" >{{#i18n}}deletes{{/i18n}}</button>
+                                    </tr>
+                                    {{/datasQuestions}}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /Page Body -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //titleName();
+        //listtitleName();
+
+        $('.btn-del').click(function () {
+            var id = $(this).attr('row-index');
+
+            if (confirm("คุณต้องการลบ?")) {
+                var data = {"questionsId": id};
+                sendData('{{_context_path}}/api/qa/questions/delete', data,
+                        function (msg) {
+                            if (msg.delete == true) {
+
+                                getHTML('content-body', '{{_context_path}}/api/qa/view/questions/lists', null);
+                                Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                            } else {
+                                Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            }
+                        });
+
+
+            }
+
+        });
+
+//        $("#btnSearch").click(function () {
+//            var searchName = $("#searchName").val();
+//            if (searchName == "") {
+//                document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+//            } else {
+//                var data = {"searchName": searchName};
+//                getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/lists', data);
+//            }
+//        });
+
+    });
+
+
+
+</script>

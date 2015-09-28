@@ -1,0 +1,171 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li>
+
+                <a href="#">Questions</a>
+            </li>
+            <li class="active">{{#datasQuestions}}{{questionsName}}{{/datasQuestions}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#datasQuestions}}{{questionsName}}{{/datasQuestions}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body" style="background: #FFF">
+
+                        <div class="pull-right">
+
+
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll" id="test">
+                            {{#datasQuestions}}{{{questionsDetails}}}{{/datasQuestions}}
+                        </div>
+
+                        <div class="mail-attachments">
+                            <h4>
+                                <span> </span>
+                            </h4>
+
+
+
+                            <hr>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="widget-body" style="background: #FFF">
+
+                        <div  class="well padding-bottom-10" >
+                            <span class="input-icon icon-right">
+                                <textarea id="answerDetails" class="summernote" ></textarea>
+                            </span>
+                            <div class="padding-top-10 text-align-right">
+                                <a id="btn_submit" class="btn btn-sm btn-primary">
+                                    Send
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            {{#datasAnswer}}
+                            <div class="comment">
+                                <img src="{{_context_path}}/assets/img/user.jpg" alt="" class="comment-avatar">
+                                <div class="comment-body">
+                                    <div class="comment-text">
+                                        <div class="comment-header">
+                                            <a href="#" title="">#{{rowsNo}} {{createBy}} </a> <span>เมื่อ: {{dateCreated}}  </span>
+                                        </div>
+                                                {{{answerDetails}}}
+                                    </div>
+                                   
+                                </div>
+
+                            </div>
+                            {{/datasAnswer}}
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<!-- /Page Body -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn_submit").click(function () {
+           
+            var data = {};
+            data['questionsId'] = "{{questionsId}}";
+            data['answerDetails'] = $("#answerDetails").val();
+            var jdata = {};
+            jdata['datas'] = data;
+            $.ajax({
+                url: '{{_context_path}}/api/qa/answer/save',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+                    var data = {"questionsId":{{questionsId}}};
+                    if (result.save == true) {
+                        getHTML('content-body', '{{_context_path}}/api/qa/user/view/qa/read', data);
+                        Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                    } else {
+                        Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    }
+
+                }
+            });
+        });
+        $('.summernote').summernote({
+            height: 200,
+            toolbar: [
+                ['edit', ['undo', 'redo']],
+                ['headline', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+                ['fontface', ['fontname']],
+                ['textsize', ['fontsize']],
+                ['fontclr', ['color']],
+                ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['group', ['video']]
+
+                        //['help', ['help']]
+            ],
+            onImageUpload: function (files) {
+                for (i = 0; i < files.length; i++) {
+                    sendFile(files[i]);
+                }
+            }
+        });
+
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: '{{_context_path}}/api/qa/multifile/save',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var url = result.url;
+                    url = "{{_context_path}}/uploads/qa/" + url;
+                    $('.summernote').summernote('editor.insertImage', url);
+                }
+            });
+        }
+    });
+
+</script>

@@ -1,0 +1,140 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">เพิ่มคำถาม</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+
+                    <div class="widget-body">
+                        <div id="registrationForm" method="post" class="form-horizontal">
+                            <div class="form-title">
+                                เพิ่มคำถาม
+                            </div>
+                            <div class="form-group ">
+
+                                <div class="col-lg-12">
+                                    <label for="exampleInputName2">หัวข้อคำถาม</label>
+
+                                    <input type="text" class="form-control" name="questionsName" id="questionsName" placeholder="กรุณาระบุหัวข้อคำถาม"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="กรุณาระบุหัวข้อคำถาม" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-lg-12 control-group">
+                                    <label for="exampleInputName2">รายละเอียด</label>
+
+                                    <textarea class="summernote" id="questionsDetails" ></textarea>
+
+                                </div>
+                            </div>
+
+                         
+
+                            <div class="form-group ">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-7 control-label">
+                                        <input class="btn btn-palegreen" id="btn_submit" type="submit" value="{{#i18n}}button.submit{{/i18n}}" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn_submit").click(function () {
+           
+            var data = {};
+            data['questionsName'] = $("#questionsName").val();
+            data['questionsDetails'] = $("#questionsDetails").val();
+            var jdata = {};
+            jdata['datas'] = data;
+            $.ajax({
+                url: '{{_context_path}}/api/qa/questions/save',
+                data: jsonEncode(jdata),
+                type: 'post', // 'or get'
+                success: function (result) {
+
+                    if (result.save == true) {
+                        getHTML('content-body', '{{_context_path}}/api/qa/view/questions/lists', null);
+                        Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                    } else {
+                        Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                    }
+
+                }
+            });
+        });
+        $('.summernote').summernote({
+            height: 400,
+            toolbar: [
+                ['edit', ['undo', 'redo']],
+                ['headline', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+                ['fontface', ['fontname']],
+                ['textsize', ['fontsize']],
+                ['fontclr', ['color']],
+                ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['group', ['video']]
+
+                        //['help', ['help']]
+            ],
+            onImageUpload: function (files) {
+                for (i = 0; i < files.length; i++) {
+                    sendFile(files[i]);
+                }
+            }
+        });
+
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: '{{_context_path}}/api/qa/multifile/save',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var url = result.url;
+                    url = "{{_context_path}}/uploads/qa/" + url;
+                    $('.summernote').summernote('editor.insertImage', url);
+                }
+            });
+        }
+    });
+
+
+</script>

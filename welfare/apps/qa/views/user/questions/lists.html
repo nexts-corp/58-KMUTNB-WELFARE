@@ -1,0 +1,98 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">รายการคำถาม</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+
+
+                <div class="pull-right">
+
+                    <div class="buttons-preview">
+                        <button class="btn btn-blue btn-lg"
+                                data-id="content-body"
+                                data-api="{{_context_path}}/api/qa/user/view/questions/add"
+                                onclick="btnHTML(this)">
+                            <i class="fa fa-plus"></i>ตั้งคำถาม
+                        </button>
+                    </div>
+
+                </div>
+                <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                <div class="flip-scroll">
+
+                    <div class="col-lg-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-themesecondary">
+                                <i class="widget-icon fa fa-tags themesecondary"></i>
+                                <span class="widget-caption themesecondary">รายการ ถาม-ตอบ</span>
+                            </div><!--Widget Header-->
+                            <div class="widget-body  no-padding">
+                                <div class="tickets-container">
+                                    <ul class="tickets-list">
+
+                                        {{#datasQuestions}}
+                                        <li class="ticket-item">
+                                            <div class="row">
+                                                <div class="ticket-user col-lg-6 col-sm-12">
+                                                    <span class="user-name">#{{rowNo}}</span>
+                                                    <span class="divider hidden-xs"></span>
+
+                                                    <img src="{{_context_path}}/assets/img/user.jpg" class="user-avatar">
+                                                    <span class="user-name">{{questionsName}}</span>
+                                                    <span class="user-at">โดย</span>
+                                                    <span class="user-company">{{createBy}}</span>
+                                                </div>
+
+                                                <div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
+                                                    <div class="divider hidden-md hidden-sm hidden-xs"></div>
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <span class="time">เมื่อ: {{dateCreated}}</span>
+                                                </div>
+
+                                                <div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
+                                                    <span class="divider hidden-xs"></span>
+                                                    <button class="btn btn-success btn-xs edit"
+                                                            data-id="content-body"
+                                                            data-api="{{_context_path}}/api/qa/user/view/qa/read"
+                                                            data-object="questionsId"
+                                                            data-param="{{questionsId}}"
+                                                            onclick="btnHTML(this)">
+                                                        <i class="fa fa-eye"></i>อ่านคำถามนี้
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                        {{/datasQuestions}}
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
