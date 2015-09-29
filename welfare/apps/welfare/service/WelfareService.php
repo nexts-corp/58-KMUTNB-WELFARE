@@ -100,8 +100,9 @@ class WelfareService extends CServiceBase implements IWelfareService {
     public function delete($id) {
         $daoWelfare = new Welfare();
         $daoWelfare->setWelfareId($id);
+        $daoWelfare->setStatusActive('N');
 
-        if ($this->datacontext->removeObject($daoWelfare)) {
+        if ($this->datacontext->updateObject($daoWelfare)) {
             return true;
         } else {
             $this->getResponse()->add("message", $this->datacontext->getLastMessage());
