@@ -28,7 +28,7 @@
                <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
 
                         <div class="flip-scroll">
-                            <table id="table2excel" class="table table-hover table-striped table-bordered table-condensed" >
+                            <table id="report" class="table table-hover table-striped table-bordered table-condensed" >
                                 <thead>
                                     <tr class="noExl">
                                         <th>{{#i18n}}IdCard{{/i18n}}</th>
@@ -65,7 +65,7 @@
 <!-- /Page Content -->
 <script>
 $("#reportExport").click(function () {
-    $("#table2excel").table2excel({
+    $("#report").table2excel({
         exclude: ".noExl",
         name: "Excel Document Name",
         filename: "SomeFile" //do not include extension
