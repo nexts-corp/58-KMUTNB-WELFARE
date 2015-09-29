@@ -99,7 +99,7 @@ class ViewService extends CServiceBase implements IViewService {
                     $dateTime = explode(" ", $value2['dateStart']);
                     $date = $dateTime[0];
                     $date = explode("-", $date);
-                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $date = intval($date[0] + 543);
                     $budget2[$key2]['dateStart'] = $date;
                 }
                 if ($budget2[$key2]['dateEnd'] != "") {
@@ -107,7 +107,7 @@ class ViewService extends CServiceBase implements IViewService {
                     $dateTime = explode(" ", $value2['dateEnd']);
                     $date = $dateTime[0];
                     $date = explode("-", $date);
-                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $date = intval($date[0] + 543);
                     $budget2[$key2]['dateEnd'] = $date;
                 }
             }
