@@ -44,4 +44,13 @@ interface IWelfareService {
      * @description getลิสต์ข้อมูล
      */
     public function get($welfareId);
+
+    /**
+     * @name preview
+     * @uri /preview
+     * @param apps\welfare\entity\Conditions conditions
+     * @return string preview
+     * @description test
+     */
+    public function preview($conditions);
 }

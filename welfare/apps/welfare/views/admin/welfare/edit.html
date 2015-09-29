@@ -30,6 +30,7 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">{{#i18n}}welfare.name{{/i18n}}</label>
                                 <div class="col-lg-8">
+                                    <input type="hidden" name="welfareId" class="welfare" id="welfareId" value="{{welfareId}}" />
                                     <input type="text" class="form-control welfare" name="name" placeholder="{{#i18n}}welfare.name{{/i18n}}"
                                            id="name" data-validation="required" value="{{name}}"
                                            data-validation-error-msg="*กรุณาใส่ชื่อสวัสดิการ" />
@@ -41,7 +42,7 @@
                                     <textarea rows="4" data-validation-error-msg="" class="form-control welfare"
                                               id="description" name="description" cols="67" 
                                               placeholder="{{#i18n}}welfare.description{{/i18n}}">
-                                        {{description}}
+                                        {{{description}}}
                                     </textarea>
                                 </div>
                             </div>
@@ -333,6 +334,9 @@
             }
             if ('{{#welfare}}{{retire}}{{/welfare}}' == 'Y') {
                 $("#retire").prop('checked', 'checked');
+            }
+            if ('{{#welfare}}{{statusActive}}{{/welfare}}' == 'Y') {
+                $("#welfare").prop('checked', 'checked');
             }
             sendData('{{_context_path}}/api/welfare/welfare/get', {welfareId: welfareId}, function (result) {
                 Details = result.welfare.details;
@@ -731,7 +735,7 @@
                     var datas = {};
                     datas['conditions'] = conditions;
                     $.ajax({
-                        url: '{{_context_path}}/api/welfare/conditions/preview',
+                        url: '{{_context_path}}/api/welfare/welfare/preview',
                         data: jsonEncode(datas),
                         type: 'post', // 'or get'
                         success: function (result) {
@@ -791,7 +795,7 @@
                         datas['welfare'] = welfare;
                         sendData('{{_context_path}}/api/welfare/welfare/update', jsonEncode(datas),
                                 function (result) {
-                                    if (result.save == true) {
+                                    if (result.update == true) {
                                         Notify('บันทึกเรียบร้อย !', 'top-right', '4000', 'success', 'fa fa-check', true);
                                         setTimeout(function () {
                                             getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/welfare/lists', null);

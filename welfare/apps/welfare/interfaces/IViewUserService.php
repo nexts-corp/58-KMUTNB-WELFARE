@@ -1,5 +1,7 @@
 <?php
+
 namespace apps\welfare\interfaces;
+
 /**
  * @name IViewUserService
  * @uri /view/user
@@ -8,7 +10,11 @@ namespace apps\welfare\interfaces;
  */
 interface IViewUserService {
 
- 
-    
-    
+    /**
+     * @name lists
+     * @uri /lists
+     * @return html view
+     * @description จัดการรายการสวัสดิการ
+     */
+    public function lists();
 }

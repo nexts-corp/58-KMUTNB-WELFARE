@@ -87,15 +87,6 @@ class WelfareService extends CServiceBase implements IWelfareService {
                     $conditions = $json->decode(new Conditions(), $value, "conditions");
                     unset($value->conditions);
                     $this->datacontext->updateObject($value);
-                    foreach ($conditions as $key2 => $value2) {
-                        if (empty($value2->conditionsId)) {
-                            $value2->welfareId = $welfareId;
-                            $value2->detailsId = $detailsId;
-                            $this->datacontext->saveObject($value2);
-                        } else {
-                            $this->datacontext->updateObject($value2);
-                        }
-                    }
                 }
             }
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
@@ -136,6 +127,62 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $details = $this->common->afterGet($details, array("welfareId", "dateCreated", "dateUpdated", "createBy", "updateBy"));
         $welfare->details = $details;
         return $welfare;
+    }
+    
+       public function preview($conditions) {
+        //ตรวจสอบว่าเงื่อนไข ตรงกับบุคลากรไหนบ้าง
+        
+        $query = "SELECT *,IFNULL(academic1,titleName1) title "
+                . "FROM v_fullmember "
+                . "where ";
+
+        $field = array();
+        foreach ($conditions as $key => $value) {
+            $index = 0;
+            if (!empty($field[$value->fieldMap])) {
+                $index = count($field[$value->fieldMap]);
+            }
+            $field[$value->fieldMap][$index]['operations'] = $value->operations;
+            $field[$value->fieldMap][$index]['valuex'] = $value->valuex;
+        }
+        $where = "";
+        foreach ($field as $key => $value) {
+            $count = count($value);
+            $sql = "";
+            if ($where != "") {
+                $sql .= " AND ";
+            }
+            if ($count > 1 && $key == 0) {
+                $sql .= " ( ";
+            }
+            foreach ($value as $key2 => $value2) {
+                if ($sql != "" && $key2 > 0) {
+                    if ($value2['operations'] == "=" || $value2['operations'] == "!=") {
+                        $sql .= " OR ";
+                    } else {
+                        $sql .= " AND ";
+                    }
+                }
+                if (strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                    $sql .= " " . $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                } elseif (!strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                    $sql .= " TIMESTAMPDIFF(YEAR," . $key . ", CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                } else {
+                    $sql .= " " . $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                }
+            }
+            if ($count > 1) {
+                $sql .= " ) ";
+            }
+            $where .= $sql;
+        }
+
+        $sql = $query . $where;
+
+        $member = $this->datacontext->pdoQuery($sql);
+
+
+        return $member;
     }
 
 }
