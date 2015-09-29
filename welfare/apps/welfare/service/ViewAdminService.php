@@ -12,6 +12,7 @@ use apps\welfare\interfaces\IViewAdminService;
 use apps\welfare\entity\Welfare;
 use apps\welfare\entity\Details;
 use apps\welfare\entity\Conditions;
+use apps\welfare\entity\History;
 
 class ViewAdminService extends CServiceBase implements IViewAdminService {
 
@@ -59,6 +60,38 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
         $wel = new WelfareService();
         $view->welfare = $wel->get($welfareId);
         $view->unit = $this->taxonomy->getPCode("unit");
+        return $view;
+    }
+
+    public function approveLists() {
+        $view = new CJView("admin/approve/lists", CJViewType::HTML_VIEW_ENGINE);
+        
+        $sqlApprove="SELECT ap.historyId,ap.statusApprove,ap.welfareId,ap.memberId,ap.detailsId,"
+                . " IFNULL(mb.academic1,mb.titleName1) title  , mb.memberId , "
+                . " mb.fname, mb.lname, "
+                . "wf.name,wf.description,"
+                . "wfc.description as wfcdetails,wfc.quantity "
+                . " FROM welfarehistory ap Left Join v_fullmember mb "
+                . " on ap.memberId = mb.memberId "
+                . "Left Join welfare wf "
+                . "on ap.welfareId = wf.welfareId "
+                . "Left Join welfaredetails wfc "
+                . "on ap.detailsId=wfc.detailsId "
+                . " where ap.statusApprove='P' ";
+        
+         
+        $objApprove = $this->datacontext->pdoQuery($sqlApprove);
+        
+         $i = 1;
+        
+        foreach ($objApprove as $key => $value) {
+
+            $objApprove[$key]["rowNo"] = $i++;
+        }
+        
+        $view->dataApprove=$objApprove;
+       
+        
         return $view;
     }
 

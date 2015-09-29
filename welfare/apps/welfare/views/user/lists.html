@@ -7,7 +7,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}detailWelfare{{/i18n}}</li>
+            <li class="active">{{#i18n}}welfare.details{{/i18n}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}detailWelfare{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.details{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
@@ -40,9 +40,9 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>{{#i18n}}all.number{{/i18n}}</th>
+                                        <th>{{#i18n}}number{{/i18n}}</th>
                                         <th>{{#i18n}}welfare.description{{/i18n}}</th>
-                                        <th>{{#i18n}}all.quantity{{/i18n}}</th>
+                                        <th>{{#i18n}}quantity{{/i18n}}</th>
 
                                         <th class="center">{{#i18n}}conditions.setList{{/i18n}}</th>
                                     </tr>
@@ -56,12 +56,18 @@
                                         <td>{{quantity}} {{returntType}}</td>
                                         <td class="center">
                                             
+                                            
                                             <button class="btn btn-info btn-xs edit btn_history"
                                                     row-index="{{detailsId}}"
                                                     row-welfareId="{{welfareId}}">
                                                 <i class="fa fa fa-eye"></i>ตรวจสอบ
                                             </button>
-
+                                               
+                                            <button class="btn btn-warning btn-xs edit btn_askWelfare"
+                                                    row-index="{{detailsId}}"
+                                                    row-welfareId="{{welfareId}}">
+                                                <i class="fa fa fa-eye"></i>ขอรับสวัสดิการนี้
+                                            </button>
 
                                         </td>
                                     </tr>
@@ -91,6 +97,7 @@
             getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName: SearchName});
         }
     });
+    
     $('.btn_history').click(function () {
         var data = {};
         data['detailsId'] = $(this).attr('row-index');
@@ -100,6 +107,20 @@
         jdata['data'] = data;
         getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
     });
+    
+    
+    
+      $('.btn_askWelfare').click(function () {
+        var data = {};
+        data['detailsId'] = $(this).attr('row-index');
+        data['welfareId'] = $(this).attr('row-welfareId');
+        data['statusApprove']="P";
+        data['memberId'] = "{{memberId}}";
+        var jdata = {};
+        jdata['data'] = data;
+        getHTML('content-body', '{{_context_path}}/api/welfare/history/save', jsonEncode(jdata))
+    });
+    
 </script> 
 
 

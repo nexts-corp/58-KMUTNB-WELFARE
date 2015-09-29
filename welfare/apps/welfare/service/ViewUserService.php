@@ -37,7 +37,7 @@ class ViewUserService extends CServiceBase implements IViewUserService {
 
         $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
         $details = $this->datacontext->pdoQuery($sqlDetails, $param);
-    
+
         $matchId = array();
         foreach ($details as $valueId) {
             $condition = new \apps\welfare\entity\Conditions();
@@ -121,12 +121,14 @@ class ViewUserService extends CServiceBase implements IViewUserService {
 
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
 
-        $i = 1;
-        foreach ($objDetailsId as $key => $value) {
+        if ($objDetailsId != "") {
+            $i = 1;
+            foreach ($objDetailsId as $key => $value) {
 
-            $objDetailsId[$key]["rowNo"] = $i++;
+                $objDetailsId[$key]["rowNo"] = $i++;
+            }
         }
-
+        
         $view->memberId = $memberId;
         $view->datasConditions = $objDetailsId;
         return $view;

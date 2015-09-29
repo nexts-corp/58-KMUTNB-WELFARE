@@ -17,6 +17,15 @@ interface IViewAdminService {
      * @description จัดการรายการสวัสดิการ
      */
     public function welfareLists();
+    
+     /**
+     * @name approveLists
+     * @uri /approve/lists
+     * @return html view
+     * @description จัดการรายการสวัสดิการ
+     */
+    public function approveLists();
+
 
     /**
      * @name add
