@@ -35,11 +35,15 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#mem}}{{titles1}} {{fname}} {{lname}}{{/mem}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">ชื่อ {{#mem}}{{titles1}} {{fname}} {{lname}}{{/mem}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-5 control-label">{{#i18n}}amountbalance{{/i18n}} : {{#sum}}{{balance}}{{/sum}}</label>
+                        <div class="pull-left">
+                            <label class="control-label">{{#i18n}}amountbalance{{/i18n}} : {{#sum}}{{balance}}{{/sum}} บาท <br>  </label>
+                            <label class="control-label">{{#i18n}}amountpayment{{/i18n}} : {{#sum}}{{payment}}{{/sum}} บาท  </label>
+                        </div>
+                        
                         <!--
 
                         <div class="col-lg-3">

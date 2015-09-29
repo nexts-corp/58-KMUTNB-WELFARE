@@ -11,16 +11,16 @@
     </div>
     <!-- /Page Breadcrumb -->
     <!-- Page Header -->
-<!--    <div class="page-header position-relative">
-        <div class="header-title">
-            <h1>
-                {{#i18n}}sso.title{{/i18n}}
-            </h1>
-        </div>
-        Header Buttons
-
-        /Header Buttons End
-    </div>-->
+    <!--    <div class="page-header position-relative">
+            <div class="header-title">
+                <h1>
+                    {{#i18n}}sso.title{{/i18n}}
+                </h1>
+            </div>
+            Header Buttons
+    
+            /Header Buttons End
+        </div>-->
     <!-- /Page Header -->
     <!-- Page Body -->
     <div class="page-body">
@@ -37,19 +37,23 @@
                                                         {{/parent}}
                                                     </select>
                                                 </div>-->
-                        <div class="col-sm-2 pull-right">
+                        <div class="pull-right">
                             <button class="btn btn-primary" 
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/insurance/view/sso/admin/add"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
-                        </div>
-                        <div class="col-sm-2 pull-right">
+
                             <button type="button" class="btn btn-primary" 
                                     data-toggle="modal" 
                                     data-target="#uploadModal" 
                                     data-whatever="@fat">
                                 <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
+                            </button>
+                            <button type="button" class="btn btn-yellow">
+                                <a href= "{{_context_path}}/apps/insurance/excel/sso.xlsx">
+                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
+                                </a>
                             </button>
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -160,9 +164,9 @@
                         data-id="content-body"
                         data-api="{{_context_path}}/api/insurance/view/sso/admin/lists"
                         onclick="setTimeout(
-                                    function(){
-                                        btnHTML(this)
-                                    },1000)">
+                                        function () {
+                                            btnHTML(this)
+                                        }, 1000)">
                     {{#i18n}}button.close{{/i18n}}</button>
             </div>
         </div>
@@ -176,7 +180,7 @@
             addRemoveLinks: true,
             autoProcessQueue: false,
             uploadMultiple: false,
-            paramName:"file",
+            paramName: "file",
             acceptedFiles: '.csv',
             maxFiles: 1,
             init: function () {
@@ -206,12 +210,12 @@
                     $.each(error, function (k, v) {
                         html += '<tr>'
                                 + '<td>' + (k + 1) + '</td>'
-                                + '<td>'+v.idCard+'</td>'
-                                + '<td>'+v.titleName+' '+v.fname+' '+v.lname+'</td>'
-                                + '<td>'+v.department+'</td>'
-                                + '<td>'+v.hospital+'</td>'
-                                + '<td>'+v.issuedDate+'</td>'
-                                + '<td>'+v.expireDate+'</td>'
+                                + '<td>' + v.idCard + '</td>'
+                                + '<td>' + v.titleName + ' ' + v.fname + ' ' + v.lname + '</td>'
+                                + '<td>' + v.department + '</td>'
+                                + '<td>' + v.hospital + '</td>'
+                                + '<td>' + v.issuedDate + '</td>'
+                                + '<td>' + v.expireDate + '</td>'
                                 + '</tr>';
                     });
                     $("#tableListsError").html(html);
