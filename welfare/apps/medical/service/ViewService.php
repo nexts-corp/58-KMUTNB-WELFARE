@@ -46,8 +46,7 @@ class ViewService extends CServiceBase implements IViewService {
         $dateEnd = $dateBudget["endDate"];
 
         $sql1 = "select mb.fname,mb.lname,whis.welfareId,wc.conditionsId,whis.memberId,wd.quantity,mb.idCard,mb.department1,mb.faculty1,"
-                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,wel.dateStart,wel.dateEnd, "
-                . "IFNULL(mb.academic1,mb.titleName1) title "
+                . "sum(whis.amount) as payment,wd.quantity-sum(whis.amount) as balance,wel.dateStart,wel.dateEnd,titles1 "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
                 . "on wd.detailsId = whis.detailsId "
@@ -60,8 +59,7 @@ class ViewService extends CServiceBase implements IViewService {
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "group by whis.memberId ";
         
-        $sql2 = "select wel.dateStart,wel.dateEnd, "
-                . "IFNULL(mb.academic1,mb.titleName1) title "
+        $sql2 = "select wel.dateStart,wel.dateEnd "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
                 . "on wd.detailsId = whis.detailsId "
@@ -69,8 +67,8 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
                 . "join welfareconditions wc "
                 . "on wc.detailsId = wd.detailsId "
-                . "join v_fullmember mb "
-                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
+//                . "join v_fullmember mb "
+//                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "group by wel.welfareId ";
         
