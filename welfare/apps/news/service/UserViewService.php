@@ -102,10 +102,11 @@ class UserViewService extends CServiceBase implements IUserViewService {
       
         $paramArray=array("memberId"=>$memberId,"nftAppId"=>$newsId);
         
-        $objNft = $this->datacontext->getObject($sqlNft,$paramArray)[0];
+        $objNft = $this->datacontext->getObject($sqlNft,$paramArray);
         
-        $view->nftId=$objNft['nftId'];
-        
+        if(!$objNft){
+        $view->nftId=$objNft[0]['nftId'];
+        }
         
         
         return $view;
