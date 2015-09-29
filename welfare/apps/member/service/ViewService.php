@@ -286,6 +286,16 @@ class ViewService extends CServiceBase implements IViewService {
                 . "FROM memberdocument mdoc "
                 . "WHERE  mdoc.memberId=$id ";
         $ref = $this->datacontext->pdoQuery($sql5);
+        foreach ($ref as $key2 => $value2) {
+            if ($ref[$key2]['dateCreated'] != "") {
+
+                $dateTime = explode(" ", $value2['dateCreated']);
+                $date = $dateTime[0];
+                $date = explode("-", $date);
+                $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                $ref[$key2]['dateCreated'] = $date;
+            }
+        }
 
         $member = new \apps\member\model\FullMember();
         $member->memberId = $id;
@@ -325,6 +335,36 @@ class ViewService extends CServiceBase implements IViewService {
             if ($mem[$key]['fieldChange'] == "remark") {
                 $mem[$key]['fieldChange'] = "หมายเหตุ";
             }
+            if ($mem[$key]['dateCreated'] != "") {
+
+                $dateTime = explode(" ", $field['dateCreated']);
+                $date = $dateTime[0];
+                $date = explode("-", $date);
+                $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                $mem[$key]['dateCreated'] = $date;
+            }
+            if ($mem[$key]['valueNew'] != "") {
+                if ($mem[$key]['valueOld'] != "") {
+                    if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $mem[$key]['valueOld'])) {
+                        $d5 = explode("-", $mem[$key]['valueOld']);
+                        if (count($d5) == 3) {
+                            $mem[$key]['valueOld'] = $d5[2] . "-" . $d5[1] . "-" . ($d5[0] + 543);
+                        }
+                    } else {
+                        
+                    }
+                }
+
+
+                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $mem[$key]['valueNew'])) {
+                    $d6 = explode("-", $mem[$key]['valueNew']);
+                    if (count($d6) == 3) {
+                        $mem[$key]['valueNew'] = $d6[2] . "-" . $d6[1] . "-" . ($d6[0] + 543);
+                    }
+                } else {
+                    
+                }
+            }
         }
 
         foreach ($work as $key => $field2) {
@@ -343,6 +383,14 @@ class ViewService extends CServiceBase implements IViewService {
             }
             if ($work[$key]['fieldChange'] == "employeeTypeId") {
                 $work[$key]['fieldChange'] = "ประเภทพนักงาน";
+            }
+            if ($work[$key]['dateCreated'] != "") {
+
+                $dateTime1 = explode(" ", $field2['dateCreated']);
+                $date = $dateTime1[0];
+                $date = explode("-", $date);
+                $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                $work[$key]['dateCreated'] = $date;
             }
         }
 
@@ -363,6 +411,14 @@ class ViewService extends CServiceBase implements IViewService {
             if ($contact[$key]['fieldChange'] == "email") {
                 $contact[$key]['fieldChange'] = "อีเมล์";
             }
+            if ($contact[$key]['dateCreated'] != "") {
+
+                $dateTime2 = explode(" ", $field3['dateCreated']);
+                $date = $dateTime2[0];
+                $date = explode("-", $date);
+                $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                $contact[$key]['dateCreated'] = $date;
+            }
         }
         foreach ($salary as $key => $field4) {
 
@@ -374,6 +430,39 @@ class ViewService extends CServiceBase implements IViewService {
             }
             if ($salary[$key]['fieldChange'] == "salaryDate") {
                 $salary[$key]['fieldChange'] = "วันที่ปรับเงินเดือน";
+            }
+            if ($salary[$key]['dateCreated'] != "") {
+
+                $dateTime3 = explode(" ", $field4['dateCreated']);
+                $date = $dateTime3[0];
+                $date = explode("-", $date);
+                $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                $salary[$key]['dateCreated'] = $date;
+            }
+            if ($salary[$key]['valueNew'] != "") {
+                if ($salary[$key]['valueOld'] != "") {
+
+                    $date1 = preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $salary[$key]['valueOld']);
+//                    print_r($date1);
+//                    exit();
+                    if ($date1 != 0) {
+                        $d3 = explode("-", $salary[$key]['valueOld']);
+                        if (count($d3) == 3) {
+                            $salary[$key]['valueOld'] = $d3[2] . "-" . $d3[1] . "-" . ($d3[0] + 543);
+                        }
+                    } else {
+                        
+                    }
+                }
+//
+//                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $salary[$key]['valueNew'])) {
+//                    $d4 = explode("-", $salary[$key]['valueNew']);
+//                    if (count($d4) == 3) {
+//                        $salary[$key]['valueNew'] = $d4[2] . "-" . $d4[1] . "-" . ($d4[0] + 543);
+//                    }
+//                }  else {
+//                    
+//                }
             }
         }
         foreach ($history as $key => $field5) {
@@ -449,46 +538,41 @@ class ViewService extends CServiceBase implements IViewService {
             if ($history[$key]['fieldChange'] == "salaryDate") {
                 $history[$key]['fieldChange'] = "วันที่ปรับเงินเดือน";
             }
+            if ($history[$key]['dateCreated'] != "") {
 
+                $dateTime4 = explode(" ", $field5['dateCreated']);
+                $date = $dateTime4[0];
+                $date = explode("-", $date);
+                $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                $history[$key]['dateCreated'] = $date;
+            }
             //print_r($history[$key]['valueOld']);
+            if ($history[$key]['valueNew'] != "") {
+                if ($history[$key]['valueOld'] != "") {
 
-            if ($d = explode("-", $history[$key]['valueOld'])) {
-                if (count($d) == 3) {
-                    $history[$key]['valueOld'] = $d[2] . "-" . $d[1] . "-" . ($d[0] + 543);
+                    if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $history[$key]['valueOld'])) {
+                        $d = explode("-", $history[$key]['valueOld']);
+                        if (count($d) == 3) {
+                            $history[$key]['valueOld'] = $d[2] . "-" . $d[1] . "-" . ($d[0] + 543);
+                        }
+                    } else {
+                        
+                    }
+                }
+
+
+                if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $history[$key]['valueNew'])) {
+                    $d2 = explode("-", $history[$key]['valueNew']);
+                    if (count($d2) == 3) {
+                        $history[$key]['valueNew'] = $d2[2] . "-" . $d2[1] . "-" . ($d2[0] + 543);
+                    }
+                } else {
+                    
                 }
             }
-
-            if ($d2 = explode("-", $history[$key]['valueNew'])) {
-                if (count($d2) == 3) {
-                    $history[$key]['valueNew'] = $d2[2] . "-" . $d2[1] . "-" . ($d2[0] + 543);
-                }
-            }
-
 //
-//            if ($d3 = explode("-", $salary[$key]['valueOld'])) {
-//                if (count($d3) == 3) {
-//                    $salary[$key]['valueOld'] = $d3[2] . "-" . $d3[1] . "-" . ($d3[0] + 543);
-//                }
-//            }
 //
-//            if ($d4 = explode("-", $salary[$key]['valueNew'])) {
-//                if (count($d4) == 3) {
-//                    $salary[$key]['valueNew'] = $d4[2] . "-" . $d4[1] . "-" . ($d4[0] + 543);
-//                }
-//            }
 //
-//            if ($d5 = explode("-", $mem[$key]['valueOld'])) {
-//                if (count($d5) == 3) {
-//                    $mem[$key]['valueOld'] = $d5[2] . "-" . $d5[1] . "-" . ($d5[0] + 543);
-//                }
-//            }
-//
-//            if ($d6 = explode("-", $mem[$key]['valueNew'])) {
-//                if (count($d6) == 3) {
-//                    $mem[$key]['valueNew'] = $d6[2] . "-" . $d6[1] . "-" . ($d6[0] + 543);
-//                }
-//            }
-
 //           if($history[$key]['valueOld']=="--"){
 //           $time=explode("-",$history[$key]['valueOld']);
 //           
