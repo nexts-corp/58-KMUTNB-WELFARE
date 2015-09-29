@@ -72,7 +72,7 @@
                                                     onclick="btnHTML(this)">
                                                 <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
                                             </button>
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareId}}" >{{#i18n}}deletes{{/i18n}}</button>
+                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareId}}" >{{#i18n}}inactive{{/i18n}}</button>
                                         </td>
 
                                     <tr class="details1" style="display: none;" >
@@ -113,15 +113,15 @@
 <script>
     $('.btn-del').click(function () {
         var Id = $(this).attr('row-index');
-        if (confirm("คุณต้องการลบ?")) {
+        if (confirm("คุณต้องการปิดใช้งาน?")) {
             var data = {"Id": Id};
             sendData('{{_context_path}}/api/welfare/welfare/delete', data,
                     function (result) {
                         if (result.delete == true) {
-                            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', null);
-                            Notify('ลบข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+                            getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/welfare/lists', null);
+                            Notify('ปิดใช้งานข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
                         } else {
-                            Notify('ลบไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                            Notify('ปิดใช้งานไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
                         }
                     });
 
