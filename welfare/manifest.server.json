@@ -24,7 +24,7 @@
                 {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
                 {"name": "OAUTH2_ACCESS_KEY","value": "code"},
                 {"name": "OAUTH2_AUTH_URL","value": "/welfare/api/oauth/authen/authorization"},
-                {"name": "OAUTH2_TOKEN_URI","value":"/welfare/api/oauth/authen/authenticate"}
+                {"name": "OAUTH2_TOKEN_URI","value":"http://www.codeunbug.com/welfare/api/oauth/authen/authenticate"}
        ] 
     }
 }
