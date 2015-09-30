@@ -348,6 +348,31 @@ class ViewService extends CServiceBase implements IViewService {
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
             $total = $this->datacontext->pdoQuery($sql, $param);
+
+            foreach ($total as $key => $value) {
+                if ($total[$key]['payment'] != "") {
+                    $total[$key]['payment'] = number_format($total[$key]['payment']);
+                }
+                if ($total[$key]['balance'] != "") {
+                    $total[$key]['balance'] = number_format($total[$key]['balance']);
+                }
+            }
+            foreach ($budget as $key2 => $value2) {
+                if ($budget[$key2]['amount'] != "") {
+                    $budget[$key2]['amount'] = number_format($budget[$key2]['amount']);
+                }
+            }
+            foreach ($budget as $key2 => $value2) {
+
+                if ($budget[$key2]['dateCreated'] != "") {
+
+                    $dateTime = explode(" ", $value2['dateCreated']);
+                    $date = $dateTime[0];
+                    $date = explode("-", $date);
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $budget[$key2]['dateCreated'] = $date;
+                }
+            }
 //            print_r($total);
 //            print_r($budget);
 //            exit();
