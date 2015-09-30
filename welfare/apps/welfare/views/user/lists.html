@@ -21,19 +21,19 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-<!--                        <div class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-                            <p id="demo" style="color:#d14"></p>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                        </div>-->
-
-
+                        <!--                        <div class="col-lg-5 control-label">
+                                                    <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
+                                                    <p id="demo" style="color:#d14"></p>
+                                                </div>
+                        
+                                                <div class="col-lg-3">
+                                                    <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                                </div>-->
 
 
-<!--                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">-->
+
+
+                        <!--                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">-->
                         <div class="flip-scroll">
 
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -61,93 +61,136 @@
             </div>
         </div>
     </div>
-    
+
+
+
     <!-- /Page Body -->
 </div>
 
- <!--LArge Modal Templates-->
-    <div class="modal fade checkHistory" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myLargeModalLabel">รายการใช้สวัสดิการ</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="widget radius-bordered">
-                        <div class="widget-header">
-                            <span class="widget-caption" id="userRows"> </span>
-                        </div>
-                        <div class="widget-body">
-                            <div class="form-horizontal">
-                                <table class="table table-hover table-striped table-bordered table-condensed" >
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">{{#i18n}}number{{/i18n}}</th>
-                                            <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
-                                            <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                            <th class="text-center">สังกัด</th>
-                                            <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="showUser">
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
+<!--LArge Modal Templates-->
+<div class="modal fade checkHistory" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">รายการใช้สวัสดิการ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption" id="userRows"> </span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                            <table class="table table-hover table-striped table-bordered table-condensed" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">จำนวน</th>
+                                        <th class="text-center">วันที่</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="showHistory">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-    <!--End Large Modal Templates-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--End Large Modal Templates-->
 
 
 <script>
     $(document).ready(function () {
+
         sendData('{{_context_path}}/api/welfare/view/user/check/welfare', null,
                 function (result) {
-                    
+
                     var html1 = "";
-                    
+
                     $.each(result.right, function (key, value) {
                         html1 += '<tr class="selectable">';
                         html1 += '<td>' + (key + 1) + '</td>';
-                        html1 += '<td>' + value.name +','+ value.description + '('+ value.dcpDetails + ')</td>';
+                        html1 += '<td>' + value.name + ',' + value.description + '(' + value.dcpDetails + ')</td>';
                         html1 += '<td>' + value.quantity + '  ' + value.returntType + '</td>';
                         html1 += '<td class = "center" >';
-                      
-                        if(value.statusApprove=="Y"){
-                        html1 += '<button class = "btn btn-success btn-xs edit btn_history"';
-                        html1 += 'data-toggle="modal" ';
-                        html1 += 'data-target=".checkHistory"';
-                        html1 += 'data-whatever="@fat"';
-                        html1 += 'row - index = "' + value.detailsId + '"';
-                        html1 += 'row - welfareId = "' + value.welfareId + '" >';
-                        html1 += '<i class = "fa fa fa-eye"></i>ตรวจสอบ';
-                        html1 += '</button>';
-                        
-                        }else if(value.statusApprove=="N" || value.statusApprove==""){
-                        html1 += '<button class = "btn btn-warning btn-xs edit btn_askWelfare"';
-                        html1 += 'row - index = "' + value.detailsId + '"';
-                        html1 += 'row - welfareId = "' + value.welfareId + '">';
-                        html1 += '<i class = "fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
-                        html1 += '</button>';
-                        }else{
-                        html1 += '<button class = "btn btn-info btn-xs edit"';
-                        html1 += 'row - index = "' + value.detailsId + '"';
-                        html1 += 'row - welfareId = "' + value.welfareId + '">';
-                        html1 += '<i class = "fa fa fa-eye"> </i>รอดำเนินการ';
-                        html1 += '</button>';
+
+                        if (value.statusApprove == "Y") {
+                            html1 += '<button class="btn_history btn btn-success btn-xs edit"';
+                            html1 += 'data-toggle="modal"';
+                            html1 += 'data-target=".checkHistory"';
+                            html1 += 'data-whatever="@fat"';
+                            html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '" >';
+                            html1 += '<i class = "fa fa fa-eye"></i>ตรวจสอบ';
+                            html1 += '</button>';
+
+                        } else if (value.statusApprove == "N" || value.statusApprove == "") {
+                            html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
+                            html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '">';
+                            html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
+                            html1 += '</button>';
+                        } else {
+                            html1 += '<button class="btn btn-info btn-xs edit"';
+                            html1 += 'row-index = "' + value.detailsId + '"';
+                            html1 += 'row-welfareId = "' + value.welfareId + '">';
+                            html1 += '<i class = "fa fa fa-eye"> </i>รอดำเนินการ';
+                            html1 += '</button>';
                         }
-                        
+
                         html1 += '</td>';
                         html1 += '</tr>';
                     });
-                   
+
                     $("#listWelfare").html(html1);
-                    
+                    $('.btn_history').click(function () {
+
+                        var data = {};
+                        data['detailsId'] = $(this).attr('row-index');
+                        data['welfareId'] = $(this).attr('row-welfareId');
+                        data['memberId'] = "{{memberId}}";
+                        var jdata = {};
+                        jdata['data'] = data;
+                        sendData('{{_context_path}}/api/welfare/history/get/history', jsonEncode(jdata),
+                                function (result) {
+                                    var html = "";
+                                    $.each(result.history, function (k, v) {
+
+                                        html += '<tr><td> ' + (k + 1) + ' </td>';
+                                        
+                                        if (v.amount == null) {
+                                        html += '<td> 1 </td>';
+                                        } else {
+                                        html += '<td>' + v.amount + '</td>';
+                                        }
+                                        
+                                        html += '<td>' + v.dateCreated + '</td></tr>';
+
+                                    });
+
+                                    $("#showHistory").html(html);
+
+                                });
+
+
+                    });
+
+                    $('.btn_askWelfare').click(function () {
+                        var data = {};
+                        data['detailsId'] = $(this).attr('row-index');
+                        data['welfareId'] = $(this).attr('row-welfareId');
+                        data['statusApprove'] = "P";
+                        data['memberId'] = "{{memberId}}";
+                        var jdata = {};
+                        jdata['data'] = data;
+                        getHTML('content-body', '{{_context_path}}/api/welfare/history/save', jsonEncode(jdata))
+                    });
+
                 });
     });
     $("#btnsearch").click(function () {
@@ -159,25 +202,8 @@
             getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName: SearchName});
         }
     });
-    $('.btn_history').click(function () {
-        var data = {};
-        data['detailsId'] = $(this).attr('row-index');
-        data['welfareId'] = $(this).attr('row-welfareId');
-        data['memberId'] = "{{memberId}}";
-        var jdata = {};
-        jdata['data'] = data;
-        getHTML('content-body', '{{_context_path}}/api/welfare/view/history/lists', jsonEncode(jdata))
-    });
-    $('.btn_askWelfare').click(function () {
-        var data = {};
-        data['detailsId'] = $(this).attr('row-index');
-        data['welfareId'] = $(this).attr('row-welfareId');
-        data['statusApprove'] = "P";
-        data['memberId'] = "{{memberId}}";
-        var jdata = {};
-        jdata['data'] = data;
-        getHTML('content-body', '{{_context_path}}/api/welfare/history/save', jsonEncode(jdata))
-    });
+
+
 
 </script> 
 

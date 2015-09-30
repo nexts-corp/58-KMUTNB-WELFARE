@@ -38,4 +38,13 @@ interface IHistoryService {
     public function delete($Id);
     
     
+    /**
+     * @name save
+     * @uri /get/history
+     * @param apps\welfare\entity\History data []
+     * @return string history
+     * @description แสดงรายละเอียดการใช้ สวัสดิการ 
+     */
+    public function getHistory($data);
+    
 }
