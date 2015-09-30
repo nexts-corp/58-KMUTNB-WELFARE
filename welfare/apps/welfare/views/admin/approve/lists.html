@@ -41,10 +41,10 @@
                                 <thead>
                                     <tr>
                                         <th class="center">{{#i18n}}number{{/i18n}}</th>
-                                        <th class="center">ชื่อ-นามสกุล</th>
+                                        <th class="center">{{#i18n}}fnamelname{{/i18n}}</th>
 
-                                        <th class="center">รายละเอียดสวัสดิการ</th>
-                                        <th class="center"> จัดการ </th>
+                                        <th class="center">รายละเอียด</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                         
                                     </tr>
                                 </thead>
@@ -61,13 +61,13 @@
                                             <button class="btn btn-success btn-xs edit btn_history_Y"
                                                     row-index="{{historyId}}"
                                                     row-welfareId="{{welfareId}}">
-                                                <i class="fa fa fa-eye"></i>อนุมัติ
+                                                <i class="fa fa fa-eye"></i>{{#i18n}}yesapprove{{/i18n}}
                                             </button>
                                             
                                              <button class="btn btn-danger btn-xs edit btn_history_N"
                                                     row-index="{{historyId}}"
                                                     row-welfareId="{{welfareId}}">
-                                                <i class="fa fa fa-eye"></i>ไม่อนุมัติ
+                                                <i class="fa fa fa-eye"></i>{{#i18n}}noapprove{{/i18n}}
                                             </button>
 
 

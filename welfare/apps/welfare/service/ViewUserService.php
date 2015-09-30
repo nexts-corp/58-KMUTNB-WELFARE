@@ -21,6 +21,15 @@ class ViewUserService extends CServiceBase implements IViewUserService {
         $view = new CJView("user/lists", CJViewType::HTML_VIEW_ENGINE);
 
         $memberId = $this->getCurrentUser()->code;
+        $view->memberId = $memberId;
+
+
+        return $view;
+    }
+
+    public function checkWelfare() {
+
+        $memberId = $this->getCurrentUser()->code;
         $mb = new \apps\member\service\MemberService();
         $member = $mb->find("memberId", $memberId)[0];
 //        $employeeTypeId = $member->employeeTypeId;
@@ -106,11 +115,13 @@ class ViewUserService extends CServiceBase implements IViewUserService {
                 $id .= $value;
             }
         }
-
-        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId, "
+        
+       
+        
+        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
                 . "wfdt.welfareId,  "
                 . "rt.value1 As returntType,rt.id,"
-                . "wf.name,wf.statusActive,wf.description "
+                . "wf.name,wf.statusActive,wf.description  "
                 . " FROM  welfaredetails wfdt "
                 . "Left JOIN  welfare wf "
                 . "on wfdt.welfareId = wf.welfareId "
@@ -120,18 +131,22 @@ class ViewUserService extends CServiceBase implements IViewUserService {
 
 
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
-
-        if ($objDetailsId != "") {
-            $i = 1;
-            foreach ($objDetailsId as $key => $value) {
-
-                $objDetailsId[$key]["rowNo"] = $i++;
-            }
-        }
         
-        $view->memberId = $memberId;
-        $view->datasConditions = $objDetailsId;
-        return $view;
+        
+        $sqlHistory = "SELECT htr.historyId,htr.detailsId,htr.statusApprove "
+                . "From welfarehistory htr where detailsId in (" . $id . ") Order By htr.historyId desc ";
+        
+        $objHistory = $this->datacontext->pdoQuery($sqlHistory);
+        
+        
+        foreach ($objHistory as $key => $value) {
+            
+            $statusApprove = $value["statusApprove"];
+            
+        }
+       $objDetailsId[0]['statusApprove']=$statusApprove;
+       
+        return $objDetailsId;
     }
 
 }

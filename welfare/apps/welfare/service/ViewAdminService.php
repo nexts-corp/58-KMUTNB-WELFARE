@@ -64,11 +64,12 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
     }
 
     public function approveLists() {
+
         $view = new CJView("admin/approve/lists", CJViewType::HTML_VIEW_ENGINE);
-        
-        $sqlApprove="SELECT ap.historyId,ap.statusApprove,ap.welfareId,ap.memberId,ap.detailsId,"
+
+        $sqlApprove = "SELECT ap.historyId,ap.statusApprove,ap.welfareId,ap.memberId,ap.detailsId,"
                 . " IFNULL(mb.academic1,mb.titleName1) title  , mb.memberId , "
-                . " mb.fname, mb.lname, "
+                . " mb.fname , mb.lname , "
                 . "wf.name,wf.description,"
                 . "wfc.description as wfcdetails,wfc.quantity "
                 . " FROM welfarehistory ap Left Join v_fullmember mb "
@@ -78,20 +79,23 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
                 . "Left Join welfaredetails wfc "
                 . "on ap.detailsId=wfc.detailsId "
                 . " where ap.statusApprove='P' ";
-        
-         
+
+
         $objApprove = $this->datacontext->pdoQuery($sqlApprove);
         
-         $i = 1;
         
-        foreach ($objApprove as $key => $value) {
+        
+        $i = 1;
+        if ($objApprove != "") {
 
-            $objApprove[$key]["rowNo"] = $i++;
+            foreach ($objApprove as $key => $value) {
+
+                $objApprove[$key]["rowNo"] = $i++;
+            }
         }
-        
-        $view->dataApprove=$objApprove;
-       
-        
+        $view->dataApprove = $objApprove;
+
+
         return $view;
     }
 

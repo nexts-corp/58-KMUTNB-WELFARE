@@ -17,4 +17,12 @@ interface IViewUserService {
      * @description จัดการรายการสวัสดิการ
      */
     public function lists();
+    
+    /**
+     * @name checkWelfare
+     * @uri /check/welfare
+     * @return string right
+     * @description ตรวจสอบสิทธิ์สวัสดิการ
+     */
+    public function checkWelfare();
 }
