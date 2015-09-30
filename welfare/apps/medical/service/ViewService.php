@@ -58,7 +58,7 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "group by whis.memberId ";
-        
+
         $sql2 = "select wel.dateStart,wel.dateEnd "
                 . "from welfarehistory whis "
                 . "join welfaredetails wd "
@@ -71,8 +71,8 @@ class ViewService extends CServiceBase implements IViewService {
 //                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "where whis.dateCreated between :dateStart and :dateEnd "
                 . "group by wel.welfareId ";
-        
-        
+
+
 
         $param = array(
             "dateStart" => $dateStart,
@@ -91,6 +91,15 @@ class ViewService extends CServiceBase implements IViewService {
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
             $budget2 = $this->datacontext->pdoQuery($sql2, $param);
+            foreach ($budget as $key => $value) {
+
+                if ($budget[$key]['payment'] != "") {
+                    $budget[$key]['payment'] = number_format($budget[$key]['payment']);
+                }
+                if ($budget[$key]['balance'] != "") {
+                    $budget[$key]['balance'] = number_format($budget[$key]['balance']);
+                }
+            }
             foreach ($budget2 as $key2 => $value2) {
                 if ($budget2[$key2]['dateStart'] != "") {
 
@@ -182,6 +191,20 @@ class ViewService extends CServiceBase implements IViewService {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
             $budget2 = $this->datacontext->pdoQuery($sql2, $param);
             $member = $this->datacontext->pdoQuery($sql3);
+            foreach ($budget as $key => $value) {
+
+                if ($budget[$key]['amount'] != "") {
+                    $budget[$key]['amount'] = number_format($budget[$key]['amount']);
+                }
+            }
+            foreach ($budget2 as $key3 => $value3) {
+                if ($budget2[$key3]['payment'] != "") {
+                    $budget2[$key3]['payment'] = number_format($budget2[$key3]['payment']);
+                }
+                if ($budget2[$key3]['balance'] != "") {
+                    $budget2[$key3]['balance'] = number_format($budget2[$key3]['balance']);
+                }
+            }
             foreach ($budget as $key2 => $value2) {
 
                 if ($budget[$key2]['dateCreated'] != "") {
@@ -325,6 +348,31 @@ class ViewService extends CServiceBase implements IViewService {
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
             $total = $this->datacontext->pdoQuery($sql, $param);
+
+            foreach ($total as $key => $value) {
+                if ($total[$key]['payment'] != "") {
+                    $total[$key]['payment'] = number_format($total[$key]['payment']);
+                }
+                if ($total[$key]['balance'] != "") {
+                    $total[$key]['balance'] = number_format($total[$key]['balance']);
+                }
+            }
+            foreach ($budget as $key2 => $value2) {
+                if ($budget[$key2]['amount'] != "") {
+                    $budget[$key2]['amount'] = number_format($budget[$key2]['amount']);
+                }
+            }
+            foreach ($budget as $key2 => $value2) {
+
+                if ($budget[$key2]['dateCreated'] != "") {
+
+                    $dateTime = explode(" ", $value2['dateCreated']);
+                    $date = $dateTime[0];
+                    $date = explode("-", $date);
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $budget[$key2]['dateCreated'] = $date;
+                }
+            }
 //            print_r($total);
 //            print_r($budget);
 //            exit();

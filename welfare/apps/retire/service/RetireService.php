@@ -91,7 +91,7 @@ class RetireService extends CServiceBase implements IRetireService {
 //                . "and weld.ageWorkStart <= :retireyear-YEAR(mb.workStartDate) "
 //                . "and :retireyear-YEAR(mb.workStartDate) <= weld.ageWorkEnd";
         if ($retireYear->present != "") {
-            print_r($retireYear->present);
+//            print_r($retireYear->present);
             $retire = $retireYear->present;
             $retireStart = ($retire - 61) . "-10-01";
             $retireEnd = ($retire - 60) . "-09-30";
@@ -158,7 +158,15 @@ class RetireService extends CServiceBase implements IRetireService {
 //        );
 
         $member = $this->datacontext->pdoQuery($query, $param);
+        foreach ($member as $key => $value) {
 
+                if ($member[$key]['quantity'] != "") {
+                    $member[$key]['quantity'] = number_format($member[$key]['quantity']);
+                }
+                if ($member[$key]['total'] != "") {
+                    $member[$key]['total'] = number_format($member[$key]['total']);
+                }
+            }
 
         return $member;
     }

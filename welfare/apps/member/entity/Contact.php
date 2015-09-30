@@ -21,7 +21,7 @@ class Contact extends EntityBase {
      * @Column(type="integer", length=11, name="memberId") 
      */
     public $memberId;
-    
+
     /**
      * @Column(type="string", length=255, name="address",nullable=true) 
      */
@@ -46,6 +46,11 @@ class Contact extends EntityBase {
      * @Column(type="string", length=255, name="email",nullable=true) 
      */
     public $email;
+
+    /**
+     * @Column(type="string", length=255, name="emailUniversity",nullable=true) 
+     */
+    public $emailUniversity;
 
     function getContactId() {
         return $this->contactId;
@@ -75,8 +80,12 @@ class Contact extends EntityBase {
         return $this->email;
     }
 
+    function getEmailUniversity() {
+        return $this->emailUniversity;
+    }
+
     function setContactId($contactId) {
-        $this->contactId = $ccontactId;
+        $this->contactId = $contactId;
     }
 
     function setMemberId($memberId) {
@@ -103,5 +112,8 @@ class Contact extends EntityBase {
         $this->email = $email;
     }
 
+    function setEmailUniversity($emailUniversity) {
+        $this->emailUniversity = $emailUniversity;
+    }
 
 }
