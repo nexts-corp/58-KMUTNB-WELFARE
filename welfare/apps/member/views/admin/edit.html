@@ -331,7 +331,17 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}email.university{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="emailUniversity" name="emailUniversity" placeholder="{{#i18n}}email.university{{/i18n}}"
+                                                   data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" value="{{#datas}}{{emailUniversity}}{{/datas}}"
+                                                   data-validation-error-msg-container="#emailUniversity-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="emailUniversity-msg-error">
 
+                                        </div>
+                                    </div>
 
 
                                     <!--                                    <div class="form-group">
@@ -351,11 +361,11 @@
                             <div class="widget-body">
                                 <div class="form-horizontal">
                                     <div class="form-title"></div>
-                                    
+
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">ไฟล์อ้างอิง pdf/jpg/jpeg/gif</label>
                                         <div class="col-lg-9">
-                                            
+
                                             <input type="text" class="form-control col-lg-6" name="upload" id="upload"/>
                                             <button type="button" class="btn btn-default col-lg-3" id="btnmodal"
                                                     data-toggle="modal" 
@@ -369,7 +379,7 @@
                                         <label class="col-lg-3 control-label">หมายเหตุไฟล์อ้างอิง</label>
                                         <div class="col-lg-9">
                                             <input type="text" class="form-control" name="remark" id="remark" placeholder="หมายเหตุ"/>
-                                            
+
                                         </div>
                                     </div>
 
@@ -432,8 +442,10 @@
         
             </script>-->
     <script type="text/javascript">
-        $("#upload").hide();
+
+        
         $(document).ready(function () {
+            $("#upload").hide();
             $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
             var academic = '{{#datas}}{{academicId}}{{/datas}}';
             var titleName = '{{#datas}}{{titleNameId}}{{/datas}}';
@@ -512,6 +524,7 @@
                 contact['phone'] = $("#phone").val();
                 contact['mobile'] = $("#mobile").val();
                 contact['email'] = $("#email").val();
+                contact['emailUniversity'] = $("#emailUniversity").val();
                 data['work'] = work;
                 data['salary'] = salary;
                 data['contact'] = contact;
@@ -552,8 +565,8 @@
                 },
                 success: function (file, txt) {
                     if (txt.upload != false) {
-                        
-                        
+
+
                         $("#upload").show();
                         parth = txt.upload;
                         $("#upload").val(parth);

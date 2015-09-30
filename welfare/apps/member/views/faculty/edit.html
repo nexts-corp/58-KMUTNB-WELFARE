@@ -324,7 +324,17 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">{{#i18n}}email.university{{/i18n}}</label>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control" id="emailUniversity" name="emailUniversity" placeholder="{{#i18n}}email.university{{/i18n}}"
+                                                   data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" value="{{#datas}}{{emailUniversity}}{{/datas}}"
+                                                   data-validation-error-msg-container="#emailUniversity-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="emailUniversity-msg-error">
 
+                                        </div>
+                                    </div>
 
 
                                     <div class="form-group">
@@ -444,7 +454,7 @@
                     contact['phone'] = $("#phone").val();
                     contact['mobile'] = $("#mobile").val();
                     contact['email'] = $("#email").val();
-                    
+                    contact['emailUniversity'] = $("#emailUniversity").val();
                     data['work'] = work;
                     data['salary'] = salary;
                     data['contact'] = contact;

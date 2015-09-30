@@ -117,6 +117,21 @@ class FullMember {
      * @Column(type="string", length=255, name="memberActive2",nullable=true) 
      */
     public $memberActive2;
+    
+    /**
+     * @Column(type="string", length=10, name="userTypeId",nullable=true) 
+     */
+    public $userTypeId;
+
+    /**
+     * @Column(type="string", length=255, name="userType1",nullable=true) 
+     */
+    public $userType1;
+
+    /**
+     * @Column(type="string", length=255, name="userType2",nullable=true) 
+     */
+    public $userType2;
 
     /**
      * @Column(type="integer" , length=11, name="contactId") 
@@ -147,6 +162,11 @@ class FullMember {
      * @Column(type="string", length=255, name="email",nullable=true) 
      */
     public $email;
+    
+    /**
+     * @Column(type="string", length=255, name="emailUniversity",nullable=true) 
+     */
+    public $emailUniversity;
 
     /**
      * @Column(type="integer" , length=11, name="salaryId") 

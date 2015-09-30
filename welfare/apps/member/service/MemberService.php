@@ -118,15 +118,13 @@ class MemberService extends CServiceBase implements IMemberService {
             $workStartDate = $date1[2] . "-" . $date1[1] . "-" . $date1[0];
             $member->workStartDate = new \DateTime($workStartDate);
         }
-        if($member->document !=""){
+        if ($member->document != "") {
             $document = $member->document;
             $doc = new \apps\member\entity\Document();
             $doc->memberId = $member->memberId;
             $doc->filename = $document;
             $doc->remark = $member->remark;
             $this->datacontext->saveObject($doc);
-            
-            
         }
         //$salary = $this->getRequest()->getValue(new Salary(),"data.salary");
         //$this->getRequest()->data2->data->salary;
@@ -155,17 +153,17 @@ class MemberService extends CServiceBase implements IMemberService {
         $s->memberId = $member->memberId;
         $salaryOld = $this->datacontext->getObject($s)[0];
         $salary->salaryId = $salaryOld->salaryId;
-        
+
         $c = new Contact();
         $c->memberId = $member->memberId;
         $contactOld = $this->datacontext->getObject($c)[0]; //contact
         $contact->contactId = $contactOld->contactId;
-        
+
         $w = new Work();
         $w->memberId = $member->memberId;
         $workOld = $this->datacontext->getObject($w)[0]; //work
         $work->workId = $workOld->workId;
-        
+
         $m = new Member();
         $m->memberId = $member->memberId;
         $memberOld = $this->datacontext->getObject($m)[0]; //member
@@ -310,8 +308,8 @@ class MemberService extends CServiceBase implements IMemberService {
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
-        print_r($facultyId);
-        print_r($departmentId);
+//        print_r($facultyId);
+//        print_r($departmentId);
         $sql = "select * "
                 . "FROM v_fullMember mem1 ";
 
@@ -319,16 +317,14 @@ class MemberService extends CServiceBase implements IMemberService {
             $sql .= "WHERE ";
         } elseif ($usertype == "adminFaculty") {
             $sql .= "join taxonomy tax "
-                    ."on tax.id = mem1.facultyId "
-                    ."WHERE tax.code = '$facultyId' and ";
-            
+                    . "on tax.id = mem1.facultyId "
+                    . "WHERE tax.code = '$facultyId' and ";
         } elseif ($usertype == "adminDepartment") {
             $sql .= "join taxonomy tax "
-                    ."on tax.id = mem1.departmentId "
-                    ."WHERE tax.code = '$departmentId' and ";
-            
+                    . "on tax.id = mem1.departmentId "
+                    . "WHERE tax.code = '$departmentId' and ";
         }
-        
+
         if ($data->searchName != "") {
             $searchName = $data->searchName;
             $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name and mem1.memberActive2 = 'Working'";
@@ -346,7 +342,7 @@ class MemberService extends CServiceBase implements IMemberService {
             $sql .= "  mem1." . $filtercode . "Id = :filtervalue and mem1.memberActive2 = 'Working' ";
             $param["filtervalue"] = $filtervalue;
         }
-        
+
 
         return $this->datacontext->pdoQuery($sql, $param);
     }
@@ -429,10 +425,10 @@ class MemberService extends CServiceBase implements IMemberService {
                 $email = str_replace(" ", "", $value[20]);
                 $dob = str_replace(" ", "", $value[21]);
                 $dob = explode("/", $dob);
-                $pwd = md5($dob[0].$dob[1].$dob[2]);
+                $pwd = md5($dob[0] . $dob[1] . $dob[2]);
                 $dob = new \DateTime(intval($dob[2] - 543) . "-" . $dob[1] . "-" . $dob[0]);
                 $memberActiveId = str_replace(" ", "", $value[22]);
-                
+
 //                $dateNotice = explode("-", $dateNotice);
 //                $dateNotice = new \DateTime(intval($dateNotice[2] - 543) . "-" . $dateNotice[1] . "-" . $dateNotice[0]);
 //                $myBenefit = str_replace(",", "", str_replace(" ", "", $value[6]));
@@ -458,6 +454,21 @@ class MemberService extends CServiceBase implements IMemberService {
 //                } else {}
 
                 $member = new \apps\member\entity\Member();
+                $memberget = $this->datacontext->getObject($member);
+//                print_r($memberget[0]->idCard);
+//                exit();
+                foreach ($memberget as $key3 => $value3) {
+                    if ($value3->idCard == $idCard) {
+                        array_push($error, array(
+                            "idCard" => $idCard,
+                            "fname" => $fname,
+                            "lname" => $lname
+                        ));
+                        return "cantUpload";
+                    }
+                    //print_r($value3->idCard);
+                }
+
                 $member->idCard = $idCard;
                 $member->titleNameId = $this->taxonomy->getPCodeValue("titleName", $titleName)[0]->id;
                 if ($academic != "") {
@@ -487,7 +498,7 @@ class MemberService extends CServiceBase implements IMemberService {
                     $usertype->code = "user";
                     $usertype->pCode = "userType";
                     $usert = $this->datacontext->getObject($usertype)[0];
-                    
+
                     $user = new \apps\user\entity\User();
                     $user->memberId = $member->memberId;
                     $user->username = $idCard;
