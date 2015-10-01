@@ -8,6 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\insurance\interfaces\IViewService;
 use apps\taxonomy\entity\Taxonomy;
+use apps\taxonomy\service\TaxonomyService;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -15,6 +16,7 @@ class ViewService extends CServiceBase implements IViewService {
 
     function __construct() {
         $this->datacontext = new CDataContext("default");
+        $this->taxonomy = new TaxonomyService();
     }
 
     public function ssoAdminAdd() {
@@ -106,11 +108,81 @@ class ViewService extends CServiceBase implements IViewService {
                     $datas[$key]['payment'] = "ยังไม่ชำระเงิน";
                 }
                 if ($key == "protectYear") {
-                    $datas[$key]['protectYear'] = intval($datas[$key]['protectYear'])+543;
+                    $datas[$key]['protectYear'] = intval($datas[$key]['protectYear']) + 543;
                 }
             }
         }
         $view->lists = $datas;
+        return $view;
+    }
+
+    public function addBeneficiary($lifeId) {
+        $view = new CJView("life/admin/add", CJViewType::HTML_VIEW_ENGINE);
+
+        $view->academic = $this->taxonomy->getPCode("academic");
+
+
+        $view->titleName = $this->taxonomy->getPCode("titleName");
+
+        $view->gender = $this->taxonomy->getPCode("gender");
+
+        $view->employeeType = $this->taxonomy->getPCode("employeeType");
+
+        $view->position = $this->taxonomy->getPCode("position");
+
+        $view->department = $this->taxonomy->getPCode("department");
+
+        $view->faculty = $this->taxonomy->getPCode("faculty");
+
+        $view->userType = $this->taxonomy->getPCode("userType");
+
+        $view->matier = $this->taxonomy->getPCode("matier");
+
+        $view->relationship = $this->taxonomy->getPCode("relation");
+
+        $view->lifeId = $lifeId;
+        return $view;
+    }
+
+    public function editBeneficiary($lifeId) {
+        $view = new CJView("life/admin/edit", CJViewType::HTML_VIEW_ENGINE);
+        $sql = "select ins.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
+                . "from InsuranceBeneficiary ins "
+                . "join taxonomy title "
+                . "on ins.titleNameId  = title.id "
+                . "left join taxonomy acdemic "
+                . "on ins.academicId = acdemic.id "
+                . "join taxonomy relation "
+                . "on relation.id = ins.relationId "
+                . "where ins.lifeId = :lifeId ";
+        $param = array(
+            "lifeId" => $lifeId
+        );
+        $ins = $this->datacontext->pdoQuery($sql, $param);
+        
+        $view->datas = $ins;
+        $view->lifeId = $lifeId;
+        return $view;
+    }
+
+    public function beneficiary($lifeId) {
+        $view = new CJView("life/admin/privilege", CJViewType::HTML_VIEW_ENGINE);
+
+        $sql = "select ins.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
+                . "from InsuranceBeneficiary ins "
+                . "join taxonomy title "
+                . "on ins.titleNameId  = title.id "
+                . "left join taxonomy acdemic "
+                . "on ins.academicId = acdemic.id "
+                . "join taxonomy relation "
+                . "on relation.id = ins.relationId "
+                . "where ins.lifeId = :lifeId ";
+        $param = array(
+            "lifeId" => $lifeId
+        );
+        $ins = $this->datacontext->pdoQuery($sql, $param);
+        $view->lists = $ins;
+        $view->lifeId = $lifeId;
         return $view;
     }
 

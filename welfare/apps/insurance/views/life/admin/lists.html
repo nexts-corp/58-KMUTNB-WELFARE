@@ -48,6 +48,7 @@
                                         <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
                                         <th class="center">{{#i18n}}sector{{/i18n}}</th>
                                         <th class="center">{{#i18n}}payment{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbodyYes">
@@ -58,6 +59,7 @@
                                         <td>{{titleName}} {{fname}} {{lname}}</td>
                                         <td>{{department1}} {{faculty1}}</td>
                                         <td>{{payment}}</td>
+                                        <td></td>
                                     </tr>
                                     {{/lists}}
                                 </tbody>
@@ -109,8 +111,6 @@
             $("#tableNo").hide();
             refreshYes();
         });
-
-
         function refreshNo() {
             sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"},
             function (result) {
@@ -134,12 +134,13 @@
                 });
                 $("#tbodyNo").html(body);
             });
-
         }
         function refreshYes() {
             sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
                 var body = "";
                 yes = result;
+                
+                
                 $.each(yes.lists, function (k, v) {
                     body += "<tr>" +
                             "<td>" + v.rowNo + "</td>" +
@@ -147,11 +148,19 @@
                             "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
                             "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
                             "<td>" + v.payment + "</td>" +
+                            "<td>" +
+                            "<button class='btn btn-maroon btn-xs'" +
+                            "data-id='content-body'" +
+                            "data-api='{{_context_path}}/api/insurance/view/beneficiary/list/" + v.lifeId + "'" +
+                            "onclick = 'btnHTML(this)'>" +
+                            "<i class = 'fa fa fa-eye'></i>{{#i18n}}beneficiary{{/i18n}}" +
+                            "</button>" +
+                            "</td>" +
                             "</tr>";
                 });
                 $("#tbodyYes").html(body);
             });
-            console.log(yes);
+           
         }
         $("#btnNo").click(function () {
             $("#tableYes").hide();
@@ -204,9 +213,6 @@
                                         //cfm.close();
                                     }
                                 });
-
-
-
                     }
                 });
             } else {
@@ -220,6 +226,5 @@
             }
 
         });
-
     });
 </script>

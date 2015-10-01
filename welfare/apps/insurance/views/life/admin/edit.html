@@ -1,0 +1,326 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">
+                <a href="#"
+                   data-id="content-body"
+                   data-api="{{_context_path}}/api/insurance/view/beneficiary/list/{{lifeId}}"
+                   onclick="btnHTML(this)">{{#i18n}}listprivilege{{/i18n}}
+                </a>
+            </li>
+            <li class="active">แก้ไขผู้รับผลประโยชน์</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+    <div class="page-body">
+
+        <div class="row">
+
+
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption">{{#i18n}}privilege{{/i18n}}</span>
+                    </div>
+                    <div class="widget-body">
+                        <form  class="form-horizontal">
+                            <div class="form-title">
+
+                            </div>
+
+                            <div  class="form-horizontal">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}IdCard{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="idCard" name="registerIdCard" placeholder="{{#i18n}}IdCard{{/i18n}}"
+                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกรหัสบัตรประชาชน" value="{{#datas}}{{fidCard}}{{/datas}}"
+                                                       data-validation-error-msg-container="#idcard-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="idcard-msg-error">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="reservation" class="col-lg-3 control-label">{{#i18n}}registerDateofBirth{{/i18n}}</label>
+
+                                            <div class="col-lg-9">
+                                                <div class="input-group">
+                                                    <input class="form-control cDate" id="dob" data-validation="required" 
+                                                           data-validation-error-msg="*กรุณาระบุวัน/เดือน/ปีเกิด" data-validation-error-msg-container="#dob-msg-error" />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-offset-4" id="dob-msg-error">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}academicPositionsId{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control col-lg-12" id="academicId" name="academicId" data-bv-field="country">
+                                                    <option value="">{{#i18n}}academicPositionsId{{/i18n}}</option>
+                                                    {{#academic}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/academic}}
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}titleNameId{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control col-lg-12" id="titleNameId" name="titleNameId" data-bv-field="country"  
+                                                        data-validation="required" data-validation-error-msg="*กรุณาเลือกคำนำหน้าชื่อ" 
+                                                        data-validation-error-msg-container="#titleNameId-msg-error">
+                                                    <option value="">{{#i18n}}titleNameId{{/i18n}}</option>
+                                                    {{#titleName}}
+                                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                                    {{/titleName}}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-offset-4" id="titleNameId-msg-error">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerName{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}"  
+                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกชื่อจริง" 
+                                                       data-validation-error-msg-container="#fname-msg-error" />
+                                            </div>
+                                            <div class="col-lg-offset-4" id="fname-msg-error">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}registerLastName{{/i18n}}</label>
+                                            <div class="col-lg-9">
+
+                                                <input  class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
+                                                        data-validation="required" data-validation-error-msg="*กรุณากรอกนามสกุล" 
+                                                        data-validation-error-msg-container="#lname-msg-error" />
+
+                                            </div>
+                                            <div class="col-lg-offset-4" id="lname-msg-error">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">{{#i18n}}ratioadd{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="ratio" name="ratio" placeholder="{{#i18n}}ratioadd{{/i18n}}" />
+
+                                            </div>
+                                            <div class="col-lg-offset-4" id="fname-msg-error">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-10">
+                                        <label class="col-lg-2 control-label">{{#i18n}}relationship{{/i18n}}</label>
+                                        <div class="col-lg-9 control-group ">
+                                            {{#relationship}}
+                                            <div class="radio col-lg-4">
+                                                <label>
+                                                    <input name="relationId" id="relationId" value="{{id}}" type="radio" checked="checked">
+                                                    <span class="text">{{value1}} </span> </label>
+                                            </div>
+
+                                            {{/relationship}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-lg-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header"> <span class="widget-caption">ข้อมูลผู้ติดต่อ</span> </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                            <div class="form-title"></div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}registerAddress{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="address" id="address" placeholder="{{#i18n}}registerAddress{{/i18n}}"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="{{#i18n}}registerAddress{{/i18n}}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}familyContactPhone{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
+                                           data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                           data-validation-error-msg-container="#phone-msg-error"/>
+                                </div>
+                                <div class="col-lg-offset-4" id="phone-msg-error">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}familyMobile{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
+                                           data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
+                                           data-validation-error-msg-container="#mobile-msg-error"/>
+                                </div>
+                                <div class="col-lg-offset-4" id="mobile-msg-error">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">{{#i18n}}familyEmail{{/i18n}}</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
+                                           data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" 
+                                           data-validation-error-msg-container="#email-msg-error"/>
+                                </div>
+                                <div class="col-lg-offset-4" id="email-msg-error">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-6 col-lg-8">
+                                    <input class="btn btn-palegreen" id="btn_submit"  value="{{#i18n}}button.submit{{/i18n}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Body -->
+</div>
+<!-- /Page Content -->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.validate();
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+        $("#btn_submit").click(function () {
+            var lifeId = '{{lifeId}}'
+            alert(lifeId);
+            var Benef = {};
+            Benef['lifeId'] = lifeId;
+            Benef['ffname'] = $("#fname").val();
+            Benef['flname'] = $("#lname").val();
+            Benef['fidCard'] = $("#idCard").val();
+            Benef['faddress'] = $("#address").val();
+            Benef['ftelephone'] = $("#phone").val();
+            Benef['fdob'] = $("#dob").val();
+            Benef['relationId'] = $('input[name=relationId]:checked').val();
+            Benef['titleNameId'] = $("#titleNameId").val();
+            Benef['academicId'] = $("#academicId").val();
+            Benef['fmobile'] = $("#mobile").val();
+            Benef['femail'] = $("#email").val();
+            Benef['ratio'] = $("#ratio").val();
+
+            var jdata = {};
+            jdata['Benef'] = Benef;
+            $.ajax({
+                url: '{{_context_path}}/api/insurance/life/save',
+                data: jsonEncode(jdata),
+                type: 'post',
+                success: function (result) {
+
+                    if (result.save == true) {
+                        getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', null);
+                        Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
+                    } else {
+                        Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+
+                    }
+                }
+            });
+
+        });
+
+//        $("#btn_submit").click(function () {
+//            var data = {};
+//            data['familyId'] = $("#familyId").val();
+//            data['ratio'] = $("#ratio").val();
+//            data['registerId'] = {{register}};
+//            
+//
+//            var jdata = {};
+//            jdata['data'] = data;
+//            $.ajax({
+//                url: '{{_context_path}}/api/ManagementInsurance/privilege/save',
+//                data: jsonEncode(jdata),
+//                type: 'post', // 'or get'
+//                success: function (result) {
+//                    alert(result.save);
+//                    //alert(result.message);
+//                    getBody('{{_context_path}}/api/ManagementInsurance/privilege/list/Privilege/{{register}}');
+//                }
+//            });
+////           
+//        });
+//        return false;
+    });
+</script>

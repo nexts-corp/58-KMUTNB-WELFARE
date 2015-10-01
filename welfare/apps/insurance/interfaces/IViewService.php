@@ -48,4 +48,31 @@ interface IViewService {
      * @description หน้าแสดงรายการข้อมูลประกันกลุ่ม
      */
     public function lifeUserLists();
+    
+    /**
+     * @name addBeneficiary
+     * @uri /beneficiary/add
+     * @param string lifeId 
+     * @return string beneficiaryAdd
+     * @description หน้าแสดงการเพิ่มข้อมูลผู้รับผลประโยชน์
+     */
+    public function addBeneficiary($lifeId);
+    
+    /**
+     * @name editBeneficiary
+     * @uri /beneficiary/edit
+     * @param string lifeId
+     * @return string beneficiaryAdd
+     * @description หน้าแสดงการแก้ไขข้อมูลผู้รับผลประโยชน์
+     */
+    public function editBeneficiary($lifeId);
+    
+    /**
+     * @name beneficiary
+     * @uri /beneficiary/list
+     * @param string lifeId 
+     * @return string listBeneficiary
+     * @description หน้าแสดงการแก้ไขข้อมูลผู้รับผลประโยชน์
+     */
+    public function beneficiary($lifeId);
 }

@@ -53,4 +53,14 @@ class LifeService extends CServiceBase implements ILifeService {
         return $this->datacontext->updateObject($life);
     }
 
+    public function saveBeneficiary($Benef) {
+        if ($this->datacontext->saveObject($Benef)) {
+            $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
+            return true;
+        } else {
+            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return $Benef;
+        }
+    }
+
 }
