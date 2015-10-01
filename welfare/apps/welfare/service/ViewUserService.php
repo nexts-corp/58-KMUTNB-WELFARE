@@ -115,9 +115,9 @@ class ViewUserService extends CServiceBase implements IViewUserService {
                 $id .= $value;
             }
         }
-        
-       
-        
+
+
+
         $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
                 . "wfdt.welfareId,  "
                 . "rt.value1 As returntType,rt.id,"
@@ -131,21 +131,27 @@ class ViewUserService extends CServiceBase implements IViewUserService {
 
 
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
-        
-        
+
+
         $sqlHistory = "SELECT htr.historyId,htr.detailsId,htr.statusApprove "
-                . "From welfarehistory htr where detailsId in (" . $id . ") Order By htr.historyId desc ";
-        
-        $objHistory = $this->datacontext->pdoQuery($sqlHistory);
-        
-        
+                . "From welfarehistory htr where detailsId in (" . $id . ") and memberId=:memberId Order By htr.historyId desc ";
+
+        $param1 = array("memberId" => $memberId);
+
+        $objHistory = $this->datacontext->pdoQuery($sqlHistory, $param1);
+
+        if(!empty($objHistory)){
         foreach ($objHistory as $key => $value) {
             
-            $statusApprove = $value["statusApprove"];
-            
+            $objDetailsId[0]['statusApprove'] =  $value["statusApprove"];
+            $objDetailsId[0]['historyId'] = $value["historyId"];
+             
         }
-       $objDetailsId[0]['statusApprove']=$statusApprove;
-       
+        }else{
+            $objDetailsId[0]['statusApprove'] = "";
+            $objDetailsId[0]['historyId'] = "";
+        }
+        
         return $objDetailsId;
     }
 

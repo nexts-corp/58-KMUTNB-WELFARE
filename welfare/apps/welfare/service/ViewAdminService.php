@@ -43,7 +43,20 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 //                }
 //            }
 //        }
-
+          
+            foreach ($obj as $key => $value ){
+                
+                if($obj[$key]->resetTime =="12"){
+                $obj[$key]->resetTime="ทุก 1 ปี";
+                }elseif($obj[$key]->resetTime=="0"){
+                    $obj[$key]->resetTime="ครั้งเดียว";
+                }elseif($obj[$key]->resetTime=="6"){
+                    $obj[$key]->resetTime="ทุก 6 เดือน";
+                }
+                
+            }
+        
+        
         $view->datas = $obj;
         return $view;
     }
@@ -87,7 +100,8 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
         
         $i = 1;
         if ($objApprove != "") {
-
+          
+            
             foreach ($objApprove as $key => $value) {
 
                 $objApprove[$key]["rowNo"] = $i++;

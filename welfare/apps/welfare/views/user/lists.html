@@ -40,7 +40,8 @@
                                 <thead>
                                     <tr>
                                         <th>{{#i18n}}number{{/i18n}}</th>
-                                        <th>{{#i18n}}welfare.description{{/i18n}}</th>
+                                        <th>ชื่อสวัสดิการ</th>
+                                        <th>รายละเอียดเงื่อนไข </th>
                                         <th>{{#i18n}}quantity{{/i18n}}</th>
 
                                         <th class="center">{{#i18n}}conditions.setList{{/i18n}}</th>
@@ -86,6 +87,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">รายละเอียด </th>
                                         <th class="text-center">จำนวน</th>
                                         <th class="text-center">วันที่</th>
                                     </tr>
@@ -115,7 +117,8 @@
                     $.each(result.right, function (key, value) {
                         html1 += '<tr class="selectable">';
                         html1 += '<td>' + (key + 1) + '</td>';
-                        html1 += '<td>' + value.name + ',' + value.description + '(' + value.dcpDetails + ')</td>';
+                        html1 += '<td>' + value.name + ',' + value.description + '</td>';
+                        html1 += '<td>' + value.dcpDetails + '</td>';
                         html1 += '<td>' + value.quantity + '  ' + value.returntType + '</td>';
                         html1 += '<td class = "center" >';
 
@@ -129,13 +132,25 @@
                             html1 += '<i class = "fa fa fa-eye"></i>ตรวจสอบ';
                             html1 += '</button>';
 
-                        } else if (value.statusApprove == "N" || value.statusApprove == "") {
+                        } else if (value.statusApprove == "N" ) {
                             html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
                             html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-historyId="' + value.historyId + '"';
+                            html1 += 'row-details="' + value.dcpDetails + '"';
                             html1 += 'row-welfareId="' + value.welfareId + '">';
                             html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
                             html1 += '</button>';
-                        } else {
+                        } else if(value.statusApprove == ""){
+                             html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
+                            html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-historyId="' + value.historyId + '"';
+                            html1 += 'row-details="' + value.dcpDetails + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '">';
+                            html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
+                            html1 += '</button>';
+                            
+                        }else if(value.statusApprove =="P"){
+                            
                             html1 += '<button class="btn btn-info btn-xs edit"';
                             html1 += 'row-index = "' + value.detailsId + '"';
                             html1 += 'row-welfareId = "' + value.welfareId + '">';
@@ -162,7 +177,7 @@
                                     $.each(result.history, function (k, v) {
 
                                         html += '<tr><td> ' + (k + 1) + ' </td>';
-                                        
+                                        html += '<td>'+ v.remark + '</td>';
                                         if (v.amount == null) {
                                         html += '<td> 1 </td>';
                                         } else {
@@ -182,13 +197,20 @@
 
                     $('.btn_askWelfare').click(function () {
                         var data = {};
+                        
                         data['detailsId'] = $(this).attr('row-index');
                         data['welfareId'] = $(this).attr('row-welfareId');
+                        data['historyId'] = $(this).attr('row-historyId');
+                        data['remark']= "ขอรับสวัสดิการ" + $(this).attr('row-details');
                         data['statusApprove'] = "P";
                         data['memberId'] = "{{memberId}}";
                         var jdata = {};
                         jdata['data'] = data;
+                        if($(this).attr('row-historyId')==""){
                         getHTML('content-body', '{{_context_path}}/api/welfare/history/save', jsonEncode(jdata))
+                        }else{
+                        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
+                        }
                     });
 
                 });

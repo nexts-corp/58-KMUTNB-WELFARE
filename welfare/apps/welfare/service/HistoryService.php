@@ -18,7 +18,9 @@ class HistoryService extends CServiceBase implements IHistoryService {
     }
 
     public function save($data) {
-
+        
+       
+        
         if ($this->datacontext->saveObject($data)) {
             return true;
         } else {
@@ -54,6 +56,15 @@ class HistoryService extends CServiceBase implements IHistoryService {
        
         $param=array("detailsId"=>$data->detailsId,"welfareId"=>$data->welfareId,"memberId"=>$memberId);
         $objHistory = $this->datacontext->pdoQuery($sqlHistory,$param);
+        
+//        foreach($objHistory as $key => $value){
+//           // $objHistory["dateUpdated"] =$value["dateUpdated"];
+//            //$checkYear = explode("-",  $objHistory["dateUpdated"]);
+//            print_r($value["dateUpdated"]);
+//        }
+            
+        
+        
         
         return $objHistory;
     }
