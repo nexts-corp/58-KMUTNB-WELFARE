@@ -12,9 +12,9 @@
 
     <div class="page-header position-relative">
         <div class="header-title">
-            <!--            <h1>
-                            {{#i18n}}listregister{{/i18n}}
-                        </h1>-->
+            <h1>
+
+            </h1>
         </div>
 
     </div>
@@ -27,43 +27,64 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <label class="col-lg-2 control-label">
-                            <select id="filterCode" class="form-control">
+                        <div class="pull-right">
+                            <label class="col-lg-12  control-label">
+                                <!--<div class="pull-right">-->
+                                <button type="button" class="btn btn-success"
+                                        id="reportCsv"
+                                        data-whatever="">
+                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                                </button>
 
-<!--                                <option value="faculty">คณะ</option>
-                                <option value="department">สาขา</option>-->
-                                <option value="employeeType">ประเภทพนักงาน</option>
-                                <option value="name" selected="">ชื่อนามสกุล</option>
-                                <option value="memberActive" >สถานะพนักงาน</option>
+                               
+                            </label>
+                            <!--</div>-->
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label class="col-lg-2 control-label">
+                                <select id="filterCode" class="form-control">
+                                    <option value="" selected="" disabled="">เลือก</option>
+                                    <option value="faculty">คณะ</option>
+                                    <option value="employeeType" >ประเภทพนักงาน</option>
+                                    <option value="memberActive" >สถานะพนักงาน</option>
 
 
-                                <!-- … -->
-                            </select>
-                            <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
-                            <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
-                            <p id="demo" style="color:#d14"></p>
-                        </label>
-                        <label class="col-lg-3 control-label">
-                            <select id="filtervalue" class="form-control">
+                                    <!-- … -->
+                                </select>
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                                <p id="demo" style="color:#d14"></p>
+                            </label>
+                            <label class="col-lg-2 control-label">
+                                <select id="filtervalue" class="form-control">
+                                    <option value="" selected="" disabled="">เลือก</option>
+                                </select>
 
-                            </select>
-                            <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >
-                            <p id="demo" style="color:#d14"></p>
-                        </label>
+                            </label>
+                            <label class="col-lg-3 control-label">
+                                <select id="filterdepartment" class="form-control">
+                                    <option value="" selected="" disabled="">เลือก</option>
+                                </select>
+                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >
+                                <p id="demo" style="color:#d14"></p>
+                            </label>
 
-                        <div class="col-lg-3">
-                            <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+
+                            <div class="col-lg-2">
+                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            </div>
                         </div>
 
-                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+
+                        <!--<hr style="border-top: 1px solid rgba(229, 229, 229, 0);">-->
                         <div class="flip-scroll">
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th>&nbsp;{{#i18n}}IdCard{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}registerName{{/i18n}} - {{#i18n}}registerLastName{{/i18n}}</th>
-                                        <th>&nbsp;{{#i18n}}departmentId{{/i18n}}</th>
-                                        
+                                        <th>&nbsp;{{#i18n}}facultyId{{/i18n}}</th>
+
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
@@ -105,44 +126,116 @@
 
     <!-- /Page Body -->
 </div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadModalLabel">อัพโหลดไฟล์พนักงานมหาวิทยาลัย</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="control-label">ไฟล์ .csv</label>
+                    <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="frm_upload">
+                        <div class="dz-default dz-message"><span>คลิก/ลากวางไฟล์ .csv เพื่ออัพโหลด</span></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{#i18n}}button.close{{/i18n}}</button>
+                <button type="button" class="btn btn-primary" id="btn_upload">{{#i18n}}button.upload{{/i18n}}</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#filterdepartment").hide();
+        $("#reportCsv").click(function () {
 
-        $("#filtervalue").hide();
+            getHTML('content-body', '{{_context_path}}/api/member/reports/lists', null);
+
+        });
+
+//        $("#filtervalue").hide();
         //titleName();
         //listtitleName();
         $("#filterCode").change(function () {
             var pCode = $("#filterCode").val();
             var data;
-            if (pCode == "department") {
+            if (pCode == "faculty") {
+                
                 data = getCode(pCode);
+                $("#filterdepartment").show();
+                $("#searchName").hide();
             } else if (pCode != "name") {
                 data = getPCode(pCode);
+                $("#filterdepartment").hide();
+                $("#searchName").show();
             }
 
             var html;
             if ($("#filterCode").val() == "name") {
+                
                 $("#searchName").show();
-                $("#filtervalue").hide();
+//                $("#filtervalue").hide();
             } else {
                 if (data == "") {
                     html = '<option value="">โปรดเลือก</option>';
 
                 } else {
                     $.each(data, function (key, value) {
-                        html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
+                        html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
 
                     });
                 }
-                $("#searchName").hide();
-                $("#filtervalue").show();
+//                $("#searchName").hide();
+
                 $("#filtervalue").html(html);
             }
+//            $("filtervalue").change(function () {
+//                if($("filtervalue").val()== ""){
+//                    filterdepartment
+//                }
+//
+//            });
 
 
         });
+        $("#filtervalue").change(function () {
+            
+            var id = $("#filtervalue").val();
+            var pCode = $("#filterCode").val();
 
+            $.ajax({
+                url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
+                data: {parentId: id},
+                success: function (result) {
+                    var data = result["lists"];
+                    var html;
+                    if (data == "") {
+                        html = '<option value="">สังกัด</option>';
+                    } else {
+                        $.each(data, function (key, value) {
+
+                            html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                        });
+                    }
+                    if (pCode == "faculty") {
+                        
+                        $("#filterdepartment").show();
+                        $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
+                    }
+                    else {
+                        
+                        $("#filterdepartment").hide();
+                        $("#searchName").show();
+                    }
+
+                }
+            });
+        });
 
 
         $('.btn-del').click(function () {
@@ -169,12 +262,26 @@
             var searchName = $("#searchName").val();
             var filterCode = $("#filterCode").val();
             var filtervalue = $("#filtervalue").val();
+            var filterdepartment = $("#filterdepartment").val();
             if (searchName) {
                 if (searchName == "") {
                     $("#demo").html("กรุณากรอกข้อมูลค้นหา");
                 } else {
                     var data = {"searchName": searchName};
                 }
+            }
+            else if (filterdepartment) {
+                if (filterdepartment != "") {
+
+                    var filterCode = 'department';
+                    var data = {
+                        "filterCode": filterCode,
+                        "filtervalue": filterdepartment
+                    };
+                }
+
+
+
             }
             else {
                 var data = {
@@ -187,7 +294,37 @@
             getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', data);
         });
 
-       
+        var myDropzone = new Dropzone("#frm_upload", {
+            url: "{{_context_path}}/api/member/member/upload",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            uploadMultiple: false,
+            acceptedFiles: '.csv',
+            maxFiles: 1,
+            init: function () {
+                $("#btn_upload").click(function () {
+                    myDropzone.processQueue();
+                });
+            },
+            sending: function (file, xhr, formData) {
+//                var properser_id = $.jx.state.get('properser', 'properser_id');
+//                formData.append('properser_id', properser_id);
+            },
+            success: function (file, txt) {
+                if (txt.upload == true) {
+
+                    $("#uploadModal").modal('hide');
+                    myDropzone.removeFile(file);
+                    Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                    setTimeout(function () {
+                        getHTML('content-body', '{{_context_path}}/api/member/view/member/lists', null);
+                    }, 1000);
+
+                } else if (txt.upload == "cantUpload") {
+                    Notify('ไม่สามารถอัพไฟล์ได้', 'top-right', '4000', 'danger', 'fa-check', true);
+                }
+            }
+        });
 
     });
 
