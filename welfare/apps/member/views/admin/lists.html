@@ -56,10 +56,9 @@
                         </div>
                         <div class="pull-right">
 
-                            <button type="button" class="btn btn-success" 
-                                    data-toggle="modal" 
-                                    data-target="#uploadModal" 
-                                    data-whatever="@fat">
+                            <button type="button" class="btn btn-success"
+                                    id="reportCsv"
+                                    data-whatever="">
                                 <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
                             </button>
 
@@ -154,9 +153,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#reportCsv").click(function (){
+            
+                      getHTML('content-body', '{{_context_path}}/api/member/reports/lists', null);
 
-        $("#filtervalue").hide();
+        });
         
+        $("#filtervalue").hide();
         //titleName();
         //listtitleName();
         $("#filterCode").change(function () {
@@ -185,7 +188,6 @@
                 $("#searchName").hide();
                 $("#filtervalue").show();
                 $("#filtervalue").html(html);
-                $("#filtervalue").select2();
             }
 
 
