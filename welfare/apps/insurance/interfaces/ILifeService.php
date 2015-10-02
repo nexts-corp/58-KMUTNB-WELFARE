@@ -34,4 +34,13 @@ interface ILifeService {
      * @description เพิ่มข้อมูลผู้รับผลประโยชน์
      */
     public function saveBeneficiary($Benef);
+    
+    /**
+     * @name updateBeneficiary
+     * @uri /beneficiaryUpdate
+     * @param apps\insurance\entity\Beneficiary Benef
+     * @return string update
+     * @description เพิ่มข้อมูลผู้รับผลประโยชน์
+     */
+    public function updateBeneficiary($Benef);
 }

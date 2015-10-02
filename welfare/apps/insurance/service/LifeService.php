@@ -54,7 +54,35 @@ class LifeService extends CServiceBase implements ILifeService {
     }
 
     public function saveBeneficiary($Benef) {
+        if ($Benef->fdob != "") {
+            $fdob = explode("-", $Benef->fdob);
+            $fdob[2] = intval($fdob[2]) - 543;
+            $fdob1 = $fdob[2] . "-" . $fdob[1] . "-" . $fdob[0];
+            $Benef->fdob = $fdob1;
+            
+        }
+        
         if ($this->datacontext->saveObject($Benef)) {
+            $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
+            return true;
+        } else {
+            $this->getResponse()->add("message", $this->datacontext->getLastMessage());
+            return $Benef;
+        }
+    }
+
+    public function updateBeneficiary($Benef) {
+        
+        if ($Benef->fdob != "") {
+            $fdob = explode("-", $Benef->fdob);
+            $fdob[2] = intval($fdob[2]) - 543;
+            $fdob1 = $fdob[2] . "-" . $fdob[1] . "-" . $fdob[0];
+            $Benef->fdob = $fdob1;
+            
+        }
+        
+        if ($this->datacontext->updateObject($Benef)) {
+            
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;
         } else {

@@ -144,7 +144,7 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function editBeneficiary($lifeId) {
+    public function editBeneficiary($beneficiaryId) {
         $view = new CJView("life/admin/edit", CJViewType::HTML_VIEW_ENGINE);
         $sql = "select ins.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
                 . "from InsuranceBeneficiary ins "
@@ -154,22 +154,52 @@ class ViewService extends CServiceBase implements IViewService {
                 . "on ins.academicId = acdemic.id "
                 . "join taxonomy relation "
                 . "on relation.id = ins.relationId "
-                . "where ins.lifeId = :lifeId ";
+                . "where ins.beneficiaryId = :beneficiaryId ";
         $param = array(
-            "lifeId" => $lifeId
+            "beneficiaryId" => $beneficiaryId
         );
         $ins = $this->datacontext->pdoQuery($sql, $param);
+        if ($ins[0]['fdob'] != "") {
+            $fdate = explode("-", $ins[0]['fdob']);
+            $fdate[0] = intval($fdate[0]) + 543;
+            $fdob = $fdate[2] . "-" . $fdate[1] . "-" . $fdate[0];
+            $ins[0]['fdob'] = $fdob;
+        }
+        $view->academic = $this->taxonomy->getPCode("academic");
+
+
+        $view->titleName = $this->taxonomy->getPCode("titleName");
+
+        $view->gender = $this->taxonomy->getPCode("gender");
+
+        $view->employeeType = $this->taxonomy->getPCode("employeeType");
+
+        $view->position = $this->taxonomy->getPCode("position");
+
+        $view->department = $this->taxonomy->getPCode("department");
+
+        $view->faculty = $this->taxonomy->getPCode("faculty");
+
+        $view->userType = $this->taxonomy->getPCode("userType");
+
+        $view->matier = $this->taxonomy->getPCode("matier");
+
+        $view->relationship = $this->taxonomy->getPCode("relation");
         
         $view->datas = $ins;
-        $view->lifeId = $lifeId;
+
         return $view;
     }
 
     public function beneficiary($lifeId) {
         $view = new CJView("life/admin/privilege", CJViewType::HTML_VIEW_ENGINE);
 
-        $sql = "select ins.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
+        $sql = "select ins.*,mb.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
                 . "from InsuranceBeneficiary ins "
+                . "join InsuranceLife inf "
+                . "on inf.lifeId = ins.lifeId "
+                . "join v_fullmember mb "
+                . "on mb.memberId = inf.memberId "
                 . "join taxonomy title "
                 . "on ins.titleNameId  = title.id "
                 . "left join taxonomy acdemic "
@@ -177,10 +207,19 @@ class ViewService extends CServiceBase implements IViewService {
                 . "join taxonomy relation "
                 . "on relation.id = ins.relationId "
                 . "where ins.lifeId = :lifeId ";
+        
+        $sql1 = "select mb.* "
+                . "from InsuranceLife inf "
+                . "join v_fullmember mb "
+                . "on mb.memberId = inf.memberId "
+                . "where inf.lifeId = :lifeId ";
         $param = array(
             "lifeId" => $lifeId
         );
+        
         $ins = $this->datacontext->pdoQuery($sql, $param);
+        $member = $this->datacontext->pdoQuery($sql1,$param);
+        $view->member = $member;
         $view->lists = $ins;
         $view->lifeId = $lifeId;
         return $view;

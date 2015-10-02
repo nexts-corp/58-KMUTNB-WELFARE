@@ -10,7 +10,7 @@
             <li class="active">
                 <a href="#"
                    data-id="content-body"
-                   data-api="{{_context_path}}/api/insurance/view/beneficiary/list/{{lifeId}}"
+                   data-api="{{_context_path}}/api/insurance/view/beneficiary/list/{{#datas}}{{lifeId}}{{/datas}}"
                    onclick="btnHTML(this)">{{#i18n}}listprivilege{{/i18n}}
                 </a>
             </li>
@@ -58,7 +58,7 @@
                                                        data-validation-error-msg-container="#idcard-msg-error" />
                                             </div>
                                             <div class="col-lg-offset-4" id="idcard-msg-error">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
 
                                             <div class="col-lg-9">
                                                 <div class="input-group">
-                                                    <input class="form-control cDate" id="dob" data-validation="required" 
+                                                    <input class="form-control cDate" id="dob" data-validation="required"  value="{{#datas}}{{fdob}}{{/datas}}"
                                                            data-validation-error-msg="*กรุณาระบุวัน/เดือน/ปีเกิด" data-validation-error-msg-container="#dob-msg-error" />
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -122,7 +122,7 @@
                                             <label class="col-lg-3 control-label">{{#i18n}}registerName{{/i18n}}</label>
                                             <div class="col-lg-9">
                                                 <input type="text" class="form-control" id="fname" name="fname" placeholder="{{#i18n}}registerName{{/i18n}}"  
-                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกชื่อจริง" 
+                                                       data-validation="required" data-validation-error-msg="*กรุณากรอกชื่อจริง" value="{{#datas}}{{ffname}}{{/datas}}"
                                                        data-validation-error-msg-container="#fname-msg-error" />
                                             </div>
                                             <div class="col-lg-offset-4" id="fname-msg-error">
@@ -136,7 +136,7 @@
                                             <div class="col-lg-9">
 
                                                 <input  class="form-control" id="lname" name="lname" placeholder="{{#i18n}}registerLastName{{/i18n}}"
-                                                        data-validation="required" data-validation-error-msg="*กรุณากรอกนามสกุล" 
+                                                        data-validation="required" data-validation-error-msg="*กรุณากรอกนามสกุล" value="{{#datas}}{{flname}}{{/datas}}"
                                                         data-validation-error-msg-container="#lname-msg-error" />
 
                                             </div>
@@ -155,7 +155,8 @@
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}ratioadd{{/i18n}}</label>
                                             <div class="col-lg-9">
-                                                <input type="text" class="form-control" id="ratio" name="ratio" placeholder="{{#i18n}}ratioadd{{/i18n}}" />
+                                                <input type="text" class="form-control" id="ratio" name="ratio" placeholder="{{#i18n}}ratioadd{{/i18n}}" 
+                                                       value="{{#datas}}{{ratio}}{{/datas}}"/>
 
                                             </div>
                                             <div class="col-lg-offset-4" id="fname-msg-error">
@@ -173,7 +174,7 @@
                                             {{#relationship}}
                                             <div class="radio col-lg-4">
                                                 <label>
-                                                    <input name="relationId" id="relationId" value="{{id}}" type="radio" checked="checked">
+                                                    <input name="relationId" id="relationId" value="{{id}}" type="radio">
                                                     <span class="text">{{value1}} </span> </label>
                                             </div>
 
@@ -201,7 +202,7 @@
                                 <label class="col-lg-3 control-label">{{#i18n}}registerAddress{{/i18n}}</label>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control" name="address" id="address" placeholder="{{#i18n}}registerAddress{{/i18n}}"
-                                           data-bv-notempty="true"
+                                           data-bv-notempty="true" value="{{#datas}}{{faddress}}{{/datas}}"
                                            data-bv-notempty-message="{{#i18n}}registerAddress{{/i18n}}" />
                                 </div>
                             </div>
@@ -211,7 +212,7 @@
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control" id="phone" name="phone" placeholder="{{#i18n}}familyContactPhone{{/i18n}}"
                                            data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
-                                           data-validation-error-msg-container="#phone-msg-error"/>
+                                           data-validation-error-msg-container="#phone-msg-error" value="{{#datas}}{{fphone}}{{/datas}}"/>
                                 </div>
                                 <div class="col-lg-offset-4" id="phone-msg-error">
 
@@ -223,7 +224,7 @@
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control" id="mobile" name="mobile" placeholder="{{#i18n}}familyMobile{{/i18n}}"
                                            data-validation="number" data-validation-allowing="float" data-validation-error-msg="*กรุณาหมายเลขโทรศัพท์ให้ถูกต้อง" 
-                                           data-validation-error-msg-container="#mobile-msg-error"/>
+                                           data-validation-error-msg-container="#mobile-msg-error" value="{{#datas}}{{fmobile}}{{/datas}}"/>
                                 </div>
                                 <div class="col-lg-offset-4" id="mobile-msg-error">
 
@@ -235,7 +236,7 @@
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control" id="email" name="email" placeholder="{{#i18n}}familyEmail{{/i18n}}"
                                            data-validation="email" data-validation-error-msg="*กรุณากรอกอีเมล์ให้ถูกต้อง" 
-                                           data-validation-error-msg-container="#email-msg-error"/>
+                                           data-validation-error-msg-container="#email-msg-error" value="{{#datas}}{{femail}}{{/datas}}"/>
                                 </div>
                                 <div class="col-lg-offset-4" id="email-msg-error">
 
@@ -262,11 +263,19 @@
     $(document).ready(function () {
         $.validate();
         $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+        var academic = '{{#datas}}{{academicId}}{{/datas}}';
+        var titlename = '{{#datas}}{{titleNameId}}{{/datas}}';
+        var relation = '{{#datas}}{{relationId}}{{/datas}}';
+
+        $("#academicId").val(academic);
+        $("#titleNameId").val(titlename);
+        $('input:radio[name="relationId"]').filter('[value="' + relation + '"]').attr('checked', true);
+        
+
         $("#btn_submit").click(function () {
-            var lifeId = '{{lifeId}}'
-            alert(lifeId);
             var Benef = {};
-            Benef['lifeId'] = lifeId;
+            Benef['beneficiaryId'] = '{{#datas}}{{beneficiaryId}}{{/datas}}';
+            Benef['lifeId'] = '{{#datas}}{{lifeId}}{{/datas}}';
             Benef['ffname'] = $("#fname").val();
             Benef['flname'] = $("#lname").val();
             Benef['fidCard'] = $("#idCard").val();
@@ -279,27 +288,23 @@
             Benef['fmobile'] = $("#mobile").val();
             Benef['femail'] = $("#email").val();
             Benef['ratio'] = $("#ratio").val();
-
             var jdata = {};
             jdata['Benef'] = Benef;
             $.ajax({
-                url: '{{_context_path}}/api/insurance/life/save',
+                url: '{{_context_path}}/api/insurance/life/beneficiaryUpdate',
                 data: jsonEncode(jdata),
                 type: 'post',
                 success: function (result) {
 
-                    if (result.save == true) {
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', null);
+                    if (result.update == true) {
+                        getHTML('content-body', '{{_context_path}}/api/insurance/view/beneficiary/list/{{#datas}}{{lifeId}}{{/datas}}', null);
                         Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
                     } else {
                         Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-
                     }
                 }
             });
-
         });
-
 //        $("#btn_submit").click(function () {
 //            var data = {};
 //            data['familyId'] = $("#familyId").val();

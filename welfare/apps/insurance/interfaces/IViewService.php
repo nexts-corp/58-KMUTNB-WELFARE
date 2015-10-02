@@ -61,11 +61,11 @@ interface IViewService {
     /**
      * @name editBeneficiary
      * @uri /beneficiary/edit
-     * @param string lifeId
+     * @param string beneficiaryId
      * @return string beneficiaryAdd
      * @description หน้าแสดงการแก้ไขข้อมูลผู้รับผลประโยชน์
      */
-    public function editBeneficiary($lifeId);
+    public function editBeneficiary($beneficiaryId);
     
     /**
      * @name beneficiary

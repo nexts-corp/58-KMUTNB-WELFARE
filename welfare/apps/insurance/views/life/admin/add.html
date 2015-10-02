@@ -264,7 +264,7 @@
         $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
         $("#btn_submit").click(function () {
             var lifeId = '{{lifeId}}'
-            alert(lifeId);
+            
             var Benef = {};
             Benef['lifeId'] = lifeId;
             Benef['ffname'] = $("#fname").val();
@@ -289,7 +289,7 @@
                 success: function (result) {
 
                     if (result.save == true) {
-                        getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', null);
+                        getHTML('content-body', '{{_context_path}}/api/insurance/view/beneficiary/list/{{lifeId}}', null);
                         Notify('บันทึกสำเร็จ', 'top-right', '4000', 'success', 'fa-check', true);
                     } else {
                         Notify('บันทึกไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
