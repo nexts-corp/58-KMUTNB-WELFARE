@@ -3,160 +3,85 @@
     <ul class="nav sidebar-menu">
         <!--Dashboard-->
 
-
         <li>
-            <a href="#" class="menu-dropdown">
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/welfare/view/admin/member/lists"
+               onclick="btnHTML(this)">
                 <i class="menu-icon fa fa-smile-o"></i>
+                <span class="menu-text">สวัสดิการรายบุคคล</span>
 
-                <span class="menu-text">
-                    จัดการข้อมูลสวัสดิการ
-                </span>
 
-                <i class="menu-expand"></i>
             </a>
-
-            <ul class="submenu">
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/welfare/view/user/lists"
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">สวัสดิการที่พึงจะได้รับ</span>
-                    </a>
-                </li>
-
-
-                <!--
-                                <li>
-                                    <a href="#" 
-                                       data-id="content-body"
-                                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/send"
-                                       
-                                       onclick="btnHTML(this)">
-                                        <span class="menu-text">ขอรับสวัสดิการ</span>
-                                    </a>
-                                </li>
-                
-                                <li>
-                                    <a href="#" 
-                                       data-id="content-body"
-                                       data-api="{{_context_path}}/api/welfare/view/welfareclaims/wait"
-                                       
-                                       onclick="btnHTML(this)">
-                                        <span class="menu-text">สวัสดิการที่ขอรับแล้ว</span>
-                                    </a>
-                                </li>-->
-
-
-
-
-
-
-
-            </ul>
         </li>
 
+
         <li>
-            <a href="#" class="menu-dropdown">
-                <i class="menu-icon fa fa-users"></i>
 
-                <span class="menu-text">
-                    จัดการข้อมูลสมาชิก
-                </span>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/member/view/member/lists"
 
-                <i class="menu-expand"></i>
+               onclick="btnHTML(this)">
+                <i class="menu-icon fa fa-users"></i><span class="menu-text">จัดการข้อมูลสมาชิก</span>
             </a>
 
-            <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/member/view/member/lists"
 
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายการข้อมูลสมาชิก</span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementMember/member/management/listmanagemember"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">รายงานรายชื่อสมาชิก</span>
-                    </a>
-                </li>
-
-
-
-
-            </ul>
         </li>
 
+        
+
         <li>
-            <a href="#" class="menu-dropdown">
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/insurance/view/sso/user/lists"
+               onclick="btnHTML(this)">
                 <i class="menu-icon fa fa-heartbeat"></i>
-
-                <span class="menu-text">
-                    จัดการข้อมูลประกัน
-                </span>
-
-                <i class="menu-expand"></i>
+                <span class="menu-text">ข้อมูลประกันสังคม</span>
             </a>
-
-            <ul class="submenu">
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/insurance/view/privilege/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">ผู้รับผลประโยชน์</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/insurance/view/social/security/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">ประกันสุขภาพกลุ่ม&อุบัติเหตุ</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/insurance/view/insurance/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">กองทุนประกันสังคม</span>
-                    </a>
-                </li>
-
-
-                <!--<li>
-                        <a href="#" onclick="btnHTML('content-body','api/ManagementInsurance/reportmoney/list',null)">
-                        <span class="menu-text">รายงานสรุปยอดเงินและรายชื่อ</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="btnHTML('content-body','api/ManagementInsurance/report/amount/member/list',null)">
-                        <span class="menu-text">รายงานสรุปจำนวนและรายชื่อ</span>
-                    </a>
-                </li>-->
-
-
-
-
-            </ul>
         </li>
 
+        <li>
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/insurance/view/life/user/lists"
+               onclick="btnHTML(this)">
+                <i class="menu-icon fa fa-heartbeat"></i>
+                <span class="menu-text">ประกันกลุ่มและประกันอุบัติเหตุ</span>
+            </a>
+        </li>
+        <li>    
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/insurance/view/beneficiary/list/{{code}}"
+
+               onclick="btnHTML(this)">
+                <i class="menu-icon fa fa-users"></i>
+                <span class="menu-text">รายการผู้รับผลประโยชน์</span>
+            </a>
+            <!--            <a href="#" onclick="">
+                            <i class="menu-icon glyphicon glyphicon-link"></i>
+            
+                            <span class="menu-text">
+                                
+                            </span>
+            
+                        </a>-->
 
 
+        </li>
+        <li>
 
+            <a href="#" 
+               data-id="content-body"
+               data-api="{{_context_path}}/api/medical/view/medicalFee/show/{{code}}"
 
+               onclick="btnHTML(this)">
+                <i class="menu-icon fa fa-medkit"></i>
+                <span class="menu-text">ค่ารักษาพยาบาล</span>
+            </a>
+
+        </li>
 
         <li>
             <a href="#" class="menu-dropdown">
@@ -173,66 +98,45 @@
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementFund/policy/list"
+                       data-api="{{_context_path}}/api/fund/view/policy/admin/lists"
 
                        onclick="btnHTML(this)">
-                        <span class="menu-text">นโยบาย</span>
+                        <span class="menu-text">นโยบายฯ</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementFund/fundlive/list"
+                       data-api="{{_context_path}}/api/fund/view/employee/admin/lists"
 
                        onclick="btnHTML(this)">
-                        <span class="menu-text">กองทุนสำรองเลี้ยงชีพ</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" 
-                       data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementFund/cooperative/list"
-
-                       onclick="btnHTML(this)">
-                        <span class="menu-text">สำรองเลี้ยงชีพ(สหกรณ์)</span>
+                        <span class="menu-text">พนักงานมหาวิทยาลัย</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" 
                        data-id="content-body"
-                       data-api="{{_context_path}}/api/ManagementFund/fundretire/list"
+                       data-api="{{_context_path}}/api/fund/view/extra/admin/lists"
 
                        onclick="btnHTML(this)">
-                        <span class="menu-text">สำรองเลี้ยงชีพ(เกษียณอายุ)</span>
+                        <span class="menu-text">พนักงานราชการ,พิเศษ</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/fund/view/retire/admin/lists"
 
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">พนักงานจ้างหลังเกษียณ</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
-        <li>
+        <li>  
 
-            <a href="#" 
-               data-id="content-body"
-               data-api="{{_context_path}}/api/medical/view/medicalFee/show/{{code}}"
-
-               onclick="btnHTML(this)">
-                <i class="menu-icon fa fa-medkit"></i>
-                <span class="menu-text">ค่ารักษาพยาบาล</span>
-            </a>
-
-            <!--            <a href="#" onclick="getBodyMember('{{_context_path}}/api/Member / medicalFee / view / medical')">
-                            <i class="menu-icon glyphicon glyphicon-link"></i>
-            
-                            <span class="menu-text">
-                                
-                            </span>
-                        </a>-->
-
-        </li>
-
-
+        
 
         <li>
             <a href="#" 
@@ -261,8 +165,54 @@
 
             </a>
 
-        <li>
+        </li>
 
+
+
+        <li>    
+
+            <a href="#" class="menu-dropdown">
+                <i class="menu-icon fa fa-user"></i>
+
+                <span class="menu-text">
+                    จัดการข้อมูลส่วนตัว
+                </span>
+
+                <i class="menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/user/view/member/password/{{code}}"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">แก้ไขรหัสผ่าน</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/member/view/member/show/{{code}}"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">ดูข้อมูลส่วนตัว</span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/member/view/member/edit/{{code}}"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">แก้ไขข้อมูลส่วนตัว</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
 
     </ul>
     <!-- /Sidebar Menu -->

@@ -52,11 +52,11 @@ interface IViewService {
     /**
      * @name addBeneficiary
      * @uri /beneficiary/add
-     * @param string lifeId 
+     * @param string memberId 
      * @return string beneficiaryAdd
      * @description หน้าแสดงการเพิ่มข้อมูลผู้รับผลประโยชน์
      */
-    public function addBeneficiary($lifeId);
+    public function addBeneficiary($memberId);
     
     /**
      * @name editBeneficiary
@@ -70,9 +70,11 @@ interface IViewService {
     /**
      * @name beneficiary
      * @uri /beneficiary/list
-     * @param string lifeId 
+     * @param string memberId 
      * @return string listBeneficiary
      * @description หน้าแสดงการแก้ไขข้อมูลผู้รับผลประโยชน์
      */
-    public function beneficiary($lifeId);
+    public function beneficiary($memberId);
+    
+    
 }

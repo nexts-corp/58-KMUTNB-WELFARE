@@ -116,7 +116,7 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function addBeneficiary($lifeId) {
+    public function addBeneficiary($memberId) {
         $view = new CJView("life/admin/add", CJViewType::HTML_VIEW_ENGINE);
 
         $view->academic = $this->taxonomy->getPCode("academic");
@@ -140,14 +140,16 @@ class ViewService extends CServiceBase implements IViewService {
 
         $view->relationship = $this->taxonomy->getPCode("relation");
 
-        $view->lifeId = $lifeId;
+        $view->memberId = $memberId;
         return $view;
     }
 
     public function editBeneficiary($beneficiaryId) {
         $view = new CJView("life/admin/edit", CJViewType::HTML_VIEW_ENGINE);
-        $sql = "select ins.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
+        $sql = "select ins.*,inf.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
                 . "from InsuranceBeneficiary ins "
+                . "join InsuranceLife inf "
+                . "on inf.lifeId = ins.lifeId "
                 . "join taxonomy title "
                 . "on ins.titleNameId  = title.id "
                 . "left join taxonomy acdemic "
@@ -185,43 +187,44 @@ class ViewService extends CServiceBase implements IViewService {
         $view->matier = $this->taxonomy->getPCode("matier");
 
         $view->relationship = $this->taxonomy->getPCode("relation");
-        
+
         $view->datas = $ins;
 
         return $view;
     }
 
-    public function beneficiary($lifeId) {
-        $view = new CJView("life/admin/privilege", CJViewType::HTML_VIEW_ENGINE);
-
-        $sql = "select ins.*,mb.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
+    public function beneficiary($memberId) {
+        $usertype = $this->getCurrentUser()->usertype;
+        if ($usertype == "administrator") {
+            $view = new CJView("life/admin/privilege", CJViewType::HTML_VIEW_ENGINE);
+        } else {
+            $view = new CJView("life/user/privilege", CJViewType::HTML_VIEW_ENGINE);
+        }
+        $sql = "select ins.*,ifnull(acdemic.value1,title.value1) as titleName,relation.value1,ins.ratio "
                 . "from InsuranceBeneficiary ins "
                 . "join InsuranceLife inf "
                 . "on inf.lifeId = ins.lifeId "
-                . "join v_fullmember mb "
-                . "on mb.memberId = inf.memberId "
                 . "join taxonomy title "
                 . "on ins.titleNameId  = title.id "
                 . "left join taxonomy acdemic "
                 . "on ins.academicId = acdemic.id "
                 . "join taxonomy relation "
                 . "on relation.id = ins.relationId "
-                . "where ins.lifeId = :lifeId ";
-        
+                . "where inf.memberId = :memberId ";
+
         $sql1 = "select mb.* "
                 . "from InsuranceLife inf "
                 . "join v_fullmember mb "
                 . "on mb.memberId = inf.memberId "
-                . "where inf.lifeId = :lifeId ";
+                . "where inf.memberId = :memberId ";
         $param = array(
-            "lifeId" => $lifeId
+            "memberId" => $memberId
         );
-        
+
         $ins = $this->datacontext->pdoQuery($sql, $param);
-        $member = $this->datacontext->pdoQuery($sql1,$param);
+        $member = $this->datacontext->pdoQuery($sql1, $param);
         $view->member = $member;
         $view->lists = $ins;
-        $view->lifeId = $lifeId;
         return $view;
     }
 

@@ -7,13 +7,7 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">
-                <a href="#"
-                   data-id="content-body"
-                   data-api="{{_context_path}}/api/insurance/view/life/admin/lists"
-                   onclick="btnHTML(this)">{{#i18n}}menu.life{{/i18n}}
-                </a>
-            </li>
+            
             <li class="active">{{#i18n}}listprivilege{{/i18n}}</li>
         </ul>
     </div>
@@ -40,14 +34,7 @@
                     </div>
                     <div class="widget-body">
                         <div class="pull-left"><h5> {{#member}} {{titles1}} {{fname}} {{lname}}{{/member}}</h5></div>
-                        <div class="pull-right">
-                            <button class="btn btn-primary"
-                                    data-id="content-body"
-                                    data-api="{{_context_path}}/api/insurance/view/beneficiary/add/{{#member}}{{memberId}}{{/member}}"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
-                            </button>
-                        </div>
+                        
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -57,7 +44,7 @@
 
                                         <th>&nbsp;{{#i18n}}rerationship{{/i18n}}</th>
                                         <th>&nbsp;{{#i18n}}ratio{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,14 +55,7 @@
 
                                         <td>&nbsp;{{value1}}</td>
                                         <td>&nbsp;{{ratio}}</td>
-                                        <td class="center">
-                                            <button class="btn btn-info btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/insurance/view/beneficiary/edit/{{beneficiaryId}}"
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-plus"></i>{{#i18n}}edit{{/i18n}} 
-                                            </button>
-                                        </td>
+                                        
                                     </tr>
                                     {{/lists}}
                                 </tbody>
