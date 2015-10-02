@@ -184,15 +184,19 @@
             var pCode = $("#filterCode").val();
             var data;
             if (pCode == "faculty") {
+                
                 data = getCode(pCode);
                 $("#filterdepartment").show();
                 $("#searchName").hide();
             } else if (pCode != "name") {
                 data = getPCode(pCode);
+                $("#filterdepartment").hide();
+                $("#searchName").show();
             }
 
             var html;
             if ($("#filterCode").val() == "name") {
+                
                 $("#searchName").show();
 //                $("#filtervalue").hide();
             } else {
@@ -201,7 +205,7 @@
 
                 } else {
                     $.each(data, function (key, value) {
-                        html += "<option value='" + value.id + "'>" + value.value1 +"</option>";
+                        html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
 
                     });
                 }
@@ -219,7 +223,9 @@
 
         });
         $("#filtervalue").change(function () {
+            
             var id = $("#filtervalue").val();
+            var pCode = $("#filterCode").val();
 
             $.ajax({
                 url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
@@ -232,11 +238,20 @@
                     } else {
                         $.each(data, function (key, value) {
 
-                            html += "<option value='" + value.id + "'>" + value.value1 +"</option>";
+                            html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
                         });
                     }
-                    $("#filterdepartment").show();
-                    $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>"+html);
+                    if (pCode == "faculty") {
+                        
+                        $("#filterdepartment").show();
+                        $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
+                    }
+                    else {
+                        
+                        $("#filterdepartment").hide();
+                        $("#searchName").show();
+                    }
+
                 }
             });
         });
@@ -276,7 +291,7 @@
             }
             else if (filterdepartment) {
                 if (filterdepartment != "") {
-                    
+
                     var filterCode = 'department';
                     var data = {
                         "filterCode": filterCode,

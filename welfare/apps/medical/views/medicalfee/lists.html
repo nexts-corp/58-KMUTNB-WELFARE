@@ -67,15 +67,15 @@
                             </div>
                         </div>
                         <div class="pull-right">
-                            
-                                <button class="btn btn-primary"
-                                        data-id="content-body"
-                                        data-api="{{_context_path}}/api/medical/view/medicalFee/add"
 
-                                        onclick="btnHTML(this)">
-                                    <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
-                                </button>
-                            
+                            <button class="btn btn-primary"
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/medical/view/medicalFee/add"
+
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                            </button>
+
                         </div>
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -145,6 +145,8 @@
                 $("#searchName").hide();
             } else if (pCode != "name") {
                 data = getPCode(pCode);
+                $("#filterdepartment").hide();
+                $("#searchName").show();
             }
 
             var html;
@@ -176,7 +178,7 @@
         });
         $("#filtervalue").change(function () {
             var id = $("#filtervalue").val();
-
+            var pCode = $("#filterCode").val();
             $.ajax({
                 url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
                 data: {parentId: id},
@@ -191,8 +193,16 @@
                             html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
                         });
                     }
-                    $("#filterdepartment").show();
-                    $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
+                    if (pCode == "faculty") {
+
+                        $("#filterdepartment").show();
+                        $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
+                    }
+                    else {
+
+                        $("#filterdepartment").hide();
+                        $("#searchName").show();
+                    }
                 }
             });
         });
