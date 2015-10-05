@@ -172,10 +172,7 @@
     $(document).ready(function () {
         $("#filterdepartment").hide();
         $("#reportCsv").click(function () {
-
-           // getHTML('content-body', '{{_context_path}}/api/member/reports/lists', null);
-         
-           window.open('{{_context_path}}/api/member/reports/lists');
+            window.open('{{_context_path}}/api/member/reports/lists');
 
         });
 
@@ -186,7 +183,7 @@
             var pCode = $("#filterCode").val();
             var data;
             if (pCode == "faculty") {
-                
+
                 data = getCode(pCode);
                 $("#filterdepartment").show();
                 $("#searchName").hide();
@@ -198,7 +195,7 @@
 
             var html;
             if ($("#filterCode").val() == "name") {
-                
+
                 $("#searchName").show();
 //                $("#filtervalue").hide();
             } else {
@@ -225,7 +222,7 @@
 
         });
         $("#filtervalue").change(function () {
-            
+
             var id = $("#filtervalue").val();
             var pCode = $("#filterCode").val();
 
@@ -244,12 +241,12 @@
                         });
                     }
                     if (pCode == "faculty") {
-                        
+
                         $("#filterdepartment").show();
                         $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
                     }
                     else {
-                        
+
                         $("#filterdepartment").hide();
                         $("#searchName").show();
                     }

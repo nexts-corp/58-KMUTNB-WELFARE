@@ -38,21 +38,24 @@ class ReportService extends CServiceBase implements IReportService {
         $param = array();
         $sql = "select mem1 "
                 . "FROM apps\\member\\model\\FullMember mem1 ";
-        $objMember = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
-        
+        $objMember = $this->datacontext->getObject($sql, $param);
+
         $f = fopen('php://memory', 'w');
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "คำนำหน้า" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อ" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "นามสกุล" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "หน่วยงานที่สังกัด" . "\"\r\n"));
         foreach ($objMember as $key => $value) {
+            fputs($f, iconv("UTF-8", "windows-874", "\"'" . $objMember[$key]->idCard . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $objMember[$key]->titles1 . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $objMember[$key]->fname . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $objMember[$key]->lname . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $objMember[$key]->department1 . "" . $objMember[$key]->faculty1 . "\"\r\n"));
 
-            fputs($f,iconv("UTF-8", "windows-874","\"'". $objMember[$key]->idCard . "\","));
-            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->titles1 . "\","));
-            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->fname . "\","));
-            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->lname . "\","));
-            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->department1 ."".$objMember[$key]->faculty1 . "\"\r\n"));
-
-           // $newFields = array(
+            // $newFields = array(
             //   array($objMember[$key]->idCard, utf8_encode($objMember[$key]->fname), $objMember[$key]->lname));
-             // fputcsv($f, $objMember);
-
+            // fputcsv($f, $objMember);
         }
         fseek($f, 0);
         header('Content-Type: application/csv; charset=windows-874');
