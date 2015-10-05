@@ -72,6 +72,7 @@ class ViewService extends CServiceBase implements IViewService {
             $view = new CJView("employee/admin/user", CJViewType::HTML_VIEW_ENGINE);
         } else {
             $memberId = $this->getCurrentUser()->code;
+           
         }
         $emp = "select "
                 . "fem.fundEmpId, "
@@ -92,33 +93,35 @@ class ViewService extends CServiceBase implements IViewService {
         );
         $datas = $this->datacontext->getObject($emp, $param);
         $i = 1;
-        foreach ($datas as $key => $value) {
-            $datas[$key]['rowNo'] = $i++;
-            foreach ($value as $key2 => $value2) {
-                if ($key2 == "dateNotice") {
-                    $date = explode("-", $value2->format("Y-m-d"));
-                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
-                    $datas[$key][$key2] = $date;
+        if ($datas != "") {
+            foreach ($datas as $key => $value) {
+                $datas[$key]['rowNo'] = $i++;
+                foreach ($value as $key2 => $value2) {
+                    if ($key2 == "dateNotice") {
+                        $date = explode("-", $value2->format("Y-m-d"));
+                        $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                        $datas[$key][$key2] = $date;
+                    }
+                    if ($key2 == "saving") {
+                        $datas[$key][$key2] = number_format($value2);
+                    }
+                    if ($key2 == "myBenefit") {
+                        $datas[$key][$key2] = number_format($value2);
+                    }
+                    if ($key2 == "employerBenefit") {
+                        $datas[$key][$key2] = number_format($value2);
+                    }
+                    if ($key2 == "grantInAid") {
+                        $datas[$key][$key2] = number_format($value2);
+                    }
+                    if ($key2 == "total") {
+                        $datas[$key][$key2] = number_format($value2);
+                    }
                 }
-                if ($key2 == "saving"){
-                    $datas[$key][$key2] = number_format($value2);
-                }
-                if ($key2 == "myBenefit"){
-                    $datas[$key][$key2] = number_format($value2);
-                }
-                if ($key2 == "employerBenefit"){
-                    $datas[$key][$key2] = number_format($value2);
-                }
-                if ($key2 == "grantInAid"){
-                    $datas[$key][$key2] = number_format($value2);
-                }
-                if ($key2 == "total"){
-                    $datas[$key][$key2] = number_format($value2);
-                }
-                
             }
         }
-        
+
+
         $mb = new \apps\member\service\MemberService();
         $view->member = $mb->find("memberId", $memberId)[0];
         $view->lists = $datas;
@@ -165,20 +168,20 @@ class ViewService extends CServiceBase implements IViewService {
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
                     $datas[$key][$key2] = $date;
                 }
-                
-                 if ($key2 == "saving"){
+
+                if ($key2 == "saving") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "myBenefit"){
+                if ($key2 == "myBenefit") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "employerBenefit"){
+                if ($key2 == "employerBenefit") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "grantInAid"){
+                if ($key2 == "grantInAid") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "total"){
+                if ($key2 == "total") {
                     $datas[$key][$key2] = number_format($value2);
                 }
             }
@@ -198,7 +201,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function retireUserLists() {
-         if ($this->getRequest()->memberId != "") {
+        if ($this->getRequest()->memberId != "") {
             $memberId = $this->getRequest()->memberId;
             $view = new CJView("retire/admin/user", CJViewType::HTML_VIEW_ENGINE);
         } else {
@@ -229,19 +232,19 @@ class ViewService extends CServiceBase implements IViewService {
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
                     $datas[$key][$key2] = $date;
                 }
-                 if ($key2 == "saving"){
+                if ($key2 == "saving") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "myBenefit"){
+                if ($key2 == "myBenefit") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "employerBenefit"){
+                if ($key2 == "employerBenefit") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "grantInAid"){
+                if ($key2 == "grantInAid") {
                     $datas[$key][$key2] = number_format($value2);
                 }
-                if ($key2 == "total"){
+                if ($key2 == "total") {
                     $datas[$key][$key2] = number_format($value2);
                 }
             }

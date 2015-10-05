@@ -60,5 +60,14 @@ interface IViewService {
      */
     public function medical();
     
+     /**
+     * @name menu/extraUser
+     * @uri /menu/extraUser
+     * @return html view
+     * @description เรียก head menu มาแสดง
+     * @authen true
+     */
+    public function extraUser();
+    
     
 }

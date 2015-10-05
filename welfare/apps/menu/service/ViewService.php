@@ -81,4 +81,10 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function extraUser() {
+         $view = new CJView("menu/extraUser", CJViewType::HTML_VIEW_ENGINE);
+        $view->code = $this->getCurrentUser()->code;
+        return $view;
+    }
+
 }

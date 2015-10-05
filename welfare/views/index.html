@@ -94,6 +94,8 @@ $(document).ready(function () {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/faculty', null);
     } else if (usertype == "adminMedical") {
         getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/medical', null);
+    } else if (usertype == "extraUser") {
+        getHTML('left_menu', '{{_context_path}}/api/menu/view/menu/extraUser', null);
     }
 });
 
@@ -101,7 +103,7 @@ $(document).ready(function () {
 
         <script src="{{_context_path}}/assets/summernote/dist/summernote.min.js"></script>
         <script src="{{_context_path}}/assets/summernote/plugin/summernote-ext-video.js"></script>
-        
+
     </body>
 
     <!--Basic Scripts-->
