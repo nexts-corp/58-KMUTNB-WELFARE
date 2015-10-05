@@ -100,8 +100,25 @@ class ViewService extends CServiceBase implements IViewService {
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
                     $datas[$key][$key2] = $date;
                 }
+                if ($key2 == "saving"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "myBenefit"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "employerBenefit"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "grantInAid"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "total"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                
             }
         }
+        
         $mb = new \apps\member\service\MemberService();
         $view->member = $mb->find("memberId", $memberId)[0];
         $view->lists = $datas;
@@ -147,6 +164,22 @@ class ViewService extends CServiceBase implements IViewService {
                     $date = explode("-", $value2->format("Y-m-d"));
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
                     $datas[$key][$key2] = $date;
+                }
+                
+                 if ($key2 == "saving"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "myBenefit"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "employerBenefit"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "grantInAid"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "total"){
+                    $datas[$key][$key2] = number_format($value2);
                 }
             }
         }
@@ -195,6 +228,21 @@ class ViewService extends CServiceBase implements IViewService {
                     $date = explode("-", $value2->format("Y-m-d"));
                     $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
                     $datas[$key][$key2] = $date;
+                }
+                 if ($key2 == "saving"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "myBenefit"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "employerBenefit"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "grantInAid"){
+                    $datas[$key][$key2] = number_format($value2);
+                }
+                if ($key2 == "total"){
+                    $datas[$key][$key2] = number_format($value2);
                 }
             }
         }
