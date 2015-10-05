@@ -173,7 +173,9 @@
         $("#filterdepartment").hide();
         $("#reportCsv").click(function () {
 
-            getHTML('content-body', '{{_context_path}}/api/member/reports/lists', null);
+           // getHTML('content-body', '{{_context_path}}/api/member/reports/lists', null);
+         
+           window.open('{{_context_path}}/api/member/reports/lists');
 
         });
 

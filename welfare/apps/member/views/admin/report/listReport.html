@@ -1,5 +1,4 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="{{_context_path}}/assets/extable/jquery.table2excel.js"></script>
+
 
 <div class="page-content">
     <!-- Page Breadcrumb -->
@@ -28,7 +27,7 @@
                <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
 
                         <div class="flip-scroll">
-                            <table id="report" class="table table-hover table-striped table-bordered table-condensed" >
+                            <table x:str BORDER="1" id="report" class="table table-hover table-striped table-bordered table-condensed" >
                                 <thead>
                                     <tr class="noExl">
                                         <th>{{#i18n}}IdCard{{/i18n}}</th>
@@ -41,7 +40,7 @@
                                     {{#lists}}
                                     <tr>
 
-                                        <td>'{{idCard}}'</td>
+                                        <td>{{idCard}}</td>
                                         <td><div id="title"></div>{{titles1}} {{fname}}      {{lname}}</td>
                                         <td>{{department1}} ( {{faculty1}} )</td>
 
@@ -63,14 +62,6 @@
     <!-- /Page Body -->
 </div>
 <!-- /Page Content -->
-<script>
-$("#reportExport").click(function () {
-    $("#report").table2excel({
-        exclude: ".noExl",
-        name: "Excel Document Name",
-        filename: "SomeFile" //do not include extension
-    });
-});
-</script>
+
 
 

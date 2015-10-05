@@ -22,9 +22,10 @@ class ReportService extends CServiceBase implements IReportService {
 
     public function reportList() {
 
-        $view = new CJView("admin/report/listReport", CJViewType::HTML_VIEW_ENGINE);
-        
-         $usertype = $this->getCurrentUser()->usertype;
+
+        //$view = new CJView("admin/report/listReport", CJViewType::HTML_VIEW_ENGINE);
+
+        $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
         $searchName = $this->getRequest()->searchName;
@@ -32,15 +33,32 @@ class ReportService extends CServiceBase implements IReportService {
         $filtervalue = $this->getRequest()->filtervalue;
         $datafilter = $this->getRequest();
 
-        
+
 
         $param = array();
         $sql = "select mem1 "
                 . "FROM apps\\member\\model\\FullMember mem1 ";
-        $view->lists = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
+        $objMember = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
         
-        
-        return $view;
+        $f = fopen('php://memory', 'w');
+        foreach ($objMember as $key => $value) {
+
+            fputs($f,iconv("UTF-8", "windows-874","\"'". $objMember[$key]->idCard . "\","));
+            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->titles1 . "\","));
+            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->fname . "\","));
+            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->lname . "\","));
+            fputs($f,iconv("UTF-8", "windows-874","\"".  $objMember[$key]->department1 ."".$objMember[$key]->faculty1 . "\"\r\n"));
+
+           // $newFields = array(
+            //   array($objMember[$key]->idCard, utf8_encode($objMember[$key]->fname), $objMember[$key]->lname));
+             // fputcsv($f, $objMember);
+
+        }
+        fseek($f, 0);
+        header('Content-Type: application/csv; charset=windows-874');
+        header('Content-Disposition: attachment; filename="report_member.csv";');
+        fpassthru($f);
+        exit();
     }
 
 }
