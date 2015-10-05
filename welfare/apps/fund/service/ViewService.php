@@ -72,7 +72,7 @@ class ViewService extends CServiceBase implements IViewService {
             $view = new CJView("employee/admin/user", CJViewType::HTML_VIEW_ENGINE);
         } else {
             $memberId = $this->getCurrentUser()->code;
-           
+            $view = new CJView("employee/user/lists", CJViewType::HTML_VIEW_ENGINE);
         }
         $emp = "select "
                 . "fem.fundEmpId, "
@@ -120,8 +120,6 @@ class ViewService extends CServiceBase implements IViewService {
                 }
             }
         }
-
-
         $mb = new \apps\member\service\MemberService();
         $view->member = $mb->find("memberId", $memberId)[0];
         $view->lists = $datas;
