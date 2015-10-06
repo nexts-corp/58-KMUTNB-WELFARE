@@ -41,6 +41,9 @@ class ReportService extends CServiceBase implements IReportService {
         $objMember = $this->datacontext->getObject($sql, $param);
 
         $f = fopen('php://memory', 'w');
+
+        fputs($f, iconv("UTF-8", "windows-874", ",," . "รายงานสรุปข้อมูลสมาชิก" . ",,\r\n"));
+
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "คำนำหน้า" . "\","));
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อ" . "\","));
