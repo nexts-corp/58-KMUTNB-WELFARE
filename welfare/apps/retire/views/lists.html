@@ -69,6 +69,8 @@
                             <div class="col-lg-2">
                                 <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                             </div>
+
+
                         </div>
 
 
@@ -76,8 +78,15 @@
 
 
                         <div class="pull-right">
-                            <label class="control-label"><h5>{{#i18n}}totalamount{{/i18n}}</h5></label>
-                            <label class="control-label"><h5 id="countTotal"> {{#retire}}{{total}}{{/retire}} บาท</h5></label>
+                            <label class="col-lg-12  control-label">
+                                <label class="control-label"><h5>{{#i18n}}totalamount{{/i18n}}</h5></label>
+                                <label class="control-label"><h5 id="countTotal">{{#total}}{{total}}{{/total}} บาท</h5></label>
+                                <button type="button" class="btn btn-success"
+                                        id="reportCsv"
+                                        data-whatever="">
+                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                                </button>
+                            </label>
                         </div>
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -132,7 +141,7 @@
                 $("#filterdepartment").show();
                 $("#searchName").hide();
             } else if (pCode != "name") {
-                
+
                 data = getPCode(pCode);
                 $("#searchName").show();
             }
@@ -143,7 +152,7 @@
                 $("#filtervalue").hide();
 
             }
-            
+
             else if ($("#filterCode").val() == "year")
             {
                 $("#searchName").hide();
@@ -289,6 +298,11 @@
 
 //            getHTML('content-body', '{{_context_path}}/api/retire/view/retire/lists', {retire: result.preview});
         });
+         $("#reportCsv").click(function () {
+            window.open('{{_context_path}}/api/retire/reports/lists');
+
+        });
+        
     });
 
 

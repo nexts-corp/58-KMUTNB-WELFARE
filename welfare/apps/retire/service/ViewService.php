@@ -29,27 +29,31 @@ class ViewService extends CServiceBase implements IViewService {
 
         if ($searchName != "") {
             $filter = new RetireService();
-            $view->retire = $filter->preview($datafilter);
+            $view->retire = $filter->preview($datafilter)["member"];
+            $view->total = $filter->preview($datafilter)["total"];
         } else if ($filterCode != "") {
-            
+
             $filter = new RetireService();
-            $view->retire = $filter->preview($datafilter);
+            $view->retire = $filter->preview($datafilter)["member"];
+            $view->total = $filter->preview($datafilter)["total"];
 //            print_r($datafilter);
 //            exit();
-        } else if ($retire!="") {
+        } else if ($retire != "") {
 //            print_r($datafilter);
 //            exit();
-            $reServ = new RetireService();
-            $data = $reServ->preview($datafilter);
-            $view->retire = $data;
+            $filter = new RetireService();
+            $view->retire = $filter->preview($datafilter)["member"];
+            $view->total = $filter->preview($datafilter)["total"];
 //            print_r($view);
 //            exit();
         } else {
             $date = new \DateTime('now');
             $datafilter->present = $date->format('Y');
-            $reServ = new RetireService();
-            $data = $reServ->preview($datafilter);
-            $view->retire = $data;
+            $filter = new RetireService();
+            $view->retire = $filter->preview($datafilter)["member"];
+            $view->total = $filter->preview($datafilter)["total"];
+//            print_r($filter->preview($datafilter));
+//            exit();
         }
 
         //print_r($date->format('Y'));
