@@ -66,6 +66,7 @@ class ReportService extends CServiceBase implements IReportService {
        
 
         $f = fopen('php://memory', 'w');
+        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานสรุปข้อมูลการเบิกค่ารักษาพยาบาล" . ",,\r\n"));
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อผู้เบิกค่ารักษาพยาบาล" . "\","));
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวนค่ารักษาพยาบาล" . "\","));
@@ -84,7 +85,7 @@ class ReportService extends CServiceBase implements IReportService {
         }
         fseek($f, 0);
         header('Content-Type: application/csv; charset=windows-874');
-        header('Content-Disposition: attachment; filename="report_member.csv";');
+        header('Content-Disposition: attachment; filename="report_medical.csv";');
         fpassthru($f);
         exit();
     }

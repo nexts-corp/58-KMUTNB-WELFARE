@@ -190,7 +190,26 @@
 
                                             </div>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
+                                            <div class="col-lg-9">
+                                                <!--<div class="controls col-lg-12">-->
+                                                <div class="input-group">
+                                                    <input class="form-control cDate" id="workStartDate" style="z-index: 9999;" 
+                                                           data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
+                                                           data-validation-error-msg-container="#workStartDate-msg-error" />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                                <!--</div>-->
+                                            </div>
+                                            <div class="col-lg-offset-4" id="workStartDate-msg-error">
 
+                                            </div>
+                                        </div>
+                                        
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}positionsTypeNameTh{{/i18n}}</label>
                                             <div class="col-lg-9">
@@ -284,24 +303,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="reservation" class="col-lg-3">{{#i18n}}registerDateAdded{{/i18n}}</label>
-                                            <div class="col-lg-9">
-                                                <!--<div class="controls col-lg-12">-->
-                                                <div class="input-group">
-                                                    <input class="form-control cDate" id="workStartDate" style="z-index: 9999;" 
-                                                           data-validation="required" data-validation-error-msg="*กรุณาเลือกวัน/เดือน/ปีที่บรรจุ" 
-                                                           data-validation-error-msg-container="#workStartDate-msg-error" />
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                </div>
-                                                <!--</div>-->
-                                            </div>
-                                            <div class="col-lg-offset-4" id="workStartDate-msg-error">
-
-                                            </div>
-                                        </div>
+                                        
                                         <div class="form-group">
                                             <label class="col-lg-3 control-label">{{#i18n}}registerSalaryNow{{/i18n}}</label>
                                             <div class="col-lg-9">
