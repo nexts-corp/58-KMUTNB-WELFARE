@@ -108,20 +108,22 @@
 
 <script>
     $(document).ready(function () {
-    
-        sendData('{{_context_path}}/api/welfare/view/user/check/welfare', null,
+        var memberId = "{{memberId}}";
+        var data = {"memberId":memberId};
+        sendData('{{_context_path}}/api/welfare/view/admin/check/welfare', data,
                 function (result) {
 
                     var html1 = "";
 
                     $.each(result.right, function (key, value) {
+                        if(value.statusApprove !="" ){
                         html1 += '<tr class="selectable">';
                         html1 += '<td>' + (key + 1) + '</td>';
                         html1 += '<td>' + value.name + ',' + value.description + '</td>';
                         html1 += '<td>' + value.dcpDetails + '</td>';
                         html1 += '<td>' + value.quantity + '  ' + value.returntType + '</td>';
                         html1 += '<td class = "center" >';
-
+                        
                         if (value.statusApprove == "Y") {
                             html1 += '<button class="btn_history btn btn-success btn-xs edit"';
                             html1 += 'data-toggle="modal"';
@@ -133,22 +135,13 @@
                             html1 += '</button>';
 
                         } else if (value.statusApprove == "N" ) {
-                            html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
+                            html1 += '<button class=" btn btn-warning btn-xs edit"';
                             html1 += 'row-index="' + value.detailsId + '"';
                             html1 += 'row-historyId="' + value.historyId + '"';
                             html1 += 'row-details="' + value.dcpDetails + '"';
                             html1 += 'row-welfareId="' + value.welfareId + '">';
-                            html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
+                            html1 += '<i class="fa fa fa-eye"> </i>ไม่อนุมัติสวัสดิการ';
                             html1 += '</button>';
-                        } else if(value.statusApprove == ""){
-                             html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
-                            html1 += 'row-index="' + value.detailsId + '"';
-                            html1 += 'row-historyId="' + value.historyId + '"';
-                            html1 += 'row-details="' + value.dcpDetails + '"';
-                            html1 += 'row-welfareId="' + value.welfareId + '">';
-                            html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
-                            html1 += '</button>';
-                            
                         }else if(value.statusApprove =="P"){
                             
                             html1 += '<button class="btn btn-info btn-xs edit"';
@@ -157,9 +150,13 @@
                             html1 += '<i class = "fa fa fa-eye"> </i>รอดำเนินการ';
                             html1 += '</button>';
                         }
-
+                        
                         html1 += '</td>';
                         html1 += '</tr>';
+                    }else{
+                        html1 += '<b> ไม่พบข้อมูล </b>';
+                    }
+                    
                     });
 
                     $("#listWelfare").html(html1);

@@ -48,15 +48,15 @@ class HistoryService extends CServiceBase implements IHistoryService {
 
     public function getHistory($data) {
         
-       $memberId = $this->getCurrentUser()->code;
+    
 
         
        $sqlHistory = "SELECT * From welfarehistory htr "
                 . "where htr.detailsId=:detailsId and welfareId=:welfareId and memberId=:memberId  Order By htr.historyId desc ";
        
-        $param=array("detailsId"=>$data->detailsId,"welfareId"=>$data->welfareId,"memberId"=>$memberId);
+        $param=array("detailsId"=>$data->detailsId,"welfareId"=>$data->welfareId,"memberId"=>$data->memberId);
         $objHistory = $this->datacontext->pdoQuery($sqlHistory,$param);
-        
+       
 //        foreach($objHistory as $key => $value){
 //           // $objHistory["dateUpdated"] =$value["dateUpdated"];
 //            //$checkYear = explode("-",  $objHistory["dateUpdated"]);

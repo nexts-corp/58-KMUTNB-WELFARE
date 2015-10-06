@@ -42,4 +42,28 @@ interface IViewAdminService {
      * @description จัดการรายการสวัสดิการ
      */
     public function welfareEdit();
+    
+    /**
+     * @name memberLists
+     * @uri /member/lists
+     * @return html view
+     * @description จัดการรายการสวัสดิการรายบุคคล
+     */
+    public function memberLists();
+    
+     /**
+     * @name wfList
+     * @uri /right/lists
+     * @return html right
+     * @description รายการสิทธิ์สวัสดิการ
+     */
+    public function rightList();
+    
+      /**
+     * @name checkWelfare
+     * @uri /check/welfare
+     * @return string right
+     * @description ตรวจสอบสิทธิ์สวัสดิการ
+     */
+    public function checkWelfare();
 }
