@@ -172,6 +172,21 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
                 . "where whis.dateCreated between :dateStart and :dateEnd ";
 
+        $sql2 = "select wel.dateStart,wel.dateEnd "
+                . "from welfarehistory whis "
+                . "join welfaredetails wd "
+                . "on wd.detailsId = whis.detailsId "
+                . "join welfare wel "
+                . "on wel.welfareId = whis.welfareId and wel.code = 'medical001' "
+                . "join welfareconditions wc "
+                . "on wc.detailsId = wd.detailsId "
+//                . "join v_fullmember mb "
+//                . "on mb.memberId = whis.memberId and mb.employeeTypeId = wc.valuex and wc.fieldMap = 'employeeTypeId' "
+                . "where whis.dateCreated between :dateStart and :dateEnd "
+                . "group by wel.welfareId ";
+
+
+
         if ($data->searchName != "") {
             $searchName = $data->searchName;
             $sql .= "and mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by whis.memberId ";
@@ -191,8 +206,13 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 "dateEnd" => $dateEnd
             );
         }
-
+        
+        $param2 = array(
+            "dateStart" => $dateStart,
+            "dateEnd" => $dateEnd
+        );
         $budget = $this->datacontext->pdoQuery($sql, $param);
+        $budget2 = $this->datacontext->pdoQuery($sql2, $param2);
         foreach ($budget as $key => $value) {
 
             if ($budget[$key]['payment'] != "") {
@@ -202,7 +222,27 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 $budget[$key]['balance'] = number_format($budget[$key]['balance']);
             }
         }
-        return $budget;
+        foreach ($budget2 as $key2 => $value2) {
+            if ($budget2[$key2]['dateStart'] != "") {
+
+                $dateTime = explode(" ", $value2['dateStart']);
+                $date = $dateTime[0];
+                $date = explode("-", $date);
+                $date = intval($date[0] + 543);
+                $budget2[$key2]['dateStart'] = $date;
+            }
+            if ($budget2[$key2]['dateEnd'] != "") {
+
+                $dateTime = explode(" ", $value2['dateEnd']);
+                $date = $dateTime[0];
+                $date = explode("-", $date);
+                $date = intval($date[0] + 543);
+                $budget2[$key2]['dateEnd'] = $date;
+            }
+        }
+        $date = $budget2;
+        $lists = $budget;
+        return array("lists" => $lists, "date" => $date);
     }
 
     public function update($data) {

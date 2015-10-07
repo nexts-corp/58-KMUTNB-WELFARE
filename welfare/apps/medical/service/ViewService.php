@@ -83,11 +83,14 @@ class ViewService extends CServiceBase implements IViewService {
         if ($searchName != "") {
 
             $search = new MedicalFeeService();
-            $view->lists = $search->search($datafilter);
+            $view->date = $search->search($datafilter)["date"];
+            $view->lists = $search->search($datafilter)["lists"];
+            
         } else if ($filterCode != "") {
 
             $filter = new MedicalFeeService();
-            $view->lists = $filter->search($datafilter);
+            $view->date = $filter->search($datafilter)["date"];
+            $view->lists = $filter->search($datafilter)["lists"];
         } else {
             $budget = $this->datacontext->pdoQuery($sql1, $param);
             $budget2 = $this->datacontext->pdoQuery($sql2, $param);
@@ -99,7 +102,7 @@ class ViewService extends CServiceBase implements IViewService {
                 if ($budget[$key]['balance'] != "") {
                     $budget[$key]['balance'] = number_format($budget[$key]['balance']);
                 }
-            }
+            } 
             foreach ($budget2 as $key2 => $value2) {
                 if ($budget2[$key2]['dateStart'] != "") {
 
