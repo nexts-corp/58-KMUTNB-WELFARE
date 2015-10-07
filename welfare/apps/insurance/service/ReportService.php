@@ -71,7 +71,7 @@ class ReportService extends CServiceBase implements IReportService {
                 }
             }
         }
-        
+
         $f = fopen('php://memory', 'w');
         fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานสรุปข้อมูลประกันสังคม" . ",,\r\n"));
         fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
@@ -95,6 +95,62 @@ class ReportService extends CServiceBase implements IReportService {
         fseek($f, 0);
         header('Content-Type: application/csv; charset=windows-874');
         header('Content-Disposition: attachment; filename="report_insurance.csv";');
+        fpassthru($f);
+        exit();
+    }
+
+    public function reportlife() {
+        
+        $year = date("Y");
+        $param = array(
+            "protectYear" => $year
+        );
+        $and = "";
+        if ($this->getRequest()->payment != "") {
+            $and = " and inf.payment = :payment ";
+            $param['payment'] = $this->getRequest()->payment;
+        }
+
+        $sql = "select fm.*,ifnull(fm.academic1,fm.titleName1) as titleName, "
+                . "inf.lifeId, inf.payment,inf.received,inf.protectYear "
+                . "from v_fullmember fm "
+                . "join insurancelife inf "
+                . "on inf.memberId = fm.memberId "
+                . "where inf.protectYear = :protectYear " . $and;
+
+        $datas = $this->datacontext->pdoQuery($sql, $param);
+        $i = 1;
+        if (count($datas) > 0) {
+            foreach ($datas as $key => $value) {
+                $datas[$key]['rowNo'] = $i++;
+                if ($value['payment'] == "yes") {
+                    $datas[$key]['payment'] = "ชำระเงินแล้ว";
+                } else {
+                    $datas[$key]['payment'] = "ยังไม่ชำระเงิน";
+                }
+            }
+        }
+//        print_r($datas);
+//        exit();
+        $f = fopen('php://memory', 'w');
+        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานสรุปข้อมูลประกันสุขภาพกลุ่มและอุบัติเหตุ" . ",,\r\n"));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อผู้-นามสกุล" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "หน่วยงานที่สังกัด" . "\","));
+        fputs($f, iconv("UTF-8", "windows-874", "\"" . "การชำระเงิน" . "\"\r\n"));
+        foreach ($datas as $key2 => $value2) {
+            fputs($f, iconv("UTF-8", "windows-874", "\"'" . $datas[$key2]['idCard'] . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $datas[$key2]['titleName'] . " " . $datas[$key2]['fname'] . " " . $datas[$key2]['lname'] . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $datas[$key2]['department1'] . "" . $datas[$key2]['faculty1'] . "\","));
+            fputs($f, iconv("UTF-8", "windows-874", "\"" . $datas[$key2]['payment'] . "\"\r\n"));
+
+            // $newFields = array(
+            //   array($objMember[$key]->idCard, utf8_encode($objMember[$key]->fname), $objMember[$key]->lname));
+            // fputcsv($f, $objMember);
+        }
+        fseek($f, 0);
+        header('Content-Type: application/csv; charset=windows-874');
+        header('Content-Disposition: attachment; filename="report_insurance_life.csv";');
         fpassthru($f);
         exit();
     }

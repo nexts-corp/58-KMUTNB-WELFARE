@@ -17,4 +17,12 @@ interface IReportService {
      * @description รายการออก report
      */
     public function reportList();
+    
+    /**
+     * @name reportlife
+     * @uri /life
+     * @return html view
+     * @description รายการออก report
+     */
+    public function reportlife();
 }

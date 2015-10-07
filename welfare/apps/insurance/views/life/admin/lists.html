@@ -39,7 +39,19 @@
                         </ul>
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                        <div class="rows">
+                        <div class="rows" id="tableYes" >
+
+                            <div class="col-sm-offset-4 pull-right">
+                                <label>
+                                    <button type="button" class="btn btn-success"
+                                            id="reportCsv"
+                                            data-whatever=""
+                                            value="all">
+                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                                    </button>
+                                </label>
+                            </div>
+
                             <table id="tableYes" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
@@ -75,9 +87,15 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-offset-8 pull-right">
+                            <div class="col-sm-offset-4 pull-right">
                                 <button id="btn_saveNo" class="btn btn-primary">
                                     {{#i18n}}button.save{{/i18n}}
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        id="reportCsvNo"
+                                        data-whatever=""
+                                        value="no">
+                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
                                 </button>
                             </div>
                             <table  class="table table-bordered table-striped table-condensed mb-none" >
@@ -133,14 +151,15 @@
                             "</tr>";
                 });
                 $("#tbodyNo").html(body);
+                $("#reportCsv").val("no");
             });
         }
         function refreshYes() {
             sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
                 var body = "";
                 yes = result;
-                
-                
+
+
                 $.each(yes.lists, function (k, v) {
                     body += "<tr>" +
                             "<td>" + v.rowNo + "</td>" +
@@ -159,8 +178,9 @@
                             "</tr>";
                 });
                 $("#tbodyYes").html(body);
+                $("#reportCsv").val("yes");
             });
-           
+
         }
         $("#btnNo").click(function () {
             $("#tableYes").hide();
@@ -226,5 +246,26 @@
             }
 
         });
+        $("#reportCsv").click(function () {
+
+            if ($("#reportCsv").val() == "all") {
+                window.open('{{_context_path}}/api/insurance/reports/life');
+            }
+            else if ($("#reportCsv").val() == "yes") {
+                var payment = $("#reportCsv").val();
+                window.open('{{_context_path}}/api/insurance/reports/life?payment=yes');
+            }
+            
+            
+
+        });
+        $("#reportCsvNo").click(function () {
+            
+            window.open('{{_context_path}}/api/insurance/reports/life?payment=no');
+
+            //window.open('{{_context_path}}/api/insurance/reports/lists');
+
+        });
+
     });
 </script>

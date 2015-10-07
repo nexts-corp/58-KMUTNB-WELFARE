@@ -191,7 +191,18 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 "dateEnd" => $dateEnd
             );
         }
-        return $this->datacontext->pdoQuery($sql, $param);
+
+        $budget = $this->datacontext->pdoQuery($sql, $param);
+        foreach ($budget as $key => $value) {
+
+            if ($budget[$key]['payment'] != "") {
+                $budget[$key]['payment'] = number_format($budget[$key]['payment']);
+            }
+            if ($budget[$key]['balance'] != "") {
+                $budget[$key]['balance'] = number_format($budget[$key]['balance']);
+            }
+        }
+        return $budget;
     }
 
     public function update($data) {
