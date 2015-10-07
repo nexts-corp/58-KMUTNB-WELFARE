@@ -26,6 +26,7 @@ class ViewService extends CServiceBase implements IViewService {
 
         return $view;
     }
+    
 
     public function ssoAdminLists() {
         $view = new CJView("sso/admin/lists", CJViewType::HTML_VIEW_ENGINE);
