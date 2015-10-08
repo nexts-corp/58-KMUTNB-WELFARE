@@ -26,11 +26,18 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function policyAdminLists() {
         $view = new CJView("policy/admin/lists", CJViewType::HTML_VIEW_ENGINE);
+        $searchname = $this->getRequest()->searchName;
+        print_r($searchname);
+        $and ="";
+        if ($searchname != ""){
+            $and = "where pol.name LIKE '%" . $searchname . "%'";
+        }
         $sql = "select pol.policyId,pol.name,pol.description,ft.value1 as fundType "
                 . "from apps\\fund\\entity\\Policy pol "
                 . "join apps\\taxonomy\\entity\\Taxonomy ft "
-                . "with ft.id = pol.fundTypeId ";
+                . "with ft.id = pol.fundTypeId  ".$and;
         $data = $this->datacontext->getObject($sql);
+        
         $i = 1;
         foreach ($data as $key => $value) {
             $data[$key]['rowNo'] = $i++;

@@ -23,8 +23,8 @@
                     </div>
                     <div class="widget-body">
                         <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-
+                            <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >
+                            <p id="demo" style="color:#d14"></p>
                         </label>
 
                         <div class="col-lg-3">
@@ -86,17 +86,15 @@
 </div>
 
 <script>
-//    $("#btnsearch").click(function () {
-//        var SearchName = $("#SearchName").val();
-//        if(SearchName==""){
-//            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-//        }else{
-//        
-//        var data = {"SearchName":SearchName};
-////       
-//        
-//        getBodyDiv('{{_context_path}}/api/ManagementFund/policy/view/search',data);
-//        }
-//    });
+    $("#btnsearch").click(function () {
+        var searchName = $("#searchName").val();
+
+        if (searchName == "") {
+            $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+        } else {
+            var data = {"searchName": searchName};
+        }
+        getHTML('content-body', '{{_context_path}}/api/fund/view/policy/admin/lists', data);
+    });
 
 </script>
