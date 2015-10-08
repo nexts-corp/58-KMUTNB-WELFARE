@@ -28,25 +28,25 @@ class UserViewService extends CServiceBase implements IUserViewService {
 
         $path = "apps\\news\\entity\\";
         $pathMember = "apps\\member\\entity\\";
-        
-        $memberId=$this->getCurrentUser()->code;
-        
-        $sqlMember="SELECT mb.memberId, mb.employeeTypeId "
-                . " From ".$pathMember."Work mb where mb.memberId =:memberId ";
-        $paramMember=array("memberId"=>$memberId);
-       
-        $objMember=$this->datacontext->getObject($sqlMember,$paramMember)[0];
-        $employeeType= $objMember["employeeTypeId"];
-       
-        
+
+        $memberId = $this->getCurrentUser()->code;
+
+        $sqlMember = "SELECT mb.memberId, mb.employeeTypeId "
+                . " From " . $pathMember . "Work mb where mb.memberId =:memberId ";
+        $paramMember = array("memberId" => $memberId);
+
+        $objMember = $this->datacontext->getObject($sqlMember, $paramMember)[0];
+        $employeeType = $objMember["employeeTypeId"];
+
+
         $sqlNews = "SELECT nw.newsName,nw.newsId ,nw.employeeTypeId,nw.dateCreated,nw.newsDetails "
-                . " From " . $path . "News nw Where nw.employeeTypeId LIKE '%".$employeeType."%' Order By nw.newsId DESC ";
+                . " From " . $path . "News nw Where nw.employeeTypeId LIKE '%" . $employeeType . "%' Order By nw.newsId DESC ";
         $objNews = $this->datacontext->getObject($sqlNews);
-       
-      
+
+
         foreach ($objNews as $key => $value) {
-          $objNews[$key]["dateCreated"] = $value["dateCreated"]->format('d-m-Y');
-          $objNews[$key]["newsDetails"] = strip_tags($value["newsDetails"]);
+            $objNews[$key]["dateCreated"] = $value["dateCreated"]->format('d-m-Y');
+            $objNews[$key]["newsDetails"] = strip_tags($value["newsDetails"]);
         }
         $i = 1;
         if ($objNews != "") {
@@ -57,60 +57,57 @@ class UserViewService extends CServiceBase implements IUserViewService {
 
             $view->datasNews = $objNews;
         }
-       
+
         return $view;
     }
 
-   
-
     public function newsRead() {
-       
-        $newsId=$this->getRequest()->newsId;
-        $memberId=$this->getCurrentUser()->code;
-        
-       
-      
-       
-        
-       $view = new CJView("user/news/readNews", CJViewType::HTML_VIEW_ENGINE);
+
+        $newsId = $this->getRequest()->newsId;
+        $memberId = $this->getCurrentUser()->code;
+
+
+
+
+
+        $view = new CJView("user/news/readNews", CJViewType::HTML_VIEW_ENGINE);
         $path = "apps\\news\\entity\\";
 
         $sqlNews = "SELECT nw.newsName,nw.newsId ,nw.employeeTypeId,nw.newsDetails "
                 . " From " . $path . "News nw Where nw.newsId=:newsId";
-        $param=array("newsId"=>$newsId);
-        $objNews = $this->datacontext->getObject($sqlNews,$param);
-        $view->datasNews=$objNews;
-        
+        $param = array("newsId" => $newsId);
+        $objNews = $this->datacontext->getObject($sqlNews, $param);
+        $view->datasNews = $objNews;
+
         $sqlMultifile = "SELECT mf.multiFileName,mf.newsId "
                 . " From " . $path . "MultiFile mf Where mf.newsId=:newsId";
-        $objMultifile = $this->datacontext->getObject($sqlMultifile,$param);
-        
-        $i=1;
+        $objMultifile = $this->datacontext->getObject($sqlMultifile, $param);
+
+        $i = 1;
         foreach ($objMultifile as $key => $value) {
-            $objMultifile[$key]["rowsNo"]=$i++;
-            
+            $objMultifile[$key]["rowsNo"] = $i++;
         }
-       
-        
-        $view->datasMultiFile=$objMultifile;
-        $view->newsId=$newsId;
-        $view->memberId=$memberId;
-        
+
+
+        $view->datasMultiFile = $objMultifile;
+        $view->newsId = $newsId;
+        $view->memberId = $memberId;
+
         $sqlNft = "SELECT nft.nftId,nft.memberId, nft.nftAppId ,nft.nftStatus "
-                    . " From apps\\common\\entity\\Nottifications nft "
-               . " where nft.memberId=:memberId And nft.nftAppId=:nftAppId And nft.nftStatus='false' ";
-      
-        $paramArray=array("memberId"=>$memberId,"nftAppId"=>$newsId);
-        
-        $objNft = $this->datacontext->getObject($sqlNft,$paramArray);
-        
-        if(!$objNft){
-        $view->nftId=$objNft[0]['nftId'];
+                . " From apps\\common\\entity\\Nottifications nft "
+                . " where nft.memberId=:memberId And nft.nftAppId=:nftAppId And nft.nftStatus='false' ";
+
+        $paramArray = array("memberId" => $memberId, "nftAppId" => $newsId);
+
+        $objNft = $this->datacontext->getObject($sqlNft, $paramArray);
+
+        for($i=0;$i<count($objNft);$i++){
+            if($i > 0){
+            $view->nftId=$objNft[0]['nftId'];
+            }
         }
-        
         
         return $view;
-
     }
 
 }

@@ -62,7 +62,8 @@
 </div>
 <script>
     $(document).ready(function (){
-        
+        var nftid = "{{nftId}}";
+        if(nftid !=""){
           var data = {};
             data['nftId'] = "{{nftId}}";
             data['nftAppId'] = "{{newsId}}";
@@ -78,6 +79,7 @@
                     
                 }
            });
+       }
     });
     
 </script>
