@@ -122,6 +122,7 @@ class LifeService extends CServiceBase implements ILifeService {
 
         }
 
+        
 
         $datas = $this->datacontext->pdoQuery($sql, $param);
         $i = 1;
