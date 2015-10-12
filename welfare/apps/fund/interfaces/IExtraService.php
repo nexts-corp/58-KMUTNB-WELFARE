@@ -26,4 +26,13 @@ interface IExtraService {
      */
     public function save();
     
+    /**
+     * @name searchext
+     * @uri /search/extra
+     * @param string searchName
+     * @return string searchName
+     * @description การค้นหาข้อมูลกองทุนเพื่อการเลี้ยงชีพ 
+     */
+    public function searchext($searchName);
+    
 }

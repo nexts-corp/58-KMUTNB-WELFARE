@@ -15,34 +15,57 @@
                 <div class="widget">
                     <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.retire{{/i18n}}</span> </div>
                     <div class="widget-body">
-                        <!--                        <div class="col-md-6">
-                                                    <select id="selectParent" class="col-md-12">
-                                                        <option value="0">เลือกทั้งหมด</option>
-                                                        {{#parent}}
-                                                        <option value="{{id}}">[{{pCode}}] {{value1}},{{value2}} [{{code}}]</option>
-                                                        {{/parent}}
-                                                    </select>
-                                                </div>-->
-                        <!--                        <div class="col-sm-2 pull-right">
-                                                    <button class="btn btn-primary" 
-                                                            data-id="content-body"
-                                                            data-api="{{_context_path}}/api/insurance/view/sso/admin/add"
-                                                            onclick="btnHTML(this)">
-                                                        <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
-                                                </div>-->
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-primary" 
-                                    data-toggle="modal" 
-                                    data-target="#uploadModal" 
-                                    data-whatever="@fat">
-                                <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
-                            </button>
 
-                            <button type="button" class="btn btn-yellow">
-                                <a href= "{{_context_path}}/apps/fund/excel/employeeEtc.xlsx">
-                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
-                                </a>
-                            </button>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label class="col-lg-2 control-label">
+                                <select id="filterCode" class="form-control">
+                                    <option value="" selected="" disabled="">เลือก</option>
+                                    <option value="faculty">คณะ</option>
+                                    <option value="employeeType" >ประเภทพนักงาน</option>
+                                    <option value="memberActive" >สถานะพนักงาน</option>
+
+
+                                    <!-- … -->
+                                </select>
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                                <p id="demo" style="color:#d14"></p>
+                            </label>
+                            <label class="col-lg-2 control-label">
+                                <select id="filtervalue" class="form-control">
+                                    <option value="" selected="" disabled="">เลือก</option>
+                                </select>
+
+                            </label>
+                            <label class="col-lg-3 control-label">
+                                <select id="filterdepartment" class="form-control">
+                                    <option value="" selected="" disabled="">เลือก</option>
+                                </select>
+                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >
+                                <p id="demo" style="color:#d14"></p>
+                            </label>
+
+
+                            <div class="col-lg-2">
+                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <label>
+                                <button type="button" class="btn btn-primary" 
+                                        data-toggle="modal" 
+                                        data-target="#uploadModal" 
+                                        data-whatever="@fat">
+                                    <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
+                                </button>
+
+                                <button type="button" class="btn btn-yellow">
+                                    <a href= "{{_context_path}}/apps/fund/excel/employeeEtc.xlsx">
+                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
+                                    </a>
+                                </button>
+                            </label>
+
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="rows">
@@ -153,6 +176,115 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#filterdepartment").hide();
+
+
+        $("#filterCode").change(function () {
+            var pCode = $("#filterCode").val();
+            var data;
+            if (pCode == "faculty") {
+
+                data = getCode(pCode);
+                $("#filterdepartment").show();
+                $("#searchName").hide();
+            } else if (pCode != "name") {
+                data = getPCode(pCode);
+                $("#filterdepartment").hide();
+                $("#searchName").show();
+            }
+
+            var html;
+            if ($("#filterCode").val() == "name") {
+
+                $("#searchName").show();
+
+            } else {
+                if (data == "") {
+                    html = '<option value="">โปรดเลือก</option>';
+
+                } else {
+                    $.each(data, function (key, value) {
+                        html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+
+                    });
+                }
+
+
+                $("#filtervalue").html(html);
+            }
+
+
+
+        });
+
+        $("#filtervalue").change(function () {
+
+            var id = $("#filtervalue").val();
+            var pCode = $("#filterCode").val();
+
+            $.ajax({
+                url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
+                data: {parentId: id},
+                success: function (result) {
+                    var data = result["lists"];
+                    var html;
+                    if (data == "") {
+                        html = '<option value="">สังกัด</option>';
+                    } else {
+                        $.each(data, function (key, value) {
+
+                            html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                        });
+                    }
+                    if (pCode == "faculty") {
+
+                        $("#filterdepartment").show();
+                        $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
+                    }
+                    else {
+
+                        $("#filterdepartment").hide();
+                        $("#searchName").show();
+                    }
+
+                }
+            });
+        });
+        $("#btnSearch").click(function () {
+            var searchName = $("#searchName").val();
+            var filterCode = $("#filterCode").val();
+            var filtervalue = $("#filtervalue").val();
+            var filterdepartment = $("#filterdepartment").val();
+            if (searchName) {
+                if (searchName == "") {
+                    $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+                } else {
+                    var data = {"searchName": searchName};
+                }
+            }
+            else if (filterdepartment) {
+                if (filterdepartment != "") {
+
+                    var filterCode = 'department';
+                    var data = {
+                        "filterCode": filterCode,
+                        "filtervalue": filterdepartment
+                    };
+                }
+
+
+
+            }
+            else {
+                var data = {
+                    "filterCode": filterCode,
+                    "filtervalue": filtervalue
+                };
+
+
+            }
+            getHTML('content-body', '{{_context_path}}/api/fund/view/retire/admin/lists', data);
+        });
         var myDropzone = new Dropzone("#frm_upload", {
             url: "{{_context_path}}/api/fund/upload/retire",
             addRemoveLinks: true,

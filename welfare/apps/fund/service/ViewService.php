@@ -28,16 +28,16 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("policy/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $searchname = $this->getRequest()->searchName;
         print_r($searchname);
-        $and ="";
-        if ($searchname != ""){
+        $and = "";
+        if ($searchname != "") {
             $and = "where pol.name LIKE '%" . $searchname . "%'";
         }
         $sql = "select pol.policyId,pol.name,pol.description,ft.value1 as fundType "
                 . "from apps\\fund\\entity\\Policy pol "
                 . "join apps\\taxonomy\\entity\\Taxonomy ft "
-                . "with ft.id = pol.fundTypeId  ".$and;
+                . "with ft.id = pol.fundTypeId  " . $and;
         $data = $this->datacontext->getObject($sql);
-        
+
         $i = 1;
         foreach ($data as $key => $value) {
             $data[$key]['rowNo'] = $i++;
@@ -66,9 +66,20 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function employeeAdminLists() {
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
+
         $view = new CJView("employee/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $emp = new EmployeeService();
-        $view->lists = $emp->lists();
+        if ($searchName != "") {
+            $view->lists = $emp->searchemp($datafilter);
+        } else if ($filterCode != "") {
+            $view->lists = $emp->searchemp($datafilter);
+        } else {
+            $view->lists = $emp->lists(); //กรณีที่ไม่ได้ search
+        }
         return $view;
     }
 
@@ -135,9 +146,21 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function extraAdminLists() {
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
+
         $view = new CJView("extra/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $ex = new ExtraService();
-        $view->lists = $ex->lists();
+        if ($searchName != "") {
+            $view->lists = $ex->searchext($datafilter);
+        } else if ($filterCode != "") {
+            $view->lists = $ex->searchext($datafilter);
+        } else {
+            $view->lists = $ex->lists(); //กรณีที่ไม่ได้ search
+        }
+
         return $view;
     }
 
@@ -199,9 +222,20 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function retireAdminLists() {
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
         $view = new CJView("retire/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $retire = new RetireService();
-        $view->lists = $retire->lists();
+        if ($searchName != "") {
+            $view->lists = $retire->searchret($datafilter);
+        } else if ($filterCode != "") {
+            $view->lists =$retire->searchret($datafilter);
+        } else {
+           $view->lists = $retire->lists(); //กรณีที่ไม่ได้ search
+        }
+        
         return $view;
     }
 

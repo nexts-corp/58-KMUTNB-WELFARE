@@ -34,4 +34,13 @@ interface IEmployeeService {
      * @description เปลี่ยนสถานพยาบาล
      */
     public function changeHospital($employeeHospital);
+    
+    /**
+     * @name searchemp
+     * @uri /search/employee
+     * @param string searchName
+     * @return string searchName
+     * @description การค้นหาข้อมูลกองทุนสำรองเลี้ยงชีพ 
+     */
+    public function searchemp($searchName);
 }
