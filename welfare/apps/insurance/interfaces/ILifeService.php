@@ -43,4 +43,13 @@ interface ILifeService {
      * @description เพิ่มข้อมูลผู้รับผลประโยชน์
      */
     public function updateBeneficiary($Benef);
+    
+    /**
+     * @name searchlife
+     * @uri /search/life
+     * @param string searchName
+     * @return string searchName
+     * @description การค้นหาข้อมูลกองทุนเพื่อการเลี้ยงชีพ 
+     */
+    public function searchlife($searchName);
 }

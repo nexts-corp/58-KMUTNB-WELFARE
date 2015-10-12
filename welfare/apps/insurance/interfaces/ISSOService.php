@@ -35,4 +35,13 @@ interface ISSOService {
      * @description เปลี่ยนสถานพยาบาล
      */
     public function changeHospital($ssoHospital);
+    
+    /**
+     * @name searchsso
+     * @uri /search/sso
+     * @param string searchName
+     * @return string searchName
+     * @description การค้นหาข้อมูลกองทุนเพื่อการเลี้ยงชีพ 
+     */
+    public function searchsso($searchName);
 }

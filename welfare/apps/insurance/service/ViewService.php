@@ -30,9 +30,20 @@ class ViewService extends CServiceBase implements IViewService {
     
 
     public function ssoAdminLists() {
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
         $view = new CJView("sso/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $sso = new SSOService();
-        $view->lists = $sso->lists();
+        if ($searchName != "") {
+            $view->lists = $sso->searchsso($datafilter);
+        } else if ($filterCode != "") {
+            $view->lists = $sso->searchsso($datafilter);
+        } else {
+           $view->lists = $sso->lists(); //กรณีที่ไม่ได้ search
+        }
+        
         return $view;
     }
 
@@ -78,10 +89,20 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function lifeAdminLists() {
-
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
         $view = new CJView("life/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $life = new LifeService();
-        $view->lists = $life->lists();
+        if ($searchName != "") {
+            $view->lists = $life->searchlife($datafilter);
+        } else if ($filterCode != "") {
+            $view->lists = $life->searchlife($datafilter);
+        } else {
+           $view->lists = $life->lists(); //กรณีที่ไม่ได้ search
+        }
+        
         return $view;
     }
 
