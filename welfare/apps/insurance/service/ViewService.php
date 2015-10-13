@@ -18,8 +18,6 @@ class ViewService extends CServiceBase implements IViewService {
         $this->datacontext = new CDataContext("default");
         $this->taxonomy = new TaxonomyService();
     }
-
-    
     public function ssoAdminAdd() {
         $view = new CJView("sso/admin/add", CJViewType::HTML_VIEW_ENGINE);
         $taxTitleName = new Taxonomy();
