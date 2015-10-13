@@ -1,0 +1,486 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="{{_context_path}}">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}menu.life{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header"> <span class="widget-caption">{{#i18n}}title.life{{/i18n}}</span> </div>
+                    <div class="widget-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active">
+                                <a href="#" role="tab" data-toggle="tab"
+                                   data-id="content-body"
+                                   data-api="{{_context_path}}/api/insurance/view/life/admin/lists"
+                                   onclick="btnHTML(this)">
+                                    <i class="fa fa-folder-open-o"></i> {{#i18n}}life.all{{/i18n}}
+                                </a>
+                            </li>
+                            <li>
+                                <a id="btnYes" href="#"  role="tab" data-toggle="tab">
+                                    <i class="fa fa-check"></i> {{#i18n}}life.yes{{/i18n}}
+                                </a>
+                            </li>
+                            <li>
+                                <a id="btnNo" href="#" role="tab" data-toggle="tab">
+                                    <i class="fa fa-close"></i>{{#i18n}}life.no{{/i18n}}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="rows" >
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label class="col-lg-2 control-label">
+                                    <select id="filterCode" class="form-control">
+                                        <option value="" selected="" disabled="">เลือก</option>
+                                        <option value="faculty">คณะ</option>
+                                        <option value="employeeType" >ประเภทพนักงาน</option>
+                                        <option value="memberActive" >สถานะพนักงาน</option>
+
+
+                                        <!-- … -->
+                                    </select>
+                                    <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
+                                    <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                                    <p id="demo" style="color:#d14"></p>
+                                </label>
+                                <label class="col-lg-2 control-label">
+                                    <select id="filtervalue" class="form-control">
+                                        <option value="" selected="" disabled="">เลือก</option>
+                                    </select>
+
+                                </label>
+                                <label class="col-lg-3 control-label">
+                                    <select id="filterdepartment" class="form-control">
+                                        <option value="" selected="" disabled="">เลือก</option>
+                                    </select>
+                                    <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >
+                                    <p id="demo" style="color:#d14"></p>
+                                </label>
+
+
+                                <div class="col-lg-2">
+                                    <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-4 pull-right">
+                                <label>
+                                    <button type="button" class="btn btn-success"
+                                            id="reportCsv"
+                                            data-whatever=""
+                                            value="all">
+                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                                    </button>
+                                </label>
+                            </div>
+
+                            <table id="tableYes" class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}idCard{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sector{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}payment{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyYes">
+                                    {{#lists}}  
+                                    <tr>
+                                        <td>{{rowNo}}</td>
+                                        <td>{{idCard}}</td>
+                                        <td>{{titleName}} {{fname}} {{lname}}</td>
+                                        <td>{{department1}} {{faculty1}}</td>
+                                        <td>{{payment}}</td>
+                                        <td>-</td>
+                                    </tr>
+                                    {{/lists}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="rows" id="tableNo" style="display:none;">
+
+                            <div class="col-sm-2 pull-left">
+                                <div class="checkbox">
+                                    <label class="checkbox">
+                                        <input type="checkbox" class="checkAll">
+                                        <span class="text">{{#i18n}}select.all{{/i18n}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-4 pull-right">
+                                <label>
+                                    <button id="btn_saveNo" class="btn btn-primary">
+                                        {{#i18n}}button.save{{/i18n}}
+                                    </button>
+                                </label>
+
+
+                            </div>
+                            <table  class="table table-bordered table-striped table-condensed mb-none" >
+                                <thead>
+                                    <tr>
+                                        <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}idCard{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}fname{{/i18n}} {{#i18n}}lname{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}sector{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}payment{{/i18n}}</th>
+                                        <th class="center">{{#i18n}}select{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyNo">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Body -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var tabActive = "";
+        $("#filterdepartment").hide();
+
+        $("#filterCode").change(function () {
+            var pCode = $("#filterCode").val();
+            var data;
+            if (pCode == "faculty") {
+
+                data = getCode(pCode);
+                $("#filterdepartment").show();
+                $("#searchName").hide();
+            } else if (pCode != "name") {
+                data = getPCode(pCode);
+                $("#filterdepartment").hide();
+                $("#searchName").show();
+            }
+
+            var html;
+            if ($("#filterCode").val() == "name") {
+
+                $("#searchName").show();
+
+            } else {
+                if (data == "") {
+                    html = '<option value="">โปรดเลือก</option>';
+
+                } else {
+                    $.each(data, function (key, value) {
+                        html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+
+                    });
+                }
+
+
+                $("#filtervalue").html(html);
+            }
+
+
+
+        });
+        $("#filtervalue").change(function () {
+
+            var id = $("#filtervalue").val();
+            var pCode = $("#filterCode").val();
+
+            $.ajax({
+                url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
+                data: {parentId: id},
+                success: function (result) {
+                    var data = result["lists"];
+                    var html;
+                    if (data == "") {
+                        html = '<option value="">สังกัด</option>';
+                    } else {
+                        $.each(data, function (key, value) {
+
+                            html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
+                        });
+                    }
+                    if (pCode == "faculty") {
+
+                        $("#filterdepartment").show();
+                        $("#filterdepartment").html("<option value='' selected='' disabled=''>เลือก</option>" + html);
+                    }
+                    else {
+
+                        $("#filterdepartment").hide();
+                        $("#searchName").show();
+                    }
+
+                }
+            });
+        });
+
+        $("#btnSearch").click(function () {
+            var searchName = $("#searchName").val();
+            var filterCode = $("#filterCode").val();
+            var filtervalue = $("#filtervalue").val();
+            var filterdepartment = $("#filterdepartment").val();
+            
+            if (tabActive == "") {
+                
+                if (searchName) {
+                    if (searchName == "") {
+                        $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+                    } else {
+                        var data = {"searchName": searchName};
+                    }
+                }
+                else if (filterdepartment) {
+                    if (filterdepartment != "") {
+
+                        var filterCode = 'department';
+                        var data = {
+                            "filterCode": filterCode,
+                            "filtervalue": filterdepartment
+                        };
+                    }
+
+                }
+                else {
+                    var data = {
+                        "filterCode": filterCode,
+                        "filtervalue": filtervalue
+                    };
+
+
+                }
+            } else if (tabActive == "y") {
+                if (searchName) {
+                    if (searchName == "") {
+                        $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+                    } else {
+                        var data = {
+                            "searchName": searchName,
+                            "payment": "yes"
+                        };
+                    }
+                }
+                else if (filterdepartment) {
+                    if (filterdepartment != "") {
+
+                        var filterCode = 'department';
+                        var data = {
+                            "filterCode": filterCode,
+                            "filtervalue": filterdepartment,
+                            "payment": "yes"
+                        };
+                    }
+
+                }
+                else {
+                    var data = {
+                        "filterCode": filterCode,
+                        "filtervalue": filtervalue,
+                        "payment": "yes"
+                    };
+
+
+                }
+            }else if (tabActive == "n") {
+                
+                if (searchName) {
+                    if (searchName == "") {
+                        $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+                    } else {
+                        var data = {
+                            "searchName": searchName,
+                            "payment": "no"
+                        };
+                    }
+                }
+                else if (filterdepartment) {
+                    if (filterdepartment != "") {
+
+                        var filterCode = 'department';
+                        var data = {
+                            "filterCode": filterCode,
+                            "filtervalue": filterdepartment,
+                            "payment": "no"
+                        };
+                    }
+
+                }
+                else {
+                    var data = {
+                        "filterCode": filterCode,
+                        "filtervalue": filtervalue,
+                        "payment": "no"
+                    };
+
+
+                }
+            }
+
+            getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', data);
+        });
+
+        var yes, no;
+        $("#btnYes").click(function () {
+            $("#tableYes").show();
+            $("#tableNo").hide();
+            refreshYes();
+        });
+        function refreshNo() {
+            sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"},
+            function (result) {
+                var body = "";
+                no = result;
+                $.each(no.lists, function (k, v) {
+                    body += "<tr row-index='" + v.lifeId + "'>" +
+                            "<td class='text-center'>" + v.rowNo + "</td>" +
+                            "<td>" + v.idCard + "</td>" +
+                            "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                            "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                            "<td class='text-center'>" + v.payment + "</td>" +
+                            "<td class='text-center'><div class='checkbox'>" +
+                            "<label>" +
+                            "<input type='checkbox' class='checkboxNo' value='" + k + "' />" +
+                            "<span class='text'></span>" +
+                            '</label>' +
+                            "</div>" +
+                            "</td>" +
+                            "</tr>";
+                });
+                $("#tbodyNo").html(body);
+                $("#reportCsv").val("no");
+                tabActive = "n";
+            });
+        }
+        function refreshYes() {
+            sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
+                var body = "";
+                yes = result;
+
+
+                $.each(yes.lists, function (k, v) {
+                    body += "<tr>" +
+                            "<td>" + v.rowNo + "</td>" +
+                            "<td>" + v.idCard + "</td>" +
+                            "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                            "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                            "<td>" + v.payment + "</td>" +
+                            "<td>" +
+                            "<button class='btn btn-maroon btn-xs'" +
+                            "data-id='content-body'" +
+                            "data-api='{{_context_path}}/api/insurance/view/beneficiary/list/" + v.memberId + "'" +
+                            "onclick = 'btnHTML(this)'>" +
+                            "<i class = 'fa fa fa-eye'></i>{{#i18n}}beneficiary{{/i18n}}" +
+                            "</button>" +
+                            "</td>" +
+                            "</tr>";
+                });
+                $("#tbodyYes").html(body);
+                $("#reportCsv").val("yes");
+                tabActive = "y";
+            });
+
+        }
+        $("#btnNo").click(function () {
+            $("#tableYes").hide();
+            $("#tableNo").show();
+            refreshNo();
+            $(".checkAll").click(function () {
+                if (this.checked) {
+                    $('.checkboxNo').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.checkboxNo').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+        });
+        $("#btn_saveNo").click(function () {
+            var data = [];
+            $(".checkboxNo").each(function (k, v) {
+                if (v.checked) {
+                    no.lists[this.value]['payment'] = "yes";
+                    data.push(no.lists[this.value]);
+                }
+            });
+            if (data.length > 0) {
+                var cfm = $.confirm({
+                    title: 'ยืนยันการอนุมัติ!',
+                    content: "คุณต้องการที่จะทำต่อ?",
+                    confirmButton: 'ตกลง',
+                    cancelButton: 'ยกเลิก',
+                    confirmButtonClass: 'btn-success',
+                    cancelButtonClass: 'btn-warning',
+                    theme: 'holodark',
+                    columnClass: 'col-md-4 col-md-offset-4',
+                    autoClose: 'cancel|11000',
+                    confirm: function () {
+                        var send = {};
+                        send['life'] = data;
+                        sendData('{{_context_path}}/api/insurance/life/update', jsonEncode(send),
+                                function (update) {
+                                    if (update.update == true) {
+                                        refreshNo();
+                                        setTimeout(function () {
+                                            Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
+                                            // cfm.close();
+                                        }, 1000);
+                                    } else {
+                                        Notify('บันทึกข้อมูลไม่สำเร็จ', 'top-right', '4000', 'danger', 'fa-check', true);
+                                        //cfm.close();
+                                    }
+                                });
+                    }
+                });
+            } else {
+                $.alert({
+                    title: 'คำแนะนำ!',
+                    content: 'ยังไม่ได้เลือกบุคลากร!',
+                    confirmButton: "ตกลง",
+                    theme: 'black',
+                    columnClass: 'col-md-4 col-md-offset-4'
+                });
+            }
+
+        });
+        $("#reportCsv").click(function () {
+
+            if ($("#reportCsv").val() == "all") {
+                window.open('{{_context_path}}/api/insurance/reports/life');
+            }
+            else if ($("#reportCsv").val() == "yes") {
+                var payment = $("#reportCsv").val();
+                window.open('{{_context_path}}/api/insurance/reports/life?payment=yes');
+            }
+            else {
+                window.open('{{_context_path}}/api/insurance/reports/life?payment=no');
+            }
+
+
+
+
+        });
+        $("#reportCsvNo").click(function () {
+
+            window.open('{{_context_path}}/api/insurance/reports/life?payment=no');
+
+            //window.open('{{_context_path}}/api/insurance/reports/lists');
+
+        });
+
+    });
+</script>

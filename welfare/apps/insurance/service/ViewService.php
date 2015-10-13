@@ -18,7 +18,7 @@ class ViewService extends CServiceBase implements IViewService {
         $this->datacontext = new CDataContext("default");
         $this->taxonomy = new TaxonomyService();
     }
-    
+
     public function ssoAdminAdd() {
         $view = new CJView("sso/admin/add", CJViewType::HTML_VIEW_ENGINE);
         $taxTitleName = new Taxonomy();
@@ -26,7 +26,6 @@ class ViewService extends CServiceBase implements IViewService {
 
         return $view;
     }
-    
 
     public function ssoAdminLists() {
         $searchName = $this->getRequest()->searchName;
@@ -40,9 +39,9 @@ class ViewService extends CServiceBase implements IViewService {
         } else if ($filterCode != "") {
             $view->lists = $sso->searchsso($datafilter);
         } else {
-           $view->lists = $sso->lists(); //กรณีที่ไม่ได้ search
+            $view->lists = $sso->lists(); //กรณีที่ไม่ได้ search
         }
-        
+
         return $view;
     }
 
@@ -72,18 +71,21 @@ class ViewService extends CServiceBase implements IViewService {
                 }
             }
         }
-        $view->hospital = $datas[0]->hospital;
-        $hospital = new \apps\insurance\entity\SSOHospital();
-        $hospital->memberId = $memberId;
-        $dataHospital = $this->datacontext->getObject($hospital);
-        if (count($dataHospital) > 0) {
-            $view->requestHospital = $dataHospital[0]->hospital;
-        } else {
-            $view->requestHospital = " - ";
+        if ($datas != "") {
+            $view->hospital = $datas[0]->hospital;
+            $hospital = new \apps\insurance\entity\SSOHospital();
+            $hospital->memberId = $memberId;
+            $dataHospital = $this->datacontext->getObject($hospital);
+            if (count($dataHospital) > 0) {
+                $view->requestHospital = $dataHospital[0]->hospital;
+            } else {
+                $view->requestHospital = " - ";
+            }
+            $mb = new \apps\member\service\MemberService();
+            $view->member = $mb->find("memberId", $memberId)[0];
+            $view->datas = $datas;
         }
-        $mb = new \apps\member\service\MemberService();
-        $view->member = $mb->find("memberId", $memberId)[0];
-        $view->datas = $datas;
+        
         return $view;
     }
 
@@ -99,9 +101,9 @@ class ViewService extends CServiceBase implements IViewService {
         } else if ($filterCode != "") {
             $view->lists = $life->searchlife($datafilter);
         } else {
-           $view->lists = $life->lists(); //กรณีที่ไม่ได้ search
+            $view->lists = $life->lists(); //กรณีที่ไม่ได้ search
         }
-        
+
         return $view;
     }
 
@@ -247,6 +249,65 @@ class ViewService extends CServiceBase implements IViewService {
         $member = $this->datacontext->pdoQuery($sql1, $param);
         $view->member = $member;
         $view->lists = $ins;
+        return $view;
+    }
+
+    public function ssoAdminFacLists() {
+        $searchName = $this->getRequest()->searchName;
+        $filterCode = $this->getRequest()->filterCode;
+        $filtervalue = $this->getRequest()->filtervalue;
+        $datafilter = $this->getRequest();
+        $view = new CJView("sso/adminfacanddepart/lists", CJViewType::HTML_VIEW_ENGINE);
+        $sso = new SSOService();
+        if ($searchName != "") {
+            $view->lists = $sso->searchsso($datafilter);
+        } else if ($filterCode != "") {
+            $view->lists = $sso->searchsso($datafilter);
+        } else {
+            $view->lists = $sso->lists(); //กรณีที่ไม่ได้ search
+        }
+
+        return $view;
+    }
+
+    public function ssoUserFacLists() {
+        if ($this->getRequest()->memberId != "") {
+            $memberId = $this->getRequest()->memberId;
+            $view = new CJView("sso/adminfacanddepart/user", CJViewType::HTML_VIEW_ENGINE);
+        } 
+        $sso = "select sso from apps\\insurance\\entity\\SSO sso "
+                . "where sso.memberId = :memberId "
+                . "order by sso.id desc";
+        $param = array(
+            "memberId" => $memberId
+        );
+        $datas = $this->datacontext->getObject($sso, $param);
+        $i = 1;
+        foreach ($datas as $key => $value) {
+            $datas[$key]->rowNo = $i++;
+            foreach ($value as $key2 => $value2) {
+                if (strpos($key2, "Date") || $key2 == "dateCreated") {
+                    $date = explode("-", $value2->format("Y-m-d"));
+                    $date = $date[2] . "-" . $date[1] . "-" . intval($date[0] + 543);
+                    $datas[$key]->$key2 = $date;
+                }
+            }
+        }
+        if ($datas != "") {
+            $view->hospital = $datas[0]->hospital;
+            $hospital = new \apps\insurance\entity\SSOHospital();
+            $hospital->memberId = $memberId;
+            $dataHospital = $this->datacontext->getObject($hospital);
+            if (count($dataHospital) > 0) {
+                $view->requestHospital = $dataHospital[0]->hospital;
+            } else {
+                $view->requestHospital = " - ";
+            }
+            $mb = new \apps\member\service\MemberService();
+            $view->member = $mb->find("memberId", $memberId)[0];
+            $view->datas = $datas;
+        }
+        
         return $view;
     }
 

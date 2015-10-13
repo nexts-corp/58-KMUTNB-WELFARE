@@ -32,6 +32,22 @@ interface IViewService {
      * @description หน้าแสดงรายการข้อมูลประกันสังคม
      */
     public function ssoUserLists();
+    
+    /**
+     * @name lists
+     * @uri /sso/faculty/lists
+     * @return html view
+     * @description หน้าแสดงรายการข้อมูลประกันสังคมรายคณะ
+     */
+    public function ssoAdminFacLists();
+    
+    /**
+     * @name lists
+     * @uri /sso/faculty/user/lists
+     * @return html view
+     * @description หน้าแสดงรายการข้อมูลประกันสังคม
+     */
+    public function ssoUserFacLists();
 
     /**
      * @name lists
