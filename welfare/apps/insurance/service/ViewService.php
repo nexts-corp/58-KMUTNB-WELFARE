@@ -88,7 +88,6 @@ class ViewService extends CServiceBase implements IViewService {
         
         return $view;
     }
-
     public function lifeAdminLists() {
         $searchName = $this->getRequest()->searchName;
         $filterCode = $this->getRequest()->filterCode;
