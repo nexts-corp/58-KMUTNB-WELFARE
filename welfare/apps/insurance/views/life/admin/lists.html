@@ -164,6 +164,7 @@
 
                 data = getCode(pCode);
                 $("#filterdepartment").show();
+                
                 $("#searchName").hide();
             } else if (pCode != "name") {
                 data = getPCode(pCode);
@@ -233,9 +234,9 @@
             var filterCode = $("#filterCode").val();
             var filtervalue = $("#filtervalue").val();
             var filterdepartment = $("#filterdepartment").val();
-            
+
             if (tabActive == "") {
-                
+
                 if (searchName) {
                     if (searchName == "") {
                         $("#demo").html("กรุณากรอกข้อมูลค้นหา");
@@ -262,6 +263,7 @@
 
 
                 }
+                getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', data);
             } else if (tabActive == "y") {
                 if (searchName) {
                     if (searchName == "") {
@@ -294,8 +296,32 @@
 
 
                 }
-            }else if (tabActive == "n") {
-                
+                sendData('{{_context_path}}/api/insurance/life/lists', data, function (result) {
+                    var body = "";
+                    yes = result;
+                    $.each(yes.lists, function (k, v) {
+                        body += "<tr>" +
+                                "<td>" + v.rowNo + "</td>" +
+                                "<td>" + v.idCard + "</td>" +
+                                "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                                "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                                "<td>" + v.payment + "</td>" +
+                                "<td>" +
+                                "<button class='btn btn-maroon btn-xs'" +
+                                "data-id='content-body'" +
+                                "data-api='{{_context_path}}/api/insurance/view/beneficiary/list/" + v.memberId + "'" +
+                                "onclick = 'btnHTML(this)'>" +
+                                "<i class = 'fa fa fa-eye'></i>{{#i18n}}beneficiary{{/i18n}}" +
+                                "</button>" +
+                                "</td>" +
+                                "</tr>";
+                    });
+                    $("#tbodyYes").html(body);
+                    $("#reportCsv").val("yes");
+                    tabActive = "y";
+                });
+            } else if (tabActive == "n") {
+
                 if (searchName) {
                     if (searchName == "") {
                         $("#demo").html("กรุณากรอกข้อมูลค้นหา");
@@ -327,9 +353,33 @@
 
 
                 }
+                sendData('{{_context_path}}/api/insurance/life/lists', data,
+                        function (result) {
+                            var body = "";
+                            no = result;
+                            $.each(no.lists, function (k, v) {
+                                body += "<tr row-index='" + v.lifeId + "'>" +
+                                        "<td class='text-center'>" + v.rowNo + "</td>" +
+                                        "<td>" + v.idCard + "</td>" +
+                                        "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                                        "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                                        "<td class='text-center'>" + v.payment + "</td>" +
+                                        "<td class='text-center'><div class='checkbox'>" +
+                                        "<label>" +
+                                        "<input type='checkbox' class='checkboxNo' value='" + k + "' />" +
+                                        "<span class='text'></span>" +
+                                        '</label>' +
+                                        "</div>" +
+                                        "</td>" +
+                                        "</tr>";
+                            });
+                            $("#tbodyNo").html(body);
+                            $("#reportCsv").val("no");
+                            tabActive = "n";
+                        });
             }
 
-            getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', data);
+
         });
 
         var yes, no;
@@ -339,33 +389,36 @@
             refreshYes();
         });
         function refreshNo() {
-            sendData('{{_context_path}}/api/insurance/life/lists', {payment: "no"},
-            function (result) {
-                var body = "";
-                no = result;
-                $.each(no.lists, function (k, v) {
-                    body += "<tr row-index='" + v.lifeId + "'>" +
-                            "<td class='text-center'>" + v.rowNo + "</td>" +
-                            "<td>" + v.idCard + "</td>" +
-                            "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
-                            "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
-                            "<td class='text-center'>" + v.payment + "</td>" +
-                            "<td class='text-center'><div class='checkbox'>" +
-                            "<label>" +
-                            "<input type='checkbox' class='checkboxNo' value='" + k + "' />" +
-                            "<span class='text'></span>" +
-                            '</label>' +
-                            "</div>" +
-                            "</td>" +
-                            "</tr>";
-                });
-                $("#tbodyNo").html(body);
-                $("#reportCsv").val("no");
-                tabActive = "n";
-            });
+            var data = {payment: "no"};
+            sendData('{{_context_path}}/api/insurance/life/lists', data,
+                    function (result) {
+                        var body = "";
+                        no = result;
+                        $.each(no.lists, function (k, v) {
+                            body += "<tr row-index='" + v.lifeId + "'>" +
+                                    "<td class='text-center'>" + v.rowNo + "</td>" +
+                                    "<td>" + v.idCard + "</td>" +
+                                    "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                                    "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                                    "<td class='text-center'>" + v.payment + "</td>" +
+                                    "<td class='text-center'><div class='checkbox'>" +
+                                    "<label>" +
+                                    "<input type='checkbox' class='checkboxNo' value='" + k + "' />" +
+                                    "<span class='text'></span>" +
+                                    '</label>' +
+                                    "</div>" +
+                                    "</td>" +
+                                    "</tr>";
+                        });
+                        $("#tbodyNo").html(body);
+                        $("#reportCsv").val("no");
+                        tabActive = "n";
+                    });
         }
         function refreshYes() {
-            sendData('{{_context_path}}/api/insurance/life/lists', {payment: "yes"}, function (result) {
+            var data = {payment: "yes"};
+
+            sendData('{{_context_path}}/api/insurance/life/lists', data, function (result) {
                 var body = "";
                 yes = result;
 
