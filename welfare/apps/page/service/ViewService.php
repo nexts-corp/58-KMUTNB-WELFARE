@@ -10,6 +10,7 @@ use apps\page\interfaces\IVewService;
  *
  * @author สิทธิพร
  */
+
 class ViewService extends CServiceBase implements IVewService{
     //put your code here
     public $datacontext;
