@@ -1,0 +1,280 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.list{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+                        <!--                        <div class="col-lg-5 control-label">
+                                                    <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
+                                                    <p id="demo" style="color:#d14"></p>
+                                                </div>
+                        
+                                                <div class="col-lg-3">
+                                                    <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                                </div>-->
+
+
+
+
+                        <!--                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">-->
+                        <div class="flip-scroll">
+
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>{{#i18n}}number{{/i18n}}</th>
+                                        <th>ชื่อสวัสดิการ</th>
+                                        <th>รายละเอียดเงื่อนไข </th>
+                                        <th>{{#i18n}}quantity{{/i18n}}</th>
+
+                                        <th class="center">{{#i18n}}conditions.setList{{/i18n}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listWelfare">
+
+
+
+                                </tbody>
+
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="widget">
+                    <div class="widget-header bordered-bottom bordered-themesecondary">
+                        <i class="widget-icon fa fa-newspaper-o themesecondary"></i>
+                        <span class="widget-caption themesecondary">รายการ ข่าวสาร ประชาสัมพันธ์</span>
+                    </div><!--Widget Header-->
+                    <div class="widget-body  no-padding " style="background: #fff">
+                        <div class="tickets-container" style="background: #fff">
+
+
+                            <ul class="timeline-v2">
+                                {{#datasNews}}
+                                <li class="equal-height-columns">
+                                    <div class="cbp_tmtime equal-height-column" style="height: 131px;"><span><h6>{{dateCreated}}</h6></span> </div>
+                                    <i class="cbp_tmicon rounded-x hidden-xs"></i>
+                                    <div class="cbp_tmlabel equal-height-column" style="height: 161px;">
+                                        <h4 style="color: #001960">{{newsName}}</h4>
+                                        <p style="color: #001960">
+                                            {{newsDetails}}
+
+                                            <a class="btn btn-success btn-xs edit"
+                                               data-id="content-body"
+                                               data-api="{{_context_path}}/api/news/user/view/news/read"
+                                               data-object="newsId"
+                                               data-param="{{newsId}}"
+                                               onclick="btnHTML(this)">
+                                                <i class="fa fa-eye"></i>อ่านเพิ่มเติม
+                                            </a>
+                                        </p>
+                                    </div>
+                                </li>
+                                {{/datasNews}}
+
+                            </ul>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <!-- /Page Body -->
+</div>
+
+<!--LArge Modal Templates-->
+<div class="modal fade checkHistory" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">รายการใช้สวัสดิการ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption" id="userRows"> </span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                            <table class="table table-hover table-striped table-bordered table-condensed" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">รายละเอียด </th>
+                                        <th class="text-center">จำนวน</th>
+                                        <th class="text-center">วันที่</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="showHistory">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--End Large Modal Templates-->
+
+
+<script>
+    $(document).ready(function () {
+
+        sendData('{{_context_path}}/api/welfare/view/user/check/welfare', null,
+                function (result) {
+
+                    var html1 = "";
+
+                    $.each(result.right, function (key, value) {
+                        html1 += '<tr class="selectable">';
+                        html1 += '<td>' + (key + 1) + '</td>';
+                        html1 += '<td>' + value.name + ',' + value.description + '</td>';
+                        html1 += '<td>' + value.dcpDetails + '</td>';
+                        html1 += '<td>' + value.quantity + '  ' + value.returntType + '</td>';
+                        html1 += '<td class = "center" >';
+
+                        if (value.statusApprove == "Y") {
+                            html1 += '<button class="btn_history btn btn-success btn-xs edit"';
+                            html1 += 'data-toggle="modal"';
+                            html1 += 'data-target=".checkHistory"';
+                            html1 += 'data-whatever="@fat"';
+                            html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '" >';
+                            html1 += '<i class = "fa fa fa-eye"></i>ตรวจสอบ';
+                            html1 += '</button>';
+
+                        } else if (value.statusApprove == "N") {
+                            html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
+                            html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-historyId="' + value.historyId + '"';
+                            html1 += 'row-details="' + value.dcpDetails + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '">';
+                            html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
+                            html1 += '</button>';
+                        } else if (value.statusApprove == "") {
+                            html1 += '<button class="btn_askWelfare btn btn-warning btn-xs edit"';
+                            html1 += 'row-index="' + value.detailsId + '"';
+                            html1 += 'row-historyId="' + value.historyId + '"';
+                            html1 += 'row-details="' + value.dcpDetails + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '">';
+                            html1 += '<i class="fa fa fa-eye"> </i>ขอรับสวัสดิการนี้';
+                            html1 += '</button>';
+
+                        } else if (value.statusApprove == "P") {
+
+                            html1 += '<button class="btn btn-info btn-xs edit"';
+                            html1 += 'row-index = "' + value.detailsId + '"';
+                            html1 += 'row-welfareId = "' + value.welfareId + '">';
+                            html1 += '<i class = "fa fa fa-eye"> </i>รอดำเนินการ';
+                            html1 += '</button>';
+                        }
+
+                        html1 += '</td>';
+                        html1 += '</tr>';
+                    });
+
+                    $("#listWelfare").html(html1);
+                    $('.btn_history').click(function () {
+
+                        var data = {};
+                        data['detailsId'] = $(this).attr('row-index');
+                        data['welfareId'] = $(this).attr('row-welfareId');
+                        data['memberId'] = "{{memberId}}";
+                        var jdata = {};
+                        jdata['data'] = data;
+                        sendData('{{_context_path}}/api/welfare/history/get/history', jsonEncode(jdata),
+                                function (result) {
+                                    var html = "";
+                                    $.each(result.history, function (k, v) {
+
+                                        html += '<tr><td> ' + (k + 1) + ' </td>';
+                                        html += '<td>' + v.remark + '</td>';
+                                        if (v.amount == null) {
+                                            html += '<td> 1 </td>';
+                                        } else {
+                                            html += '<td>' + v.amount + '</td>';
+                                        }
+
+                                        html += '<td>' + v.dateCreated + '</td></tr>';
+
+                                    });
+
+                                    $("#showHistory").html(html);
+
+                                });
+
+
+                    });
+
+                    $('.btn_askWelfare').click(function () {
+                        var data = {};
+
+                        data['detailsId'] = $(this).attr('row-index');
+                        data['welfareId'] = $(this).attr('row-welfareId');
+                        data['historyId'] = $(this).attr('row-historyId');
+                        data['remark'] = "ขอรับสวัสดิการ" + $(this).attr('row-details');
+                        data['statusApprove'] = "P";
+                        data['memberId'] = "{{memberId}}";
+                        var jdata = {};
+                        jdata['data'] = data;
+                        if ($(this).attr('row-historyId') == "") {
+                            getHTML('content-body', '{{_context_path}}/api/welfare/history/save', jsonEncode(jdata))
+                        } else {
+                            getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
+                        }
+                    });
+
+                });
+    });
+    $("#btnsearch").click(function () {
+        var SearchName = $("#SearchName").val();
+        if (SearchName == "") {
+            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+        } else {
+
+            getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName: SearchName});
+        }
+    });
+
+
+
+</script> 
+
+
+
+
