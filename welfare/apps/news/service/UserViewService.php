@@ -46,6 +46,9 @@ class UserViewService extends CServiceBase implements IUserViewService {
 
         foreach ($objNews as $key => $value) {
             $objNews[$key]["dateCreated"] = $value["dateCreated"]->format('d-m-Y');
+            $dc = explode("-", $objNews[$key]["dateCreated"]);
+            $objNews[$key]["dateCreated"] = $dc[0] . "-" . $dc[1] . "-" . (intval($dc[2]) + 543);
+
             $objNews[$key]["newsDetails"] = strip_tags($value["newsDetails"]);
         }
         $i = 1;
@@ -101,12 +104,12 @@ class UserViewService extends CServiceBase implements IUserViewService {
 
         $objNft = $this->datacontext->getObject($sqlNft, $paramArray);
 
-        for($i=0;$i<count($objNft);$i++){
-            if($i > 0){
-            $view->nftId=$objNft[0]['nftId'];
+        for ($i = 0; $i < count($objNft); $i++) {
+            if ($i > 0) {
+                $view->nftId = $objNft[0]['nftId'];
             }
         }
-        
+
         return $view;
     }
 

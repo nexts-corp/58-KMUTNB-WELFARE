@@ -38,9 +38,10 @@ class ViewService extends CServiceBase implements IVewService{
                 . " From " . $path . "News nw Where nw.employeeTypeId LIKE '%" . $employeeType . "%' Order By nw.newsId DESC ";
         $objNews = $this->datacontext->getObject($sqlNews);
 
-
         foreach ($objNews as $key => $value) {
             $objNews[$key]["dateCreated"] = $value["dateCreated"]->format('d-m-Y');
+            $dc = explode("-", $objNews[$key]["dateCreated"]);
+            $objNews[$key]["dateCreated"] = $dc[0] . "-" . $dc[1] . "-" . (intval($dc[2]) + 543);
             $objNews[$key]["newsDetails"] = strip_tags($value["newsDetails"]);
         }
         $i = 1;
