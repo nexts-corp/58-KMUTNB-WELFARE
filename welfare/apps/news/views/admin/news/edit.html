@@ -89,7 +89,17 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var employeeType = '{{#datasNews}}{{employeeTypeId}}{{/datasNews}}';
+        var empId = employeeType.split(",");
+        $.each(empId, function (k, v) {
+            //$('input:radio[name="employeeType"]').filter('[value="' + empId + '"]').attr('checked', true);
+            $('.employeeType[value="' + v + '"]').prop('checked', true);
+            
+        });
+        
+        
         $("#btn_submit").click(function () {
+            
             var employeeTypeId = [];
             $(".employeeType").each(function (k, v) {
                 if (this.checked) {
@@ -102,13 +112,11 @@
             $.each(employeeTypeId, function (k, v) {
                 data1.push(v);
             });
-            
-            data['newsId']="{{newsId}}";
+            data['newsId'] = '{{#datasNews}}{{newsId}}{{/datasNews}}';
             data['newsName'] = $("#newsName").val();
             data['newsDetails'] = $("#newsDetails").val();
             data['multiFileName'] = $("#multiFileName").val();
             data['employeeTypeId'] = data1;
-            
             var jdata = {};
             jdata['news'] = data;
             $.ajax({
@@ -118,7 +126,8 @@
                 success: function (result) {
 
                     if (result.update == true) {
-                        var data={"newsId":{{newsId}}};
+                        var newsId = '{{#datasNews}}{{newsId}}{{/datasNews}}';
+                        var data = {"newsId": newsId};
                         getHTML('content-body', '{{_context_path}}/api/news/view/news/lists', data);
                         Notify('แก้ไขสำเร็จ', 'top-right', '4000', 'info', 'fa-check', true);
                     } else {
@@ -128,7 +137,6 @@
                 }
             });
         });
-
         $('.summernote').summernote({
             height: 400,
             toolbar: [
@@ -157,7 +165,6 @@
         function sendFile(file, editor, welEditable) {
             data = new FormData();
             data.append("file", file);
-
             $.ajax({
                 data: data,
                 type: "POST",

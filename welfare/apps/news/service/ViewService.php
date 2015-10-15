@@ -32,9 +32,9 @@ class ViewService extends CServiceBase implements IViewService {
 //        $sqlNews = "SELECT nw.newsName,nw.newsId ,nw.employeeTypeId,nw.date "
 //                . " From " . $path . "News nw ";
         $objNews = $this->datacontext->getObject(new News());
-        $objNews = $this->common->afterGet($objNews,array("dateUpdated","createBy"));
-       
-     
+        $objNews = $this->common->afterGet($objNews, array("dateUpdated", "createBy"));
+
+
         foreach ($objNews as $key => $value) {
             foreach ($value as $key1 => $value1) {
                 if ($key1 == "employeeTypeId") {
@@ -77,17 +77,22 @@ class ViewService extends CServiceBase implements IViewService {
     public function newsEdit() {
 
         $newsId = $this->getRequest()->newsId;
-
+        
         $view = new CJView("admin/news/edit", CJViewType::HTML_VIEW_ENGINE);
         $daoNews = new News();
         $daoNews->setNewsId($newsId);
-        $objNews = $this->datacontext->getObject($daoNews);
+        $objNews = $this->datacontext->getObject($daoNews)[0];
+//        if ($objNews->employeeTypeId != "") {
+//            $empId = explode(",", $objNews->employeeTypeId);
+//            $objNews->employeeTypeId = $empId;
+//            print_r($objNews->employeeTypeId);
+//        }
 
         $employeeType = new Taxonomy();
         $employeeType->pCode = "employeeType";
         $view->employeeType = $this->datacontext->getObject($employeeType);
-        
-        
+
+
         $view->newsId = $newsId;
         $view->datasNews = $objNews;
         return $view;
