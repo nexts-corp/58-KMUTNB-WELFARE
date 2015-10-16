@@ -19,11 +19,11 @@ interface IQuestionsService {
     /**
      * @name update
      * @uri /update
-     * @param apps\qa\entity\Questions datas []
+     * @param apps\qa\entity\Questions questions []
      * @return boolean update [return ture or false if don't ]  Description
      * @description แก้ไขข่าว  
      */
-    public function update($datas);
+    public function update($questions);
     
     /**
      * @name deletequestions

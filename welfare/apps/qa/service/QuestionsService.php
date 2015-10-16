@@ -27,10 +27,10 @@ class QuestionsService extends CServiceBase implements IQuestionsService{
         
     }
 
-    public function update($datas) {
+    public function update($questions) {
+       
         
-        
-        $checkUpdate=$this->datacontext->updateObject($datas);
+        $checkUpdate=$this->datacontext->updateObject($questions);
          if ($checkUpdate){
             return true;
         } else {
