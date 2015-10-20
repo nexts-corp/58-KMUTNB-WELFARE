@@ -87,4 +87,16 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function governmentUser() {
+        $view = new CJView("menu/governmentUser", CJViewType::HTML_VIEW_ENGINE);
+        $view->code = $this->getCurrentUser()->code;
+        return $view;
+    }
+
+    public function retireUser() {
+        $view = new CJView("menu/governmentUser", CJViewType::HTML_VIEW_ENGINE);
+        $view->code = $this->getCurrentUser()->code;
+        return $view;
+    }
+
 }

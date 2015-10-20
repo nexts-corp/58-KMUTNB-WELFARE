@@ -17,7 +17,7 @@ interface IViewService {
      * @authen true
      */
     public function header();
-    
+
     /**
      * @name menu/admin
      * @uri /menu/admin
@@ -26,6 +26,7 @@ interface IViewService {
      * @authen true
      */
     public function admin();
+
     /**
      * @name menu/member
      * @uri /menu/member
@@ -34,7 +35,7 @@ interface IViewService {
      * @authen true
      */
     public function member();
-    
+
     /**
      * @name menu/department
      * @uri /menu/department
@@ -43,7 +44,7 @@ interface IViewService {
      * @authen true
      */
     public function department();
-    
+
     /**
      * @name menu/faculty
      * @uri /menu/faculty
@@ -51,16 +52,16 @@ interface IViewService {
      * @description เรียก head menu มาแสดง
      */
     public function faculty();
-    
-     /**
+
+    /**
      * @name menu/medical
      * @uri /menu/medical
      * @return html view
      * @description เรียก head menu มาแสดง
      */
     public function medical();
-    
-     /**
+
+    /**
      * @name menu/extraUser
      * @uri /menu/extraUser
      * @return html view
@@ -68,6 +69,22 @@ interface IViewService {
      * @authen true
      */
     public function extraUser();
+
+    /**
+     * @name menu/governmentUser
+     * @uri /menu/governmentUser
+     * @return html view
+     * @description เรียก head menu มาแสดง
+     * @authen true
+     */
+    public function governmentUser();
     
-    
+    /**
+     * @name menu/retireUser
+     * @uri /menu/retireUser
+     * @return html view
+     * @description เรียก head menu มาแสดง
+     * @authen true
+     */
+    public function retireUser();
 }

@@ -49,9 +49,11 @@ class UploadService extends CServiceBase implements IUploadService {
             $tax->code = "employee";
             $employeeType = $this->datacontext->getObject($tax)[0];
             foreach ($arr as $key => $value) {
-
+               
+                
                 $idCard = str_replace(" ", "", $value[0]);
                 $fname = str_replace(" ", "", $value[1]);
+                
                 $lname = str_replace(" ", "", $value[2]);
                 $dateNotice = str_replace(" ", "", $value[3]);
                 $dateNotice = explode("-", $dateNotice);
