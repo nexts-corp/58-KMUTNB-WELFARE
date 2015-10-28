@@ -139,7 +139,7 @@ class ViewService extends CServiceBase implements IViewService {
         $filtervalue = $this->getRequest()->filtervalue;
         $datafilter = $this->getRequest();
 
-
+        
 
         $param = array();
         $sql = "select mem1 "
@@ -169,10 +169,13 @@ class ViewService extends CServiceBase implements IViewService {
         if ($searchName != "") {
 
             $search = new MemberService();
+            $view->searchvalue = $searchName;
             $view->lists = $search->search($datafilter);
         } else if ($filterCode != "") {
 
             $filter = new MemberService();
+            $view->filterCode = $filterCode;
+            $view->filterValue = $filtervalue;
             $view->lists = $filter->search($datafilter);
         } else {
             $view->lists = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
