@@ -83,12 +83,16 @@ class ViewService extends CServiceBase implements IViewService {
         if ($searchName != "") {
 
             $search = new MedicalFeeService();
+            $view->searchvalue = $searchName;
             $view->date = $search->search($datafilter)["date"];
             $view->lists = $search->search($datafilter)["lists"];
             
         } else if ($filterCode != "") {
 
             $filter = new MedicalFeeService();
+            
+            $view->filterCode = $filterCode;
+            $view->filterValue = $filtervalue;
             $view->date = $filter->search($datafilter)["date"];
             $view->lists = $filter->search($datafilter)["lists"];
         } else {

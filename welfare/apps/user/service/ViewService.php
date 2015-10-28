@@ -116,14 +116,17 @@ class ViewService extends CServiceBase implements IViewService {
         $sql = "select * ,IFNULL(mem1.academic1,mem1.titleName1) title "
                 . "FROM v_fullmember mem1 "
                 . "WHERE mem1.memberActive2 = 'Working'  ";
-        
+         
         if ($searchName != "") {
             
             $search = new MemberService();
+            $view->searchvalue = $searchName;
             $view->lists = $search->search($datafilter);
         } else if ($filterCode != "") {
             
             $filter = new MemberService();
+            $view->filterCode = $filterCode;
+            $view->filterValue = $filtervalue;
             $view->lists = $filter->search($datafilter);
         } else {
             $view->lists = $this->datacontext->pdoQuery($sql); //กรณีที่ไม่ได้ search
