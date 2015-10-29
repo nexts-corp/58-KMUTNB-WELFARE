@@ -29,6 +29,7 @@ class ViewService extends CServiceBase implements IViewService {
 
         if ($searchName != "") {
             $filter = new RetireService();
+            $view->searchvalue = $searchName;
             $view->retire = $filter->preview($datafilter)["member"];
             $view->total = $filter->preview($datafilter)["total"];
         } else if ($filterCode != "") {
@@ -42,6 +43,7 @@ class ViewService extends CServiceBase implements IViewService {
 //            print_r($datafilter);
 //            exit();
             $filter = new RetireService();
+            $view->searchretire = $retire+543;
             $view->retire = $filter->preview($datafilter)["member"];
             $view->total = $filter->preview($datafilter)["total"];
 //            print_r($view);

@@ -42,6 +42,9 @@ class ViewService extends CServiceBase implements IViewService {
         foreach ($data as $key => $value) {
             $data[$key]['rowNo'] = $i++;
         }
+        if($searchname !=""){
+            $view->searchvalue = $searchname;
+        }
         $view->lists = $data;
         return $view;
     }
@@ -74,6 +77,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("employee/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $emp = new EmployeeService();
         if ($searchName != "") {
+            $view->searchvalue = $searchName;
             $view->lists = $emp->searchemp($datafilter);
         } else if ($filterCode != "") {
             $view->lists = $emp->searchemp($datafilter);
@@ -154,6 +158,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("extra/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $ex = new ExtraService();
         if ($searchName != "") {
+            $view->searchvalue = $searchName;
             $view->lists = $ex->searchext($datafilter);
         } else if ($filterCode != "") {
             $view->lists = $ex->searchext($datafilter);
@@ -229,6 +234,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("retire/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $retire = new RetireService();
         if ($searchName != "") {
+            $view->searchvalue = $searchName;
             $view->lists = $retire->searchret($datafilter);
         } else if ($filterCode != "") {
             $view->lists =$retire->searchret($datafilter);
