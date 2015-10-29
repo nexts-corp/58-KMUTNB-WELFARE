@@ -305,9 +305,13 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
+        
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
+        $searchName = $this->getRequest()->searchName;  
+        $filtercode = $data->filterCode;
+        $filtervalue = $data->filtervalue;
 //        print_r($facultyId);
 //        print_r($departmentId);
         $sql = "select * "
@@ -325,20 +329,18 @@ class MemberService extends CServiceBase implements IMemberService {
                     . "WHERE tax.code = '$departmentId' and ";
         }
 
-        if ($data->searchName != "") {
-            $searchName = $data->searchName;
+        if ($searchName != "") {
+
             $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name and mem1.memberActive2 = 'Working'";
             $param = array(
                 "name" => "%" . $searchName . "%"
             );
-        } else if ($data->filterCode == "memberActive") {
-            $filtercode = $data->filterCode;
-            $filtervalue = $data->filtervalue;
+        } else if ($filtercode == "memberActive") {
+
             $sql .= "  mem1." . $filtercode . "Id = :filtervalue ";
             $param["filtervalue"] = $filtervalue;
         } else {
-            $filtercode = $data->filterCode;
-            $filtervalue = $data->filtervalue;
+
             $sql .= "  mem1." . $filtercode . "Id = :filtervalue and mem1.memberActive2 = 'Working' ";
             $param["filtervalue"] = $filtervalue;
         }
