@@ -73,30 +73,30 @@
                         </div>
                         <div class="pull-right">
                             <label>
-                               <button class="btn btn-primary" 
-                                    data-id="content-body"
-                                    data-api="{{_context_path}}/api/insurance/view/sso/admin/add"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
+                                <button class="btn btn-primary" 
+                                        data-id="content-body"
+                                        data-api="{{_context_path}}/api/insurance/view/sso/admin/add"
+                                        onclick="btnHTML(this)">
+                                    <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
 
-                            <button type="button" class="btn btn-primary" 
-                                    data-toggle="modal" 
-                                    data-target="#uploadModal" 
-                                    data-whatever="@fat">
-                                <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
-                            </button>
-                            <button type="button" class="btn btn-yellow">
-                                <a href= "{{_context_path}}/apps/insurance/excel/sso.xlsx">
-                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
-                                </a>
-                            </button>
-                            <button type="button" class="btn btn-success"
-                                    id="reportCsv"
-                                    data-whatever="">
-                                <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                            </button> 
+                                <button type="button" class="btn btn-primary" 
+                                        data-toggle="modal" 
+                                        data-target="#uploadModal" 
+                                        data-whatever="@fat">
+                                    <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
+                                </button>
+                                <button type="button" class="btn btn-yellow">
+                                    <a href= "{{_context_path}}/apps/insurance/excel/sso.xlsx">
+                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
+                                    </a>
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        id="reportCsv"
+                                        data-whatever="">
+                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                                </button> 
                             </label>
-                            
+
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="rows">
@@ -116,7 +116,7 @@
                                                                                 <th class="center">{{#i18n}}delete{{/i18n}}</th>-->
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="title">
                                     {{#lists}}  
                                     <tr class="selectable">
                                         <td>{{rowNo}}</td>
@@ -218,7 +218,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#filterdepartment").hide();
-        
+
         $("#filterCode").change(function () {
             var pCode = $("#filterCode").val();
             var data;
@@ -289,7 +289,7 @@
                 }
             });
         });
-        
+
         $("#btnSearch").click(function () {
             var searchName = $("#searchName").val();
             var filterCode = $("#filterCode").val();
@@ -301,6 +301,7 @@
                 } else {
                     var data = {"searchName": searchName};
                 }
+                getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', data);
             }
             else if (filterdepartment) {
                 if (filterdepartment != "") {
@@ -320,12 +321,53 @@
                     "filterCode": filterCode,
                     "filtervalue": filtervalue
                 };
+                var html;
+                var jdata = {};
+                jdata['searchName'] = data;
+                $.ajax({
+                    url: '{{_context_path}}/api/insurance/sso/search/sso',
+                    data: jsonEncode(jdata),
+                    type: 'post',
+                    success: function (result) {
+                        
+                        var data = result["searchName"];
+                        console.log(data);
+                        if (data != "") {
+                            $.each(data, function (key, value) {
+                                html += "<tr class='selectable'>"
+                                        + "<td>" + value.rowNo + "</td>"
+                                        + "<td>" + value.idCard + "</td>"
+                                        + "<td><div id='title'></div>" + value.titleName + " " + value.fname + " " + value.lname + "</td>"
+                                        + "<td>" + value.department + " " + value.faculty + "</td>"
+                                        + "<td>" + value.hospital + "</td>"
+                                        + "<td>" + value.issuedDate + "</td>"
+                                        + "<td>" + value.expireDate + "</td>"
+                                        + "<td>" + value.dateCreated + "</td>"
+                                        + "<td class='center'>"
+                                        + "<button class='btn btn-info btn-xs' data-id='content-body' "
+                                        + "data-api='{{_context_path}}/api/insurance/view/sso/user/lists' "
+                                        + "data-object='memberId'"
+                                        + "data-param='" + value.memberId + "' "
+                                        + "onclick='btnHTML(this)'> "
+                                        + "<i class='fa fa-plus'></i>{{#i18n}}details{{/i18n}}</button> "
+                                        + "</td></tr>";
+
+
+                            });
+
+                        }
+                        else {
+                            html = "<tr class='selectable'><td>ไม่พบข้อมูล</td>";
+                        }
+                        $('#title').html(html);
+                    }
+                });
 
 
             }
-            getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', data);
+
         });
-        
+
         var myDropzone = new Dropzone("#frm_upload", {
             url: "{{_context_path}}/api/insurance/upload/sso",
             addRemoveLinks: true,

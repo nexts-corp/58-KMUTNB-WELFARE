@@ -104,8 +104,10 @@ class SSOService extends CServiceBase implements ISSOService {
         return $return;
     }
     
-    public function searchsso($searchName) {
-        
+    public function searchsso($search) {
+        $searchName = $this->getRequest()->searchName;  
+        $filtercode = $search->filterCode;
+        $filtervalue = $search->filtervalue;
         $sql = "SELECT "
                 . "mb.memberId, "
                 . "mb.idCard, "
@@ -131,16 +133,15 @@ class SSOService extends CServiceBase implements ISSOService {
                 . "join taxonomy fac on fac.id = mb.facultyId "
                 . "where ";
 
-        if ($searchName->searchName != "") {
-            $searchName = $searchName->searchName;
+        if ($searchName != "") {
+            
             $sql .= " mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by tb.memberId "
                 . "order by tb.dateCreated desc";
             $param = array(
                 "name" => "%" . $searchName . "%"
             );
         } else {
-            $filtercode = $searchName->filterCode;
-            $filtervalue = $searchName->filtervalue;
+            
             $sql .= " mb." . $filtercode . "Id = :filtervalue group by tb.memberId "
                 . "order by tb.dateCreated desc";
 

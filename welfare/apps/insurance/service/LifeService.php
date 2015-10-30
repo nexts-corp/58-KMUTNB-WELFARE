@@ -138,8 +138,10 @@ class LifeService extends CServiceBase implements ILifeService {
         }
     }
     
-    public function searchlife($searchName) {
-        
+    public function searchlife($search) {
+        $searchName = $this->getRequest()->searchName;  
+        $filtercode = $search->filterCode;
+        $filtervalue = $search->filtervalue;
         $year = date("Y");
         $param = array(
             "protectYear" => $year
@@ -157,14 +159,11 @@ class LifeService extends CServiceBase implements ILifeService {
                 . "on inf.memberId = fm.memberId "
                 . "where inf.protectYear = :protectYear " . $and;
 
-        if ($searchName->searchName != "") {
-            $searchName = $searchName->searchName;
+        if ($searchName != "") {
             $sql .= "and (fm.fname LIKE "."'%" . $searchName . "%'"." or fm.lname LIKE "."'%" . $searchName . "%'"." or fm.idCard LIKE "
                    ."'%" . $searchName . "%')";
             
         } else {
-            $filtercode = $searchName->filterCode;
-            $filtervalue = $searchName->filtervalue;
             $sql .= "and fm." . $filtercode . "Id = $filtervalue ";
 
         }

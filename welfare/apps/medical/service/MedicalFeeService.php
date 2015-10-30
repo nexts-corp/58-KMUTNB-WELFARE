@@ -137,7 +137,9 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
     }
 
     public function search($data) {
-
+        $searchName = $this->getRequest()->searchName;  
+        $filtercode = $data->filterCode;
+        $filtervalue = $data->filtervalue;
         $welfare = new \apps\welfare\entity\Welfare();
         $welfare->setCode("medical001");
         $query = $this->datacontext->getObject($welfare)[0];
@@ -187,8 +189,8 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
 
 
 
-        if ($data->searchName != "") {
-            $searchName = $data->searchName;
+        if ($searchName != "") {
+            
             $sql .= "and mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by whis.memberId ";
             $param = array(
                 "name" => "%" . $searchName . "%",
@@ -196,8 +198,7 @@ class MedicalFeeService extends CServiceBase implements IMedicalFeeService {
                 "dateEnd" => $dateEnd
             );
         } else {
-            $filtercode = $data->filterCode;
-            $filtervalue = $data->filtervalue;
+            
             $sql .= " and mb." . $filtercode . "Id = :filtervalue group by whis.memberId ";
 
             $param = array(

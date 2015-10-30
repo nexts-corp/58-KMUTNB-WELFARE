@@ -137,27 +137,27 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
-        
+        $searchName = $this->getRequest()->searchName;  
+        $filtercode = $data->filterCode;
+        $filtervalue = $data->filtervalue;
         $sql = "select *,IFNULL(mem1.academic1,mem1.titleName1) title "
                 . "FROM v_fullmember mem1 "
                 . "WHERE ";
 
-        if ($data->searchName != "") {
-            $searchName = $data->searchName;
+        if ($searchName != "") {
+            
             $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
             $param = array(
                 "name" => "%" .$searchName. "%"
             );
             
-        }else if($data->filterCode =="memberActive"){
-          $filtercode = $data->filterCode ; 
-          $filtervalue = $data->filtervalue;
+        }else if($filtercode =="memberActive"){
+          
           $sql .= "  mem1.".$filtercode."Id = :filtervalue ";
             $param["filtervalue"] = $filtervalue;  
         }  
         else{
-          $filtercode = $data->filterCode ; 
-          $filtervalue = $data->filtervalue;
+          
           $sql .= "  mem1.".$filtercode."Id = :filtervalue and mem1.memberActive2 = 'Working' ";
             $param["filtervalue"] = $filtervalue;  
         }

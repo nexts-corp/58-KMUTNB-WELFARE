@@ -101,7 +101,7 @@
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="title">
                                     {{#lists}}
                                     <tr class="selectable">
                                         <td>{{idCard}}</td>
@@ -225,6 +225,7 @@
                 } else {
                     var data = {"searchName": searchName};
                 }
+                getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/lists', data);
             }
             else if (filterdepartment) {
                 if (filterdepartment != "") {
@@ -234,6 +235,39 @@
                         "filterCode": filterCode,
                         "filtervalue": filterdepartment
                     };
+                    var html;
+                    var jdata = {};
+                    jdata['data'] = data;
+                    $.ajax({
+                        url: '{{_context_path}}/api/medical/medicalfee/search',
+                        data: jsonEncode(jdata),
+                        type: 'post',
+                        success: function (result) {
+                            var data = result["search"]["lists"];
+                            if (data != "") {
+                                $.each(data, function (key, value) {
+                                    html += "<tr class='selectable'><td>" + value.idCard + "</td>"
+                                            + "<td><div id='title'></div>" + value.title + " " + value.fname + " " + value.lname + "</td>"
+                                            + "<td>" + value.payment + "</td>"
+                                            + "<td>" + value.balance + "</td>"
+                                            + "<td>" + value.department1 + " " + value.faculty1 + "</td>"
+                                            + "<td class='center'>"
+                                            + "<button class='btn btn-maroon btn-xs' data-id='content-body' "
+                                            + "data-api='{{_context_path}}/api/medical/view/medicalFee/details/" + value.memberId + "' "
+                                            + "onclick='btnHTML(this)'> "
+                                            + "<i class='fa fa fa-eye'></i>{{#i18n}}detail{{/i18n}}</button> "
+                                            + "</td></tr>";
+
+
+                                });
+
+                            }
+                            else {
+                                html = "<tr class='selectable'><td>ไม่พบข้อมูล</td>";
+                            }
+                            $('#title').html(html);
+                        }
+                    });
                 }
 
 
@@ -244,10 +278,43 @@
                     "filterCode": filterCode,
                     "filtervalue": filtervalue
                 };
+                var html;
+                var jdata = {};
+                jdata['data'] = data;
+                $.ajax({
+                    url: '{{_context_path}}/api/medical/medicalfee/search',
+                    data: jsonEncode(jdata),
+                    type: 'post',
+                    success: function (result) {
+                        var data = result["search"]["lists"];
+                        if (data != "") {
+                            $.each(data, function (key, value) {
+                                html += "<tr class='selectable'><td>" + value.idCard + "</td>"
+                                        + "<td><div id='title'></div>" + value.title + " " + value.fname + " " + value.lname + "</td>"
+                                        + "<td>" + value.payment + "</td>"
+                                        + "<td>" + value.balance + "</td>"
+                                        + "<td>" + value.department1 + " " + value.faculty1 + "</td>"
+                                        + "<td class='center'>"
+                                        + "<button class='btn btn-maroon btn-xs' data-id='content-body' "
+                                        + "data-api='{{_context_path}}/api/medical/view/medicalFee/details/" + value.memberId + "' "
+                                        + "onclick='btnHTML(this)'> "
+                                        + "<i class='fa fa fa-eye'></i>{{#i18n}}detail{{/i18n}}</button> "
+                                        + "</td></tr>";
+
+
+                            });
+
+                        }
+                        else {
+                            html = "<tr class='selectable'><td>ไม่พบข้อมูล</td>";
+                        }
+                        $('#title').html(html);
+                    }
+                });
 
 
             }
-            getHTML('content-body', '{{_context_path}}/api/medical/view/medicalFee/lists', data);
+
         });
 
         $("#reportCsv").click(function () {

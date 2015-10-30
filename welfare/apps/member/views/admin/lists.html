@@ -297,6 +297,42 @@
                         "filterCode": filterCode,
                         "filtervalue": filterdepartment
                     };
+                    var html;
+                    var jdata = {};
+                    jdata['data'] = data;
+                    $.ajax({
+                        url: '{{_context_path}}/api/member/member/search',
+                        data: jsonEncode(jdata),
+                        type: 'post',
+                        success: function (result) {
+                            var data = result["search"];
+                            if (data != "") {
+                                $.each(data, function (key, value) {
+                                    html += "<tr class='selectable'><td>" + value.idCard + "</td>"
+                                            + "<td><div id='title'></div>" + value.titles1 + " " + value.fname + " " + value.lname + "</td>"
+                                            + "<td>" + value.department1 + " " + value.faculty1 + "</td>"
+                                            + "<td class='center'>"
+                                            + "<button class='btn btn-info btn-xs edit' data-id='content-body' "
+                                            + "data-api='{{_context_path}}/api/member/view/member/edit/" + value.memberId + "' "
+                                            + "onclick='btnHTML(this)'> "
+                                            + "<i class='fa fa-edit'></i>{{#i18n}}edit{{/i18n}}</button> "
+                                            + "<button class='btn btn-xs btn-success' data-id='content-body' "
+                                            + "data-api='{{_context_path}}/api/member/view/member/history/" + value.memberId + "' "
+                                            + "onclick='btnHTML(this)'> "
+                                            + "<i class='fa fa-edit'></i>ประวัติการแก้ไข</button>"
+                                            + "<button class='btn-del btn btn-xs btn-danger' row-index=" + value.memberId + " >ลาออก</button>"
+                                            + "</td></tr>";
+
+
+                                });
+
+                            }
+                            else {
+                                html = "<tr class='selectable'><td>ไม่พบข้อมูล</td>";
+                            }
+                            $('#title').html(html);
+                        }
+                    });
                 }
 
 

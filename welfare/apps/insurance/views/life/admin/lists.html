@@ -164,7 +164,7 @@
 
                 data = getCode(pCode);
                 $("#filterdepartment").show();
-                
+
                 $("#searchName").hide();
             } else if (pCode != "name") {
                 data = getPCode(pCode);
@@ -243,6 +243,7 @@
                     } else {
                         var data = {"searchName": searchName};
                     }
+                    getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', data);
                 }
                 else if (filterdepartment) {
                     if (filterdepartment != "") {
@@ -252,6 +253,28 @@
                             "filterCode": filterCode,
                             "filtervalue": filterdepartment
                         };
+                        sendData('{{_context_path}}/api/insurance/life/lists', data, function (result) {
+                            var body = "";
+                            yes = result;
+                            $.each(yes.lists, function (k, v) {
+                                body += "<tr>" +
+                                        "<td>" + v.rowNo + "</td>" +
+                                        "<td>" + v.idCard + "</td>" +
+                                        "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                                        "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                                        "<td>" + v.payment + "</td>" +
+                                        "<td>" +
+                                        "<button class='btn btn-maroon btn-xs'" +
+                                        "data-id='content-body'" +
+                                        "data-api='{{_context_path}}/api/insurance/view/beneficiary/list/" + v.memberId + "'" +
+                                        "onclick = 'btnHTML(this)'>" +
+                                        "<i class = 'fa fa fa-eye'></i>{{#i18n}}beneficiary{{/i18n}}" +
+                                        "</button>" +
+                                        "</td>" +
+                                        "</tr>";
+                            });
+                        });
+
                     }
 
                 }
@@ -260,10 +283,30 @@
                         "filterCode": filterCode,
                         "filtervalue": filtervalue
                     };
-
+                    sendData('{{_context_path}}/api/insurance/life/lists', data, function (result) {
+                        var body = "";
+                        yes = result;
+                        $.each(yes.lists, function (k, v) {
+                            body += "<tr>" +
+                                    "<td>" + v.rowNo + "</td>" +
+                                    "<td>" + v.idCard + "</td>" +
+                                    "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                                    "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                                    "<td>" + v.payment + "</td>" +
+                                    "<td>" +
+                                    "<button class='btn btn-maroon btn-xs'" +
+                                    "data-id='content-body'" +
+                                    "data-api='{{_context_path}}/api/insurance/view/beneficiary/list/" + v.memberId + "'" +
+                                    "onclick = 'btnHTML(this)'>" +
+                                    "<i class = 'fa fa fa-eye'></i>{{#i18n}}beneficiary{{/i18n}}" +
+                                    "</button>" +
+                                    "</td>" +
+                                    "</tr>";
+                        });
+                    });
 
                 }
-                getHTML('content-body', '{{_context_path}}/api/insurance/view/life/admin/lists', data);
+
             } else if (tabActive == "y") {
                 if (searchName) {
                     if (searchName == "") {

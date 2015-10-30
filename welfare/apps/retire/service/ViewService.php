@@ -29,23 +29,27 @@ class ViewService extends CServiceBase implements IViewService {
 
         if ($searchName != "") {
             $filter = new RetireService();
-            $view->searchvalue = $searchName;
-            $view->retire = $filter->preview($datafilter)["member"];
-            $view->total = $filter->preview($datafilter)["total"];
+//            $view->searchvalue = $searchName;
+//            $view->retire = $filter->preview($datafilter)["member"];
+//            $view->total = $filter->preview($datafilter)["total"];
+            return $filter->preview($datafilter);
         } else if ($filterCode != "") {
 
             $filter = new RetireService();
-            $view->retire = $filter->preview($datafilter)["member"];
-            $view->total = $filter->preview($datafilter)["total"];
+            return $filter->preview($datafilter);
+//            $view->retire = $filter->preview($datafilter)["member"];
+//            $view->total = $filter->preview($datafilter)["total"];
+//            
 //            print_r($datafilter);
 //            exit();
         } else if ($retire != "") {
 //            print_r($datafilter);
 //            exit();
             $filter = new RetireService();
-            $view->searchretire = $retire+543;
-            $view->retire = $filter->preview($datafilter)["member"];
-            $view->total = $filter->preview($datafilter)["total"];
+            return $filter->preview($datafilter);
+//            $view->searchretire = $retire + 543;
+//            $view->retire = $filter->preview($datafilter)["member"];
+//            $view->total = $filter->preview($datafilter)["total"];
 //            print_r($view);
 //            exit();
         } else {

@@ -84,7 +84,7 @@
 
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="title">
                                     {{#lists}}  
                                     <tr class="selectable">
                                         <td>{{rowNo}}</td>
@@ -281,9 +281,39 @@
                     "filtervalue": filtervalue
                 };
 
-
+                
             }
-            getHTML('content-body', '{{_context_path}}/api/fund/view/retire/admin/lists', data);
+            
+            sendData('{{_context_path}}/api/fund/view/retire/admin/lists', data,
+                        function (result) {
+                            var body = "";
+//                            console.log(result);
+                            $.each(result.view, function (k, v) {
+                                body += "<tr>" +
+                                        "<td>" + v.rowNo + "</td>" +
+                                        "<td>" + v.idCard + "</td>" +
+                                        "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
+                                        "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
+                                        "<td>" + v.saving + "</td>" +
+                                        "<td>" + v.grantInAid + "</td>" +
+                                        "<td>" + v.total + "</td>" +
+                                        "<td>" + v.dateNotice + "</td>" +
+                                        "<td>" +
+                                        "<button class='btn btn-info btn-xs'" +
+                                        "data-id='content-body'" +
+                                        "data-api='{{_context_path}}/api/fund/view/retire/user/lists '" +
+                                        "data-object='memberId'"+
+                                        "data-param='"+v.memberId+"'"+            
+                                        "onclick = 'btnHTML(this)'>" +
+                                        "<i class = 'fa fa-plus'></i>{{#i18n}}details{{/i18n}}" +
+                                        "</button>" +
+                                        "</td>" +
+                                        "</tr>";
+                            });
+                            $("#title").html(body);
+                           
+                            
+                        });
         });
         var myDropzone = new Dropzone("#frm_upload", {
             url: "{{_context_path}}/api/fund/upload/retire",

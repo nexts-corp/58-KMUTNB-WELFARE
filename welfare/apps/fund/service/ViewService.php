@@ -42,7 +42,7 @@ class ViewService extends CServiceBase implements IViewService {
         foreach ($data as $key => $value) {
             $data[$key]['rowNo'] = $i++;
         }
-        if($searchname !=""){
+        if ($searchname != "") {
             $view->searchvalue = $searchname;
         }
         $view->lists = $data;
@@ -77,10 +77,12 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("employee/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $emp = new EmployeeService();
         if ($searchName != "") {
-            $view->searchvalue = $searchName;
-            $view->lists = $emp->searchemp($datafilter);
+//            $view->searchvalue = $searchName;
+//            $view->lists = $emp->searchemp($datafilter);
+            return $emp->searchemp($datafilter);
         } else if ($filterCode != "") {
-            $view->lists = $emp->searchemp($datafilter);
+//            $view->lists = $emp->searchemp($datafilter);
+            return $emp->searchemp($datafilter);
         } else {
             $view->lists = $emp->lists(); //กรณีที่ไม่ได้ search
         }
@@ -158,12 +160,15 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("extra/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $ex = new ExtraService();
         if ($searchName != "") {
-            $view->searchvalue = $searchName;
-            $view->lists = $ex->searchext($datafilter);
+//            $view->searchvalue = $searchName;
+//            $view->lists = $ex->searchext($datafilter);
+            return $ex->searchext($datafilter);
         } else if ($filterCode != "") {
-            $view->lists = $ex->searchext($datafilter);
+//            $view->lists = $ex->searchext($datafilter);
+            return $ex->searchext($datafilter);
         } else {
             $view->lists = $ex->lists(); //กรณีที่ไม่ได้ search
+//            return $ex->searchext($datafilter);
         }
 
         return $view;
@@ -234,14 +239,16 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("retire/admin/lists", CJViewType::HTML_VIEW_ENGINE);
         $retire = new RetireService();
         if ($searchName != "") {
-            $view->searchvalue = $searchName;
-            $view->lists = $retire->searchret($datafilter);
+//            $view->searchvalue = $searchName;
+//            $view->lists = $retire->searchret($datafilter);
+             return $retire->searchret($datafilter);
         } else if ($filterCode != "") {
-            $view->lists =$retire->searchret($datafilter);
+//            $view->lists = $retire->searchret($datafilter);
+            return $retire->searchret($datafilter);
         } else {
-           $view->lists = $retire->lists(); //กรณีที่ไม่ได้ search
+            $view->lists = $retire->lists(); //กรณีที่ไม่ได้ search
         }
-        
+
         return $view;
     }
 
