@@ -70,8 +70,9 @@ class ByMemberService extends CServiceBase implements IByMemberService {
         return $this->datacontext->updateObject($data);
     }
 
-    
-
-   
+    public function getReport($data) {
+        
+        
+    }
 
 }

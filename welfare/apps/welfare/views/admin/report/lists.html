@@ -1,0 +1,87 @@
+<!-- Page Content -->
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">{{#i18n}}listcutwelfare{{/i18n}}</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+
+    <!-- Page Body -->
+    <div class="page-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listcutwelfare{{/i18n}}</span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    <div class="widget-body">
+<!--                        <label class="col-lg-5 control-label">
+                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
+                        </label>
+
+                        <div class="col-lg-3">
+                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                        </div>-->
+
+
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="flip-scroll">
+
+                            <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}welfare.conditions{{/i18n}}</th>
+
+                                        <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datasDetails}}
+                                    <tr>
+                                        <td>{{rowNo}}</td>
+                                        <td>{{description}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-xs reportCsv"
+                                                    row-index="{{detailsId}}"
+                                                    data-whatever="">
+                                                <i class="fa fa-file-excel-o"></i>ออกรายงาน CSV
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    {{/datasDetails}}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Body -->
+</div>
+
+
+<script>
+$(".reportCsv").click(function () {
+      var id=$(this).attr("row-index");
+   
+        window.open('{{_context_path}}/api/welfare/reports/lists?detailsId='+id);
+
+
+});
+
+
+</script>

@@ -60,10 +60,11 @@ interface IViewAdminService {
     public function rightList();
     
       /**
-     * @name checkWelfare
-     * @uri /check/welfare
-     * @return string right
-     * @description ตรวจสอบสิทธิ์สวัสดิการ
+     * @name reportWelfare
+     * @uri /report/welfare
+     * @return html right
+     * @description ตรวจสอบรายงานผู้รับสวัสดิการ
      */
-    public function checkWelfare();
+    public function reportWelfare();
+    
 }

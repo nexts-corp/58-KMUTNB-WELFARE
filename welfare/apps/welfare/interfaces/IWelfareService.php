@@ -53,4 +53,22 @@ interface IWelfareService {
      * @description test
      */
     public function preview($conditions);
+    
+     /**
+     * @name checkWelfare
+     * @uri /check/welfare
+     * @return string right
+     * @description ตรวจสอบสิทธิ์สวัสดิการ
+     */
+    public function checkWelfare();
+    
+    /**
+     * @name getByWelfare
+     * @uri /by/welfare
+     * @param string data
+     * @return string welfare
+     * @description getลิสต์ข้อมูล
+     */
+    public function byWelfare($welfareId);
+    
 }

@@ -64,6 +64,17 @@
                                         <td>{{dateEnd}}</td>
                                         <td>{{resetTime}}</td>
                                         <td class="center">
+                                          
+                                            <button class="btn btn btn-default btn-xs edit btn_history"
+                                                   data-id="content-body"
+                                                    data-api="{{_context_path}}/api/welfare/view/admin/report/welfare"
+                                                    data-object='welfareId'
+                                                    data-param='{{welfareId}}'
+                                                    onclick="btnHTML(this)">
+                                                
+                                                <i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}
+                                            </button>
+                                            
                                             <button class="btn btn-info btn-xs edit"
                                                     data-id="content-body"
                                                     data-api="{{_context_path}}/api/welfare/view/admin/welfare/edit"
@@ -80,7 +91,7 @@
                                             <div class="well bordered-left bordered-themeprimary" id="showDetails"> </div> 
 
 
-
+                                                    
 
                                         </td>
                                     </tr>
@@ -111,6 +122,7 @@
             });</script>-->
 
 <script>
+    
     $('.btn-del').click(function () {
         var Id = $(this).attr('row-index');
         if (confirm("คุณต้องการปิดใช้งาน?")) {
