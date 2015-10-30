@@ -115,6 +115,7 @@
                     var html1 = "";
 
                     $.each(result.right, function (key, value) {
+                        if (value.detailsId !="" && value.statusApprove != "") {
                         html1 += '<tr class="selectable">';
                         html1 += '<td>' + (key + 1) + '</td>';
                         html1 += '<td>' + value.name + ',' + value.description + '</td>';
@@ -160,8 +161,11 @@
 
                         html1 += '</td>';
                         html1 += '</tr>';
+                    }else{
+                        html1 += '<b> ไม่พบข้อมูล </b>';
+                    }
                     });
-
+                    
                     $("#listWelfare").html(html1);
                     $('.btn_history').click(function () {
 

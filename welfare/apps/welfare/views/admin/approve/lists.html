@@ -11,8 +11,8 @@
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
-    
-    
+
+
     <!-- Page Body -->
     <div class="page-body">
         <div class="row">
@@ -22,58 +22,85 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <div class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-                            <p id="demo" style="color:#d14"></p>
+
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label class="col-lg-2 control-label">
+                                <select id="typeStatus" class="form-control">
+                                    <option value="" >ค้นหารายการ</option>
+                                    <option value="Y" >อนุมัติ</option>
+                                    <option value="N" >ไม่อนุมัติ</option>
+                                    <option value="P" >รอดำเนินการ</option>
+
+
+                                    <!-- … -->
+                                </select>
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+
+                            </label>
+                            <label class="col-lg-4 control-label">
+                                <select id="filtervalue" class="form-control">
+                                    <option value="" selected="" >ค้นหา</option>
+                                    {{#academic}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/academic}}
+
+                                    {{#gender}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/gender}}
+
+                                    {{#employeeType}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/employeeType}}
+
+                                    {{#position}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/position}}
+
+                                    {{#department}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/department}}
+
+                                    {{#faculty}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/faculty}}
+
+                                    {{#userType}}
+                                    <option value="{{id}}" selected="" >{{value1}}</option>
+                                    {{/userType}}
+
+                                </select>
+
+                            </label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อ/นามสกุล" list="filterCode">
+                            </div>
+
+                            <div class="col-lg-2">
+                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            </div>
                         </div>
 
-                        <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                        </div>
 
-
-
-
-                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
 
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
-                                        <th class="center">{{#i18n}}number{{/i18n}}</th>
-                                        <th class="center">{{#i18n}}fnamelname{{/i18n}}</th>
-                                        
-                                        <th class="center">รายละเอียด</th>
-                                        <th class="center">{{#i18n}}manage{{/i18n}}</th>
-                                        
+                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
+
+                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}welfare.name{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
+
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{#dataApprove}}
-                                    <tr class="selectable">
-
-                                        <td>{{rowNo}}</td>
-                                        <td>{{title}} {{fname}} {{lname}}</td>
-                                        
-                                        <td>{{name}} , {{description}} , {{wfcdetails}} ,</td>
-                                        <td class="center">
-                                            
-                                            <button class="btn btn-success btn-xs edit btn_history_Y"
-                                                    row-index="{{historyId}}"
-                                                    row-welfareId="{{welfareId}}">
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}yesapprove{{/i18n}}
-                                            </button>
-                                            
-                                             <button class="btn btn-danger btn-xs edit btn_history_N"
-                                                    row-index="{{historyId}}"
-                                                    row-welfareId="{{welfareId}}">
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}noapprove{{/i18n}}
-                                            </button>
+                                <tbody id="listWelfare">
 
 
-                                        </td>
-                                    </tr>
-                                    {{/dataApprove}}
                                 </tbody>
 
                             </table>
@@ -89,31 +116,292 @@
     <!-- /Page Body -->
 </div>
 
-<script>
-    $("#btnsearch").click(function () {
-        var SearchName = $("#SearchName").val();
-        if (SearchName == "") {
-            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-        } else {
+<!--LArge Modal Templates-->
+<div class="modal fade checkHistory" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">รายละเอียดสวัสดิการ</h4>
+            </div>
+            <div class="modal-body">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+                        <span class="widget-caption" id="userRows"> </span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-horizontal">
+                            <table class="table table-hover table-striped table-bordered table-condensed" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">รายละเอียด </th>
+                                        <th class="text-center">เงื่อนไข </th>
+                                        <th class="text-center">จำนวน </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="showHistory">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--End Large Modal Templates-->
 
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName: SearchName});
-        }
-    });
-    $('.btn_history_N').click(function () {
-        var data = {};
-        data['historyId'] = $(this).attr('row-index');
-        data['statusApprove'] = "N";
-        var jdata = {};
-        jdata['data'] = data;
-        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
-    });
-       $('.btn_history_Y').click(function () {
-        var data = {};
-        data['historyId'] = $(this).attr('row-index');
-        data['statusApprove'] = "Y";
-        var jdata = {};
-        jdata['data'] = data;
-        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
+<script>
+    $(document).ready(function () {
+        $("#btnsearch").click(function () {
+            var SearchName = $("#SearchName").val();
+            if (SearchName == "") {
+                document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+            } else {
+
+                //getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName: SearchName});
+            }
+        });
+
+
+        sendData('{{_context_path}}/api/welfare/history/check/approve', null,
+                function (result) {
+
+                    var html1 = "";
+
+                    $.each(result.history, function (key, value) {
+
+                        html1 += '<tr class="selectable">';
+                        html1 += '<td>' + (key + 1) + '</td>';
+                        html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                        html1 += '<td>' + value.gender1 + '</td>';
+                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                        html1 += '<td>' + value.employeeType1 + '</td>';
+                        html1 += '<td>' + value.name + '</td>';
+                        html1 += '<td class = "center" >';
+                        
+                           html1 += '<button class="btn_history btn btn-info btn-xs edit"';
+                                html1 += 'data-toggle="modal"';
+                                html1 += 'data-target=".checkHistory"';
+                                html1 += 'data-whatever="@fat"';
+                                html1 += 'row-index="' + value.detailsId + '"';
+                                html1 += 'row-welfareId="' + value.welfareId + '" >';
+                                html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
+                                html1 += '</button> ';
+                        
+                        if (value.filename != null) {
+
+                            html1 += '<a class="btn btn-maroon btn-xs edit"';
+                            html1 += 'target="_blank"';
+                            html1 += ' href="http://localhost/{{_context_path}}/uploads/welfare/' + value.filename + '" >';
+                            html1 += '<i class = "fa fa fa-download"></i>ดาวน์โหลด';
+                            html1 += '</a> ';
+
+                        } else {
+                            html1 += '<a class="btn  btn-default btn-xs edit">';
+                            html1 += '<i class = "fa fa fa-close"></i>ไม่มีไฟล์แนบ';
+                            html1 += '</a> ';
+                        }
+                        if (value.statusApprove != "Y") {
+                            html1 += '<button class="btn btn-success btn-xs edit btn_history_Y"';
+                            html1 += 'row-index="' + value.historyId + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '">';
+                            html1 += '<i class="fa fa fa-check"></i>อนุมัติ';
+                            html1 += '</button> ';
+
+
+                            html1 += '<button class="btn btn-danger btn-xs edit btn_history_N"';
+                            html1 += 'row-index="' + value.historyId + '"';
+                            html1 += 'row-welfareId="' + value.welfareId + '">';
+                            html1 += '<i class="fa fa fa-close"></i>ไม่อนุมัติ';
+                            html1 += '</button> ';
+                        } else {
+                            html1 += '<a class="btn  btn-default btn-xs edit">';
+                            html1 += '<i class = "fa fa fa-check"></i>อนุมัติแล้ว';
+                            html1 += '</a> ';
+                        }
+
+
+                        html1 += '</td>';
+                        html1 += '</tr>';
+
+                    });
+
+
+
+                    $("#listWelfare").html(html1);
+                    $('.btn_history_N').click(function () {
+                        var data = {};
+                        data['historyId'] = $(this).attr('row-index');
+                        data['statusApprove'] = "N";
+                        var jdata = {};
+                        jdata['data'] = data;
+                        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
+                    });
+                    $('.btn_history_Y').click(function () {
+                        var data = {};
+                        data['historyId'] = $(this).attr('row-index');
+                        data['statusApprove'] = "Y";
+                        var jdata = {};
+                        jdata['data'] = data;
+                        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
+                    });
+                    
+                    $('.btn_history').click(function () {
+                        
+                         var data = {};
+                        data['detailsId'] = $(this).attr('row-index');
+                        data['welfareId'] = $(this).attr('row-welfareId');
+                        
+                        var jdata = {};
+                        jdata['data'] = data;
+                         
+                        sendData('{{_context_path}}/api/welfare/welfare/by/welfare', jsonEncode(jdata),
+                                function (result) {
+                                    var html = "";
+                                   
+                                    $.each(result.welfare, function (k, v) {
+                                        
+                                        html += '<tr><td> ' + (k + 1) + ' </td>';
+                                        html += '<td>' + v.name + '' + v.description + '</td>';
+                                        html += '<td>' + v.dcpDetails + '</td>';
+                                         if (v.amount == null) {
+                                            html += '<td> 1 ' + v.returntType + '</td>';
+                                        } else {
+                                            html += '<td>' + v.quantity + ' ' + v.returntType + '</td>';
+                                        }
+
+                                        html += '</tr>';
+
+                                    });
+
+                                    $("#showHistory").html(html);
+
+                                });
+
+
+                    });
+
+                });
+
+
+        $("#typeStatus").change(function () {
+            var data = {};
+            var status = $(this).val();
+            data['statusApprove'] = status;
+            data['filtervalue'] = $("#filtervalue").val();
+            data['searchName'] = $("#searchName").val();
+            var jdata = {};
+            jdata['data'] = data;
+
+            sendData('{{_context_path}}/api/welfare/history/check/status', jsonEncode(jdata),
+                    function (result) {
+
+                        var html1 = "";
+
+                        $.each(result.history, function (key, value) {
+
+                            html1 += '<tr class="selectable">';
+                            html1 += '<td>' + (key + 1) + '</td>';
+                            html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                            html1 += '<td>' + value.gender1 + '</td>';
+                            html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                            html1 += '<td>' + value.employeeType1 + '</td>';
+                            html1 += '<td>' + value.name + '</td>';
+                            html1 += '<td class = "center" >';
+
+                            if (value.filename != null) {
+
+                                html1 += '<a class="btn btn-maroon btn-xs edit"';
+                                html1 += 'target="_blank"';
+                                html1 += ' href="http://localhost/{{_context_path}}/uploads/welfare/' + value.filename + '" >';
+                                html1 += '<i class = "fa fa fa-download"></i>ดาวน์โหลด';
+                                html1 += '</a> ';
+
+                            } else {
+                                html1 += '<a class="btn  btn-default btn-xs edit"';
+                                html1 += ' href="#" >';
+                                html1 += '<i class = "fa fa fa-close"></i>ไม่มีไฟล์แนบ';
+                                html1 += '</a> ';
+                            }
+
+                            if (value.statusApprove != "Y") {
+                                html1 += '<button class="btn btn-success btn-xs edit btn_history_Y"';
+                                html1 += 'row-index="' + value.historyId + '"';
+                                html1 += 'row-welfareId="' + value.welfareId + '">';
+                                html1 += '<i class="fa fa fa-check"></i>อนุมัติ';
+                                html1 += '</button> ';
+
+
+                                html1 += '<button class="btn btn-danger btn-xs edit btn_history_N"';
+                                html1 += 'row-index="' + value.historyId + '"';
+                                html1 += 'row-welfareId="' + value.welfareId + '">';
+                                html1 += '<i class="fa fa fa-close"></i>ไม่อนุมัติ';
+                                html1 += '</button> ';
+                            } else {
+                                html1 += '<a class="btn  btn-success btn-xs edit">';
+                                html1 += '<i class = "fa fa fa-check"></i>อนุมัติแล้ว';
+                                html1 += '</a> ';
+                            }
+
+
+
+                            html1 += '</td>';
+                            html1 += '</tr>';
+
+                        });
+
+                        $("#listWelfare").html(html1);
+                        $('.btn_history_N').click(function () {
+                            if (confirm("คุณไม่ต้องการอนุมัติ ? ")) {
+                                var data = {};
+                                data['historyId'] = $(this).attr('row-index');
+                                data['statusApprove'] = "N";
+                                var jdata = {};
+                                jdata['data'] = data;
+                                sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
+                                        function (msg) {
+                                            if (msg.update == true) {
+                                                getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+                                                Notify('ไม่อนุมัติ!', 'top-right', '4000', 'danger', 'fa fa-check', true);
+                                            } else {
+                                                Notify('ไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                                            }
+                                        });
+
+
+                            }
+
+
+                        });
+                        $('.btn_history_Y').click(function () {
+                            if (confirm("คุณต้องการอนุมัติ ? ")) {
+                                var data = {};
+                                data['historyId'] = $(this).attr('row-index');
+                                data['statusApprove'] = "Y";
+                                var jdata = {};
+                                jdata['data'] = data;
+                                sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
+                                        function (msg) {
+                                            if (msg.update == true) {
+                                                getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+                                                Notify('อนุมัติสำเร็จ!', 'top-right', '4000', 'success', 'fa fa-check', true);
+                                            } else {
+                                                Notify('อนุมัติไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                                            }
+                                        });
+
+
+                            }
+                        });
+
+                    });
+
+        });
+
+
     });
 </script> 
 

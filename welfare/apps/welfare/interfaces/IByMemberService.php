@@ -14,26 +14,34 @@ interface IByMemberService {
      * @uri /save
      * @param apps\welfare\entity\Welfare data []
      * @return boolean save [return ture or false if don't ]
-     * @description save เพิ่มข้อมูลสวัสดิการ
+     * @description save เพิ่มข้อมูลสวัสดิการรายบุคคล
      */
     public function save($data);
     
     /**
-     * @name updatewelfare
+     * @name update
      * @uri /update
      * @param apps\welfare\entity\Welfare data []
      * @return boolean update [return ture or false if don't ]
-     * @description update แก้ไขข้อมูลสวัสดิการ
+     * @description update แก้ไขสวัสดิการรายบุคคล
      */
     public function update($data);
 
     /**
-     * @name deletewelfare
+     * @name delete
      * @uri /delete
      * @param integer Id Description
      * @return boolean delete [return ture or false if don't ]
-     * @description delete ลบข้อมูลสวัสดิการ
+     * @description delete ลบสวัสดิการรายบุคคล
      */
     public function delete($Id);
     
+     /**
+     * @name getReport
+     * @uri /get/report
+     * @param apps\welfare\entity\History data []
+     * @return string report
+     * @description ออกรีพอร์ท
+     */
+    public function getReport($data);
 }

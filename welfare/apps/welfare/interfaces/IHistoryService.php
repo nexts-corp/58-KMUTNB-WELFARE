@@ -20,16 +20,16 @@ interface IHistoryService {
     public function save($data);
     
      /**
-     * @name save
+     * @name update
      * @uri /update
      * @param apps\welfare\entity\History data []
-     * @return boolean save [return ture or false if don't ]
+     * @return boolean update [return ture or false if don't ]
      * @description update แก้ไขการใช้งาน
      */
     public function update($data);
     
      /**
-     * @name deletewelfare
+     * @name delete
      * @uri /delete
      * @param integer Id Description
      * @return boolean delete [return ture or false if don't ]
@@ -39,12 +39,30 @@ interface IHistoryService {
     
     
     /**
-     * @name save
+     * @name getHistory
      * @uri /get/history
      * @param apps\welfare\entity\History data []
      * @return string history
      * @description แสดงรายละเอียดการใช้ สวัสดิการ 
      */
     public function getHistory($data);
+    
+       /**
+     * @name checkApprove
+     * @uri /check/approve
+     * @return string history
+     * @description test
+     */
+    public function checkApprove();
+    
+        /**
+     * @name checkStatus
+     * @param string data 
+     * @uri /check/status
+     * @return string history
+     * @description test
+     */
+    public function checkStatus($data);
+    
     
 }
