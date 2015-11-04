@@ -17,6 +17,7 @@ class RetireService extends CServiceBase implements IRetireService {
     }
 
     public function preview($retireYear) {
+//        print_r($retireYear->filterCode);
 //        $retireYear -= 543;
 //        exit();
 //        if ($retireYear == "") {
@@ -84,7 +85,7 @@ class RetireService extends CServiceBase implements IRetireService {
                 . "and TIMESTAMPDIFF(YEAR,mb.workStartDate,:retireyear) < welEnd.workEndDate ";
 
         if ($retireYear->present != "") {
-//            print_r($retireYear->present);
+            
             $retire = $retireYear->present;
             $retireStart = ($retire - 61) . "-10-01";
             $retireEnd = ($retire - 60) . "-09-30";
@@ -105,6 +106,7 @@ class RetireService extends CServiceBase implements IRetireService {
             $retireY = $retire . "-09-30";
 
             $query .= "and mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name ";
+            $query2 .= "and mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name ";
             $param = array(
                 "name" => "%" . $searchName . "%",
                 "retireStart" => $retireStart,
@@ -112,30 +114,32 @@ class RetireService extends CServiceBase implements IRetireService {
                 "retireyear" => $retireY,
                 "employeeTypeIds" => $employeeTypeId
             );
-        } else if ($retireYear->retire != "") {
+        } else if ($retireYear->filterCode != "") {
+            
+            $filtercode = $retireYear->filterCode;
+            $filtervalue = $retireYear->filtervalue;
             $retire = $retireYear->retire;
             $retireStart = ($retire - 61) . "-10-01";
             $retireEnd = ($retire - 60) . "-09-30";
             $retireY = $retire . "-09-30";
 
+            $query .= " and mb." . $filtercode . "Id = :filtervalue  ";
+            $query2 .= " and mb." . $filtercode . "Id = :filtervalue  ";
             $param = array(
+                "filtervalue" => $filtervalue,
                 "retireStart" => $retireStart,
                 "retireEnd" => $retireEnd,
                 "retireyear" => $retireY,
                 "employeeTypeIds" => $employeeTypeId
             );
         } else {
-            $filtercode = $retireYear->filterCode;
-            $filtervalue = $retireYear->filtervalue;
-            $retire = $retireYear->date;
+            
+            $retire = $retireYear->retire;
             $retireStart = ($retire - 61) . "-10-01";
             $retireEnd = ($retire - 60) . "-09-30";
             $retireY = $retire . "-09-30";
 
-            $query .= " and mb." . $filtercode . "Id = :filtervalue  ";
-
             $param = array(
-                "filtervalue" => $filtervalue,
                 "retireStart" => $retireStart,
                 "retireEnd" => $retireEnd,
                 "retireyear" => $retireY,
@@ -153,11 +157,11 @@ class RetireService extends CServiceBase implements IRetireService {
         $member = $this->datacontext->pdoQuery($query, $param);
         $total = $this->datacontext->pdoQuery($query2, $param)[0];
 
-        
-            if ($total['total'] != "") {
-                $total['total'] = number_format($total['total']);
-            }
-        
+
+        if ($total['total'] != "") {
+            $total['total'] = number_format($total['total']);
+        }
+
 
         foreach ($member as $key => $value) {
 
@@ -168,7 +172,7 @@ class RetireService extends CServiceBase implements IRetireService {
 //                    $member[$key]['total'] = number_format($member[$key]['total']);
 //                }
         }
-        return array("member"=>$member,"total"=>$total);
+        return array("member" => $member, "total" => $total);
     }
 
 }

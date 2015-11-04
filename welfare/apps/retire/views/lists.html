@@ -302,7 +302,8 @@
             sendData('{{_context_path}}/api/retire/view/retire/lists', data,
                     function (result) {
                         var body = "";
-                        if (result != "") {
+                         var re = result.viewList;
+                        if (re.member != "") {
 //                            console.log(result.viewList);
                             var re = result.viewList;
                             var tot = re.total;
@@ -316,9 +317,11 @@
                             $("#retirelist").html(body);
                             $("#countTotal").html(tot.total + " บาท");
                         }
+                        else {
+                            $("#retirelist").html("<tr><td></td><td>ไม่พบข้อมูล</td><td></td></tr>");
+                            $("#countTotal").html("- บาท");
+                        }
 
-                        $("#retirelist").html("<tr><td></td><td>ไม่พบข้อมูล</td><td></td></tr>");
-                        $("#countTotal").html("- บาท");
 
                     });
 
