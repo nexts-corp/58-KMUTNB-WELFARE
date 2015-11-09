@@ -179,6 +179,10 @@ class ViewService extends CServiceBase implements IViewService {
             $view->lists = $filter->search($datafilter);
         } else {
             $view->lists = $this->datacontext->getObject($sql, $param); //กรณีที่ไม่ได้ search
+            $view->faculty = $this->taxonomy->getPCode("faculty");
+            $view->employeeType = $this->taxonomy->getPCode("employeeType");
+            $view->memberActive = $this->taxonomy->getPCode("memberActive");
+            
         }
         return $view;
     }

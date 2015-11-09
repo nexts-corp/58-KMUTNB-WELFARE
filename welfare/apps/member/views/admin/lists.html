@@ -62,7 +62,35 @@
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                             <label class="col-lg-2 control-label">
                                 <select id="filterCode" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
+                                    <option value="" selected="" disabled="">เลือกคณะ</option>
+                                    {{#faculty}}
+                                    <option value="{{id}}">{{value1}} , {{value2}}</option>
+                                    {{/faculty}}
+
+
+                                    <!-- … -->
+                                </select>
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                                <p id="demo" style="color:#d14"></p>
+                            </label>
+                            <label class="col-lg-2 control-label">
+                                <select id="filterCode" class="form-control">
+                                    <option value="" selected="" disabled="">เลือกประเภทพนักงาน</option>
+                                    <option value="faculty">คณะ</option>
+                                    <option value="employeeType" >ประเภทพนักงาน</option>
+                                    <option value="memberActive" >สถานะพนักงาน</option>
+
+
+                                    <!-- … -->
+                                </select>
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
+                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                                <p id="demo" style="color:#d14"></p>
+                            </label>
+                            <label class="col-lg-2 control-label">
+                                <select id="filterCode" class="form-control">
+                                    <option value="" selected="" disabled="">เลือกสถานะพนักงาน</option>
                                     <option value="faculty">คณะ</option>
                                     <option value="employeeType" >ประเภทพนักงาน</option>
                                     <option value="memberActive" >สถานะพนักงาน</option>
@@ -181,6 +209,7 @@
         //listtitleName();
         $("#filterCode").change(function () {
             var pCode = $("#filterCode").val();
+            
             var data;
             if (pCode == "faculty") {
 
