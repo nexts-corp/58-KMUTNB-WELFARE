@@ -22,18 +22,17 @@
 
     </head>
     <body>
-
         <div id="showMain">
             <!-- Loading Container -->
             <div class="loading-container">
                 <div class="loader"></div>
             </div>
             <!--  /Loading Container -->
-
+            
             <div class="navbar" id="header">
 
             </div>
-
+            
             <!-- Main Container -->
             <div class="main-container container-fluid">
                 <!-- Page Container -->
@@ -51,11 +50,13 @@
 
             </div>
         </div>
+      
+            
         <div class="loading-container loading-inactive">
             <div class="loader"></div>
         </div>
         <!--Basic Scripts-->
-
+        
 
         <script src="{{_context_path}}/assets/js/jquery.min.js"></script>
         <script src="{{_context_path}}/assets/js/js.cookie.js"></script>
@@ -71,12 +72,14 @@
         <script src="{{_context_path}}/assets/js/dropzone/dropzone.min.js" type="text/javascript"></script>
         <script src="{{_context_path}}/assets/js/dropzone/dropzone-amd-module.min.js" type="text/javascript"></script>
         <!--Beyond Scripts-->
-
+        <script src="{{_context_path}}/assets/js/confirm/jquery.confirm.js"></script>
 
         <script src="{{_context_path}}/assets/js/beyond.js"></script>
         <script src="{{_context_path}}/assets/js/toastr/toastr.js"></script>
         <script src="{{_context_path}}/assets/js/idcard/JVaildator.js"></script>
         <script src="{{_context_path}}/assets/js/confirm/jquery-confirm.min.js" type="text/javascript"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
         <script type="text/javascript">
 $(document).ready(function () {
     getHTML('header', '{{_context_path}}/api/menu/view/header', null);
