@@ -49,9 +49,46 @@ class History extends EntityBase {
     /**
      * @Column(type="string",length=255, name="remark",nullable=true)
      */
+    
     public $remark;
+    public $nftAppId;
+    public $nftAppName;
+    public $nftName;
+    public $nftStatus;
+    
+    function getNftAppId() {
+        return $this->nftAppId;
+    }
 
-    function getHistoryId() {
+    function getNftAppName() {
+        return $this->nftAppName;
+    }
+
+    function getNftName() {
+        return $this->nftName;
+    }
+
+    function getNftStatus() {
+        return $this->nftStatus;
+    }
+
+    function setNftAppId($nftAppId) {
+        $this->nftAppId = $nftAppId;
+    }
+
+    function setNftAppName($nftAppName) {
+        $this->nftAppName = $nftAppName;
+    }
+
+    function setNftName($nftName) {
+        $this->nftName = $nftName;
+    }
+
+    function setNftStatus($nftStatus) {
+        $this->nftStatus = $nftStatus;
+    }
+
+        function getHistoryId() {
         return $this->historyId;
     }
 

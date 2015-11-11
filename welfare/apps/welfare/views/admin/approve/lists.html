@@ -1,4 +1,4 @@
-<!-- Page Content -->
+
 <div class="page-content">
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
@@ -10,7 +10,6 @@
             <li class="active">รายการขอรับสวัสดิการ</li>
         </ul>
     </div>
-    <!-- /Page Breadcrumb -->
 
 
     <!-- Page Body -->
@@ -22,63 +21,78 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
+                        <div class="pull-right">
 
+                            <button type="button" class="btn btn-success reportCsv" >
+                                <i class="fa fa-file-excel-o"></i>EXPORT CSV
+                            </button>
 
+                            <button type="button" class="btn btn-warning" onclick=" JsPrint('DataPanel');">
+                                <i class="fa fa-print"></i>PRINT
+                            </button>
+
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                            <label class="col-lg-2 control-label">
+                            <label class="col-lg-4 control-label">
                                 <select id="typeStatus" class="form-control">
-                                    <option value="" >ค้นหารายการ</option>
+                                    <option value="YNP" >ค้นหารายการ</option>
                                     <option value="Y" >อนุมัติ</option>
                                     <option value="N" >ไม่อนุมัติ</option>
                                     <option value="P" >รอดำเนินการ</option>
 
 
-                                    <!-- … -->
                                 </select>
-                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+
+                            </label>
+                             <label class="col-lg-4 control-label">
+                                <select id="faculty" class="form-control" >
+                                    <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
+                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}
+
+                                </select>
+                            </label>
+                            <label class="col-lg-4 control-label">
+                                <select id="department" class="form-control" >
+                                    <option value="" selected="">ค้นหาจากภาควิชา</option>
+                                </select>
+                            </label>
+                           
+                            <label class="col-lg-4 control-label">
+                                <select id="employeeType" class="form-control" >
+                                    <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
+                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
+                                </select>
 
                             </label>
                             <label class="col-lg-4 control-label">
-                                <select id="filtervalue" class="form-control">
-                                    <option value="" selected="" >ค้นหา</option>
-                                    {{#academic}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/academic}}
+                                <select id="gender" class="form-control">
+                                    <option value="" selected="" >ค้นหาจากเพศ</option>
+                                    {{#gender}}<option value="{{id}}">{{value1}}</option>{{/gender}}
 
-                                    {{#gender}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/gender}}
 
-                                    {{#employeeType}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/employeeType}}
-
-                                    {{#position}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/position}}
-
-                                    {{#department}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/department}}
-
-                                    {{#faculty}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/faculty}}
-
-                                    {{#userType}}
-                                    <option value="{{id}}" selected="" >{{value1}}</option>
-                                    {{/userType}}
-
+                                    <!-- … -->
                                 </select>
-
                             </label>
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อ/นามสกุล" list="filterCode">
+
+                            <div class="col-lg-4 control-label">
+                                <select id="nameAndLast" class="form-control">
+                                    <option value="" selected="" >เลือก</option>
+                                    <option value="nameAndLast" >ค้นหาด้วย ชื่อ-นามสกุล</option>
+                                </select>
+                                <p></p>
+                                <div id="showInputSearch" style="display: none;">
+                                    <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อ/นามสกุล" list="filterCode">
+                                    <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                                </div>
+                                
                             </div>
 
-                            <div class="col-lg-2">
-                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                            </div>
+
+
+
+
                         </div>
 
 
@@ -141,7 +155,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="showHistory">
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -150,39 +164,88 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+
 </div>
 <!--End Large Modal Templates-->
-
+<div style="display: none" id="printPdf"> </div>
 <script>
-    $(document).ready(function () {
-        $("#btnsearch").click(function () {
-            var SearchName = $("#SearchName").val();
-            if (SearchName == "") {
-                document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-            } else {
+     $(document).ready(function () {
+         getSearch();
+     });
+    $(".reportCsv").click(function () {
+        var id = $(this).attr("row-index");
+        window.open('{{_context_path}}/api/welfare/reports/approve');
+    });
+    $("#typeStatus").change(function () {
+        getSearch();
+    });
 
-                //getHTML('content-body', '{{_context_path}}/api/welfare/view/conditions/lists/{{welfareId}}', {SearchName: SearchName});
-            }
-        });
+    $("#employeeType").change(function () {
+        getSearch();
+    });
+    $("#department").change(function () {
+        getSearch();
+    })
 
-
-        sendData('{{_context_path}}/api/welfare/history/check/approve', null,
+    $("#gender").change(function () {
+        getSearch();
+    });
+    $("#nameAndLast").change(function () {
+        if ($("#nameAndLast").val() == "nameAndLast") {
+            $("#showInputSearch").show();
+        } else {
+            $("#showInputSearch").hide();
+        }
+    });
+    $("#btnSearch").click(function () {
+        getSearch();
+    })
+    $("#faculty").change(function () {
+        var faculty = $("#faculty").val();
+        var data = {"parentId": faculty};
+        sendData('{{_context_path}}/api/taxonomy/taxonomy/getParentId', data,
                 function (result) {
+                    var html2 = "";
+                    $.each(result.lists, function (key, value) {
+                        html2 += '<option value=' + value.id + '>' + value.value1 + '</option>';
+                    });
+                    $("#department").html(html2);
+                });
+    });
+    function getSearch() {
 
-                    var html1 = "";
+        var faculty = $("#faculty").val();
+        var employeeType = $("#employeeType").val();
+        var gender = $("#gender").val();
+        var searchName = $("#searchName").val();
+        var department = $("#department").val();
+        var data = {};
 
-                    $.each(result.history, function (key, value) {
+        data['faculty'] = faculty;
+        data['employeeType'] = employeeType;
+        data['gender'] = gender;
+        data['statusApprove'] = $("#typeStatus").val();
+        data['searchName'] = searchName;
+        data['department'] = department;
+        var jdata = {};
+        jdata['data'] = data;
+        sendData('{{_context_path}}/api/welfare/history/check/status', jsonEncode(jdata),
+                //sendData('{{_context_path}}/api/welfare/history/check/search', jsonEncode(jdata),
+                        function (result) {
 
-                        html1 += '<tr class="selectable">';
-                        html1 += '<td>' + (key + 1) + '</td>';
-                        html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
-                        html1 += '<td>' + value.gender1 + '</td>';
-                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                        html1 += '<td>' + value.employeeType1 + '</td>';
-                        html1 += '<td>' + value.name + '</td>';
-                        html1 += '<td class = "center" >';
-                        
-                           html1 += '<button class="btn_history btn btn-info btn-xs edit"';
+                            var html1 = "";
+                            $.each(result.history, function (key, value) {
+
+                                html1 += '<tr class="selectable">';
+                                html1 += '<td>' + (key + 1) + '</td>';
+                                html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                                html1 += '<td>' + value.gender1 + '</td>';
+                                html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                                html1 += '<td>' + value.employeeType1 + '</td>';
+                                html1 += '<td>' + value.name + '</td>';
+                                html1 += '<td class = "center" >';
+
+                                html1 += '<button class="btn_history btn btn-info btn-xs edit"';
                                 html1 += 'data-toggle="modal"';
                                 html1 += 'data-target=".checkHistory"';
                                 html1 += 'data-whatever="@fat"';
@@ -190,220 +253,256 @@
                                 html1 += 'row-welfareId="' + value.welfareId + '" >';
                                 html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
                                 html1 += '</button> ';
-                        
-                        if (value.filename != null) {
 
-                            html1 += '<a class="btn btn-maroon btn-xs edit"';
-                            html1 += 'target="_blank"';
-                            html1 += ' href="http://localhost/{{_context_path}}/uploads/welfare/' + value.filename + '" >';
-                            html1 += '<i class = "fa fa fa-download"></i>ดาวน์โหลด';
-                            html1 += '</a> ';
+                                if (value.filename != null) {
 
-                        } else {
-                            html1 += '<a class="btn  btn-default btn-xs edit">';
-                            html1 += '<i class = "fa fa fa-close"></i>ไม่มีไฟล์แนบ';
-                            html1 += '</a> ';
-                        }
-                        if (value.statusApprove != "Y") {
-                            html1 += '<button class="btn btn-success btn-xs edit btn_history_Y"';
-                            html1 += 'row-index="' + value.historyId + '"';
-                            html1 += 'row-welfareId="' + value.welfareId + '">';
-                            html1 += '<i class="fa fa fa-check"></i>อนุมัติ';
-                            html1 += '</button> ';
+                                    html1 += '<a class="btn btn-maroon btn-xs edit"';
+                                    html1 += 'target="_blank"';
+                                    html1 += ' href="http://localhost/{{_context_path}}/uploads/welfare/' + value.filename + '" >';
+                                    html1 += '<i class = "fa fa fa-download"></i>ดาวน์โหลด';
+                                    html1 += '</a> ';
+                                } else {
+                                    html1 += '<a class="btn  btn-default btn-xs edit"';
+                                    html1 += ' href="#" >';
+                                    html1 += '<i class = "fa fa fa-close"></i>ไม่มีไฟล์';
+                                    html1 += '</a> ';
+                                }
 
+                                if (value.statusApprove != "Y") {
 
-                            html1 += '<button class="btn btn-danger btn-xs edit btn_history_N"';
-                            html1 += 'row-index="' + value.historyId + '"';
-                            html1 += 'row-welfareId="' + value.welfareId + '">';
-                            html1 += '<i class="fa fa fa-close"></i>ไม่อนุมัติ';
-                            html1 += '</button> ';
-                        } else {
-                            html1 += '<a class="btn  btn-default btn-xs edit">';
-                            html1 += '<i class = "fa fa fa-check"></i>อนุมัติแล้ว';
-                            html1 += '</a> ';
-                        }
+                                    html1 += '<button class="btn btn-success btn-xs edit btn_history_Y"';
+                                    html1 += 'row-index="' + value.historyId + '"';
+                                    html1 += 'row-memberId="' + value.memberId + '"';
+                                    html1 += 'row-nftName="อนุมัติ ' + value.name + ',' + value.wfcdetails + '"';
+                                    html1 += 'row-welfareId="' + value.welfareId + '">';
+                                    html1 += '<i class="fa fa fa-check"></i>อนุมัติ';
+                                    html1 += '</button> ';
 
 
-                        html1 += '</td>';
-                        html1 += '</tr>';
+                                    html1 += '<button class="btn btn-danger btn-xs edit btn_history_N"';
+                                    html1 += 'row-index="' + value.historyId + '"';
+                                    html1 += 'row-memberId="' + value.memberId + '"';
+                                    html1 += 'row-nftName="ไม่อนุมัติ ' + value.name + '' + value.wfcdetails + '"';
+                                    html1 += 'row-detailsId="' + value.detailsId + '"';
+                                    html1 += 'row-welfareId="' + value.welfareId + '">';
+                                    html1 += '<i class="fa fa fa-close"></i>ไม่อนุมัติ';
+                                    html1 += '</button> ';
 
-                    });
-
-
-
-                    $("#listWelfare").html(html1);
-                    $('.btn_history_N').click(function () {
-                        var data = {};
-                        data['historyId'] = $(this).attr('row-index');
-                        data['statusApprove'] = "N";
-                        var jdata = {};
-                        jdata['data'] = data;
-                        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
-                    });
-                    $('.btn_history_Y').click(function () {
-                        var data = {};
-                        data['historyId'] = $(this).attr('row-index');
-                        data['statusApprove'] = "Y";
-                        var jdata = {};
-                        jdata['data'] = data;
-                        getHTML('content-body', '{{_context_path}}/api/welfare/history/update', jsonEncode(jdata))
-                    });
-                    
-                    $('.btn_history').click(function () {
-                        
-                         var data = {};
-                        data['detailsId'] = $(this).attr('row-index');
-                        data['welfareId'] = $(this).attr('row-welfareId');
-                        
-                        var jdata = {};
-                        jdata['data'] = data;
-                         
-                        sendData('{{_context_path}}/api/welfare/welfare/by/welfare', jsonEncode(jdata),
-                                function (result) {
-                                    var html = "";
-                                   
-                                    $.each(result.welfare, function (k, v) {
-                                        
-                                        html += '<tr><td> ' + (k + 1) + ' </td>';
-                                        html += '<td>' + v.name + '' + v.description + '</td>';
-                                        html += '<td>' + v.dcpDetails + '</td>';
-                                         if (v.amount == null) {
-                                            html += '<td> 1 ' + v.returntType + '</td>';
-                                        } else {
-                                            html += '<td>' + v.quantity + ' ' + v.returntType + '</td>';
-                                        }
-
-                                        html += '</tr>';
-
-                                    });
-
-                                    $("#showHistory").html(html);
-
-                                });
-
-
-                    });
-
-                });
-
-
-        $("#typeStatus").change(function () {
-            var data = {};
-            var status = $(this).val();
-            data['statusApprove'] = status;
-            data['filtervalue'] = $("#filtervalue").val();
-            data['searchName'] = $("#searchName").val();
-            var jdata = {};
-            jdata['data'] = data;
-
-            sendData('{{_context_path}}/api/welfare/history/check/status', jsonEncode(jdata),
-                    function (result) {
-
-                        var html1 = "";
-
-                        $.each(result.history, function (key, value) {
-
-                            html1 += '<tr class="selectable">';
-                            html1 += '<td>' + (key + 1) + '</td>';
-                            html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
-                            html1 += '<td>' + value.gender1 + '</td>';
-                            html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                            html1 += '<td>' + value.employeeType1 + '</td>';
-                            html1 += '<td>' + value.name + '</td>';
-                            html1 += '<td class = "center" >';
-
-                            if (value.filename != null) {
-
-                                html1 += '<a class="btn btn-maroon btn-xs edit"';
-                                html1 += 'target="_blank"';
-                                html1 += ' href="http://localhost/{{_context_path}}/uploads/welfare/' + value.filename + '" >';
-                                html1 += '<i class = "fa fa fa-download"></i>ดาวน์โหลด';
-                                html1 += '</a> ';
-
-                            } else {
-                                html1 += '<a class="btn  btn-default btn-xs edit"';
-                                html1 += ' href="#" >';
-                                html1 += '<i class = "fa fa fa-close"></i>ไม่มีไฟล์แนบ';
-                                html1 += '</a> ';
-                            }
-
-                            if (value.statusApprove != "Y") {
-                                html1 += '<button class="btn btn-success btn-xs edit btn_history_Y"';
-                                html1 += 'row-index="' + value.historyId + '"';
-                                html1 += 'row-welfareId="' + value.welfareId + '">';
-                                html1 += '<i class="fa fa fa-check"></i>อนุมัติ';
-                                html1 += '</button> ';
-
-
-                                html1 += '<button class="btn btn-danger btn-xs edit btn_history_N"';
-                                html1 += 'row-index="' + value.historyId + '"';
-                                html1 += 'row-welfareId="' + value.welfareId + '">';
-                                html1 += '<i class="fa fa fa-close"></i>ไม่อนุมัติ';
-                                html1 += '</button> ';
-                            } else {
-                                html1 += '<a class="btn  btn-success btn-xs edit">';
-                                html1 += '<i class = "fa fa fa-check"></i>อนุมัติแล้ว';
-                                html1 += '</a> ';
-                            }
+                                } else {
+                                    html1 += '<a class="btn  btn-success btn-xs edit">';
+                                    html1 += '<i class = "fa fa fa-check"></i>อนุมัติแล้ว';
+                                    html1 += '</a> ';
+                                }
 
 
 
-                            html1 += '</td>';
-                            html1 += '</tr>';
-
-                        });
-
-                        $("#listWelfare").html(html1);
-                        $('.btn_history_N').click(function () {
-                            if (confirm("คุณไม่ต้องการอนุมัติ ? ")) {
+                                html1 += '</td>';
+                                html1 += '</tr>';
+                            });
+                            $("#listWelfare").html(html1);
+                            $('.btn_history_N').click(function () {
                                 var data = {};
                                 data['historyId'] = $(this).attr('row-index');
                                 data['statusApprove'] = "N";
+                                data['nftAppName'] = "detailsId";
+                                data['nftAppId'] = $(this).attr('row-detailsId');
+                                data['nftName'] = $(this).attr('row-nftName');
+                                data['memberId'] = $(this).attr('row-memberId');
                                 var jdata = {};
+
                                 jdata['data'] = data;
-                                sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
-                                        function (msg) {
-                                            if (msg.update == true) {
-                                                getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
-                                                Notify('ไม่อนุมัติ!', 'top-right', '4000', 'danger', 'fa fa-check', true);
-                                            } else {
-                                                Notify('ไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                                            }
-                                        });
+
+                                $.confirm({
+                                    title: "ยกเลิกรายการอนุมัติ",
+                                    content: "ท่านไม่ต้องการอนุมัติ ?",
+                                    confirm: function (button) {
+                                        button.fadeOut(2000).fadeIn(2000);
+
+                                        sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
+                                                function (msg) {
+                                                    if (msg.update == true) {
+                                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+                                                        Notify('ไม่อนุมัติ!', 'top-right', '4000', 'danger', 'fa fa-check', true);
+                                                    } else {
+                                                        Notify('ไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                                                    }
+                                                });
+                                    },
+                                    cancel: function (button) {
+                                        button.fadeOut(2000).fadeIn(2000);
+
+                                    },
+                                    confirmButton: "ตกลง",
+                                    cancelButton: "ยกเลิก"
+                                });
 
 
-                            }
+                            });
 
+                            $('.btn_history_Y').click(function () {
 
-                        });
-                        $('.btn_history_Y').click(function () {
-                            if (confirm("คุณต้องการอนุมัติ ? ")) {
                                 var data = {};
                                 data['historyId'] = $(this).attr('row-index');
                                 data['statusApprove'] = "Y";
+                                data['nftAppName'] = "detailsId";
+                                data['nftAppId'] = $(this).attr('row-detailsId');
+                                data['nftName'] = $(this).attr('row-nftName');
+                                data['memberId'] = $(this).attr('row-memberId');
                                 var jdata = {};
                                 jdata['data'] = data;
-                                sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
-                                        function (msg) {
-                                            if (msg.update == true) {
-                                                getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
-                                                Notify('อนุมัติสำเร็จ!', 'top-right', '4000', 'success', 'fa fa-check', true);
-                                            } else {
-                                                Notify('อนุมัติไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                                            }
+                                $.confirm({
+                                    title: "เลือกรายการอนุมัติ",
+                                    content: "ท่านต้องการอนุมัติ ?",
+                                    confirm: function (button) {
+                                        sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
+                                                function (msg) {
+                                                    if (msg.update == true) {
+                                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+                                                        Notify('อนุมัติสำเร็จ!', 'top-right', '4000', 'success', 'fa fa-check', true);
+                                                    } else {
+                                                        Notify('อนุมัติไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                                                    }
+                                                });
+                                    },
+                                    cancel: function (button) {
+                                        button.fadeOut(2000).fadeIn(2000);
+
+                                    },
+                                    confirmButton: "ตกลง",
+                                    cancelButton: "ยกเลิก"
+                                });
+
+                            });
+
+                            $('.btn_history').click(function () {
+
+                                var data = {};
+                                data['detailsId'] = $(this).attr('row-index');
+                                data['welfareId'] = $(this).attr('row-welfareId');
+                                var jdata = {};
+                                jdata['data'] = data;
+                                sendData('{{_context_path}}/api/welfare/welfare/by/welfare', jsonEncode(jdata),
+                                        function (result) {
+                                            var html = "";
+                                            $.each(result.welfare, function (k, v) {
+
+                                                html += '<tr><td> ' + (k + 1) + ' </td>';
+                                                html += '<td>' + v.name + '' + v.description + '</td>';
+                                                html += '<td>' + v.dcpDetails + '</td>';
+                                                if (v.amount == null) {
+                                                    html += '<td> 1 ' + v.returntType + '</td>';
+                                                } else {
+                                                    html += '<td>' + v.quantity + ' ' + v.returntType + '</td>';
+                                                }
+
+                                                html += '</tr>';
+                                            });
+                                            $("#showHistory").html(html);
                                         });
-
-
-                            }
+                            });
                         });
 
-                    });
 
-        });
+            }
 
 
-    });
-</script> 
+</script>
+<script type="text/javascript">
+
+    sendData('{{_context_path}}/api/welfare/history/check/approve', null,
+            function (result) {
+
+                var html1 = "";
+                html1 += ' <tr>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ลำดับ</th>';
+
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ชื่อ-นามสกุล</th>';
+
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">เพศ</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">สังกัด</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ประเภทพนักงาน</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ชื่อสวัสดิการ</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">สถานะ</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">วันที่ปรับปรุง</th>'
+                html1 += '</tr>';
+                $.each(result.history, function (key, value) {
+
+                    html1 += '<tr class="selectable">';
+                    html1 += '<td width="1%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 1px 1px 1px;">' + (key + 1) + '</td>';
+                    html1 += '<td width="10%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                    html1 += '<td width="1%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.gender1 + '</td>';
+                    html1 += '<td width="14%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.department1 + '  ' + value.faculty1 + '</td>';
+                    html1 += '<td width="10%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.employeeType1 + '</td>';
+                    html1 += '<td width="15%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.name + '</td>';
+                    html1 += '<td width="3%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;" >';
+
+                    if (value.statusApprove == "N") {
+                        html1 += 'ไม่อนุมัติ';
+                    } else if (value.statusApprove == "Y") {
+                        html1 += 'อนุมัติ';
+                    } else if (value.statusApprove == "P") {
+                        html1 += 'รอดำเนินการ';
+                    }
+
+
+                    html1 += '</td>';
+                    html1 += '<td width="9%" style=" font-size: 2px; color: #b3b2b2;  text-align: left;   vertical-align: middle;">';
+                    html1 += '' + value.dateUpdated + '';
+                    html1 += '</td>'
+                    html1 += '</tr>';
+                });
+                $("#printPdf").html(html1)
+            });
+
+    function PrintPanel(tableId) {
+
+
+        var divContents = $("#printPdf").html();
+        var printWindow = window.open('', '', 'height=600,width=1050,scrollbars=1');
+        //สร้าง popup
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('<link href="{{_context_path}}/assets/css/bootstrap.min.css" rel="stylesheet" />');
+
+
+        printWindow.document.write('</head><body onLoad="self.print();self.close();">');
+        // สั่ง Print เมื่อ reder เสร็จ
+        printWindow.document.write('<table top="5px" width="100%">');
+        printWindow.document.write('<tbody>');
+
+
+        printWindow.document.write('<tr><td width="100%" align="center" style=" font-size:  12px; color: #b3b2b2;  text-align: center;   vertical-align: middle;  ">');
+        printWindow.document.write('มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ');
+        printWindow.document.write('</td></tr>');
+
+        printWindow.document.write('<tr><td width="100%" align="center" style=" font-size:  12px; color: #b3b2b2;  text-align: center;   vertical-align: middle;  ">');
+        printWindow.document.write('รายงาน ระบบสาระสนเทศสวัสดิการ');
+        printWindow.document.write('</td></tr>');
+
+        printWindow.document.write('<tr><td">');
+        printWindow.document.write('<table align="center">');
+        printWindow.document.write('<tbody>');
+        printWindow.document.write(divContents);
+
+        printWindow.document.write('</tbody></table>    </td>   </tr>  </tbody></table>');
+
+
+
+
+
+        //printWindow.document.write(divContents);
+
+        printWindow.document.write('</body> </html>');
+        printWindow.document.close();
+
+        //printWindow.print();   print แบบนี้มีปัญหา run ไม่ได้ทุก Browser
+    }
+
+    function JsPrint(tableId) {
+        PrintPanel(tableId);
+    }
+
+</script>
+
 
 
 

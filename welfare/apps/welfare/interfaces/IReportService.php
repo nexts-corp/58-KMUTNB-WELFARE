@@ -20,12 +20,11 @@ interface IReportService {
  public function reportList($detailsId);
     
   /**
-     * @name reportWelfare
-     * @uri /lists
-     * @param integer memberId 
+     * @name reportApprove
+     * @uri /approve
      * @return html report
-     * @description ออก report ว่าสมาชิกใช้ ได้รับสวัสดิการอะไรบ้าง และใช้สวัสดิการอะไร ไปบ้าง
+     * @description ออก report csv ว่า อนุมัติสวัสดิการอะไรไปแล้วบ้าง
      */
- public function reportWelfare($memberId);
+ public function reportApprove();
  
 }

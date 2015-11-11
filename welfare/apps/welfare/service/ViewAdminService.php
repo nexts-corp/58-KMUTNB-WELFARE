@@ -86,13 +86,11 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 
         $view->employeeType = $this->taxonomy->getPCode("employeeType");
 
-        $view->position = $this->taxonomy->getPCode("position");
 
         $view->department = $this->taxonomy->getPCode("department");
 
         $view->faculty = $this->taxonomy->getPCode("faculty");
 
-        $view->userType = $this->taxonomy->getPCode("userType");
         
         return $view;
     }
@@ -149,6 +147,12 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 //                
 //            }
 
+
+        return $view;
+    }
+
+    public function reportPdfAp() {
+        $view = new CJView("admin/report/listPdfAp", CJViewType::HTML_VIEW_ENGINE);
 
         return $view;
     }

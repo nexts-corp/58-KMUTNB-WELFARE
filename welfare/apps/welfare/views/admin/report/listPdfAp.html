@@ -1,0 +1,136 @@
+
+<style>
+    #showMain{
+        display: none;
+    }
+
+    table.gridtable {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+    }
+    table.gridtable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+    }
+    table.gridtable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
+
+    }
+
+
+
+    /*From TEST */
+
+    @media print
+    {
+        table.gridtable     { page-break-after: auto; }
+        table.gridtable   tr    { page-break-inside:avoid;page-break-after: auto; }
+        table.gridtable   td    { page-break-inside:avoid; page-break-after:auto;font-size: 11px;}
+        table.gridtable   thead { display:table-header-group }
+        table.gridtable   tfoot { display:table-footer-group }
+    }
+
+
+    .formCustomControl {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        position: relative;
+        background-color: #ffffff;
+        border: 1px solid #999999;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        outline: 0;
+        margin-bottom: 10px;
+        width: 480px;
+    }
+    @media print {
+        #prints {
+            display: none;
+        }
+    }
+</style>
+
+<div class="page-body">
+
+    <button type="button" id="prints" onclick="JsPrint();" class="btn btn-default reportPDF">
+        <i class="fa fa-print"></i>
+    </button>
+
+
+    <table   class="gridtable" id="listWelfare">
+
+
+    </table>
+</div>
+
+
+
+<script>
+    
+    sendData('{{_context_path}}/api/welfare/history/check/approve', null,
+            function (result) {
+
+                var html1 = "";
+                html1 += ' <tr >';
+
+                html1 += '<th class="text-center">ลำดับ</th>';
+                html1 += '<th class="text-center">ชื่อ-นามสกุล</th>';
+
+                html1 += '<th class="text-center">เพศ</th>';
+                html1 += '<th class="text-center">สังกัด</th>';
+                html1 += '<th class="text-center">ประเภทพนักงาน</th>';
+                html1 += '<th class="text-center">ชื่อสวัสดิการ</th>';
+                html1 += '<th class="text-center">สถานะ</th>';
+                html1 += '<th class="text-center">วันที่ปรับปรุง</th>'
+                html1 += '</tr>';
+                $.each(result.history, function (key, value) {
+
+                    html1 += '<tr class="selectable">';
+                    html1 += '<td>' + (key + 1) + '</td>';
+                    html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                    html1 += '<td>' + value.gender1 + '</td>';
+                    html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                    html1 += '<td>' + value.employeeType1 + '</td>';
+                    html1 += '<td>' + value.name + '</td>';
+                    html1 += '<td class = "center" >';
+                    
+                    if(value.statusApprove=="N"){
+                     html1 += 'ไม่อนุมัติ';
+                    }else if(value.statusApprove=="Y"){
+                     html1 += 'อนุมัติแล้ว';
+                    }else if(value.statusApprove=="P"){
+                     html1 += 'รอดำเนินการ';
+                    }
+
+                    
+                    html1 += '</td>';
+                    html1 += '<td>';
+                    html1 += ''+ value.dateUpdated + '';
+                    html1 += '</td>'
+                    html1 += '</tr>';
+                });
+                $("#listWelfare").html(html1);
+
+                
+
+            });
+    function JsPrint() {
+        window.print();
+    }
+</script>
