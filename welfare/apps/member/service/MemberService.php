@@ -305,48 +305,98 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
-        
+        print_r($data);
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;
-        $searchName = $this->getRequest()->searchName;  
-        $filtercode = $data->filterCode;
-        $filtervalue = $data->filtervalue;
+//        $searchName = $this->getRequest()->searchName;  
+//        $filtercode = $data->filterCode;
+//        $filtervalue = $data->filtervalue;
 //        print_r($facultyId);
 //        print_r($departmentId);
-        $sql = "select * "
-                . "FROM v_fullMember mem1 ";
-
-        if ($usertype == "administrator") {
-            $sql .= "WHERE ";
-        } elseif ($usertype == "adminFaculty") {
-            $sql .= "join taxonomy tax "
-                    . "on tax.id = mem1.facultyId "
-                    . "WHERE tax.code = '$facultyId' and ";
-        } elseif ($usertype == "adminDepartment") {
-            $sql .= "join taxonomy tax "
-                    . "on tax.id = mem1.departmentId "
-                    . "WHERE tax.code = '$departmentId' and ";
-        }
-
-        if ($searchName != "") {
-
-            $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name and mem1.memberActive2 = 'Working'";
-            $param = array(
-                "name" => "%" . $searchName . "%"
-            );
-        } else if ($filtercode == "memberActive") {
-
-            $sql .= "  mem1." . $filtercode . "Id = :filtervalue ";
-            $param["filtervalue"] = $filtervalue;
+        if ($data == "") {
+            $sql = "select * "
+                    . "FROM v_fullMember mb ";
         } else {
 
-            $sql .= "  mem1." . $filtercode . "Id = :filtervalue and mem1.memberActive2 = 'Working' ";
-            $param["filtervalue"] = $filtervalue;
+            $where = "";
+            if ($data->faculty) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.facultyId='" . $data->faculty . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->filterdepartment) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.departmentId='" . $data->filterdepartment . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->filtermemberActive) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.memberActiveId='" . $data->filtermemberActive . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->filteremployeeType) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.employeeTypeId='" . $data->filteremployeeType . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->searchName) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .="mb.fname LIKE '%" . $data->searchName . "%' or mb.lname LIKE '%" . $data->searchName . "%'";
+            } else {
+                $where .="";
+            }
+
+            $sql = "select * "
+                    . "FROM v_fullMember mb ";
+
+            if ($usertype == "administrator") {
+                $sql .= "where ";
+            } elseif ($usertype == "adminFaculty") {
+                $sql .= "join taxonomy tax "
+                        . "on tax.id = mb.facultyId "
+                        . "WHERE tax.code = '$facultyId' ";
+            } elseif ($usertype == "adminDepartment") {
+                $sql .= "join taxonomy tax "
+                        . "on tax.id = mb.departmentId "
+                        . "WHERE tax.code = '$departmentId' ";
+            }
+
+            $sql .=$where;
         }
 
+//        if ($searchName != "") {
+//
+//            $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name and mem1.memberActive2 = 'Working'";
+//            $param = array(
+//                "name" => "%" . $searchName . "%"
+//            );
+//        } else if ($filtercode == "memberActive") {
+//
+//            $sql .= "  mem1." . $filtercode . "Id = :filtervalue ";
+//            $param["filtervalue"] = $filtervalue;
+//        } else {
+//
+//            $sql .= "  mem1." . $filtercode . "Id = :filtervalue and mem1.memberActive2 = 'Working' ";
+//            $param["filtervalue"] = $filtervalue;
+//        }
 
-        return $this->datacontext->pdoQuery($sql, $param);
+
+        return $this->datacontext->pdoQuery($sql);
     }
 
     public function find($field, $value) {
