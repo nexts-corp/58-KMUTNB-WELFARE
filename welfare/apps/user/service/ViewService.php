@@ -8,13 +8,15 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\user\interfaces\IViewService;
 use apps\taxonomy\entity\Taxonomy;
+use apps\taxonomy\service\TaxonomyService;
 
 class ViewService extends CServiceBase implements IViewService {
 
     public $datacontext;
-
+     public $taxonomy;
     function __construct() {
         $this->datacontext = new CDataContext("default");
+        $this->taxonomy = new TaxonomyService();
     }
 
     public function memberAdd() {
@@ -130,6 +132,9 @@ class ViewService extends CServiceBase implements IViewService {
             $view->lists = $filter->search($datafilter);
         } else {
             $view->lists = $this->datacontext->pdoQuery($sql); //กรณีที่ไม่ได้ search
+            $view->faculty = $this->taxonomy->getPCode("faculty");
+            $view->employeeType = $this->taxonomy->getPCode("employeeType");
+            $view->memberActive = $this->taxonomy->getPCode("memberActive");
         }
         return $view;
     }

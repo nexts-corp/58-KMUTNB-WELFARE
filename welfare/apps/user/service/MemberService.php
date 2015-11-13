@@ -137,31 +137,83 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
-        $searchName = $this->getRequest()->searchName;  
-        $filtercode = $data->filterCode;
-        $filtervalue = $data->filtervalue;
-        $sql = "select *,IFNULL(mem1.academic1,mem1.titleName1) title "
-                . "FROM v_fullmember mem1 "
-                . "WHERE ";
+//        $searchName = $this->getRequest()->searchName;  
+//        $filtercode = $data->filterCode;
+//        $filtervalue = $data->filtervalue;
+//        $sql = "select *,IFNULL(mem1.academic1,mem1.titleName1) title "
+//                . "FROM v_fullmember mem1 "
+//                . "WHERE ";
+//
+//        if ($searchName != "") {
+//            
+//            $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
+//            $param = array(
+//                "name" => "%" .$searchName. "%"
+//            );
+//            
+//        }else if($filtercode =="memberActive"){
+//          
+//          $sql .= "  mem1.".$filtercode."Id = :filtervalue ";
+//            $param["filtervalue"] = $filtervalue;  
+//        }  
+//        else{
+//          
+//          $sql .= "  mem1.".$filtercode."Id = :filtervalue and mem1.memberActive2 = 'Working' ";
+//            $param["filtervalue"] = $filtervalue;  
+//        }
+        if ($data == "") {
+            $sql = "select * "
+                    . "FROM v_fullMember mb  ";
+        } else {
 
-        if ($searchName != "") {
-            
-            $sql .= " mem1.fname LIKE :name or mem1.lname LIKE :name or mem1.idCard LIKE :name ";
-            $param = array(
-                "name" => "%" .$searchName. "%"
-            );
-            
-        }else if($filtercode =="memberActive"){
-          
-          $sql .= "  mem1.".$filtercode."Id = :filtervalue ";
-            $param["filtervalue"] = $filtervalue;  
-        }  
-        else{
-          
-          $sql .= "  mem1.".$filtercode."Id = :filtervalue and mem1.memberActive2 = 'Working' ";
-            $param["filtervalue"] = $filtervalue;  
+            $where = "";
+            if ($data->faculty) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.facultyId='" . $data->faculty . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->filterdepartment) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.departmentId='" . $data->filterdepartment . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->filtermemberActive) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.memberActiveId='" . $data->filtermemberActive . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->filteremployeeType) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .=" mb.employeeTypeId='" . $data->filteremployeeType . "'  ";
+            } else {
+                $where .="";
+            }
+            if ($data->searchName) {
+                if($where!=""){
+                    $where .= " and ";
+                }
+                $where .="mb.fname LIKE '%" . $data->searchName . "%' or mb.lname LIKE '%" . $data->searchName . "%'";
+            } else {
+                $where .="";
+            }
+
+            $sql = "select * "
+                    . "FROM v_fullMember mb where ";
+
+            $sql .=$where;
         }
-        return $this->datacontext->pdoQuery($sql, $param);
+        return $this->datacontext->pdoQuery($sql);
     }
 
     public function changePassword($data) {

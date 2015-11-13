@@ -305,7 +305,7 @@ class MemberService extends CServiceBase implements IMemberService {
     }
 
     public function search($data) {
-        print_r($data);
+//        print_r($data);
         $usertype = $this->getCurrentUser()->usertype;
         $facultyId = $this->getCurrentUser()->attribute->facultyId;
         $departmentId = $this->getCurrentUser()->attribute->departmentId;

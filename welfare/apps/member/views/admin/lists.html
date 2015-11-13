@@ -220,49 +220,7 @@
 //        $("#filtervalue").hide();
         //titleName();
         //listtitleName();
-        $("#filterCode").change(function () {
-            var pCode = $("#filterCode").val();
-
-            var data;
-//            if (pCode == "faculty") {
-//
-//                data = getCode(pCode);
-//                $("#filterdepartment").show();
-//                $("#searchName").hide();
-//            } else if (pCode != "name") {
-//                data = getPCode(pCode);
-//                $("#filterdepartment").hide();
-//                $("#searchName").show();
-//            }
-
-            var html;
-            if ($("#filterCode").val() == "name") {
-
-                $("#searchName").show();
-//                $("#filtervalue").hide();
-            } else {
-                if (data == "") {
-                    html = '<option value="">โปรดเลือก</option>';
-
-                } else {
-                    $.each(data, function (key, value) {
-                        html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
-
-                    });
-                }
-//                $("#searchName").hide();
-
-                $("#filtervalue").html(html);
-            }
-//            $("filtervalue").change(function () {
-//                if($("filtervalue").val()== ""){
-//                    filterdepartment
-//                }
-//
-//            });
-
-
-        });
+        
         $("#filterfaculty").change(function () {
 
             var id = $("#filterfaculty").val();
@@ -333,10 +291,11 @@
                     //sendData('{{_context_path}}/api/welfare/history/check/search', jsonEncode(jdata),
                             function (result) {
 
-                                var html;
+                                var html="";
 //                                $.each(result.history, function (key, value) {
                                 var data = result["search"];
                                 if (data != "") {
+                                    
                                     $.each(data, function (key, value) {
                                         html += "<tr class='selectable'><td>" + value.idCard + "</td>"
                                                 + "<td><div id='title'></div>" + value.titles1 + " " + value.fname + " " + value.lname + "</td>"
