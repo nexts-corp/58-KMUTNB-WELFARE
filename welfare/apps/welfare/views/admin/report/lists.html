@@ -7,7 +7,13 @@
                 <i class="fa fa-home"></i>
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
-            <li class="active">{{#i18n}}listcutwelfare{{/i18n}}</li>
+
+            <li class="active"><a  data-id="content-body" 
+                                   data-api="/welfare/api/welfare/view/admin/welfare/lists" 
+                                   onclick="btnHTML(this)">
+                    {{#i18n}}welfare.list{{/i18n}}</a>
+            </li>
+            <li class="active">{{#datas}}{{name}}{{/datas}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -16,18 +22,31 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xs-12 col-md-12">
+<!--                <div class="well bordered-left bordered-themeprimary">
+                    <div class="panel-heading">
+                        <h6>รายละเอียด : {{#datas}}{{name}}{{/datas}}</h6>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>
+                                เงื่อนไขทั้งหมด : เงื่อนไข
+                            </li>
+                            <li>จำนวนผู้เข้าเงื่อนไขทั้งหมด : คน</li>
+                            <li>จำนวนผู้ใช้สวัสดิการทั้งหมด : คน</li>
+                            <li>จำนวนการใช้สวัสดิการทั้งหมด :  ครั้ง</li>
+                            
+                        </ul>
+                    </div>
+               </div>
+                -->
+                
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}listcutwelfare{{/i18n}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#datas}}{{name}}{{/datas}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-<!--                        <label class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา">            
-                        </label>
 
-                        <div class="col-lg-3">
-                            <button id="xx" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                        </div>-->
+
 
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -75,13 +94,13 @@
 
 
 <script>
-$(".reportCsv").click(function () {
-      var id=$(this).attr("row-index");
-   
-        window.open('{{_context_path}}/api/welfare/reports/lists?detailsId='+id);
+    $(".reportCsv").click(function () {
+        var id = $(this).attr("row-index");
+
+        window.open('{{_context_path}}/api/welfare/reports/lists?detailsId=' + id);
 
 
-});
+    });
 
 
 </script>

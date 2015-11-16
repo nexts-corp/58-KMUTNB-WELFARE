@@ -13,7 +13,7 @@
 
                                   onclick="btnHTML(this)">{{#i18n}}welfare.bymember{{/i18n}}</a></li>
 
-            <li class="active">{{#i18n}}welfare.right{{/i18n}}</li>
+            <li class="active">{{#datasMember}}{{titles1}}{{fname}} {{lname}}{{/datasMember}}</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -22,28 +22,74 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xs-12 col-md-12">
+                
+                <div class="widget">
+                    <div class="widget-header  with-footer"> <span class="widget-caption"></span>
+                        <div class="widget-buttons"> </div>
+                    </div>
+                    
+                    <div class="widget-body">
+                     
+                        
+
+                        <div class="flip-scroll">
+
+                            <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
+
+                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#datasMember}}
+                                    <tr>
+                                        <td>{{titles1}} {{fname}} {{lname}}</td>
+                                        <td>{{gender1}}</td>
+                                        <td>{{department1}} {{faculty1}}</td>
+                                        <td>{{employeeType1}}</td>
+                                            
+                                    </tr>
+                                    {{/datasMember}}
+                                    
+                                    
+
+                                </tbody>
+
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+                
+              
                 <div class="widget">
                     <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.right{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
+                    
                     <div class="widget-body">
-<!--                                               <div class="col-lg-5 control-label">
-                                                    <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-                                                    <p id="demo" style="color:#d14"></p>
-                                                </div>-->
+                        <div class="col-lg-5 control-label">
+                            
+                        </div>
                         <div class="pull-right">
-                        <div class="col-lg-3">
-                            <button type="button" class="btn btn-success"
-                                    id="reportCsv"
-                                    data-whatever="">
-                                <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                            </button>                                               
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-success"
+                                        id="reportCsv"
+                                        data-whatever="">
+                                    <i class="fa fa-file-excel-o"></i>EXPORT CSV
+                                </button>                                               
+                            </div>
                         </div>
-                        </div>
 
 
 
-                      <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
 
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -115,13 +161,14 @@
 </div>
 <!--End Large Modal Templates-->
 <script>
-$("#reportCsv").click(function () {
-      var id=$(this).attr("row-index");
+    $("#reportCsv").click(function () {
+        //var id = $(this).attr("row-index");
+         var memberId = "{{memberId}}";
+      
+        window.open('{{_context_path}}/api/welfare/reports/right?memberId=' + memberId);
         
-        window.open('{{_context_path}}/api/welfare/reports/lists?detailsId='+id);
 
-
-});
+    });
 
 
 </script>
@@ -136,7 +183,7 @@ $("#reportCsv").click(function () {
                     var html1 = "";
 
                     $.each(result.right, function (key, value) {
-                        if (value.detailsId !="" && value.statusApprove != "") {
+                        
                             html1 += '<tr class="selectable">';
                             html1 += '<td>' + (key + 1) + '</td>';
                             html1 += '<td>' + value.name + ',' + value.description + '</td>';
@@ -169,7 +216,7 @@ $("#reportCsv").click(function () {
                                 html1 += 'row-welfareId = "' + value.welfareId + '">';
                                 html1 += '<i class = "fa fa fa-eye"> </i>รอดำเนินการ';
                                 html1 += '</button>';
-                            }else if (value.statusApprove == "") {
+                            } else{
 
                                 html1 += '<button class="btn btn-info btn-xs edit">';
                                 html1 += '<i class = "fa fa-eye-slash"> </i>ยังไม่มีการใช้สวัสดิการ';
@@ -178,9 +225,7 @@ $("#reportCsv").click(function () {
 
                             html1 += '</td>';
                             html1 += '</tr>';
-                        } else {
-                            html1 += '<b> ไม่พบข้อมูล </b>';
-                        }
+                        
 
                     });
 

@@ -22,25 +22,59 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <div class="col-lg-5 control-label">
-                            <input type="text" class="form-control" name="SearchName" id="SearchName" placeholder="ค้นหา" >  
-                            <p id="demo" style="color:#d14"></p>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <button id="btnsearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                        </div>
-
-
                         <div class="pull-right">
-
                             <button class="btn btn-primary"
                                     data-id="content-body"
                                     data-api="{{_context_path}}/api/welfare/view/admin/welfare/add"
                                     onclick="btnHTML(this)">
                                 <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
                             </button>
+                            <button type="button" class="btn btn-success reportCsv" >
+                                <i class="fa fa-file-excel-o"></i>EXPORT CSV
+                            </button>
+
+                            <button type="button" class="btn btn-warning" onclick=" JsPrint('DataPanel');">
+                                <i class="fa fa-print"></i>PRINT
+                            </button>
+
                         </div>
+
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="col-lg-3 control-label">
+                                <div class="input-group">
+                                    <input class="form-control cDate welfare" id="dateStart" name="dateStart" placeholder="ค้นหาตั้งแต่ วันที่เริมใช้งาน "
+                                           data-validation="required" data-validation-error-msg="*ค้นหาจาก วันที่เริมใช้งาน " 
+                                           data-validation-error-msg-container="#dateStart-th-msg-error" />
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-3 control-label">
+                                <div class="input-group">
+                                    <input class="form-control cDate welfare" id="dateEnd" name="dateEnd" placeholder="ค้นหาถึง วันที่สิ้นสุดการใช้งาน"
+                                           data-validation="required" data-validation-error-msg="*ถึง วันที่สิ้นสุดการใช้งาน" 
+                                           data-validation-error-msg-container="#dateStart-th-msg-error" />
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 control-label">
+                                <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อสวัสดิการ" list="filterCode">
+
+                            </div>
+                            <div class="col-lg-2">
+                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            </div>
+                            <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        </div>
+
+
+
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
@@ -55,49 +89,12 @@
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{#datas}}
-                                    <tr class="selectable">
-                                        <td>{{rowNo}}</td>
-                                        <td>{{name}}</td>
-                                        <td>{{dateStart}}</td>
-                                        <td>{{dateEnd}}</td>
-                                        <td>{{resetTime}}</td>
-                                        <td class="center">
-                                          
-                                            <button class="btn btn btn-default btn-xs edit btn_history"
-                                                   data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/admin/report/welfare"
-                                                    data-object='welfareId'
-                                                    data-param='{{welfareId}}'
-                                                    onclick="btnHTML(this)">
-                                                
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}
-                                            </button>
-                                            
-                                            <button class="btn btn-info btn-xs edit"
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/welfare/view/admin/welfare/edit"
-                                                    data-object='welfareId'
-                                                    data-param='{{welfareId}}'
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}} 
-                                            </button>
-                                            <button class="btn-del btn btn-xs btn-danger" row-index="{{welfareId}}" >{{#i18n}}inactive{{/i18n}}</button>
-                                        </td>
-
-                                    <tr class="details1" style="display: none;" >
-                                        <td class="details" colspan="6">
-                                            <div class="well bordered-left bordered-themeprimary" id="showDetails"> </div> 
+                                <tbody id="listWelfare">
 
 
-                                                    
 
-                                        </td>
-                                    </tr>
 
-                                    </tr>
-                                    {{/datas}}
+
                                 </tbody>
 
                             </table>
@@ -110,44 +107,187 @@
 
     <!-- /Page Body -->
 </div>
-<!--<script>
-            $(function() {
-            var availableTags = [
-            {{#datas}}"{{name}}",
-            {{/datas}}
-            ];
-                    $("#SearchName").autocomplete({
-            source: availableTags
-            });
-            });</script>-->
+<div style="display: none" id="printPdf"> </div>
 
 <script>
     
-    $('.btn-del').click(function () {
-        var Id = $(this).attr('row-index');
-        if (confirm("คุณต้องการปิดใช้งาน?")) {
-            var data = {"Id": Id};
-            sendData('{{_context_path}}/api/welfare/welfare/delete', data,
-                    function (result) {
-                        if (result.delete == true) {
-                            getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/welfare/lists', null);
-                            Notify('ปิดใช้งานข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
-                        } else {
-                            Notify('ปิดใช้งานไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                        }
+    $(document).ready(function () {
+        getWelfare();
+    })
+    $(".reportCsv").click(function () {
+       
+        window.open('{{_context_path}}/api/welfare/reports/csv/welfare');
+
+
+    });
+    $('#btnSearch').click(function () {
+        getWelfare();
+    })
+    function getWelfare() {
+
+        var dateStart = $("#dateStart").val();
+        var dateEnd = $("#dateEnd").val();
+        var searchName = $("#searchName").val();
+        var data = {};
+        data['dateStart'] = dateStart;
+        data['dateEnd'] = dateEnd;
+        data['searchName'] = searchName;
+        var jdata = {};
+        jdata['data'] = data;
+        sendData('{{_context_path}}/api/welfare/welfare/search/welfare', jsonEncode(jdata),
+                function (result) {
+
+                    var html1 = "";
+                    $.each(result.welfare, function (key, value) {
+
+                        html1 += '<tr class="selectable">';
+                        html1 += '<td>' + (key + 1) + '</td>';
+                        html1 += '<td>' + value.name + '</td>';
+                        html1 += '<td>' + value.dateStart + '</td>';
+                        html1 += '<td>' + value.dateEnd + '</td>';
+                        html1 += '<td>' + value.resetTime + '</td>';
+                        html1 += '<td class = "center" >';
+
+                        html1 += '<button class="btn btn btn-default btn-xs edit btn_history"';
+                        html1 += 'data-id="content-body"';
+                        html1 += 'data-api="{{_context_path}}/api/welfare/view/admin/report/welfare"';
+                        html1 += 'data-object="welfareId"';
+                        html1 += 'data-param="' + value.welfareId + '"';
+                        html1 += 'onclick="btnHTML(this)">';
+                        html1 += '<i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}';
+                        html1 += '</button>';
+
+                        html1 += '<button class="btn btn-info btn-xs edit"';
+                        html1 += 'data-id="content-body"';
+                        html1 += 'data-api="{{_context_path}}/api/welfare/view/admin/welfare/edit"';
+                        html1 += 'data-object="welfareId"';
+                        html1 += 'data-param="' + value.welfareId + '"';
+                        html1 += 'onclick="btnHTML(this)">';
+                        html1 += '<i class="fa fa-edit"></i>{{#i18n}}edit{{/i18n}}';
+                        html1 += '</button>';
+                        html1 += '</td>';
+                        html1 += '</tr>';
                     });
+                    $("#listWelfare").html(html1);
 
-        }
+                });
 
-    });
+    }
 
-    $("#btnsearch").click(function () {
-        var SearchName = $("#SearchName").val();
-        if (SearchName == "") {
-            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
-        } else {
 
-            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName: SearchName});
-        }
-    });
+//    $('.btn-del').click(function () {
+//        var Id = $(this).attr('row-index');
+//        if (confirm("คุณต้องการปิดใช้งาน?")) {
+//            var data = {"Id": Id};
+//            sendData('{{_context_path}}/api/welfare/welfare/delete', data,
+//                    function (result) {
+//                        if (result.delete == true) {
+//                            getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/welfare/lists', null);
+//                            Notify('ปิดใช้งานข้อมูลสำเร็จ!', 'top-right', '4000', 'danger', 'fa fa-trash-o', true);
+//                        } else {
+//                            Notify('ปิดใช้งานไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+//                        }
+//                    });
+//
+//        }
+//
+//    });
+//
+//    $("#btnsearch").click(function () {
+//        var SearchName = $("#SearchName").val();
+//        if (SearchName == "") {
+//            document.getElementById("demo").innerHTML = "กรุณากรอกข้อมูลค้นหา";
+//        } else {
+//
+//            getHTML('content-body', '{{_context_path}}/api/welfare/view/welfare/lists', {SearchName: SearchName});
+//        }
+//    });
+    $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 </script> 
+<script type="text/javascript">
+
+    sendData('{{_context_path}}/api/welfare/welfare/pdf/welfare', null,
+            function (result) {
+
+                var html1 = "";
+                html1 += ' <tr>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ลำดับ</th>';
+
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ชื่อสวัสดิการ</th>';
+
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">วันที่เริ่ม</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">วันที่สิ้นสุด</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">สิทธิ์สวัสดิการ</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">จำนวนผู้ได้รับสิทธิ์</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">จำนวนผู้ใช้สิทธ์</th>';
+                html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">ใช้แล้วจำนวน/ครั้ง</th>';
+                html1 += '</tr>';
+                $.each(result.welfare, function (key, value) {
+
+                    html1 += '<tr class="selectable">';
+                    html1 += '<td width="1%"  style=" font-size: 5px; color: #303030;  text-align: center; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 1px 1px 1px;">' + (key + 1) + '</td>';
+                    html1 += '<td width="30%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.name + '  ' + value.description + '</td>';
+                    html1 += '<td width="10%" style=" font-size: 5px; color: #303030;  text-align: center; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.dateStart + '</td>';
+                    html1 += '<td width="10%" style=" font-size: 5px; color: #303030;  text-align: center; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.dateEnd + '</td>';
+                    html1 += '<td width="8%" style=" font-size: 5px; color: #303030;  text-align: center; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 3px 3px 3px;">' + value.resetTime + '</td>';
+                    html1 += '<td width="8%" style=" font-size: 2px; color: #b3b2b2;  text-align: center; text-align:center;  vertical-align: middle;">';
+                    html1 += '' + value.totals + ' คน ';
+                    html1 += '<td width="10%" style=" font-size: 5px; color: #303030;  text-align: center; font-family: Arial, Helvetica, sans-serif;   vertical-align: middle; padding: 0 3px 3px 3px;">' + value.countMember + '</td>';
+
+                    html1 += '<td width="10%" style=" font-size: 2px; color: #b3b2b2;  text-align: center; text-align:center;   vertical-align: middle;">';
+                   
+                    html1 += '' + value.countUse + '';
+                    html1 += '</td>'
+                    html1 += '</tr>';
+                });
+                $("#printPdf").html(html1)
+            });
+
+    function PrintPanel(tableId) {
+
+
+        var divContents = $("#printPdf").html();
+        var printWindow = window.open('', '', 'height=600,width=1050,scrollbars=1');
+        //สร้าง popup
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('<link href="{{_context_path}}/assets/css/bootstrap.min.css" rel="stylesheet" />');
+
+
+        printWindow.document.write('</head><body onLoad="self.print();self.close();">');
+        // สั่ง Print เมื่อ reder เสร็จ
+        printWindow.document.write('<table top="5px" width="100%">');
+        printWindow.document.write('<tbody>');
+
+
+        printWindow.document.write('<tr><td width="100%" align="center" style=" font-size:  12px; color: #b3b2b2;  text-align: center;   vertical-align: middle;  ">');
+        printWindow.document.write('มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ');
+        printWindow.document.write('</td></tr>');
+
+        printWindow.document.write('<tr><td width="100%" align="center" style=" font-size:  12px; color: #b3b2b2;  text-align: center;   vertical-align: middle;  ">');
+        printWindow.document.write('รายงาน ข้อมูลสวัสดิการ');
+        printWindow.document.write('</td></tr>');
+
+        printWindow.document.write('<tr><td">');
+        printWindow.document.write('<table align="center">');
+        printWindow.document.write('<tbody>');
+        printWindow.document.write(divContents);
+
+        printWindow.document.write('</tbody></table>    </td>   </tr>  </tbody></table>');
+
+
+
+
+
+        //printWindow.document.write(divContents);
+
+        printWindow.document.write('</body> </html>');
+        printWindow.document.close();
+
+        //printWindow.print();   print แบบนี้มีปัญหา run ไม่ได้ทุก Browser
+    }
+
+    function JsPrint(tableId) {
+        PrintPanel(tableId);
+    }
+
+</script>

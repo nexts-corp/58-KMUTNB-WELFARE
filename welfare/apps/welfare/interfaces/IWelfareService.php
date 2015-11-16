@@ -71,4 +71,38 @@ interface IWelfareService {
      */
     public function byWelfare($welfareId);
     
+    /**
+     * @name searchWelfare
+     * @uri /search/welfare
+     * @param string data
+     * @return string welfare
+     * @description ค้นหาข้อมูลสวัสดิการ
+     */
+    public function searchWelfare($data);
+    
+    /**
+     * @name pdfWelfare
+     * @uri /pdf/welfare
+     * @return string welfare
+     * @description ปริ้นข้อมูลสวัสดิการ
+     */
+    public function pdfWelfare();
+    
+     /**
+     * @name rightMember
+     * @uri /right/member
+     * @param string data
+     * @return string member
+     * @description 
+     */
+    public function rightMember($data);
+    
+     /**
+     * @name getMemPreview
+     * @uri /mempreview
+     * @param apps\welfare\entity\Conditions conditions
+     * @return string preview
+     * @description test
+     */
+    public function getMemPreview($conditions);
 }

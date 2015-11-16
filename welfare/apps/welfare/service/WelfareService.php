@@ -12,14 +12,13 @@ use apps\welfare\entity\Details;
 use apps\welfare\entity\Conditions;
 use apps\taxonomy\entity\Taxonomy;
 
-
 class WelfareService extends CServiceBase implements IWelfareService {
 
     public $datacontext;
     public $common;
 
-    function __construct() {
-        $this->datacontext = new CDataContext();
+    public function __construct() {
+        $this->datacontext = new CDataContext(NULL);
         $this->common = new CommonService();
     }
 
@@ -130,10 +129,10 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $welfare->details = $details;
         return $welfare;
     }
-    
-       public function preview($conditions) {
+
+    public function preview($conditions) {
         //ตรวจสอบว่าเงื่อนไข ตรงกับบุคลากรไหนบ้าง
-        
+
         $query = "SELECT *,IFNULL(academic1,titleName1) title "
                 . "FROM v_fullmember "
                 . "where ";
@@ -186,8 +185,8 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
         return $member;
     }
-    
-     public function checkWelfare() {
+
+    public function checkWelfare() {
 
         $memberId = $this->getRequest()->memberId;
         $mb = new \apps\member\service\MemberService();
@@ -287,41 +286,49 @@ class WelfareService extends CServiceBase implements IWelfareService {
                 . "on wfdt.welfareId = wf.welfareId "
                 . "Left JOIN taxonomy rt  "
                 . "on wfdt.returnTypeId = rt.id "
-                . "where detailsId in ( " . $id . " )";
+                . "where wf.statusActive='Y' and detailsId in ( " . $id . " )";
 
 
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
 
 
         $sqlHistory = "SELECT htr.historyId,htr.detailsId,htr.statusApprove "
-                . "From welfarehistory htr where detailsId in (" . $id . ") and memberId=:memberId Order By htr.historyId desc ";
+                . "From welfarehistory htr where detailsId in (" . $id . ") and memberId=:memberId ";
 
         $param1 = array("memberId" => $memberId);
 
         $objHistory = $this->datacontext->pdoQuery($sqlHistory, $param1);
 
-        if (!empty($objHistory)) {
-            foreach ($objHistory as $key => $value) {
 
-                $objDetailsId[0]['statusApprove'] = $value["statusApprove"];
-                $objDetailsId[0]['historyId'] = $value["historyId"];
+
+        if (!empty($objHistory)) {
+            foreach ($objDetailsId as $key => $value) {
+                $objDetailsId[$key]['statusApprove'] = "";
+                $objDetailsId[$key]['historyId'] = "";
+                foreach ($objHistory as $key1 => $value1) {
+                    if ($key['detailsId'] == $key1['detailsId']) {
+                        $objDetailsId[$key]['statusApprove'] = $value1["statusApprove"];
+                        $objDetailsId[$key]['historyId'] = $value1["historyId"];
+                    }
+                }
             }
-        } else {
-            $objDetailsId[0]['statusApprove'] = "";
-            $objDetailsId[0]['historyId'] = "";
         }
 
-        return $objDetailsId;
+        if ($objDetailsId != "") {
+            return $objDetailsId;
+        } else {
+            return false;
+        }
     }
 
     public function byWelfare($data) {
-        
+
 //        $welfaredao = new Welfare();
 //        $welfaredao->welfareId = $data->welfareId;
 //        $objwelfare = $this->datacontext->getObject($welfaredao);
 //        $objwelfare = $this->common->afterGet($objwelfare, array("dateCreated", "dateUpdated", "createBy", "updateBy"));
 //        
-         $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
+        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
                 . "wfdt.welfareId,  "
                 . "rt.value1 As returntType,rt.id,"
                 . "wf.name,wf.statusActive,wf.description  "
@@ -331,15 +338,285 @@ class WelfareService extends CServiceBase implements IWelfareService {
                 . "Left JOIN taxonomy rt  "
                 . "on wfdt.returnTypeId = rt.id "
                 . "where wfdt.detailsId=:detailsId";
-         $param=array("detailsId" => $data->detailsId);
+        $param = array("detailsId" => $data->detailsId);
 
-        $objdetails = $this->datacontext->pdoQuery($sqlDetails,$param);
-        
-      
-        
-        
+        $objdetails = $this->datacontext->pdoQuery($sqlDetails, $param);
+
         return $objdetails;
-        
+    }
+
+    public function searchWelfare($data) {
+
+
+        if ($data->dateStart != "" or $data->dateEnd != "" or $data->searchName != "") {
+            $where = "";
+
+
+
+            if ($data->dateStart != "" && $data->dateEnd == "") {
+                $arrdateStart = explode("-", $data->dateStart);
+                $year = $arrdateStart[2] - "543";
+                $dateStart = $year . "-" . $arrdateStart[1] . "-" . $arrdateStart[0];
+
+
+
+                $where .="And wf.dateStart >= '" . $dateStart . "'";
+            } elseif ($data->dateStart == "" && $data->dateEnd != "") {
+
+                $arrdateEnd = explode("-", $data->dateEnd);
+                $year = $arrdateEnd[2] - "543";
+                $dateEnd = $year . "-" . $arrdateEnd[1] . "-" . $arrdateEnd[0];
+
+                $where .="And wf.dateEnd <= '" . $dateEnd . "'";
+            } elseif ($data->dateStart != "" && $data->dateEnd != "") {
+
+                $arrdateStart = explode("-", $data->dateStart);
+                $year = $arrdateStart[2] - "543";
+                $dateStart = $year . "-" . $arrdateStart[1] . "-" . $arrdateStart[0];
+
+                $arrdateEnd = explode("-", $data->dateEnd);
+                $year = $arrdateEnd[2] - "543";
+                $dateEnd = $year . "-" . $arrdateEnd[1] . "-" . $arrdateEnd[0];
+
+                $where .="And wf.dateStart >= '" . $dateStart . "' And  wf.dateEnd <= '" . $dateEnd . "'";
+            }
+            if ($data->searchName) {
+                $where .="And wf.name LIKE '%" . $data->searchName . "%'";
+            }
+
+
+
+            $sqlWelfare = "SELECT wf.welfareId,wf.name,wf.statusActive,wf.resetTime,wf.free , "
+                    . "wf.willing,wf.dateStart,wf.dateEnd "
+                    . " FROM welfare wf where wf.statusActive='Y' " . $where . " ";
+            $obj = $this->datacontext->pdoQuery($sqlWelfare);
+
+            foreach ($obj as $key => $value) {
+
+                if ($obj[$key]['resetTime'] == "12") {
+                    $obj[$key]['resetTime'] = "ทุก 1 ปี";
+                } elseif ($obj[$key]['resetTime'] == "0") {
+                    $obj[$key]['resetTime'] = "ครั้งเดียว";
+                } elseif ($obj[$key]['resetTime'] == "6") {
+                    $obj[$key]['resetTime'] = "ทุก 6 เดือน";
+                }
+            }
+
+            return $obj;
+        } else {
+
+            $daoWelfare = new Welfare();
+            $obj = $this->datacontext->getObject($daoWelfare);
+            $obj = $this->common->afterGet($obj);
+
+            foreach ($obj as $key => $value) {
+
+                if ($obj[$key]->resetTime == "12") {
+                    $obj[$key]->resetTime = "ทุก 1 ปี";
+                } elseif ($obj[$key]->resetTime == "0") {
+                    $obj[$key]->resetTime = "ครั้งเดียว";
+                } elseif ($obj[$key]->resetTime == "6") {
+                    $obj[$key]->resetTime = "ทุก 6 เดือน";
+                }
+            }
+
+
+            return $obj;
+        }
+    }
+
+    public function pdfWelfare() {
+
+
+        $where = "select w.welfareId,
+                count(cm.countMember) as countMember,
+                cu.countUse from welfare w 
+                join (
+                select
+                welfareId,
+                memberId as countMember
+                from welfarehistory group by welfareId,memberId
+                ) cm on w.welfareId = cm.welfareId
+                join (
+                select
+                welfareId,
+                count(memberId) as countUse
+                from welfarehistory group by welfareId
+                ) cu on w.welfareId = cu.welfareId
+                group by w.welfareId,w.name";
+        $obj = $this->datacontext->pdoQuery($where);
+
+        $count = array();
+        $welfare = new \apps\welfare\entity\Welfare();
+        $welfare->statusActive = "Y";
+        $wf = $this->datacontext->getObject($welfare);
+        foreach ($wf as $keyWf => $valWf) {
+            $count[$valWf->welfareId] = 0;
+            $detail = new \apps\welfare\entity\Details();
+            $detail->welfareId = $valWf->welfareId;
+            $wd = $this->datacontext->getObject($detail);
+            foreach ($wd as $keyWd => $valWd) {
+                $cond = new \apps\welfare\entity\Conditions();
+                $cond->detailsId = $valWd->detailsId;
+                $wc = $this->datacontext->getObject($cond);
+                if (count($wc) > 0) {
+                    $mb = $this->preview($wc);
+                    $count[$valWf->welfareId] += count($mb);
+                }
+            }
+        }
+
+
+
+        foreach ($wf as $key => $value) {
+
+            if ($value->resetTime == "12") {
+                $value->resetTime = "ทุก 1 ปี";
+            } elseif ($value->resetTime == "0") {
+                $value->resetTime = "ครั้งเดียว";
+            } elseif ($value->resetTime == "6") {
+                $value->resetTime = "ทุก 6 เดือน";
+            }
+
+            foreach ($count as $key1 => $value1) {
+                if ($value->welfareId == $key1) {
+                    $wf[$key]->totals = $value1;
+                }
+            }
+
+            $wf[$key]->dateStart = date_format($value->dateStart, "Y-m-d");
+            if ($value->dateEnd != "") {
+                $wf[$key]->dateEnd = date_format($value->dateEnd, "Y-m-d");
+            }
+            $wf[$key]->countMember = "";
+            $wf[$key]->countUse = "";
+
+            foreach ($obj as $keyobj => $valueobj) {
+
+                if ($value->welfareId == $obj[$keyobj]['welfareId']) {
+                    $wf[$key]->countMember = $valueobj['countMember'];
+                    $wf[$key]->countUse = $valueobj['countUse'];
+                }
+            }
+        }
+
+
+        return $wf;
+    }
+
+    public function rightMember($data) {
+
+        $where = "";
+        $checkWhere = "";
+        if ($data != "") {
+
+            if ($data->faculty != "" or $data->department != "" or $data->employeeType != "" or $data->gender != "" or $data->searchName != "") {
+                $checkWhere .= "where";
+            }
+
+
+            if ($data->faculty != "") {
+                if ($where != "") {
+                    $where .= " and ";
+                }
+                $where .="  mb.facultyId='" . $data->faculty . "'";
+            } else {
+                $where .="";
+            }
+            if ($data->department != "") {
+                if ($where != "") {
+                    $where .= " and ";
+                }
+                $where .="  mb.departmentId='" . $data->department . "'";
+            } else {
+                $where .="";
+            }
+            if ($data->employeeType != "") {
+                if ($where != "") {
+                    $where .= " and ";
+                }
+                $where .=" mb.employeeTypeId='" . $data->employeeType . "'";
+            } else {
+                $where .="";
+            }
+            if ($data->gender != "") {
+                if ($where != "") {
+                    $where .= " and ";
+                }
+                $where .=" mb.genderId='" . $data->gender . "'";
+            } else {
+                $where .="";
+            }
+            if ($data->searchName != "") {
+                if ($where != "") {
+                    $where .= " and ";
+                }
+                $where .=" mb.fname LIKE '%" . $data->searchName . "%' or mb.lname LIKE '%" . $data->searchName . "%'";
+            } else {
+                $where .="";
+            }
+        }
+
+        $query = "SELECT mb "
+                . "FROM apps\\member\\model\\Fullmember mb " . $checkWhere . " " . $where;
+
+
+        $member = $this->datacontext->getObject($query);
+
+        return $member;
+    }
+
+    public function getMemPreview($conditions) {
+        $query = "SELECT *,IFNULL(academic1,titleName1) title "
+                . "FROM v_fullmember "
+                . "where ";
+
+        $field = array();
+        foreach ($conditions as $key => $value) {
+            $index = 0;
+            if (!empty($field[$value['fieldMap']])) {
+                $index = count($field[$value['fieldMap']]);
+            }
+            $field[$value['fieldMap']][$index]['operations'] = $value['operations'];
+            $field[$value['fieldMap']][$index]['valuex'] = $value['valuex'];
+        }
+
+        $where = "";
+        foreach ($field as $key => $value) {
+            $count = count($value);
+            $sql = "";
+            if ($where != "") {
+                $sql .= " AND ";
+            }
+            if ($count > 1 && $key == 0) {
+                $sql .= " ( ";
+            }
+            foreach ($value as $key2 => $value2) {
+                if ($sql != "" && $key2 > 0) {
+                    if ($value2['operations'] == "=" || $value2['operations'] == "!=") {
+                        $sql .= " OR ";
+                    } else {
+                        $sql .= " AND ";
+                    }
+                }
+                if (strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                    $sql .= " " . $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                } elseif (!strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                    $sql .= " TIMESTAMPDIFF(YEAR," . $key . ", CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                } else {
+                    $sql .= " " . $key . " " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                }
+            }
+            if ($count > 1) {
+                $sql .= " ) ";
+            }
+            $where .= $sql;
+        }
+
+        $sql = $query . $where;
+
+        $member = $this->datacontext->pdoQuery($sql);
+        return $member;
     }
 
 }

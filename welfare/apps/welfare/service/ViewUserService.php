@@ -140,19 +140,26 @@ class ViewUserService extends CServiceBase implements IViewUserService {
 
         $objHistory = $this->datacontext->pdoQuery($sqlHistory, $param1);
 
-        if(!empty($objHistory)){
-        foreach ($objHistory as $key => $value) {
-            
-            $objDetailsId[0]['statusApprove'] =  $value["statusApprove"];
-            $objDetailsId[0]['historyId'] = $value["historyId"];
-             
+
+
+        if (!empty($objHistory)) {
+            foreach ($objDetailsId as $key => $value) {
+                $objDetailsId[$key]['statusApprove'] = "";
+                $objDetailsId[$key]['historyId'] = "";
+                foreach ($objHistory as $key1 => $value1) {
+                    if ($key['detailsId'] == $key1['detailsId']) {
+                        $objDetailsId[$key]['statusApprove'] = $value1["statusApprove"];
+                        $objDetailsId[$key]['historyId'] = $value1["historyId"];
+                    }
+                }
+            }
         }
-        }else{
-            $objDetailsId[0]['statusApprove'] = "";
-            $objDetailsId[0]['historyId'] = "";
+
+        if ($objDetailsId != "") {
+            return $objDetailsId;
+        } else {
+            return false;
         }
-        
-        return $objDetailsId;
     }
 
 }

@@ -1,4 +1,4 @@
-<!-- Page Content -->
+ <!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
@@ -21,48 +21,58 @@
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                          <div class="pull-right">
-                            <label class="col-lg-12  control-label">
-                                <!--<div class="pull-right">-->
-                            
-                               
-                            </label>
-                            <!--</div>-->
+                        <div class="pull-right">
+
                         </div>
-                        <div class="col-lg-10 col-md-10 col-xs-10 col-sm-9">
-                            <label class="col-lg-2 control-label">
-                                <select id="filterCode" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
-                                    <option value="faculty">คณะ</option>
-                                    <option value="employeeType" >ประเภทพนักงาน</option>
-                                    <option value="memberActive" >สถานะพนักงาน</option>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+
+                            <label class="col-lg-4 control-label">
+                                <select id="faculty" class="form-control" >
+                                    <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
+                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}
+
+                                </select>
+                            </label>
+                            <label class="col-lg-4 control-label">
+                                <select id="department" class="form-control" >
+                                    <option value="" selected="">ค้นหาจากภาควิชา</option>
+                                </select>
+                            </label>
+
+                            <label class="col-lg-4 control-label">
+                                <select id="employeeType" class="form-control" >
+                                    <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
+                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
+                                </select>
+
+                            </label>
+                            <label class="col-lg-4 control-label">
+                                <select id="gender" class="form-control">
+                                    <option value="" selected="" >ค้นหาจากเพศ</option>
+                                    {{#gender}}<option value="{{id}}">{{value1}}</option>{{/gender}}
 
 
                                     <!-- … -->
                                 </select>
-                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
-                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
                             </label>
-                            <label class="col-lg-2 control-label">
-                                <select id="filtervalue" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
+
+                            <div class="col-lg-4 control-label">
+                                <select id="nameAndLast" class="form-control">
+                                    <option value="" selected="" >เลือก</option>
+                                    <option value="nameAndLast" >ค้นหาด้วย ชื่อ-นามสกุล</option>
                                 </select>
-
-                            </label>
-                            <label class="col-lg-3 control-label">
-                                <select id="filterdepartment" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
-                                </select>
-                               
-                            </label>
-
-
-                            <div class="col-lg-2">
-                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                             </div>
+
+                            <div id="showInputSearch" class="col-lg-4 control-label" style="display: none;">
+                                <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อ/นามสกุล" list="filterCode">
+                                <p></p>
+                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                <p></p>
+                            </div>  
+
+
                         </div>
-                       
-                        
+
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
@@ -80,24 +90,10 @@
 
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {{#datasMember}}
-                                    <tr>
-                                        <td>{{rowNo}}</td>
-                                        <td>{{title}}  {{fname}}  {{lname}}</td>
-                                        <td>{{gender1}}</td>
-                                        <td>{{department1}} / {{faculty1}}  </td>
-                                        <td>{{employeeType1}}</td>
-                                        <td>
-                                            <button class="btn btn btn-default btn-xs edit btn_history"
-                                                    row-index="{{memberId}}"
-                                                    row-emploryee="{{employeeTypeId}}">
-                                                <i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}
-                                            </button>
-                                        </td>
+                                <tbody id="listWelfare">
 
-                                    </tr>
-                                    {{/datasMember}}
+
+                                    
 
                                 </tbody>
 
@@ -115,11 +111,97 @@
 
 
 <script>
-    $('.btn_history').click(function () {
-       
-        var memberId = $(this).attr('row-index');
-        var data = {"memberId":memberId};
-        
-        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/right/lists',data)
+    $(document).ready(function () {
+        getSearch();
     });
+
+
+    $("#nameAndLast").change(function () {
+        if ($("#nameAndLast").val() == "nameAndLast") {
+            $("#showInputSearch").show();
+        } else {
+            $("#showInputSearch").hide();
+        }
+    });
+    $("#employeeType").change(function () {
+        getSearch();
+    });
+    $("#department").change(function () {
+        getSearch();
+    })
+
+    $("#gender").change(function () {
+        getSearch();
+    });
+
+    $("#faculty").change(function () {
+        var faculty = $("#faculty").val();
+        var data = {"parentId": faculty};
+        sendData('{{_context_path}}/api/taxonomy/taxonomy/getParentId', data,
+                function (result) {
+                    var html2 = "";
+                    $.each(result.lists, function (key, value) {
+                        html2 += '<option value=' + value.id + '>' + value.value1 + '</option>';
+                    });
+                    $("#department").html(html2);
+                });
+    });
+    $("#btnSearch").click(function () {
+        getSearch();
+    })
+    function getSearch() {
+
+        var faculty = $("#faculty").val();
+        var employeeType = $("#employeeType").val();
+        var gender = $("#gender").val();
+        var searchName = $("#searchName").val();
+        var department = $("#department").val();
+        var data = {};
+
+        data['faculty'] = faculty;
+        data['employeeType'] = employeeType;
+        data['gender'] = gender;
+        data['statusApprove'] = $("#typeStatus").val();
+        data['searchName'] = searchName;
+        data['department'] = department;
+        var jdata = {};
+        jdata['data'] = data;
+        sendData('{{_context_path}}/api/welfare/welfare/right/member', jsonEncode(jdata),
+                function (result) {
+
+                    var html1 = "";
+                    $.each(result.member, function (key, value) {
+
+                        html1 += '<tr class="selectable">';
+                        html1 += '<td>' + (key + 1) + '</td>';
+                        html1 += '<td>' + value.titles1 + ' ' + value.fname + ' ' + value.lname + '</td>';
+                        html1 += '<td>' + value.gender1 + '</td>';
+                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                        html1 += '<td>' + value.employeeType1 + '</td>';
+                        html1 += '<td class = "center" >';
+
+                        html1 += '<button class="btn btn-default btn-xs edit btn_history"';
+                        html1 += 'row-index="' + value.memberId + '"';
+                        html1 += 'row-emploryee="' + value.employeeTypeId + '" >';
+                        html1 += '<i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}';
+                        html1 += '</button> ';
+
+                        html1 += '</td>';
+                        html1 += '</tr>';
+                    });
+                    $("#listWelfare").html(html1);
+
+
+                    $('.btn_history').click(function () {
+
+                        var memberId = $(this).attr('row-index');
+                        var data = {"memberId": memberId};
+
+                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/right/lists', data)
+                    });
+                });
+
+
+    }
+
 </script>

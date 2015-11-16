@@ -105,6 +105,9 @@ class HistoryService extends CServiceBase implements IHistoryService {
                 case 'N':
                     $where .="ap.statusApprove='" . $data->statusApprove . "'";
                     break;
+                case 'P':
+                    $where .="ap.statusApprove='" . $data->statusApprove . "'";
+                    break;    
             }
 
             if ($data->faculty) {

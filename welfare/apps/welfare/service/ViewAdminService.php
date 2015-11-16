@@ -29,35 +29,7 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 
     public function welfareLists() {
         $view = new CJView("admin/welfare/lists", CJViewType::HTML_VIEW_ENGINE);
-        $daoWelfare = new Welfare();
-        $obj = $this->datacontext->getObject($daoWelfare);
-        $obj = $this->common->afterGet($obj);
-//        if (count($obj) > 0) {
-//            foreach ($obj as $key => $value) {
-//                if ($value->dateStart != "") {
-//                    $dsY = $value->dateStart->format('Y') + 543;
-//                    $obj[$key]->dateStart = $value->dateStart->format('d-m-' . $dsY);
-//                }
-//                if ($value->dateEnd != "") {
-//                    $deY = $value->dateEnd->format('Y') + 543;
-//                    $obj[$key]->dateEnd = $value->dateEnd->format('d-m-' . $deY);
-//                }
-//            }
-//        }
-
-        foreach ($obj as $key => $value) {
-
-            if ($obj[$key]->resetTime == "12") {
-                $obj[$key]->resetTime = "ทุก 1 ปี";
-            } elseif ($obj[$key]->resetTime == "0") {
-                $obj[$key]->resetTime = "ครั้งเดียว";
-            } elseif ($obj[$key]->resetTime == "6") {
-                $obj[$key]->resetTime = "ทุก 6 เดือน";
-            }
-        }
-
-
-        $view->datas = $obj;
+        
         return $view;
     }
 
@@ -98,16 +70,19 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
     public function memberLists() {
 
         $view = new CJView("admin/member/lists", CJViewType::HTML_VIEW_ENGINE);
-        $query = "SELECT *,IFNULL(academic1,titleName1) title "
-                . "FROM v_fullmember ";
-        $member = $this->datacontext->pdoQuery($query);
+        
+        $view->academic = $this->taxonomy->getPCode("academic");
 
-        $i = 1;
-        foreach ($member as $key => $value) {
-            $member[$key]["rowNo"] = $i++;
-        }
+        $view->gender = $this->taxonomy->getPCode("gender");
 
-        $view->datasMember = $member;
+        $view->employeeType = $this->taxonomy->getPCode("employeeType");
+
+
+        $view->department = $this->taxonomy->getPCode("department");
+
+        $view->faculty = $this->taxonomy->getPCode("faculty");
+        
+       
 
         return $view;
     }
@@ -115,15 +90,17 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
     public function rightList() {
 
         $memberId = $this->getRequest()->memberId;
-
+        
         $view = new CJView("admin/member/rightLists", CJViewType::HTML_VIEW_ENGINE);
-        $query = "SELECT *,IFNULL(academic1,titleName1) title "
-                . "FROM v_fullmember where memberId=:memberId";
+       $query = "SELECT mb "
+                . "FROM apps\\member\\model\\Fullmember mb where mb.memberId=:memberId" ;
         $param = array("memberId" => $memberId);
-        $member = $this->datacontext->pdoQuery($query, $param);
+        $member = $this->datacontext->getObject($query, $param);
         $view->datasMember = $member;
         $view->memberId = $memberId;
-
+        
+        
+        
         return $view;
     }
 
@@ -133,6 +110,9 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
         $view = new CJView("admin/report/lists", CJViewType::HTML_VIEW_ENGINE);
         $daoWelfare = new WelfareService();
         $objWelfare = $daoWelfare->get($welfareId);
+        
+        
+
         
         $employee = array();
         $view->datasDetails=$objWelfare->details;
@@ -146,8 +126,10 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 //                $view->datasMember = $value;
 //                
 //            }
-
-
+        
+        
+        $view->datas=$objWelfare;
+        
         return $view;
     }
 

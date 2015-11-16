@@ -27,4 +27,20 @@ interface IReportService {
      */
  public function reportApprove();
  
+ /**
+     * @name reportRight
+     * @uri /right
+     * @return html lists
+     * @description ออก report ว่าบุคคลท่านนี้ได้รับสวัสดิการอะไรบ้าง ใช้อะไรไปแล้วบ้าง 
+     */
+ public function reportRight();
+ 
+ /**
+     * @name reportCsvWelfare
+     * @uri /csv/welfare
+     * @return html lists
+     * @description ออก csv ว่าสวัสดิการนี้ ใช้ไปเท่าไร ใครใช้บ้าง
+     */
+ public function reportCsvWelfare();
+ 
 }
