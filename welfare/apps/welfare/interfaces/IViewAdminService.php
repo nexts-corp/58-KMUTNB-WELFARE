@@ -19,6 +19,14 @@ interface IViewAdminService {
     public function welfareLists();
     
      /**
+     * @name add
+     * @uri /approve/add
+     * @return html view
+     * @description เพิ่มการเบิกจ่ายสวัสดิการ
+     */
+    public function approveAdd();
+    
+     /**
      * @name approveLists
      * @uri /approve/lists
      * @return html view
@@ -74,4 +82,5 @@ interface IViewAdminService {
      * @description ออกรายงาน PDF
      */
     public function reportPdfAp();
+    
 }

@@ -406,6 +406,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
         } else {
 
             $daoWelfare = new Welfare();
+           
             $obj = $this->datacontext->getObject($daoWelfare);
             $obj = $this->common->afterGet($obj);
 
@@ -616,6 +617,82 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $sql = $query . $where;
 
         $member = $this->datacontext->pdoQuery($sql);
+        return $member;
+    }
+
+    public function getRightWelfare($data) {
+        
+        $welfareId=$data->welfareId;
+        $daoWelfare = new WelfareService();
+        $objWelfare = $daoWelfare->get($welfareId);
+        $employee = array();
+      
+       foreach ($objWelfare->details as $key => $value) {
+            
+            array_push($employee, $daoWelfare->preview($value->conditions));
+            
+        }
+        
+        $member=array();
+        foreach ($employee as $key => $value){
+            foreach ($value as $key1 => $value1) {
+                array_push($member, $value1);
+            }
+            
+        }
+        
+        return $member;
+        
+    }
+
+    public function getMemberDetails($data) {
+        
+        $conditions = new Conditions();
+        $conditions->detailsId = $data->detailsId;
+        $conditions = $this->datacontext->getObject($conditions);
+        $conditions = $this->common->afterGet($conditions, array("welfareId", "detailsId", "dateCreated", "dateUpdated", "createBy", "updateBy"));
+
+
+        $daoWelfare = new WelfareService();
+        $objMember = $daoWelfare->preview($conditions);
+        
+        if($objMember!=""){
+            return $objMember;
+        }else{
+            return false;
+        }
+        
+    }
+
+    public function searchMemberDetails($data) {
+        
+        $welfareId=$data->welfareId;
+        $idCard=$data->idCard;
+        
+        $mb = new \apps\member\service\MemberService();
+        $member = $mb->find("idCard", $idCard)[0];
+        $memberId=$member->memberId;
+         $sqlDetails = "select wfc.detailsId , wfc.welfareId from welfareconditions wfc
+                join welfaredetails wfd on wfc.detailsId = wfd.detailsId
+                join welfare wf on wf.welfareId = wfd.welfareId
+                where wfc.fieldMap = :fieldmap
+                and wfc.valuex in 
+                ( 
+                   select employeeTypeId from v_fullmember where memberId =:memberId
+                )
+                and wfd.statusActive = 'Y' and wf.statusActive = 'Y' ";
+
+        $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
+        $details = $this->datacontext->pdoQuery($sqlDetails, $param);
+        
+  
+        foreach ($details as $key => $value) {
+            if($value['welfareId']==$data->welfareId){
+               $member->detailsId=$value['detailsId'];
+            }
+        }
+       
+        
         return $member;
     }
 

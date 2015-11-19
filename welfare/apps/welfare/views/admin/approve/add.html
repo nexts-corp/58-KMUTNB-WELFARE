@@ -1,0 +1,367 @@
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">{{#i18n}}home{{/i18n}}</a>
+            </li>
+            <li class="active">รายการสวัสดิการที่รับแล้ว</li>
+            <li class="active">เพิ่มข้อมูล</li>
+        </ul>
+    </div>
+    <!-- /Page Breadcrumb -->
+    <!-- Page Header -->
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+
+            </h1>
+        </div>
+        <!--Header Buttons-->
+
+        <!--Header Buttons End-->
+    </div>
+    <!-- /Page Header -->
+    <!-- Page Body -->
+
+    <div class="page-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-header">
+
+                    </div>
+                    <div class="widget-body">
+                        <form id="registerForm">
+                            <div class="form-horizontal">
+                                <div class="form-title">
+                                    เพิ่มการเบิกจ่ายสวัสดิการ
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-lg-4 control-label">เลือกสวัสดิการ</label>
+                                    <div class="col-lg-5">
+                                        <select id="welfareId" class="form-control" >
+
+                                            {{#dataslist}}<option value="{{welfareId}}">{{name}}</option>{{/dataslist}}
+                                        </select>
+                                    </div>
+                                    <input  name="detailsId"  type="hidden" id="detailsId">
+
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-lg-4 control-label">{{#i18n}}inputcardid{{/i18n}}</label>
+                                    <div class="col-lg-5">
+                                        <span class="input-icon">
+
+
+                                            <input  list="registerIdCard" name="registerIdCard" class="form-control input-sm registerIdCard">
+                                            <datalist id="registerIdCard">
+                                            </datalist>
+                                            <i class="glyphicon glyphicon-search blue"></i>
+                                            <input  name="memberId"  type="hidden" id="memberId">
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <button id="btn_search" name="bn" class="btn btn-default" type="button">ค้นหา</button>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="hidden" class="form-control" name="code" id="code" disabled="disabled"/>
+                                        <input type="text" class="form-control" name="fname" placeholder="{{#i18n}}name{{/i18n}}"
+                                               data-bv-notempty="true" id="fname"
+                                               data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">{{#i18n}}lastname{{/i18n}}</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="lname" placeholder="{{#i18n}}lastname{{/i18n}}"
+                                               data-bv-notempty="true" id="lname"
+                                               data-bv-notempty-message="{{#i18n}}lastname{{/i18n}}" disabled="disabled"/>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">กรุณาระบุจำนวน</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="amount" placeholder="กรุณาระบุจำนวน"
+                                               data-validation="required" data-validation-error-msg="*กรุณาระบุจำนวน" id="amount"
+                                               data-validation-error-msg-container="#amount-msg-error"/>
+                                    </div>
+                                    <div class="col-lg-offset-4" id="amount-msg-error">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <label class="col-lg-4 control-label">วันที่มีการเบิกจ่าย</label>
+                                    <div class="col-lg-6">    
+                                        <div class="input-group">
+                                            <input class="form-control cDate welfare" id="dateUse" name="dateUse" placeholder="เลือกวันที่มีการเบิกจ่าย"
+                                                   data-validation="required" data-validation-error-msg="*เลือกวันที่มีการเบิกจ่าย" 
+                                                   data-validation-error-msg-container="#dateStart-th-msg-error" />
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
+                                    <div class="col-lg-6">
+                                        <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="dropzoneWelfare">
+                                            <div class="dz-default dz-message"><span id="txtWelfareFile">{{#i18n}}welfare.filename{{/i18n}}</span></div>
+                                        </form>
+                                        <input type="hidden" name="filename" class="welfare" id="filename"  />
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+
+                                    <label class="col-lg-4 control-label">หมายเหตุ</label>
+
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="remark"  placeholder="หมายเหตุ" id="remark"/>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-7 control-label">
+                                            <button id="btn_submit" name="btn_submit" class="btn btn-primary" type="button">{{#i18n}}button.submit{{/i18n}}</button>
+                                            <button id="bn" name="bn" class="btn btn-default" type="reset">{{#i18n}}button.cancel{{/i18n}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+
+                <div class="widget-header  with-footer"> <span class="widget-caption">  </span>
+                    <div class="widget-buttons"> </div>
+                </div>
+                <div class="widget-body">
+
+                    <div class="pull-right">
+
+
+
+                    </div>
+                    <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+
+
+
+                    </div>
+
+
+                    <div class="flip-scroll">
+
+                        <table class="table table-hover table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}idCard{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
+
+                                    <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="listRightWelfare">
+
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+    <!-- /Page Content -->
+    <script type="text/javascript">
+        
+       
+        $(document).ready(function () {
+            $.validate();
+
+            
+
+
+            $("#btn_search").click(function () {
+
+                var data = {};
+                data['idCard'] = $(".registerIdCard").val();
+                data['welfareId'] = $("#welfareId").val();
+
+                var jdata = {};
+                jdata['data'] = data;
+
+                sendData('{{_context_path}}/api/welfare/welfare/search/details', jsonEncode(jdata),
+                        function (result) {
+                            var data = result.member;
+                            if (data != null) {
+                                $("#fname").val(data.fname);
+                                $("#lname").val(data.lname);
+                                $("#memberId").val(data.memberId);
+                                $("#detailsId").val(data.detailsId);
+
+                            } else {
+                                Notify('ไม่พบข้อมูล', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+
+                            }
+
+
+                        });
+
+
+            });
+
+            $("#welfareId").change(function () {
+                $("#fname").val("");
+                $("#lname").val("");
+                $("#detailsId").val("");
+                $(".registerIdCard").val("");
+
+                getSearch();
+            });
+
+
+            function getSearch() {
+
+                var welfareId = $("#welfareId").val();
+                var data = {};
+
+                data['welfareId'] = welfareId;
+
+                var jdata = {};
+                jdata['data'] = data;
+
+                sendData('{{_context_path}}/api/welfare/welfare/right/welfare', jsonEncode(jdata),
+                        //sendData('{{_context_path}}/api/welfare/history/check/search', jsonEncode(jdata),
+                                function (result) {
+
+                                    var html1 = "";
+                                    var html2 = "";
+                                    $.each(result.preview, function (key, value) {
+
+                                        html1 += '<tr class="selectable">';
+                                        html1 += '<td>' + (key + 1) + '</td>';
+                                        html1 += '<td>' + value.idCard + '</td>';
+                                        html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+                                        html1 += '<td>' + value.gender1 + '</td>';
+                                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+                                        html1 += '<td>' + value.employeeType1 + '</td>';
+                                        html1 += '<td class = "center" >';
+
+                                        html1 += '<button class="btn_history btn btn-info btn-xs edit"';
+                                        html1 += 'data-toggle="modal"';
+                                        html1 += 'data-target=".checkHistory"';
+                                        html1 += 'data-whatever="@fat"';
+                                        html1 += 'row-index="' + value.detailsId + '"';
+                                        html1 += 'row-welfareId="' + value.welfareId + '" >';
+                                        html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
+                                        html1 += '</button> ';
+
+                                        html1 += '</td>';
+                                        html1 += '</tr>';
+
+                                        html2 += '<option value="' + value.idCard + '">';
+                                    });
+                                    $("#listRightWelfare").html(html1);
+                                    $("#registerIdCard").html(html2);
+
+
+                                });
+
+
+                    }
+
+            $("#btn_submit").click(function () {
+                var data = {};
+                data['detailsId'] = $("#detailsId").val();
+                data['welfareId'] = $("#welfareId").val();
+                data['memberId'] = $("#memberId").val();
+                data['remark'] = $("#remark").val();
+                data['amount'] = $("#amount").val();
+                data['dateUse'] = $("#dateUse").val();
+                data['statusApprove'] = "Y";
+                var jdata = {};
+
+                jdata['data'] = data;
+
+                $.confirm({
+                    title: "เพิ่มการใช้สวัสดิการ",
+                    content: "ท่านต้องการเพิ่ม  ?",
+                    confirm: function (button) {
+                        button.fadeOut(2000).fadeIn(2000);
+
+                        sendData('{{_context_path}}/api/welfare/history/save', jsonEncode(jdata),
+                                function (msg) {
+                                    if (msg.save == true) {
+                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+                                        Notify('บันทึกสำเร็จ !', 'top-right', '4000', 'success', 'fa fa-check', true);
+                                    } else {
+                                        Notify('บันทึก ไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+                                    }
+                                });
+                    },
+                    cancel: function (button) {
+                        button.fadeOut(2000).fadeIn(2000);
+
+                    },
+                    confirmButton: "ตกลง",
+                    cancelButton: "ยกเลิก"
+                });
+
+
+            });
+
+
+        });
+        
+
+        $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+    </script>

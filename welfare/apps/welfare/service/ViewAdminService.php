@@ -29,7 +29,7 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 
     public function welfareLists() {
         $view = new CJView("admin/welfare/lists", CJViewType::HTML_VIEW_ENGINE);
-        
+
         return $view;
     }
 
@@ -51,7 +51,7 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
     public function approveLists() {
 
         $view = new CJView("admin/approve/lists", CJViewType::HTML_VIEW_ENGINE);
-         
+
         $view->academic = $this->taxonomy->getPCode("academic");
 
         $view->gender = $this->taxonomy->getPCode("gender");
@@ -63,14 +63,14 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
 
         $view->faculty = $this->taxonomy->getPCode("faculty");
 
-        
+
         return $view;
     }
 
     public function memberLists() {
 
         $view = new CJView("admin/member/lists", CJViewType::HTML_VIEW_ENGINE);
-        
+
         $view->academic = $this->taxonomy->getPCode("academic");
 
         $view->gender = $this->taxonomy->getPCode("gender");
@@ -81,8 +81,8 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
         $view->department = $this->taxonomy->getPCode("department");
 
         $view->faculty = $this->taxonomy->getPCode("faculty");
-        
-       
+
+
 
         return $view;
     }
@@ -90,52 +90,61 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
     public function rightList() {
 
         $memberId = $this->getRequest()->memberId;
-        
+
         $view = new CJView("admin/member/rightLists", CJViewType::HTML_VIEW_ENGINE);
-       $query = "SELECT mb "
-                . "FROM apps\\member\\model\\Fullmember mb where mb.memberId=:memberId" ;
+        $query = "SELECT mb "
+                . "FROM apps\\member\\model\\Fullmember mb where mb.memberId=:memberId";
         $param = array("memberId" => $memberId);
         $member = $this->datacontext->getObject($query, $param);
         $view->datasMember = $member;
         $view->memberId = $memberId;
-        
-        
-        
+
+
+
         return $view;
     }
 
     public function reportWelfare() {
 
         $welfareId = $this->getRequest()->welfareId;
-        $view = new CJView("admin/report/lists", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("admin/welfare/right/lists", CJViewType::HTML_VIEW_ENGINE);
         $daoWelfare = new WelfareService();
         $objWelfare = $daoWelfare->get($welfareId);
-        
-        
 
-        
         $employee = array();
-        $view->datasDetails=$objWelfare->details;
-       
-       foreach ($objWelfare->details as $key => $value) {
-            
+        $view->datasDetails = $objWelfare->details;
+
+        foreach ($objWelfare->details as $key => $value) {
+
             array_push($employee, $daoWelfare->preview($value->conditions));
-            
         }
 //         foreach ($employee as $key => $value) {
 //                $view->datasMember = $value;
 //                
 //            }
-        
-        
-        $view->datas=$objWelfare;
-        
+
+        $view->welfareId = $welfareId;
+        $view->datas = $objWelfare;
+
         return $view;
     }
 
     public function reportPdfAp() {
         $view = new CJView("admin/report/listPdfAp", CJViewType::HTML_VIEW_ENGINE);
 
+        return $view;
+    }
+
+    public function approveAdd() {
+
+        $view = new CJView("admin/approve/add", CJViewType::HTML_VIEW_ENGINE);
+        $sqlWel = "select r from apps\\welfare\\entity\\Welfare r "
+                . "where r.code is null and r.statusActive = 'Y'";
+
+        $obj = $this->datacontext->getObject($sqlWel);
+        $obj = $this->common->afterGet($obj);
+        $view->dataslist=$obj;
+        
         return $view;
     }
 

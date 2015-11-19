@@ -23,28 +23,48 @@
                     <div class="widget-body">
                         <div class="pull-right">
 
-                            <button type="button" class="btn btn-success reportCsv" >
-                                <i class="fa fa-file-excel-o"></i>EXPORT CSV
-                            </button>
-
-                            <button type="button" class="btn btn-warning" onclick=" JsPrint('DataPanel');">
-                                <i class="fa fa-print"></i>PRINT
+                           <button class="btn btn-primary"
+                                    data-id="content-body"
+                                    data-api="{{_context_path}}/api/welfare/view/admin/approve/add"
+                                    onclick="btnHTML(this)">
+                                <i class="fa fa-plus"></i>เพิ่มการเบิกจ่ายสวัสดิการ 
                             </button>
 
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                            <label class="col-lg-4 control-label">
-                                <select id="typeStatus" class="form-control">
-                                    <option value="YNP" >ค้นหารายการ</option>
-                                    <option value="Y" >อนุมัติ</option>
-                                    <option value="N" >ไม่อนุมัติ</option>
-                                    <option value="P" >รอดำเนินการ</option>
+                            
+                            <div class="col-lg-4 control-label">
+                                <div class="input-group">
+                                    <input class="form-control cDate welfare" id="dateStart" name="dateStart" placeholder="ค้นหาตั้งแต่ วันที่เริมใช้งาน "
+                                           data-validation="required" data-validation-error-msg="*ค้นหาจาก วันที่/เดือน/ปี " 
+                                           data-validation-error-msg-container="#dateStart-th-msg-error" />
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
 
+                            </div>
+                            <div class="col-lg-4 control-label">
+                                <div class="input-group">
+                                    <input class="form-control cDate welfare" id="dateEnd" name="dateEnd" placeholder="ค้นหาถึง วันที่สิ้นสุดการใช้งาน"
+                                           data-validation="required" data-validation-error-msg="*ถึง วันที่/เดือน/ปี" 
+                                           data-validation-error-msg-container="#dateStart-th-msg-error" />
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
 
+                            </div>
+                            
+                             <label class="col-lg-4 control-label">
+                                <select id="employeeType" class="form-control" >
+                                    <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
+                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
                                 </select>
 
                             </label>
+                            
                              <label class="col-lg-4 control-label">
                                 <select id="faculty" class="form-control" >
                                     <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
@@ -58,22 +78,8 @@
                                 </select>
                             </label>
                            
-                            <label class="col-lg-4 control-label">
-                                <select id="employeeType" class="form-control" >
-                                    <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
-                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
-                                </select>
-
-                            </label>
-                            <label class="col-lg-4 control-label">
-                                <select id="gender" class="form-control">
-                                    <option value="" selected="" >ค้นหาจากเพศ</option>
-                                    {{#gender}}<option value="{{id}}">{{value1}}</option>{{/gender}}
-
-
-                                    <!-- … -->
-                                </select>
-                            </label>
+                           
+                            
 
                             <div class="col-lg-4 control-label">
                                 <select id="nameAndLast" class="form-control">
@@ -254,125 +260,83 @@
                                 html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
                                 html1 += '</button> ';
 
-                                if (value.filename != null) {
-
-                                    html1 += '<a class="btn btn-maroon btn-xs edit"';
-                                    html1 += 'target="_blank"';
-                                    html1 += ' href="http://localhost/{{_context_path}}/uploads/welfare/' + value.filename + '" >';
-                                    html1 += '<i class = "fa fa fa-download"></i>ดาวน์โหลด';
-                                    html1 += '</a> ';
-                                } else {
-                                    html1 += '<a class="btn  btn-default btn-xs edit"';
-                                    html1 += ' href="#" >';
-                                    html1 += '<i class = "fa fa fa-close"></i>ไม่มีไฟล์';
-                                    html1 += '</a> ';
-                                }
-
-                                if (value.statusApprove != "Y") {
-
-                                    html1 += '<button class="btn btn-success btn-xs edit btn_history_Y"';
-                                    html1 += 'row-index="' + value.historyId + '"';
-                                    html1 += 'row-memberId="' + value.memberId + '"';
-                                    html1 += 'row-nftName="อนุมัติ ' + value.name + ',' + value.wfcdetails + '"';
-                                    html1 += 'row-welfareId="' + value.welfareId + '">';
-                                    html1 += '<i class="fa fa fa-check"></i>อนุมัติ';
-                                    html1 += '</button> ';
-
-
-                                    html1 += '<button class="btn btn-danger btn-xs edit btn_history_N"';
-                                    html1 += 'row-index="' + value.historyId + '"';
-                                    html1 += 'row-memberId="' + value.memberId + '"';
-                                    html1 += 'row-nftName="ไม่อนุมัติ ' + value.name + '' + value.wfcdetails + '"';
-                                    html1 += 'row-detailsId="' + value.detailsId + '"';
-                                    html1 += 'row-welfareId="' + value.welfareId + '">';
-                                    html1 += '<i class="fa fa fa-close"></i>ไม่อนุมัติ';
-                                    html1 += '</button> ';
-
-                                } else {
-                                    html1 += '<a class="btn  btn-success btn-xs edit">';
-                                    html1 += '<i class = "fa fa fa-check"></i>อนุมัติแล้ว';
-                                    html1 += '</a> ';
-                                }
-
-
-
                                 html1 += '</td>';
                                 html1 += '</tr>';
                             });
                             $("#listWelfare").html(html1);
-                            $('.btn_history_N').click(function () {
-                                var data = {};
-                                data['historyId'] = $(this).attr('row-index');
-                                data['statusApprove'] = "N";
-                                data['nftAppName'] = "detailsId";
-                                data['nftAppId'] = $(this).attr('row-detailsId');
-                                data['nftName'] = $(this).attr('row-nftName');
-                                data['memberId'] = $(this).attr('row-memberId');
-                                var jdata = {};
+//                            $('.btn_history_N').click(function () {
+//                                var data = {};
+//                                data['historyId'] = $(this).attr('row-index');
+//                                data['statusApprove'] = "N";
+//                                data['nftAppName'] = "detailsId";
+//                                data['nftAppId'] = $(this).attr('row-detailsId');
+//                                data['nftName'] = $(this).attr('row-nftName');
+//                                data['memberId'] = $(this).attr('row-memberId');
+//                                var jdata = {};
+//
+//                                jdata['data'] = data;
+//
+//                                $.confirm({
+//                                    title: "ยกเลิกรายการอนุมัติ",
+//                                    content: "ท่านไม่ต้องการอนุมัติ ?",
+//                                    confirm: function (button) {
+//                                        button.fadeOut(2000).fadeIn(2000);
+//
+//                                        sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
+//                                                function (msg) {
+//                                                    if (msg.update == true) {
+//                                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+//                                                        Notify('ไม่อนุมัติ!', 'top-right', '4000', 'danger', 'fa fa-check', true);
+//                                                    } else {
+//                                                        Notify('ไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+//                                                    }
+//                                                });
+//                                    },
+//                                    cancel: function (button) {
+//                                        button.fadeOut(2000).fadeIn(2000);
+//
+//                                    },
+//                                    confirmButton: "ตกลง",
+//                                    cancelButton: "ยกเลิก"
+//                                });
+//
+//
+//                            });
 
-                                jdata['data'] = data;
-
-                                $.confirm({
-                                    title: "ยกเลิกรายการอนุมัติ",
-                                    content: "ท่านไม่ต้องการอนุมัติ ?",
-                                    confirm: function (button) {
-                                        button.fadeOut(2000).fadeIn(2000);
-
-                                        sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
-                                                function (msg) {
-                                                    if (msg.update == true) {
-                                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
-                                                        Notify('ไม่อนุมัติ!', 'top-right', '4000', 'danger', 'fa fa-check', true);
-                                                    } else {
-                                                        Notify('ไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                                                    }
-                                                });
-                                    },
-                                    cancel: function (button) {
-                                        button.fadeOut(2000).fadeIn(2000);
-
-                                    },
-                                    confirmButton: "ตกลง",
-                                    cancelButton: "ยกเลิก"
-                                });
-
-
-                            });
-
-                            $('.btn_history_Y').click(function () {
-
-                                var data = {};
-                                data['historyId'] = $(this).attr('row-index');
-                                data['statusApprove'] = "Y";
-                                data['nftAppName'] = "detailsId";
-                                data['nftAppId'] = $(this).attr('row-detailsId');
-                                data['nftName'] = $(this).attr('row-nftName');
-                                data['memberId'] = $(this).attr('row-memberId');
-                                var jdata = {};
-                                jdata['data'] = data;
-                                $.confirm({
-                                    title: "เลือกรายการอนุมัติ",
-                                    content: "ท่านต้องการอนุมัติ ?",
-                                    confirm: function (button) {
-                                        sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
-                                                function (msg) {
-                                                    if (msg.update == true) {
-                                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
-                                                        Notify('อนุมัติสำเร็จ!', 'top-right', '4000', 'success', 'fa fa-check', true);
-                                                    } else {
-                                                        Notify('อนุมัติไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-                                                    }
-                                                });
-                                    },
-                                    cancel: function (button) {
-                                        button.fadeOut(2000).fadeIn(2000);
-
-                                    },
-                                    confirmButton: "ตกลง",
-                                    cancelButton: "ยกเลิก"
-                                });
-
-                            });
+//                            $('.btn_history_Y').click(function () {
+//
+//                                var data = {};
+//                                data['historyId'] = $(this).attr('row-index');
+//                                data['statusApprove'] = "Y";
+//                                data['nftAppName'] = "detailsId";
+//                                data['nftAppId'] = $(this).attr('row-detailsId');
+//                                data['nftName'] = $(this).attr('row-nftName');
+//                                data['memberId'] = $(this).attr('row-memberId');
+//                                var jdata = {};
+//                                jdata['data'] = data;
+//                                $.confirm({
+//                                    title: "เลือกรายการอนุมัติ",
+//                                    content: "ท่านต้องการอนุมัติ ?",
+//                                    confirm: function (button) {
+//                                        sendData('{{_context_path}}/api/welfare/history/update', jsonEncode(jdata),
+//                                                function (msg) {
+//                                                    if (msg.update == true) {
+//                                                        getHTML('content-body', '{{_context_path}}/api/welfare/view/admin/approve/lists', null);
+//                                                        Notify('อนุมัติสำเร็จ!', 'top-right', '4000', 'success', 'fa fa-check', true);
+//                                                    } else {
+//                                                        Notify('อนุมัติไม่สำเร็จ!', 'top-right', '4000', 'warning', 'fa fa-warning', true);
+//                                                    }
+//                                                });
+//                                    },
+//                                    cancel: function (button) {
+//                                        button.fadeOut(2000).fadeIn(2000);
+//
+//                                    },
+//                                    confirmButton: "ตกลง",
+//                                    cancelButton: "ยกเลิก"
+//                                });
+//
+//                            });
 
                             $('.btn_history').click(function () {
 
@@ -405,7 +369,7 @@
 
             }
 
-
+$(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 </script>
 <script type="text/javascript">
 

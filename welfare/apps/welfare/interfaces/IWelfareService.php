@@ -105,4 +105,33 @@ interface IWelfareService {
      * @description test
      */
     public function getMemPreview($conditions);
+    
+     /**
+     * @name getRightWelfare
+     * @uri /right/welfare
+     * @param string data
+     * @return string preview
+     * @description นำข้อมูลผู้เข้าเงื่อนไข ไปแสดง ในรายการของสวัสดิการนั้น ๆ
+     */
+    public function getRightWelfare($data);
+    
+    /**
+     * @name getMemberDetails
+     * @uri /member
+     * @param string data 
+     * @return html member
+     * @description นำข้อมูลมาแสดง ว่า ในสวัสดิการนั้น มีใครที่ได้รับสิทธิ์สวัสดิการบ้าง
+     */
+ public function getMemberDetails($data);
+ 
+  /**
+     * @name searchMemberDetails
+     * @uri /search/details
+     * @param string data 
+     * @return html member
+     * @description นำข้อมูลมาแสดง ว่า บุคลากรคนนี้ เข้ากับเงื่อนไข ไหน page ที่มีการใช้คือ approve/add.html
+     */
+ public function searchMemberDetails($data);
+ 
+ 
 }

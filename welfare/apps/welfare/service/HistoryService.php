@@ -8,6 +8,7 @@ use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\welfare\interfaces\IHistoryService;
 use apps\welfare\entity\History;
+use apps\common\service\CommonService;
 use apps\taxonomy\service\TaxonomyService;
 use apps\common\entity\Nottifications;
 
@@ -20,11 +21,14 @@ class HistoryService extends CServiceBase implements IHistoryService {
     function __construct() {
         $this->datacontext = new CDataContext();
         $this->taxonomy = new TaxonomyService();
+        $this->common = new CommonService();
     }
 
     public function save($data) {
 
-
+        if ($data->dateUse != "") {
+            $data->dateUse = $this->common->str2date($data->dateUse, "d-m-Y", "-");
+        }
 
         if ($this->datacontext->saveObject($data)) {
             return true;
@@ -107,36 +111,34 @@ class HistoryService extends CServiceBase implements IHistoryService {
                     break;
                 case 'P':
                     $where .="ap.statusApprove='" . $data->statusApprove . "'";
-                    break;    
+                    break;
             }
 
             if ($data->faculty) {
                 $where .="And mb.facultyId='" . $data->faculty . "'";
-            }else{
+            } else {
                 $where .="";
             }
             if ($data->department) {
                 $where .="And mb.departmentId='" . $data->department . "'";
-            }else{
+            } else {
                 $where .="";
             }
             if ($data->employeeType) {
                 $where .="And mb.employeeTypeId='" . $data->employeeType . "'";
-            }else{
+            } else {
                 $where .="";
             }
             if ($data->gender) {
                 $where .="And mb.genderId='" . $data->gender . "'";
-            }else{
+            } else {
                 $where .="";
             }
             if ($data->searchName) {
                 $where .="And mb.fname LIKE '%" . $data->searchName . "%' or mb.lname LIKE '%" . $data->searchName . "%'";
-            }else{
+            } else {
                 $where .="";
             }
-            
-          
         } else {
             $where .="ap.statusApprove='P' or ap.statusApprove='N' or ap.statusApprove='Y'";
         }
@@ -171,7 +173,5 @@ class HistoryService extends CServiceBase implements IHistoryService {
 
         return $objApprove;
     }
-
-  
 
 }
