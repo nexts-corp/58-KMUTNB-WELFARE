@@ -8,13 +8,15 @@
                 <i class="menu-icon fa fa-smile-o"></i>
 
                 <span class="menu-text">
-                    จัดการข้อมูลสวัสดิการ
+                    จัดการข้อมูลผู้ใช้งาน
                 </span>
 
                 <i class="menu-expand"></i>
             </a>
 
             <ul class="submenu">
+              
+                 
                  <li>
                     <a href="#" 
                        data-id="content-body"
@@ -45,20 +47,17 @@
                     </a>
                 </li>
 
-               
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/admin/approve/lists"
 
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">ออกรายงานเบิกจ่ายสวัสดิการ</span>
+                    </a>
+                </li>
 
-
-
-
-                <!-- <li>
-                     <a href="#" onclick="btnHTML('content-body','api/ManagementWelfare/welfareCut/list',null)">
-                         <span class="menu-text">สวัสดิการรายบุคคล</span>
-                     </a>
-                 </li>-->
-
-
-
+                
 
             </ul>
         </li>
