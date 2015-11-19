@@ -8,12 +8,9 @@
                 <a href="#">{{#i18n}}home{{/i18n}}</a>
             </li>
 
-            <li class="active"><a  data-id="content-body" 
-                                   data-api="/welfare/api/welfare/view/admin/welfare/lists" 
-                                   onclick="btnHTML(this)">
-                    {{#i18n}}welfare.list{{/i18n}}</a>
+            <li class="active"> ออกรายงาน</a>
             </li>
-            <li class="active">{{#datas}}{{name}}{{/datas}}</li>
+           
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -25,14 +22,7 @@
 
                 <div class="well bordered-left bordered-themeprimary">
                     <div class="panel-heading">
-                        {{#datas}}
-                        <h6>ชื่อสวัสดิการ : {{name}}</h6>
-                        <h6>รายละเอียด : {{description}} </h6>
-                        <h6>วันที่เริ่มใช้สวัสดิการ : {{dateStart}} </h6>
-                        <h6>วันที่สิ้นสุดการใช้สวัสดิการ : {{dateEnd}} </h6>
-                        <h6>การให้สิทธิ์สวัสดิการ : {{resetTime}} </h6>
-                        <h6>ไฟล์แนบ :  </h6>
-                        {{/datas}}
+                      
                     </div>
 
 
@@ -40,7 +30,7 @@
 
 
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">รายละเอียดเงือนไข : {{#datas}}{{name}}{{/datas}}</span>
+                    <div class="widget-header  with-footer"> 
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
@@ -64,25 +54,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#datasDetails}}
-                                    <tr>
-                                        <td>{{rowNo}}</td>
-                                        <td>{{description}}</td>
-                                        <td>{{quantity}}</td>
-                                        <td>
-
-
-                                            <button class="btn_checkmember btn btn-info btn-xs edit"
-                                                    data-toggle="modal"
-                                                    data-target=".getMember"
-                                                    data-whatever="@fat"
-                                                    row-index="{{detailsId}}"
-                                                    row-welfareId="" >
-                                                <i class = "fa fa fa-eye"></i>รายละเอียดผู้เข้าเงื่อนไข
-                                            </button> 
-                                        </td>
-                                    </tr>
-                                    {{/datasDetails}}
+                                    
 
                                 </tbody>
                             </table>
@@ -92,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="widget-header  with-footer"> <span class="widget-caption">ผู้ได้รับสวัสดิการของ {{#datas}}{{name}}{{/datas}} ทั้งหมด </span>
+                <div class="widget-header  with-footer"> <span class="widget-caption"> </span>
                     <div class="widget-buttons"> </div>
                 </div>
                 <div class="widget-body">
@@ -102,38 +74,10 @@
 
 
                     </div>
-                    <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                
 
 
-
-                    </div>
-
-
-                    <div class="flip-scroll">
-
-                        <table class="table table-hover table-striped table-bordered table-condensed">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">{{#i18n}}number{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
-
-                                    <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="listRightWelfare">
-
-
-                            </tbody>
-
-                        </table>
-
-
-                    </div>
+              
                 </div>
 
             </div>
@@ -143,141 +87,9 @@
     <!-- /Page Body -->
 </div>
 
-<!--LArge Modal Templates-->
-<div class="modal fade getMember" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myLargeModalLabel">บุคคลากรผู้เข้าเงื่อนไข</h4>
-            </div>
-            <div class="modal-body">
-                <div class="widget radius-bordered">
-                    <div class="widget-header">
-                        <span class="widget-caption" id="userRows"> </span>
-                    </div>
-                    <div class="widget-body">
-                        <div class="form-horizontal">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
 
-                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody id="showMember">
-
-
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-
-</div>
-<!--End Large Modal Templates-->
 
 <script>
 
 
-    getSearch();
-
-    function getSearch() {
-
-
-        var data = {};
-
-        data['welfareId'] = "{{welfareId}}";
-
-        var jdata = {};
-        jdata['data'] = data;
-
-        sendData('{{_context_path}}/api/welfare/welfare/right/welfare', jsonEncode(jdata),
-                //sendData('{{_context_path}}/api/welfare/history/check/search', jsonEncode(jdata),
-                        function (result) {
-
-                            var html1 = "";
-                            $.each(result.preview, function (key, value) {
-
-                                html1 += '<tr class="selectable">';
-                                html1 += '<td>' + (key + 1) + '</td>';
-                                html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
-                                html1 += '<td>' + value.gender1 + '</td>';
-                                html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                                html1 += '<td>' + value.employeeType1 + '</td>';
-                                html1 += '<td class = "center" >';
-
-                                html1 += '<button class="btn_history btn btn-info btn-xs edit"';
-                                html1 += 'data-toggle="modal"';
-                                html1 += 'data-target=".checkHistory"';
-                                html1 += 'data-whatever="@fat"';
-                                html1 += 'row-index="' + value.detailsId + '"';
-                                html1 += 'row-welfareId="' + value.welfareId + '" >';
-                                html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
-                                html1 += '</button> ';
-
-                                html1 += '</td>';
-                                html1 += '</tr>';
-                            });
-                            $("#listRightWelfare").html(html1);
-
-
-
-                        });
-
-
-            }
-    $(".btn_checkmember").click(function () {
-        var id = $(this).attr("row-index");
-        var data = {};
-
-        data['detailsId'] = id;
-
-        var jdata = {};
-        jdata['data'] = data;
-
-        sendData('{{_context_path}}/api/welfare/welfare/member', jsonEncode(jdata),
-                function (result) {
-                    var html1 = "";
-                    $.each(result.member, function (key, value) {
-
-                        html1 += '<tr class="selectable">';
-                        html1 += '<td>' + (key + 1) + '</td>';
-                        html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
-                        html1 += '<td>' + value.gender1 + '</td>';
-                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                        html1 += '<td>' + value.employeeType1 + '</td>';
-                        html1 += '<td class = "center" >';
-
-                        html1 += '<button class="btn_history btn btn-info btn-xs edit"';
-                        html1 += 'data-toggle="modal"';
-                        html1 += 'data-target=".checkHistory"';
-                        html1 += 'data-whatever="@fat"';
-                        html1 += 'row-index="' + value.detailsId + '"';
-                        html1 += 'row-welfareId="' + value.welfareId + '" >';
-                        html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
-                        html1 += '</button> ';
-
-                        html1 += '</td>';
-                        html1 += '</tr>';
-                    });
-
-                    $("#showMember").html(html1);
-
-
-
-                });
-
-
-    });
 </script>

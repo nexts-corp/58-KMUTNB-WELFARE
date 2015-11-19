@@ -129,8 +129,8 @@ class ViewAdminService extends CServiceBase implements IViewAdminService {
         return $view;
     }
 
-    public function reportPdfAp() {
-        $view = new CJView("admin/report/listPdfAp", CJViewType::HTML_VIEW_ENGINE);
+    public function reportsAp() {
+        $view = new CJView("admin/report/lists", CJViewType::HTML_VIEW_ENGINE);
 
         return $view;
     }

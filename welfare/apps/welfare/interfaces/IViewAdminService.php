@@ -76,11 +76,11 @@ interface IViewAdminService {
     public function reportWelfare();
     
     /**
-     * @name reportPdfAp
-     * @uri /report/pdf/approve
+     * @name reportsAp
+     * @uri /reports/ap
      * @return html history
-     * @description ออกรายงาน PDF
+     * @description ออกรายงานการเบิกจ่ายสวัสดิการ
      */
-    public function reportPdfAp();
+    public function reportsAp();
     
 }
