@@ -23,49 +23,23 @@
                     <div class="widget-body">
                         <div class="pull-right">
 
-                           <button class="btn btn-primary"
-                                    data-id="content-body"
-                                    data-api="{{_context_path}}/api/welfare/view/admin/approve/add"
-                                    onclick="btnHTML(this)">
-                                <i class="fa fa-plus"></i>เพิ่มการเบิกจ่ายสวัสดิการ 
-                            </button>
+                            
 
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                            
-                            <div class="col-lg-4 control-label">
-                                <div class="input-group">
-                                    <input class="form-control cDate welfare" id="dateStart" name="dateStart" placeholder="ค้นหาตั้งแต่ วันที่เริมใช้งาน "
-                                           data-validation="required" data-validation-error-msg="*ค้นหาจาก วันที่/เดือน/ปี " 
-                                           data-validation-error-msg-container="#dateStart-th-msg-error" />
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </div>
 
-                            </div>
-                            <div class="col-lg-4 control-label">
-                                <div class="input-group">
-                                    <input class="form-control cDate welfare" id="dateEnd" name="dateEnd" placeholder="ค้นหาถึง วันที่สิ้นสุดการใช้งาน"
-                                           data-validation="required" data-validation-error-msg="*ถึง วันที่/เดือน/ปี" 
-                                           data-validation-error-msg-container="#dateStart-th-msg-error" />
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </div>
+                         
 
-                            </div>
-                            
-                             <label class="col-lg-4 control-label">
+                            <label class="col-lg-4 control-label">
                                 <select id="employeeType" class="form-control" >
                                     <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
                                     {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
                                 </select>
 
                             </label>
-                            
-                             <label class="col-lg-4 control-label">
+
+                            <label class="col-lg-4 control-label">
                                 <select id="faculty" class="form-control" >
                                     <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
                                     {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}
@@ -77,31 +51,33 @@
                                     <option value="" selected="">ค้นหาจากภาควิชา</option>
                                 </select>
                             </label>
-                           
-                           
-                            
+
+
+
 
                             <div class="col-lg-4 control-label">
                                 <select id="nameAndLast" class="form-control">
                                     <option value="" selected="" >เลือก</option>
                                     <option value="nameAndLast" >ค้นหาด้วย ชื่อ-นามสกุล</option>
+                                    <option value="idCard" >ค้นหาด้วย รหัสบัตรประชาชน 13 หลัก</option>
                                 </select>
-                                <p></p>
-                                <div id="showInputSearch" style="display: none;">
-                                    <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อ/นามสกุล" list="filterCode">
-                                    <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                                 <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                                </div>
-                                
                             </div>
-
-
-
-
+                            
+                            <div id="showInputSearch" style="display: none;">
+                                <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                           
+                            <label class="col-lg-4 control-label">
+                                <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">
+                            </label>
+                            <label class="col-lg-2 control-label">
+                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                            </label>
+                            </div>
 
                         </div>
 
-
+                        
                         <div class="flip-scroll">
 
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -157,7 +133,9 @@
                                         <th class="text-center">{{#i18n}}number{{/i18n}}</th>
                                         <th class="text-center">รายละเอียด </th>
                                         <th class="text-center">เงื่อนไข </th>
+                                        <th class="text-center">วันที่ใช้  </th>
                                         <th class="text-center">จำนวน </th>
+                                        <th class="text-center">จำนวนเบิก </th>
                                     </tr>
                                 </thead>
                                 <tbody id="showHistory">
@@ -175,9 +153,9 @@
 <!--End Large Modal Templates-->
 <div style="display: none" id="printPdf"> </div>
 <script>
-     $(document).ready(function () {
-         getSearch();
-     });
+    $(document).ready(function () {
+        getSearch();
+    });
     $(".reportCsv").click(function () {
         var id = $(this).attr("row-index");
         window.open('{{_context_path}}/api/welfare/reports/approve');
@@ -193,9 +171,6 @@
         getSearch();
     })
 
-    $("#gender").change(function () {
-        getSearch();
-    });
     $("#nameAndLast").change(function () {
         if ($("#nameAndLast").val() == "nameAndLast") {
             $("#showInputSearch").show();
@@ -222,15 +197,12 @@
 
         var faculty = $("#faculty").val();
         var employeeType = $("#employeeType").val();
-        var gender = $("#gender").val();
         var searchName = $("#searchName").val();
         var department = $("#department").val();
         var data = {};
 
         data['faculty'] = faculty;
         data['employeeType'] = employeeType;
-        data['gender'] = gender;
-        data['statusApprove'] = $("#typeStatus").val();
         data['searchName'] = searchName;
         data['department'] = department;
         var jdata = {};
@@ -256,6 +228,7 @@
                                 html1 += 'data-target=".checkHistory"';
                                 html1 += 'data-whatever="@fat"';
                                 html1 += 'row-index="' + value.detailsId + '"';
+                                html1 += 'row-member="' + value.memberId + '"';
                                 html1 += 'row-welfareId="' + value.welfareId + '" >';
                                 html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
                                 html1 += '</button> ';
@@ -343,6 +316,7 @@
                                 var data = {};
                                 data['detailsId'] = $(this).attr('row-index');
                                 data['welfareId'] = $(this).attr('row-welfareId');
+                                data['memberId'] = $(this).attr('row-member');
                                 var jdata = {};
                                 jdata['data'] = data;
                                 sendData('{{_context_path}}/api/welfare/welfare/by/welfare', jsonEncode(jdata),
@@ -353,12 +327,13 @@
                                                 html += '<tr><td> ' + (k + 1) + ' </td>';
                                                 html += '<td>' + v.name + '' + v.description + '</td>';
                                                 html += '<td>' + v.dcpDetails + '</td>';
+                                                html += '<td>' + v.dateUse + '</td>';
                                                 if (v.amount == null) {
                                                     html += '<td> 1 ' + v.returntType + '</td>';
                                                 } else {
                                                     html += '<td>' + v.quantity + ' ' + v.returntType + '</td>';
                                                 }
-
+                                                html += '<td>' + v.amount + '</td>';
                                                 html += '</tr>';
                                             });
                                             $("#showHistory").html(html);
@@ -369,7 +344,7 @@
 
             }
 
-$(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
+    $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
 </script>
 <script type="text/javascript">
 

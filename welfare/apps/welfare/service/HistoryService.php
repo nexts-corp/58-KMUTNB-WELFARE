@@ -38,16 +38,17 @@ class HistoryService extends CServiceBase implements IHistoryService {
     }
 
     public function update($data) {
+        
         $this->datacontext->updateObject($data);
 
-        $daoNft = new Nottifications();
-        $daoNft->memberId = $data->memberId;
-        $daoNft->nftAppId = $data->nftAppId;
-        $daoNft->nftAppName = $data->nftAppName;
-        $daoNft->nftStatus = "false";
-        $daoNft->nftName = $data->nftName;
-        $daoNft->nftLink = "api/welfare/view/user/lists";
-        $this->datacontext->saveObject($daoNft);
+//        $daoNft = new Nottifications();
+//        $daoNft->memberId = $data->memberId;
+//        $daoNft->nftAppId = $data->nftAppId;
+//        $daoNft->nftAppName = $data->nftAppName;
+//        $daoNft->nftStatus = "false";
+//        $daoNft->nftName = $data->nftName;
+//        $daoNft->nftLink = "api/welfare/view/user/lists";
+//        $this->datacontext->saveObject($daoNft);
 
         return true;
     }
@@ -65,9 +66,6 @@ class HistoryService extends CServiceBase implements IHistoryService {
     }
 
     public function getHistory($data) {
-
-
-
 
         $sqlHistory = "SELECT * From welfarehistory htr "
                 . "where htr.detailsId=:detailsId and welfareId=:welfareId and memberId=:memberId  Order By htr.historyId desc ";
@@ -99,20 +97,8 @@ class HistoryService extends CServiceBase implements IHistoryService {
         $where = "";
         if ($data != "") {
 
-            switch ($data->statusApprove) {
-                case 'YNP':
-                    $where .="ap.statusApprove='P' or ap.statusApprove='N' or ap.statusApprove='Y'";
-                    break;
-                case 'Y':
-                    $where .="ap.statusApprove='" . $data->statusApprove . "'";
-                    break;
-                case 'N':
-                    $where .="ap.statusApprove='" . $data->statusApprove . "'";
-                    break;
-                case 'P':
-                    $where .="ap.statusApprove='" . $data->statusApprove . "'";
-                    break;
-            }
+            $where .="ap.statusApprove='Y' ";
+                   
 
             if ($data->faculty) {
                 $where .="And mb.facultyId='" . $data->faculty . "'";
@@ -129,18 +115,14 @@ class HistoryService extends CServiceBase implements IHistoryService {
             } else {
                 $where .="";
             }
-            if ($data->gender) {
-                $where .="And mb.genderId='" . $data->gender . "'";
-            } else {
-                $where .="";
-            }
+          
             if ($data->searchName) {
                 $where .="And mb.fname LIKE '%" . $data->searchName . "%' or mb.lname LIKE '%" . $data->searchName . "%'";
             } else {
                 $where .="";
             }
         } else {
-            $where .="ap.statusApprove='P' or ap.statusApprove='N' or ap.statusApprove='Y'";
+            $where .=" ap.statusApprove='Y'";
         }
 
 
@@ -172,6 +154,35 @@ class HistoryService extends CServiceBase implements IHistoryService {
 
 
         return $objApprove;
+    }
+
+    public function getHistoryAll($data) {
+        
+         $sqlDetails = "SELECT hr.detailsId,hr.remark,hr.amount,hr.dateUse ,"
+                 . "wfdt.detailsId ,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
+                . "wf.welfareId,wf.name,  "
+                . "rt.value1 As returntType,rt.id,"
+                . "wf.name,wf.statusActive,wf.description  "
+                . " FROM  welfarehistory hr "
+                 . "left join welfare wf "
+                 . "on hr.welfareId=wf.welfareId "
+                 . "left join welfaredetails wfdt "
+                 . "on hr.detailsId = wfdt.detailsId "
+                 . "left join taxonomy rt "
+                 . "on wfdt.returnTypeId = rt.id "
+                 . "where hr.memberId=:memberId  ";
+                  
+        $param = array( "memberId" => $data->memberId );
+  
+        $objdetails = $this->datacontext->pdoQuery($sqlDetails, $param);
+        
+        if($objdetails != 0){
+             return $objdetails;
+        }else{
+            return false;
+        }
+       
+        
     }
 
 }

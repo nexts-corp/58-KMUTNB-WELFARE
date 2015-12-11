@@ -20,6 +20,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
     public function __construct() {
         $this->datacontext = new CDataContext(NULL);
         $this->common = new CommonService();
+        $this->pathMember = "apps\\member\\model\\";
     }
 
     public function save($welfare) {
@@ -328,17 +329,32 @@ class WelfareService extends CServiceBase implements IWelfareService {
 //        $objwelfare = $this->datacontext->getObject($welfaredao);
 //        $objwelfare = $this->common->afterGet($objwelfare, array("dateCreated", "dateUpdated", "createBy", "updateBy"));
 //        
-        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
-                . "wfdt.welfareId,  "
+//        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
+//                . "wfdt.welfareId,  "
+//                . "rt.value1 As returntType,rt.id,"
+//                . "wf.name,wf.statusActive,wf.description  "
+//                . " FROM  welfaredetails wfdt "
+//                . "Left JOIN  welfare wf "
+//                . "on wfdt.welfareId = wf.welfareId "
+//                . "Left JOIN taxonomy rt  "
+//                . "on wfdt.returnTypeId = rt.id "
+//                . "where wfdt.detailsId=:detailsId";
+
+        $sqlDetails = "SELECT hr.detailsId,hr.remark,hr.amount,hr.dateUse ,"
+                . "wfdt.detailsId ,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
+                . "wf.welfareId,wf.name,  "
                 . "rt.value1 As returntType,rt.id,"
                 . "wf.name,wf.statusActive,wf.description  "
-                . " FROM  welfaredetails wfdt "
-                . "Left JOIN  welfare wf "
-                . "on wfdt.welfareId = wf.welfareId "
-                . "Left JOIN taxonomy rt  "
+                . " FROM  welfarehistory hr "
+                . "left join welfare wf "
+                . "on hr.welfareId=wf.welfareId "
+                . "left join welfaredetails wfdt "
+                . "on hr.detailsId = wfdt.detailsId "
+                . "left join taxonomy rt "
                 . "on wfdt.returnTypeId = rt.id "
-                . "where wfdt.detailsId=:detailsId";
-        $param = array("detailsId" => $data->detailsId);
+                . "where hr.detailsId=:detailsId and hr.memberId=:memberId  ";
+
+        $param = array("detailsId" => $data->detailsId, "memberId" => $data->memberId);
 
         $objdetails = $this->datacontext->pdoQuery($sqlDetails, $param);
 
@@ -406,7 +422,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
         } else {
 
             $daoWelfare = new Welfare();
-           
+
             $obj = $this->datacontext->getObject($daoWelfare);
             $obj = $this->common->afterGet($obj);
 
@@ -621,32 +637,29 @@ class WelfareService extends CServiceBase implements IWelfareService {
     }
 
     public function getRightWelfare($data) {
-        
-        $welfareId=$data->welfareId;
+
+        $welfareId = $data->welfareId;
         $daoWelfare = new WelfareService();
         $objWelfare = $daoWelfare->get($welfareId);
         $employee = array();
-      
-       foreach ($objWelfare->details as $key => $value) {
-            
+
+        foreach ($objWelfare->details as $key => $value) {
+
             array_push($employee, $daoWelfare->preview($value->conditions));
-            
         }
-        
-        $member=array();
-        foreach ($employee as $key => $value){
+
+        $member = array();
+        foreach ($employee as $key => $value) {
             foreach ($value as $key1 => $value1) {
                 array_push($member, $value1);
             }
-            
         }
-        
+
         return $member;
-        
     }
 
     public function getMemberDetails($data) {
-        
+
         $conditions = new Conditions();
         $conditions->detailsId = $data->detailsId;
         $conditions = $this->datacontext->getObject($conditions);
@@ -655,24 +668,44 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
         $daoWelfare = new WelfareService();
         $objMember = $daoWelfare->preview($conditions);
-        
-        if($objMember!=""){
+
+        if ($objMember != "") {
             return $objMember;
-        }else{
+        } else {
             return false;
         }
-        
     }
 
     public function searchMemberDetails($data) {
+
+        $welfareId = $data->welfareId;
+        $sql = "";
+
+        if ($data->idCard != "") {
+            $sql .=" mb.idCard=" . $data->idCard . "";
+        }
+
+
+
+        if ($data->fname != "" and $data->lname != "") {
+            if ($sql != "") {
+                $or = "or";
+            } else {
+                $or = "";
+            }
+
+            $sql .=" " . $or . "  mb.fname Like '%" . $data->fname . "%' "
+                    . " or mb.lname Like '%" . $data->lname . "%' ";
+        }
+
+        $query = "SELECT mb "
+                . "FROM " . $this->pathMember . "Fullmember mb where  " . $sql . "";
+
+        $member = $this->datacontext->getObject($query)[0];
+
+        $memberId = $member->memberId;
         
-        $welfareId=$data->welfareId;
-        $idCard=$data->idCard;
-        
-        $mb = new \apps\member\service\MemberService();
-        $member = $mb->find("idCard", $idCard)[0];
-        $memberId=$member->memberId;
-         $sqlDetails = "select wfc.detailsId , wfc.welfareId from welfareconditions wfc
+       $sqlDetails = "select wfc.detailsId  from welfareconditions wfc
                 join welfaredetails wfd on wfc.detailsId = wfd.detailsId
                 join welfare wf on wf.welfareId = wfd.welfareId
                 where wfc.fieldMap = :fieldmap
@@ -681,17 +714,103 @@ class WelfareService extends CServiceBase implements IWelfareService {
                    select employeeTypeId from v_fullmember where memberId =:memberId
                 )
                 and wfd.statusActive = 'Y' and wf.statusActive = 'Y' ";
-
+       
         $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
         $details = $this->datacontext->pdoQuery($sqlDetails, $param);
+       
         
-  
-        foreach ($details as $key => $value) {
-            if($value['welfareId']==$data->welfareId){
-               $member->detailsId=$value['detailsId'];
+        $matchId = array();
+        foreach ($details as $valueId) {
+            $condition = new \apps\welfare\entity\Conditions();
+            $condition->detailsId = $valueId['detailsId'];
+            $dataCondition = $this->datacontext->getObject($condition);
+
+            $query = "SELECT * "
+                    . "FROM v_fullmember "
+                    . "where ";
+            $field = array();
+            foreach ($dataCondition as $key => $value) {
+                $index = 0;
+                if (!empty($field[$value->fieldMap])) {
+                    $index = count($field[$value->fieldMap]);
+                }
+                $field[$value->fieldMap][$index]['operations'] = $value->operations;
+                $field[$value->fieldMap][$index]['valuex'] = $value->valuex;
+            }
+
+            $where = "";
+            foreach ($field as $key => $value) {
+                $count = count($value);
+                $sql = "";
+                if ($where != "") {
+                    $sql .= " AND ";
+                }
+                if ($count > 1 && $key == 0) {
+                    $sql .= " ( ";
+                }
+
+                foreach ($value as $key2 => $value2) {
+
+                    if ($sql != "" && $key2 > 0) {
+                        if ($value2['operations'] == "=" || $value2['operations'] == "!=") {
+                            $sql .= " OR ";
+                        } else {
+                            $sql .= " AND ";
+                        }
+                    }
+                    if (strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                        $sql .= " " . $key . " " . $value2['operations'] . " '" . $value2['valuex'] . "' ";
+                    } elseif (!strpos($value2['valuex'], "-") && ($key == "dob" || $key == "workStartDate" || $key == "workEndDate")) {
+                        $sql .= " TIMESTAMPDIFF(YEAR,'" . $member->$key . "', CURDATE()) " . $value2['operations'] . " " . $value2['valuex'] . " ";
+                    } else {
+                        $sql .= " " . $key . " " . $value2['operations'] . " '" . $value2['valuex'] . "' ";
+                    }
+                }
+                if ($count > 1) {
+                    $sql .= " ) ";
+                }
+                $where .= $sql;
+            }
+            $detailsId = $valueId['detailsId'];
+            $sql = $query . " " . $where . " and memberId = :memberId ";
+            $dataCheck = $this->datacontext->pdoQuery($sql, array("memberId" => $memberId));
+            if (count($dataCheck) > 0) {
+                array_push($matchId, $detailsId);
             }
         }
+
+        $id = "";
+        foreach ($matchId as $key => $value) {
+            if ($key != 0) {
+                $id .= "," . $value;
+            } else {
+                $id .= $value;
+            }
+        }
+     
+
+
+        $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
+                . "wfdt.welfareId,  "
+                . "rt.value1 As returntType,rt.id,"
+                . "wf.name,wf.statusActive,wf.description  "
+                . " FROM  welfaredetails wfdt "
+                . "Left JOIN  welfare wf "
+                . "on wfdt.welfareId = wf.welfareId "
+                . "Left JOIN taxonomy rt  "
+                . "on wfdt.returnTypeId = rt.id "
+                . "where wf.statusActive='Y' and detailsId in ( " . $id . " )";
+        
+
+        $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
+        
        
+        foreach ($objDetailsId as $key => $value) {
+            if ($value['welfareId'] == $data->welfareId) {
+                $member->detailsId = $value['detailsId'];
+            }
+        }
+        
         
         return $member;
     }

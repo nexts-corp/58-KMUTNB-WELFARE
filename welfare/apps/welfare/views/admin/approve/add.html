@@ -28,191 +28,226 @@
     <div class="page-body">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
+
                 <div class="widget radius-bordered">
                     <div class="widget-header">
 
                     </div>
                     <div class="widget-body">
-                        <form id="registerForm">
+                        <form id="registerForm" class="has-validation-callback">
                             <div class="form-horizontal">
                                 <div class="form-title">
-                                    เพิ่มการเบิกจ่ายสวัสดิการ
+                                    ตั้งค่า การเบิกจ่ายสวัสดิการ
                                 </div>
                                 <div class="form-group ">
                                     <label class="col-lg-4 control-label">เลือกสวัสดิการ</label>
                                     <div class="col-lg-5">
                                         <select id="welfareId" class="form-control" >
-
+                                            <option value="">กรุณาเลือกสวัสดิการ</option>
                                             {{#dataslist}}<option value="{{welfareId}}">{{name}}</option>{{/dataslist}}
                                         </select>
                                     </div>
                                     <input  name="detailsId"  type="hidden" id="detailsId">
 
                                 </div>
+
                                 <div class="form-group ">
-                                    <label class="col-lg-4 control-label">{{#i18n}}inputcardid{{/i18n}}</label>
+                                    <label class="col-lg-4 control-label">เลือกรูปแบบ</label>
                                     <div class="col-lg-5">
-                                        <span class="input-icon">
-
-
-                                            <input  list="registerIdCard" name="registerIdCard" class="form-control input-sm registerIdCard">
-                                            <datalist id="registerIdCard">
-                                            </datalist>
-                                            <i class="glyphicon glyphicon-search blue"></i>
-                                            <input  name="memberId"  type="hidden" id="memberId">
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <button id="btn_search" name="bn" class="btn btn-default" type="button">ค้นหา</button>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="form-group ">
-
-                                    <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
-
-                                    <div class="col-lg-6">
-                                        <input type="hidden" class="form-control" name="code" id="code" disabled="disabled"/>
-                                        <input type="text" class="form-control" name="fname" placeholder="{{#i18n}}name{{/i18n}}"
-                                               data-bv-notempty="true" id="fname"
-                                               data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group ">
-
-                                    <label class="col-lg-4 control-label">{{#i18n}}lastname{{/i18n}}</label>
-
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="lname" placeholder="{{#i18n}}lastname{{/i18n}}"
-                                               data-bv-notempty="true" id="lname"
-                                               data-bv-notempty-message="{{#i18n}}lastname{{/i18n}}" disabled="disabled"/>
-                                    </div>
-
-                                </div>
-
-
-
-
-
-                                <div class="form-group ">
-
-                                    <label class="col-lg-4 control-label">กรุณาระบุจำนวน</label>
-
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="amount" placeholder="กรุณาระบุจำนวน"
-                                               data-validation="required" data-validation-error-msg="*กรุณาระบุจำนวน" id="amount"
-                                               data-validation-error-msg-container="#amount-msg-error"/>
-                                    </div>
-                                    <div class="col-lg-offset-4" id="amount-msg-error">
-
+                                        <select id="changeFormat" class="form-control">
+                                            <option value="No">เลือกรูปแบบการเบิกจ่ายสวัสดิการ</option>
+                                            <option value="Single">เบิกจ่ายแบบรายบุคคล</option>
+                                            <option value="All">เบิกจ่ายทั้งหมด</option>
+                                        </select>
                                     </div>
                                 </div>
 
-                                <div class="form-group ">
-                                    <label class="col-lg-4 control-label">วันที่มีการเบิกจ่าย</label>
-                                    <div class="col-lg-6">    
-                                        <div class="input-group">
-                                            <input class="form-control cDate welfare" id="dateUse" name="dateUse" placeholder="เลือกวันที่มีการเบิกจ่าย"
-                                                   data-validation="required" data-validation-error-msg="*เลือกวันที่มีการเบิกจ่าย" 
-                                                   data-validation-error-msg-container="#dateStart-th-msg-error" />
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
+                                <div id="searchShow" style="display: none;" >
 
+                                    <div class="form-group ">
+                                        <label class="col-lg-4 control-label">เลือกรูปแบบการค้นหา</label>
+                                        <div class="col-lg-5">
+                                            <select id="changeFormatSearch" class="form-control">
+                                                <option value="">เลือกรูปแบบการค้นหา</option>
+                                                <option value="idCard">รหัสบัตรประชาชน</option>
+                                                <option value="nameAndLast">ค้นหาด้วยชื่อ-นามสกุล</option>
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
-                                    <div class="col-lg-6">
-                                        <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="dropzoneWelfare">
-                                            <div class="dz-default dz-message"><span id="txtWelfareFile">{{#i18n}}welfare.filename{{/i18n}}</span></div>
-                                        </form>
-                                        <input type="hidden" name="filename" class="welfare" id="filename"  />
-                                    </div>
-                                </div>
-
-                                <div class="form-group ">
-
-                                    <label class="col-lg-4 control-label">หมายเหตุ</label>
-
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="remark"  placeholder="หมายเหตุ" id="remark"/>
-                                    </div>
-
-                                </div>
-
-
-
-                                <div class="form-group ">
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-7 control-label">
-                                            <button id="btn_submit" name="btn_submit" class="btn btn-primary" type="button">{{#i18n}}button.submit{{/i18n}}</button>
-                                            <button id="bn" name="bn" class="btn btn-default" type="reset">{{#i18n}}button.cancel{{/i18n}}</button>
+                                    <div id="showSearchIdcard" style="display: none;">
+                                        <div class="form-group ">
+                                            <label class="col-lg-4 control-label">รหัสบัตรประชาชน</label>
+                                            <div class="col-lg-5">
+                                                <span class="input-icon">
+                                                    <input list="searchIdCard" name="searchIdCard" class="form-control input-sm searchIdCard">
+                                                    <datalist id="searchIdCard"></datalist>
+                                                    <i class="glyphicon glyphicon-search blue"></i>
+                                                    <input name="memberId" type="hidden" id="memberId">
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                    <div id="showSearchNameAndLast" style="display: none;">
+                                        <div class="form-group ">
+                                            <label class="col-lg-4 control-label">ค้นหาด้วย ชื่อ-นามสกุล</label>
+                                            <div class="col-lg-5">
+                                                <input list="searchNameAndLast" name="searchNameAndLast" class="form-control input-sm searchNameAndLast">
+                                                <datalist id="searchNameAndLast"></datalist>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-4">
+                                            <button id="btn_search" name="bn" class="btn btn-default" type="button">ค้นหา</button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>
                         </form>
+
                     </div>
 
+                </div>
 
+                <div id="showSingle" style="display: none;" >
+                    <div class="widget radius-bordered">
+                        <div class="widget-header">
 
+                        </div>
+                        <div class="widget-body">
+                            <form id="registerForm">
+                                <div class="form-horizontal">
+                                    <div class="form-title">
+                                        เพิ่มการเบิกจ่ายสวัสดิการ
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-lg-4 control-label">บัตรประชาชน</label>
+                                        <div class="col-lg-5">
+
+                                            <input type="text" class="form-control" name="idCard" id="idCard"  disabled="disabled"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="col-lg-4 control-label">{{#i18n}}name{{/i18n}}</label>
+                                        <div class="col-lg-5">
+                                            <input  name="memberId"  type="hidden" id="memberId">
+                                            <input type="text" class="form-control" name="fname" placeholder="{{#i18n}}name{{/i18n}}"
+                                                   data-bv-notempty="true" id="fname"
+                                                   data-bv-notempty-message="{{#i18n}}name{{/i18n}}" disabled="disabled"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-lg-4 control-label">{{#i18n}}lastname{{/i18n}}</label>
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" name="lname" placeholder="{{#i18n}}lastname{{/i18n}}"
+                                                   data-bv-notempty="true" id="lname"
+                                                   data-bv-notempty-message="{{#i18n}}lastname{{/i18n}}" disabled="disabled"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="col-lg-4 control-label">กรุณาระบุจำนวน</label>
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" name="amount" placeholder="กรุณาระบุจำนวน"
+                                                   data-validation="required" data-validation-error-msg="*กรุณาระบุจำนวน" id="amount"
+                                                   data-validation-error-msg-container="#amount-msg-error"/>
+                                        </div>
+                                        <div class="col-lg-offset-4" id="amount-msg-error">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="col-lg-4 control-label">วันที่มีการเบิกจ่าย</label>
+                                        <div class="col-lg-5">    
+                                            <div class="input-group">
+                                                <input class="form-control cDate welfare" id="dateUse" name="dateUse" placeholder="เลือกวันที่มีการเบิกจ่าย"
+                                                       data-validation="required" data-validation-error-msg="*เลือกวันที่มีการเบิกจ่าย" 
+                                                       data-validation-error-msg-container="#dateStart-th-msg-error" />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
+                                        <div class="col-lg-5">
+                                            <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="dropzoneWelfare">
+                                                <div class="dz-default dz-message"><span id="txtWelfareFile">{{#i18n}}welfare.filename{{/i18n}}</span></div>
+                                            </form>
+                                            <input type="hidden" name="filename" class="welfare" id="filename"  />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+
+                                        <label class="col-lg-4 control-label">หมายเหตุ</label>
+
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" name="remark"  placeholder="หมายเหตุ" id="remark"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-8 control-label">
+                                                <button id="btn_submit" name="btn_submit" class="btn btn-primary" type="button">{{#i18n}}button.submit{{/i18n}}</button>
+                                                <button id="bn" name="bn" class="btn btn-default" type="reset">{{#i18n}}button.cancel{{/i18n}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="widget-header  with-footer"> <span class="widget-caption">  </span>
                     <div class="widget-buttons"> </div>
                 </div>
-                <div class="widget-body">
+                <div id="showList" style="display: none;">
+                    <div class="widget-body">
+                        <div class="pull-right">
+                        </div>
+                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="form-title">
+                            บุคคลากรผู้เข้าเงื่อนไข
+                        </div>
+                        <div class="flip-scroll">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}idCard{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
 
-                    <div class="pull-right">
+                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                        <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
 
+                                    </tr>
+                                </thead>
+                                <tbody id="listRightWelfare">
 
-
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-
-
-
-                    </div>
-
-
-                    <div class="flip-scroll">
-
-                        <table class="table table-hover table-striped table-bordered table-condensed">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">{{#i18n}}number{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}idCard{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
-
-                                    <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                    <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="listRightWelfare">
-
-
-                            </tbody>
-
-                        </table>
-
-
-                    </div>
-
                 </div>
             </div>
-
 
 
         </div>
@@ -220,37 +255,113 @@
         <!-- /Page Body -->
     </div>
     <!-- /Page Content -->
-    <!-- /Page Content -->
+    <!--LArge Modal Templates-->
+    <div class="modal fade checkHistory" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel">รายละเอียดสวัสดิการของ: </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="widget radius-bordered">
+                        <div class="widget-header">
+                            <span class="widget-caption" id="userRows"> </span>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-horizontal">
+                                <table class="table table-hover table-striped table-bordered table-condensed" >
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                            <th class="text-center">รายละเอียด </th>
+                                            <th class="text-center">เงื่อนไข </th>
+                                            <th class="text-center">วันที่ใช้  </th>
+                                            <th class="text-center">จำนวน </th>
+                                            <th class="text-center">จำนวนเบิก </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="showHistory">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+
+    </div>
+    <!--End Large Modal Templates-->
     <script type="text/javascript">
-        
-       
         $(document).ready(function () {
+            $("#changeFormat").change(function () {
+                var changeFormat;
+                changeFormat = $("#changeFormat").val();
+                if (changeFormat == "Single") {
+                    $("#searchShow").show();
+                    $("#showSingle").show();
+                } else {
+                    $("#searchShow").hide();
+                    $("#showSingle").hide();
+                }
+
+            })
+            $("#changeFormatSearch").change(function () {
+                var changeSearch;
+                changeSearch = $("#changeFormatSearch").val();
+                if (changeSearch == "idCard") {
+                    $("#showSearchIdcard").show();
+
+                } else {
+                    $("#showSearchIdcard").hide();
+                    $(".searchIdCard").val("");
+                }
+
+                if (changeSearch == "nameAndLast") {
+                    $("#showSearchNameAndLast").show();
+
+                } else {
+                    $("#showSearchNameAndLast").hide();
+                    $(".searchNameAndLast").val("");
+                }
+
+            })
+
+
+
             $.validate();
-
-            
-
 
             $("#btn_search").click(function () {
 
-                var data = {};
-                data['idCard'] = $(".registerIdCard").val();
-                data['welfareId'] = $("#welfareId").val();
 
+
+
+                var data = {};
+                var a = $(".searchNameAndLast").val();
+                var t = a.split(" ");  //ถ้าเจอวรรคแตกเก็บลง array t
+                
+                
+                data['fname'] = t[0];
+                data['lname'] = t[1];
+                data['idCard'] = $(".searchIdCard").val();
+                data['welfareId'] = $("#welfareId").val();
                 var jdata = {};
                 jdata['data'] = data;
 
                 sendData('{{_context_path}}/api/welfare/welfare/search/details', jsonEncode(jdata),
                         function (result) {
                             var data = result.member;
+
                             if (data != null) {
                                 $("#fname").val(data.fname);
                                 $("#lname").val(data.lname);
                                 $("#memberId").val(data.memberId);
                                 $("#detailsId").val(data.detailsId);
-
+                                $("#idCard").val(data.idCard);
                             } else {
                                 Notify('ไม่พบข้อมูล', 'top-right', '4000', 'warning', 'fa fa-warning', true);
-
                             }
 
 
@@ -264,7 +375,7 @@
                 $("#lname").val("");
                 $("#detailsId").val("");
                 $(".registerIdCard").val("");
-
+                $(".searchNameAndLast").val("");
                 getSearch();
             });
 
@@ -273,9 +384,7 @@
 
                 var welfareId = $("#welfareId").val();
                 var data = {};
-
                 data['welfareId'] = welfareId;
-
                 var jdata = {};
                 jdata['data'] = data;
 
@@ -285,6 +394,7 @@
 
                                     var html1 = "";
                                     var html2 = "";
+                                    var html3 = "";
                                     $.each(result.preview, function (key, value) {
 
                                         html1 += '<tr class="selectable">';
@@ -300,8 +410,7 @@
                                         html1 += 'data-toggle="modal"';
                                         html1 += 'data-target=".checkHistory"';
                                         html1 += 'data-whatever="@fat"';
-                                        html1 += 'row-index="' + value.detailsId + '"';
-                                        html1 += 'row-welfareId="' + value.welfareId + '" >';
+                                        html1 += 'row-member="' + value.memberId + '">';
                                         html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
                                         html1 += '</button> ';
 
@@ -309,13 +418,39 @@
                                         html1 += '</tr>';
 
                                         html2 += '<option value="' + value.idCard + '">';
+                                        html3 += '<option value="' + value.fname + ' ' + value.lname + '">';
                                     });
                                     $("#listRightWelfare").html(html1);
-                                    $("#registerIdCard").html(html2);
+                                    $("#searchIdCard").html(html2);
+                                    $("#searchNameAndLast").html(html3);
 
+                                    $('.btn_history').click(function () {
+                                        var data = {};
+                                        data['memberId'] = $(this).attr('row-member');
+                                        var jdata = {};
+                                        jdata['data'] = data;
+                                        sendData('{{_context_path}}/api/welfare/history/all/history', jsonEncode(jdata),
+                                                function (result) {
+                                                    var html = "";
+                                                    $.each(result.preview, function (k, v) {
+
+                                                        html += '<tr><td> ' + (k + 1) + ' </td>';
+                                                        html += '<td>' + v.name + '' + v.description + '</td>';
+                                                        html += '<td>' + v.dcpDetails + '</td>';
+                                                        html += '<td>' + v.dateUse + '</td>';
+                                                        if (v.amount == null) {
+                                                            html += '<td> 1 ' + v.returntType + '</td>';
+                                                        } else {
+                                                            html += '<td>' + v.quantity + ' ' + v.returntType + '</td>';
+                                                        }
+                                                        html += '<td>' + v.amount + '</td>';
+                                                        html += '</tr>';
+                                                    });
+                                                    $("#showHistory").html(html);
+                                                });
+                                    });
 
                                 });
-
 
                     }
 
@@ -361,7 +496,8 @@
 
 
         });
-        
+
 
         $(".cDate").datepicker({language: 'th-th', format: 'dd-mm-yyyy', autoclose: true});
     </script>
+

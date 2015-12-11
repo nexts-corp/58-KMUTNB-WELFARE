@@ -64,6 +64,13 @@ interface IHistoryService {
      */
     public function checkStatus($data);
     
-     
+     /**
+     * @name getHistoryAll
+     * @uri /all/history
+     * @param apps\welfare\entity\History data []
+     * @return string preview
+     * @description แสดงรายละเอียดการใช้ สวัสดิการ 
+     */
+    public function getHistoryAll($data);
      
 }
