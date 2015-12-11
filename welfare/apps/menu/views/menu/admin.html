@@ -8,7 +8,7 @@
                 <i class="menu-icon fa fa-smile-o"></i>
 
                 <span class="menu-text">
-                    จัดการข้อมูลผู้ใช้งาน
+                    จัดการข้อมูลสวัสดิการ
                 </span>
 
                 <i class="menu-expand"></i>
@@ -16,7 +16,15 @@
 
             <ul class="submenu">
               
-                 
+                  <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/admin/approve/add"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">การเบิกจ่ายสวัสดิการ</span>
+                    </a>
+                </li>
                  <li>
                     <a href="#" 
                        data-id="content-body"
@@ -56,8 +64,6 @@
                         <span class="menu-text">ออกรายงานเบิกจ่ายสวัสดิการ</span>
                     </a>
                 </li>
-
-                
 
             </ul>
         </li>
@@ -129,7 +135,7 @@
                         <span class="menu-text">รายการข้อมูลผู้ใช้งาน</span>
                     </a>
                 </li>
-                <li>
+<!--                <li>
                     <a href="#" 
                        data-id="content-body"
                        data-api="{{_context_path}}/api/user/view/Permission/lists"
@@ -137,7 +143,7 @@
                        onclick="btnHTML(this)">
                         <span class="menu-text">จัดการสิทธิ์</span>
                     </a>
-                </li>
+                </li>-->
 
 
 
@@ -200,7 +206,9 @@
         
                     </ul>
                 </li>-->
-
+        
+        
+        
         <li>
             <a href="#" class="menu-dropdown">
                 <i class="menu-icon fa fa-medkit"></i>
@@ -223,11 +231,21 @@
                     </a>
                 </li>
 
-              
+               <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/welfare/view/admin/reports/ap"
+
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">ออกรายงานฯ</span>
+                    </a>
+                </li>
 
             </ul>
+            
         </li>
-        
+            
+
 
         <li>
             <a href="#" class="menu-dropdown">
@@ -265,10 +283,19 @@
                        data-api="{{_context_path}}/api/insurance/view/life/admin/lists"
 
                        onclick="btnHTML(this)">
-                        <span class="menu-text">ประกันสุขภาพกลุ่ม&อุบัติเหตุ</span>
+                        <span class="menu-text">ประกันสุขภาพกลุ่ม</span>
                     </a>
                 </li>
+                
+                <li>
+                    <a href="#" 
+                       data-id="content-body"
+                       data-api="{{_context_path}}/api/insurance/view/life/admin/lists"
 
+                       onclick="btnHTML(this)">
+                        <span class="menu-text">ประกันอุบัติเหตุ</span>
+                    </a>
+                </li>
 
 
                 <!--<li>
