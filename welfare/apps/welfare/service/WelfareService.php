@@ -133,7 +133,8 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
     public function preview($conditions) {
         //ตรวจสอบว่าเงื่อนไข ตรงกับบุคลากรไหนบ้าง
-
+       
+        
         $query = "SELECT *,IFNULL(academic1,titleName1) title "
                 . "FROM v_fullmember "
                 . "where ";
@@ -182,8 +183,10 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $sql = $query . $where;
 
         $member = $this->datacontext->pdoQuery($sql);
+      
+        
 
-
+           
         return $member;
     }
 
@@ -642,14 +645,17 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $daoWelfare = new WelfareService();
         $objWelfare = $daoWelfare->get($welfareId);
         $employee = array();
-
+        
         foreach ($objWelfare->details as $key => $value) {
-
+            
             array_push($employee, $daoWelfare->preview($value->conditions));
-        }
 
+        }
+       
+        
         $member = array();
         foreach ($employee as $key => $value) {
+           
             foreach ($value as $key1 => $value1) {
                 array_push($member, $value1);
             }
@@ -664,7 +670,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $conditions->detailsId = $data->detailsId;
         $conditions = $this->datacontext->getObject($conditions);
         $conditions = $this->common->afterGet($conditions, array("welfareId", "detailsId", "dateCreated", "dateUpdated", "createBy", "updateBy"));
-
+       
 
         $daoWelfare = new WelfareService();
         $objMember = $daoWelfare->preview($conditions);
@@ -684,9 +690,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
         if ($data->idCard != "") {
             $sql .=" mb.idCard=" . $data->idCard . "";
         }
-
-
-
+    
         if ($data->fname != "" and $data->lname != "") {
             if ($sql != "") {
                 $or = "or";
@@ -699,8 +703,10 @@ class WelfareService extends CServiceBase implements IWelfareService {
         }
 
         $query = "SELECT mb "
-                . "FROM " . $this->pathMember . "Fullmember mb where  " . $sql . "";
-
+                . " FROM " . $this->pathMember . "Fullmember mb where  " . $sql . "";
+        
+       
+        
         $member = $this->datacontext->getObject($query)[0];
 
         $memberId = $member->memberId;
@@ -708,17 +714,12 @@ class WelfareService extends CServiceBase implements IWelfareService {
        $sqlDetails = "select wfc.detailsId  from welfareconditions wfc
                 join welfaredetails wfd on wfc.detailsId = wfd.detailsId
                 join welfare wf on wf.welfareId = wfd.welfareId
-                where wfc.fieldMap = :fieldmap
-                and wfc.valuex in 
-                ( 
-                   select employeeTypeId from v_fullmember where memberId =:memberId
-                )
-                and wfd.statusActive = 'Y' and wf.statusActive = 'Y' ";
+                where  wf.welfareId=:welfareId ";
        
-        $param = array("memberId" => $memberId, "fieldmap" => "employeeTypeId");
+        $param = array("welfareId" => $data->welfareId);
         $details = $this->datacontext->pdoQuery($sqlDetails, $param);
        
-        
+       
         $matchId = array();
         foreach ($details as $valueId) {
             $condition = new \apps\welfare\entity\Conditions();
@@ -788,7 +789,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
             }
         }
      
-
+       
 
         $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
                 . "wfdt.welfareId,  "
@@ -799,20 +800,23 @@ class WelfareService extends CServiceBase implements IWelfareService {
                 . "on wfdt.welfareId = wf.welfareId "
                 . "Left JOIN taxonomy rt  "
                 . "on wfdt.returnTypeId = rt.id "
-                . "where wf.statusActive='Y' and detailsId in ( " . $id . " )";
+                . "where wf.statusActive='Y' and detailsId in (" . $id . ")";
         
-
+      
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
         
-       
+       if($objDetailsId !=""){
         foreach ($objDetailsId as $key => $value) {
-            if ($value['welfareId'] == $data->welfareId) {
                 $member->detailsId = $value['detailsId'];
-            }
+            
         }
-        
-        
+       }
+      
+       if($member!=""){
         return $member;
+       }else{
+        return FALSE;
+       }
     }
 
 }

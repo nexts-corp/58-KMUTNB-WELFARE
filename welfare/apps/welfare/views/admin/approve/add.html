@@ -62,6 +62,8 @@
                                     </div>
                                 </div>
 
+
+
                                 <div id="searchShow" style="display: none;" >
 
                                     <div class="form-group ">
@@ -116,11 +118,12 @@
 
                 </div>
 
-                <div id="showSingle" style="display: none;" >
-                    <div class="widget radius-bordered">
-                        <div class="widget-header">
 
-                        </div>
+
+                <div id="showSingle" style="display: none;" >
+
+                    <div class="widget radius-bordered">
+
                         <div class="widget-body">
                             <form id="registerForm">
                                 <div class="form-horizontal">
@@ -179,15 +182,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="frmWelfareFile" class="control-label col-lg-4">{{#i18n}}welfare.file{{/i18n}}</label>
-                                        <div class="col-lg-5">
-                                            <form enctype="multipart/form-data" method="post" class="dropzone dz-square" id="dropzoneWelfare">
-                                                <div class="dz-default dz-message"><span id="txtWelfareFile">{{#i18n}}welfare.filename{{/i18n}}</span></div>
-                                            </form>
-                                            <input type="hidden" name="filename" class="welfare" id="filename"  />
-                                        </div>
-                                    </div>
+
 
                                     <div class="form-group ">
 
@@ -214,14 +209,28 @@
                     </div>
                 </div>
 
-                <div class="widget-header  with-footer"> <span class="widget-caption">  </span>
-                    <div class="widget-buttons"> </div>
-                </div>
+
                 <div id="showList" style="display: none;">
+
+
                     <div class="widget-body">
                         <div class="pull-right">
                         </div>
-                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
+                        <div class="checkbox">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkAll">
+                                <span class="text">เลือกทั้งหมด</span>
+                            </label>
+                        </div>
+                         <div class="col-sm-offset-4 pull-right">
+                                <label>
+                                    <button id="btn_saveNo" class="btn btn-primary">
+                                        {{#i18n}}button.save{{/i18n}}
+                                    </button>
+                                </label>
+
+
+                            </div>
                         <div class="form-title">
                             บุคคลากรผู้เข้าเงื่อนไข
                         </div>
@@ -229,6 +238,7 @@
                             <table class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
+                                        <th class="text-center" >เลือก</th>
                                         <th class="text-center">{{#i18n}}number{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}idCard{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
@@ -273,6 +283,7 @@
                                 <table class="table table-hover table-striped table-bordered table-condensed" >
                                     <thead>
                                         <tr>
+                                            <th class="text-center">เลือก </th>
                                             <th class="text-center">{{#i18n}}number{{/i18n}}</th>
                                             <th class="text-center">รายละเอียด </th>
                                             <th class="text-center">เงื่อนไข </th>
@@ -302,12 +313,28 @@
                 if (changeFormat == "Single") {
                     $("#searchShow").show();
                     $("#showSingle").show();
+                    $("#showList").hide();
                 } else {
+
                     $("#searchShow").hide();
                     $("#showSingle").hide();
+                    $("#showList").show();
                 }
 
             })
+            
+            $(".checkAll").click(function () {
+                if (this.checked) {
+                    $('.checkboxNo').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.checkboxNo').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+                
             $("#changeFormatSearch").change(function () {
                 var changeSearch;
                 changeSearch = $("#changeFormatSearch").val();
@@ -329,24 +356,21 @@
 
             })
 
-
-
             $.validate();
 
             $("#btn_search").click(function () {
 
 
-
-
                 var data = {};
                 var a = $(".searchNameAndLast").val();
                 var t = a.split(" ");  //ถ้าเจอวรรคแตกเก็บลง array t
-                
-                
+
+
                 data['fname'] = t[0];
                 data['lname'] = t[1];
                 data['idCard'] = $(".searchIdCard").val();
                 data['welfareId'] = $("#welfareId").val();
+                data['detailsId'] = $("#detailsId").val();
                 var jdata = {};
                 jdata['data'] = data;
 
@@ -398,6 +422,13 @@
                                     $.each(result.preview, function (key, value) {
 
                                         html1 += '<tr class="selectable">';
+                                        html1 += '<td class="text-center"><div class="checkbox">' ;
+                                        html1 += '<label>';
+                                        html1 += '<input type="checkbox" class="checkboxNo" value=' + key + ' />';
+                                        html1 += '<span class="text"></span>';
+                                        html1 += '</label>';
+                                        html1 +=  '</div>';
+                                        html1 += '</td>';
                                         html1 += '<td>' + (key + 1) + '</td>';
                                         html1 += '<td>' + value.idCard + '</td>';
                                         html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
