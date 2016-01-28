@@ -92,8 +92,8 @@ class HistoryService extends CServiceBase implements IHistoryService {
     }
 
     public function checkStatus($data) {
-
-
+        /*
+         * 
         $where = "";
         if ($data != "") {
 
@@ -125,7 +125,7 @@ class HistoryService extends CServiceBase implements IHistoryService {
             $where .=" ap.statusApprove='Y'";
         }
 
-
+        
         $sqlApprove = "SELECT ap.historyId,ap.statusApprove,ap.welfareId,ap.memberId,ap.detailsId,ap.dateUpdated , "
                 . " IFNULL(mb.academic1,mb.titleName1) title  , mb.memberId , "
                 . " mb.fname , mb.lname , mb.gender1, mb.department1,"
@@ -139,9 +139,30 @@ class HistoryService extends CServiceBase implements IHistoryService {
                 . "Left Join welfaredetails wfc "
                 . "on ap.detailsId=wfc.detailsId "
                 . " where " . $where . " ";
+        */
+        
+        $sqlApprove = "select 
+            welhist.historyId as historyId, mb.memberId as memberId,
+            wel.welfareId as welfareId, wel.`name` as name,
+            title.value1 as title, mb.fname as fname, mb.lname as lname,
+            gender.id as genderId, gender.value1 as gender1,
+            faculty.id as facultyId, faculty.value1 as faculty1,
+            dept.id as departmentId, dept.value1 as department1,
+            employee.id as employeeTypeId, employee.value1 as employeeType1,
+            welhist.statusApprove as statusApprove
+            from member mb 
+            inner join welfarehistory welhist on mb.memberId = welhist.memberId
+            inner join welfare wel on wel.welfareId = welhist.welfareId
+            inner join memberwork mbwork on mbwork.memberId = mb.memberId
+            inner join taxonomy title on title.id = mb.titleNameId
+            inner join taxonomy gender on gender.id = mb.genderId
+            inner join taxonomy employee on employee.id = mbwork.employeeTypeId
+            inner join taxonomy faculty on faculty.id = mbwork.facultyId
+            inner join taxonomy dept on dept.id = mbwork.departmentId";
+        
 
         $objApprove = $this->datacontext->pdoQuery($sqlApprove);
-
+        
         $i = 1;
         if ($objApprove != "") {
 
@@ -151,7 +172,6 @@ class HistoryService extends CServiceBase implements IHistoryService {
                 $objApprove[$key]["rowNo"] = $i++;
             }
         }
-
 
         return $objApprove;
     }
