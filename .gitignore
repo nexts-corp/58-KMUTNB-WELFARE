@@ -6,3 +6,6 @@ welfare/manifest.server.json
 welfare/manifest.server.json
 welfare/manifest.server.json
 welfare/manifest.server.json
+*.xml
+welfare/.idea/welfare.iml
+*.name
