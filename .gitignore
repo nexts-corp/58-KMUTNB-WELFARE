@@ -1,11 +1,11 @@
-/welfare/vendor/
-/welfare/logs/
+welfare/vendor/
+welfare/logs/
 welfare/nbproject/private/private.properties
 welfare/nbproject/private/private.xml
 welfare/manifest.server.json
-welfare/manifest.server.json
-welfare/manifest.server.json
-welfare/manifest.server.json
-*.xml
+welfare/index.php
 welfare/.idea/welfare.iml
+*.xml
 *.name
+/nbproject/private/
+nbproject/project.properties

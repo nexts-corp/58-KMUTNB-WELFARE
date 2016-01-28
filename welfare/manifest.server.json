@@ -1,6 +1,6 @@
 {
-    "context_path":"/welfare",
-    "welcome_page":"/welfare/api/root/view/index",
+    "context_path":"/kmutnb-welfare/welfare",
+    "welcome_page":"/kmutnb-welfare/welfare/api/root/view/index",
     "locale":"th-TH",
     "context": [
         {
@@ -23,8 +23,8 @@
                 {"name": "OAUTH2_CLIENT_ID","value": "123456"},
                 {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
                 {"name": "OAUTH2_ACCESS_KEY","value": "code"},
-                {"name": "OAUTH2_AUTH_URL","value": "/welfare/api/oauth/authen/authorization"},
-                {"name": "OAUTH2_TOKEN_URI","value":"localhost/welfare/api/oauth/authen/authenticate"}
+                {"name": "OAUTH2_AUTH_URL","value": "/kmutnb-welfare/welfare/api/oauth/authen/authorization"},
+                {"name": "OAUTH2_TOKEN_URI","value":"localhost:8081/kmutnb-welfare/welfare/api/oauth/authen/authenticate"}
        ] 
     }
 }
