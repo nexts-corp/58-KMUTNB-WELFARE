@@ -142,8 +142,8 @@ class HistoryService extends CServiceBase implements IHistoryService {
         */
         
         $sqlApprove = "select 
-            welhist.historyId as historyId, mb.memberId as memberId,
-            wel.welfareId as welfareId, wel.`name` as name,
+            welhist.historyId as historyId, 
+            mb.memberId as memberId, mb.idCard as idCard,
             title.value1 as title, mb.fname as fname, mb.lname as lname,
             gender.id as genderId, gender.value1 as gender1,
             faculty.id as facultyId, faculty.value1 as faculty1,
@@ -152,13 +152,14 @@ class HistoryService extends CServiceBase implements IHistoryService {
             welhist.statusApprove as statusApprove
             from member mb 
             inner join welfarehistory welhist on mb.memberId = welhist.memberId
-            inner join welfare wel on wel.welfareId = welhist.welfareId
             inner join memberwork mbwork on mbwork.memberId = mb.memberId
             inner join taxonomy title on title.id = mb.titleNameId
             inner join taxonomy gender on gender.id = mb.genderId
             inner join taxonomy employee on employee.id = mbwork.employeeTypeId
             inner join taxonomy faculty on faculty.id = mbwork.facultyId
             inner join taxonomy dept on dept.id = mbwork.departmentId";
+        
+        
         
 
         $objApprove = $this->datacontext->pdoQuery($sqlApprove);

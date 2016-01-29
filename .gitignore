@@ -9,3 +9,4 @@ welfare/.idea/welfare.iml
 *.name
 /nbproject/private/
 nbproject/project.properties
+/welfare/nbproject/private/

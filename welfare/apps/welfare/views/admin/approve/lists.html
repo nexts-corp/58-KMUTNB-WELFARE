@@ -23,13 +23,13 @@
                     <div class="widget-body">
                         <div class="pull-right">
 
-                            
+
 
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
-                         
+
 
                             <label class="col-lg-4 control-label">
                                 <select id="employeeType" class="form-control" >
@@ -63,21 +63,21 @@
                                 </select>
                                 <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                             </div>
-                            
+
                             <div id="showInputSearch" style="display: none;">
                                 <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                           
-                            <label class="col-lg-4 control-label">
-                                <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">
-                            </label>
-                            <label class="col-lg-2 control-label">
-                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                            </label>
+
+                                <label class="col-lg-4 control-label">
+                                    <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">
+                                </label>
+                                <label class="col-lg-2 control-label">
+                                    <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                </label>
                             </div>
 
                         </div>
 
-                        
+
                         <div class="flip-scroll">
 
                             <table class="table table-hover table-striped table-bordered table-condensed">
@@ -227,9 +227,9 @@
                                 html1 += 'data-toggle="modal"';
                                 html1 += 'data-target=".checkHistory"';
                                 html1 += 'data-whatever="@fat"';
-                                html1 += 'row-index="' + value.detailsId + '"';
+                                //html1 += 'row-index="' + value.detailsId + '"';
                                 html1 += 'row-member="' + value.memberId + '"';
-                                html1 += 'row-welfareId="' + value.welfareId + '" >';
+                                //html1 += 'row-welfareId="' + value.welfareId + '" >';
                                 html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
                                 html1 += '</button> ';
 
@@ -314,8 +314,8 @@
                             $('.btn_history').click(function () {
 
                                 var data = {};
-                                data['detailsId'] = $(this).attr('row-index');
-                                data['welfareId'] = $(this).attr('row-welfareId');
+                                //data['detailsId'] = $(this).attr('row-index');
+                                //data['welfareId'] = $(this).attr('row-welfareId');
                                 data['memberId'] = $(this).attr('row-member');
                                 var jdata = {};
                                 jdata['data'] = data;
