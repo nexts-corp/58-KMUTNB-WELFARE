@@ -362,6 +362,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
         $sqlDetails = "select 
             welhist.detailsId as detailsId, welhist.memberId,
             welhist.amount as amount, welhist.dateUse as dateUse, welhist.remark as remark,
+            concat(welcon.operations, ' ', welcon.valuex) as dcpDetails,
             weldel.description as description,
             weldel.quantity as quantity,
             weldel.returnTypeId, rettype.value1 as returntType,
@@ -370,6 +371,7 @@ class WelfareService extends CServiceBase implements IWelfareService {
             from welfarehistory welhist
             inner join welfare wel on wel.welfareId = welhist.welfareId
             inner join welfaredetails weldel on weldel.welfareId = wel.welfareId
+            inner join welfareconditions welcon on welcon.welfareId = wel.welfareId
             inner join taxonomy rettype on rettype.id = weldel.returnTypeId
             where welhist.dateUse is not null and welhist.memberId = :memberId";
         $param = array("memberId" => $data->memberId);
