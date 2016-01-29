@@ -256,6 +256,7 @@
                         sendData('{{_context_path}}/api/insurance/life/lists', data, function (result) {
                             var body = "";
                             yes = result;
+                            debugger
                             $.each(yes.lists, function (k, v) {
                                 body += "<tr>" +
                                         "<td>" + v.rowNo + "</td>" +

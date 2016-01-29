@@ -30,23 +30,30 @@ class LifeService extends CServiceBase implements ILifeService {
             $param['payment'] = $this->getRequest()->payment;
         }
 
+        /*
         $sql = "select fm.*,ifnull(fm.academic1,fm.titleName1) as titleName, "
                 . "inf.lifeId, inf.payment,inf.received,inf.protectYear "
                 . "from v_fullmember fm "
                 . "join insurancelife inf "
                 . "on inf.memberId = fm.memberId "
                 . "where inf.protectYear = :protectYear " . $and;
+        */
+        
+        $sql = "select fm.*,ifnull(fm.academic1,fm.titleName1) as titleName, "
+                . "inf.lifeId, inf.payment,inf.received,inf.protectYear "
+                . "from v_fullmember fm "
+                . "join insurancelife inf "
+                . "on inf.memberId = fm.memberId "
+                . "where inf.protectYear is not null " . $and;
 
         if ($searchN != "") {
             $searchName = $searchN;
-            $sql .= "and (fm.fname LIKE "."'%" . $searchName . "%'"." or fm.lname LIKE "."'%" . $searchName . "%'"." or fm.idCard LIKE "
-                   ."'%" . $searchName . "%')";
-            
-        }else if ($filterCode!=""){
+            $sql .= "and (fm.fname LIKE " . "'%" . $searchName . "%'" . " or fm.lname LIKE " . "'%" . $searchName . "%'" . " or fm.idCard LIKE "
+                    . "'%" . $searchName . "%')";
+        } else if ($filterCode != "") {
             $filtercode = $filterCode;
             $filtervalue = $filterval;
             $sql .= "and fm." . $filtercode . "Id = $filtervalue ";
-
         }
 
         $datas = $this->datacontext->pdoQuery($sql, $param);
@@ -106,9 +113,8 @@ class LifeService extends CServiceBase implements ILifeService {
             $fdob[2] = intval($fdob[2]) - 543;
             $fdob1 = $fdob[2] . "-" . $fdob[1] . "-" . $fdob[0];
             $Benef->fdob = $fdob1;
-            
         }
-        
+
         if ($this->datacontext->saveObject($Benef)) {
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;
@@ -119,17 +125,16 @@ class LifeService extends CServiceBase implements ILifeService {
     }
 
     public function updateBeneficiary($Benef) {
-        
+
         if ($Benef->fdob != "") {
             $fdob = explode("-", $Benef->fdob);
             $fdob[2] = intval($fdob[2]) - 543;
             $fdob1 = $fdob[2] . "-" . $fdob[1] . "-" . $fdob[0];
             $Benef->fdob = $fdob1;
-            
         }
-        
+
         if ($this->datacontext->updateObject($Benef)) {
-            
+
             $this->getResponse()->add("message", "บันทึกข้อมูลสำเร็จ");
             return true;
         } else {
@@ -137,9 +142,9 @@ class LifeService extends CServiceBase implements ILifeService {
             return $Benef;
         }
     }
-    
+
     public function searchlife($search) {
-        $searchName = $this->getRequest()->searchName;  
+        $searchName = $this->getRequest()->searchName;
         $filtercode = $search->filterCode;
         $filtervalue = $search->filtervalue;
         $year = date("Y");
@@ -160,15 +165,13 @@ class LifeService extends CServiceBase implements ILifeService {
                 . "where inf.protectYear = :protectYear " . $and;
 
         if ($searchName != "") {
-            $sql .= "and (fm.fname LIKE "."'%" . $searchName . "%'"." or fm.lname LIKE "."'%" . $searchName . "%'"." or fm.idCard LIKE "
-                   ."'%" . $searchName . "%')";
-            
+            $sql .= "and (fm.fname LIKE " . "'%" . $searchName . "%'" . " or fm.lname LIKE " . "'%" . $searchName . "%'" . " or fm.idCard LIKE "
+                    . "'%" . $searchName . "%')";
         } else {
             $sql .= "and fm." . $filtercode . "Id = $filtervalue ";
-
         }
 
-        
+
 
         $datas = $this->datacontext->pdoQuery($sql, $param);
         $i = 1;

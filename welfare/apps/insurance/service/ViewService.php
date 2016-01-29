@@ -104,6 +104,9 @@ class ViewService extends CServiceBase implements IViewService {
         } else {
             $view->lists = $life->lists(); //กรณีที่ไม่ได้ search
         }
+        
+        
+        $view->lists = $life->lists();
 
         return $view;
     }

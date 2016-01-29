@@ -108,6 +108,8 @@ class SSOService extends CServiceBase implements ISSOService {
         $searchName = $this->getRequest()->searchName;  
         $filtercode = $search->filterCode;
         $filtervalue = $search->filtervalue;
+        $param = array();
+        
         $sql = "SELECT "
                 . "mb.memberId, "
                 . "mb.idCard, "
@@ -126,30 +128,28 @@ class SSOService extends CServiceBase implements ISSOService {
                 . "from kmutnb_welfare.sso "
                 . "order by dateCreated desc "
                 . ") tb "
-                . "join v_member mb on mb.memberId = tb.memberId "
-                . "join taxonomy titleName on titleName.id = mb.titleNameId "
-                . "join taxonomy academic on academic.id = mb.academicId "
-                . "join taxonomy dep on dep.id = mb.departmentId "
-                . "join taxonomy fac on fac.id = mb.facultyId "
-                . "where ";
+                . "left outer join v_member mb on mb.memberId = tb.memberId "
+                . "left outer join taxonomy titleName on titleName.id = mb.titleNameId "
+                . "left outer join taxonomy academic on academic.id = mb.academicId "
+                . "left outer join taxonomy dep on dep.id = mb.departmentId "
+                . "left outer join taxonomy fac on fac.id = mb.facultyId ";
 
         if ($searchName != "") {
             
-            $sql .= " mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by tb.memberId "
+            $sql .= "where mb.fname LIKE :name or mb.lname LIKE :name or mb.idCard LIKE :name group by tb.memberId "
                 . "order by tb.dateCreated desc";
             $param = array(
                 "name" => "%" . $searchName . "%"
             );
-        } else {
+        } else if ($filtercode != "") {
             
-            $sql .= " mb." . $filtercode . "Id = :filtervalue group by tb.memberId "
+            $sql .= "where mb." . $filtercode . "Id = :filtervalue group by tb.memberId "
                 . "order by tb.dateCreated desc";
 
             $param = array(
                 "filtervalue" => $filtervalue,
             );
         }
-
 
         $datas = $this->datacontext->pdoQuery($sql, $param);
         $i = 1;

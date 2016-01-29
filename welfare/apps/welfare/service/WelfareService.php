@@ -383,18 +383,13 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
     public function searchWelfare($data) {
 
-
         if ($data->dateStart != "" or $data->dateEnd != "" or $data->searchName != "") {
             $where = "";
-
-
 
             if ($data->dateStart != "" && $data->dateEnd == "") {
                 $arrdateStart = explode("-", $data->dateStart);
                 $year = $arrdateStart[2] - "543";
                 $dateStart = $year . "-" . $arrdateStart[1] . "-" . $arrdateStart[0];
-
-
 
                 $where .="And wf.dateStart >= '" . $dateStart . "'";
             } elseif ($data->dateStart == "" && $data->dateEnd != "") {
@@ -422,9 +417,21 @@ class WelfareService extends CServiceBase implements IWelfareService {
 
 
 
-            $sqlWelfare = "SELECT wf.welfareId,wf.name,wf.statusActive,wf.resetTime,wf.free , "
-                    . "wf.willing,wf.dateStart,wf.dateEnd "
-                    . " FROM welfare wf where wf.statusActive='Y' " . $where . " ";
+            $sqlWelfare = "SELECT
+                    wf.welfareId,
+                    wf.name,
+                    wf.statusActive,
+                    wf.resetTime,
+                    wf.free,
+                    wf.willing,
+                    wf.dateStart,
+                    wf.dateEnd
+                FROM
+                    welfare wf
+                WHERE
+                    wf.statusActive = 'Y'"
+                    . $where . " ";
+
             $obj = $this->datacontext->pdoQuery($sqlWelfare);
 
             foreach ($obj as $key => $value) {
@@ -456,7 +463,6 @@ class WelfareService extends CServiceBase implements IWelfareService {
                     $obj[$key]->resetTime = "ทุก 6 เดือน";
                 }
             }
-
 
             return $obj;
         }

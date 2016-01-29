@@ -3,20 +3,20 @@
 
 $(document).ajaxStart(function () {
     //console.log("Triggered ajaxStart handler.");
- 
+
     $(".loading-container").removeClass("loading-inactive");
 });
 
 $(document).ajaxStop(function () {
-   // console.log("Triggered ajaxStop handler.");
+    // console.log("Triggered ajaxStop handler.");
     $(".loading-container").addClass("loading-inactive");
-    
+
 });
 
 function getCode(code) {
     var data;
     $.ajax({
-        url: '/welfare/api/taxonomy/taxonomy/getCode',
+        url: '/kmutnb-welfare/welfare/api/taxonomy/taxonomy/getCode',
         type: 'post',
         data: {code: code},
         async: false,
@@ -34,7 +34,7 @@ function getCode(code) {
 function getPCode(pCode) {
     var data;
     $.ajax({
-        url: '/welfare/api/taxonomy/taxonomy/getPCode',
+        url: '/kmutnb-welfare/welfare/api/taxonomy/taxonomy/getPCode',
         type: 'post',
         data: {pCode: pCode},
         async: false,
@@ -52,7 +52,7 @@ function getPCode(pCode) {
 function getParentId(parentId) {
     var data;
     $.ajax({
-        url: '/welfare/api/taxonomy/taxonomy/getParentId',
+        url: '/kmutnb-welfare/welfare/api/taxonomy/taxonomy/getParentId',
         type: 'post',
         data: {parentId: parentId},
         async: false,
@@ -82,7 +82,7 @@ function btnHTML(value) {
 }
 
 function getHTML(id, link, data) {
-    
+
     //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
     ////have data ==> getHTML("navbar","/api/xxx/xxx/",jsonEncode(xxx));
     //dont have data ==> getHTML("navbar","/api/xxx/xxx/",null);
@@ -117,8 +117,8 @@ function getHTML(id, link, data) {
         });
     }
 }
-function sendData(url, data,callback) {
-   // var callback;
+function sendData(url, data, callback) {
+    // var callback;
     $.ajax({
         url: url,
         data: data,
@@ -130,8 +130,8 @@ function sendData(url, data,callback) {
             }
         },
         success: function (result) {
-           // callback = result;
-           callback(result);
+            // callback = result;
+            callback(result);
         }
     });
     //return callback;
