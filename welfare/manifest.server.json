@@ -1,6 +1,6 @@
 {
-    "context_path":"/kmutnb-welfare/welfare",
-    "welcome_page":"/kmutnb-welfare/welfare/api/root/view/index",
+    "context_path":"/welfare",
+    "welcome_page":"/welfare/api/root/view/index",
     "locale":"th-TH",
     "context": [
         {

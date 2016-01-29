@@ -1,4 +1,4 @@
- <!-- Page Content -->
+<!-- Page Content -->
 <div class="page-content">
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
@@ -24,60 +24,48 @@
                         <div class="pull-right">
 
                         </div>
-                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <label class="col-lg-4 control-label">
+                                    <select id="employeeType" class="form-control" >
+                                        <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
+                                        <!--                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}-->
+                                    </select>
 
-                            <label class="col-lg-4 control-label">
-                                <select id="faculty" class="form-control" >
-                                    <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
-                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}
+                                </label>
 
-                                </select>
-                            </label>
-                            <label class="col-lg-4 control-label">
-                                <select id="department" class="form-control" >
-                                    <option value="" selected="">ค้นหาจากภาควิชา</option>
-                                </select>
-                            </label>
+                                <label class="col-lg-4 control-label">
+                                    <select id="faculty" class="form-control" >
+                                        <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
+                                        <!--                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}-->
 
-                            <label class="col-lg-4 control-label">
-                                <select id="employeeType" class="form-control" >
-                                    <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
-                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
-                                </select>
-
-                            </label>
-                            <label class="col-lg-4 control-label">
-                                <select id="gender" class="form-control">
-                                    <option value="" selected="" >ค้นหาจากเพศ</option>
-                                    {{#gender}}<option value="{{id}}">{{value1}}</option>{{/gender}}
+                                    </select>
+                                </label>
+                                <label class="col-lg-4 control-label">
+                                    <select id="department" class="form-control" >
+                                        <option value="" selected="">ค้นหาจากภาควิชา</option>
+                                    </select>
+                                </label>
 
 
-                                    <!-- … -->
-                                </select>
-                            </label>
 
-                            <div class="col-lg-4 control-label">
-                                <select id="nameAndLast" class="form-control">
-                                    <option value="" selected="" >เลือก</option>
-                                    <option value="nameAndLast" >ค้นหาด้วย ชื่อ-นามสกุล</option>
-                                </select>
                             </div>
-
-                            <div id="showInputSearch" class="col-lg-4 control-label" style="display: none;">
-                                <input  type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหาด้วย ชี่อ/นามสกุล" list="filterCode">
-                                <p></p>
-                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                                <p></p>
-                            </div>  
-
-
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
 
+
+                                <div class="pull-right">
+                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ส่งออก Excel</a>
+                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ส่งออก PDF</a>
+                                </div>
+                            </div>
+                        </div>
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
 
-                            <table class="table table-hover table-striped table-bordered table-condensed" id="showTable">
+                            <table id="table" class="table table-hover table-striped table-bordered table-condensed" id="showTable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">{{#i18n}}number{{/i18n}}</th>
@@ -93,7 +81,7 @@
                                 <tbody id="listWelfare">
 
 
-                                    
+
 
                                 </tbody>
 
@@ -111,51 +99,60 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         getSearch();
     });
 
 
-    $("#nameAndLast").change(function () {
+    $("#nameAndLast").change(function() {
         if ($("#nameAndLast").val() == "nameAndLast") {
             $("#showInputSearch").show();
         } else {
             $("#showInputSearch").hide();
         }
     });
-    $("#employeeType").change(function () {
+    $("#employeeType").change(function() {
         getSearch();
     });
-    $("#department").change(function () {
+    $("#department").change(function() {
         getSearch();
     })
 
-    $("#gender").change(function () {
+    $("#gender").change(function() {
         getSearch();
     });
 
-    $("#faculty").change(function () {
+    $("#faculty").change(function() {
         var faculty = $("#faculty").val();
         var data = {"parentId": faculty};
         sendData('{{_context_path}}/api/taxonomy/taxonomy/getParentId', data,
-                function (result) {
+                function(result) {
                     var html2 = "";
-                    $.each(result.lists, function (key, value) {
+                    $.each(result.lists, function(key, value) {
                         html2 += '<option value=' + value.id + '>' + value.value1 + '</option>';
                     });
                     $("#department").html(html2);
                 });
     });
-    $("#btnSearch").click(function () {
+    $("#btnSearch").click(function() {
         getSearch();
     })
     function getSearch() {
 
-        var faculty = $("#faculty").val();
-        var employeeType = $("#employeeType").val();
-        var gender = $("#gender").val();
-        var searchName = $("#searchName").val();
-        var department = $("#department").val();
+        var department1 = {};
+        var faculty1 = {};
+        var employeeType1 = {};
+
+//        var faculty = $("#faculty").val();
+//        var employeeType = $("#employeeType").val();
+//        var gender = $("#gender").val();
+//        var searchName = $("#searchName").val();
+//        var department = $("#department").val();
+        var faculty = "";
+        var employeeType = "";
+        var gender = "";
+        var searchName = "";
+        var department = "";
         var data = {};
 
         data['faculty'] = faculty;
@@ -167,32 +164,123 @@
         var jdata = {};
         jdata['data'] = data;
         sendData('{{_context_path}}/api/welfare/welfare/right/member', jsonEncode(jdata),
-                function (result) {
+                function(result) {
 
-                    var html1 = "";
-                    $.each(result.member, function (key, value) {
 
-                        html1 += '<tr class="selectable">';
-                        html1 += '<td>' + (key + 1) + '</td>';
-                        html1 += '<td>' + value.titles1 + ' ' + value.fname + ' ' + value.lname + '</td>';
-                        html1 += '<td>' + value.gender1 + '</td>';
-                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
-                        html1 += '<td>' + value.employeeType1 + '</td>';
-                        html1 += '<td class = "center" >';
+                    $.each(result["member"], function(key, value) {
+                        department1[value["department1"]] = value["department1"];
+                        faculty1[value["faculty1"]] = value["faculty1"];
+                        employeeType1[value["employeeType1"]] = value["employeeType1"];
 
-                        html1 += '<button class="btn btn-default btn-xs edit btn_history"';
-                        html1 += 'row-index="' + value.memberId + '"';
-                        html1 += 'row-emploryee="' + value.employeeTypeId + '" >';
-                        html1 += '<i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}';
-                        html1 += '</button> ';
-
-                        html1 += '</td>';
-                        html1 += '</tr>';
                     });
-                    $("#listWelfare").html(html1);
+
+                    console.log(result);
+                    var t = $("#table").DataTable({
+                        "destroy": true,
+                        "data": result["member"],
+                        "order": [0, 'asc'],
+                        "iDisplayLength": 50,
+                        "columnDefs": [
+                            {
+                                "targets": 0,
+                                "searchable": false,
+                                "orderable": false,
+                                "data": "memberId",
+                                "sClass": "text-center col-md-1"
+                            }, {
+                                "targets": 1,
+                                "data": "fname",
+                                "sClass": "text-left col-md-2",
+                                "render": function(data, key, full) {
+                                    return full["titleName1"] + "&nbsp;" + full["fname"] + "&nbsp;&nbsp;" + full["lname"];
+                                }
+                            }, {
+                                "targets": 2,
+                                "data": "gender1",
+                                "sClass": "text-center col-md-1"
+
+                            }, {
+                                "targets": 3,
+                                "data": "fname",
+                                "sClass": "text-left col-md-2",
+                                "render": function(data, key, full) {
+                                    return full["faculty1"] + '/' + full["department1"];
+                                }
+                            }, {
+                                "targets": 4,
+                                "data": "employeeType1",
+                                "sClass": "text-left col-md-2"
+
+                            }, {
+                                "targets": 5,
+                                "data": "fname",
+                                "sClass": "text-center col-md-1",
+                                "render": function(data, key, full) {
+                                    html1 = '<button class="btn btn-default btn-xs edit btn_history"';
+                                    html1 += 'row-index="' + full["memberId"] + '"';
+                                    html1 += 'row-emploryee="' + full["employeeTypeId"] + '" >';
+                                    html1 += '<i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}';
+                                    html1 += '</button> ';
+                                    return html1;
+                                }
 
 
-                    $('.btn_history').click(function () {
+                            }
+                        ]
+                    });
+                    t.on('order.dt search.dt', function() {
+                        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(cell, i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    }).draw();
+
+                    var search = '<option value="" selected="selected">แสดงภาควิชาทั้งหมด</option>';
+                    $.each(department1, function(key, value) {
+                        search += '<option value="' + value + '">' + value + '</option>';
+                    });
+                    $("#department").html(search).select().change(function() {
+                        t.columns(3).search(this.value).draw();
+                    });
+
+                    var search = '<option value="" selected="selected">แสดงสังกัด/คณะ ทั้งหมด</option>';
+                    $.each(faculty1, function(key, value) {
+                        search += '<option value="' + value + '">' + value + '</option>';
+                    });
+                    $("#faculty").html(search).select().change(function() {
+                        t.columns(3).search(this.value).draw();
+                    });
+
+                    var search = '<option value="" selected="selected">แสดงประเภทพนักงานทั้งหมด</option>';
+                    $.each(employeeType1, function(key, value) {
+                        search += '<option value="' + value + '">' + value + '</option>';
+                    });
+                    $("#employeeType").html(search).select().change(function() {
+                        t.columns(4).search(this.value).draw();
+                    });
+//                    var html1 = "";
+//                    $.each(result.member, function(key, value) {
+//
+//                        html1 += '<tr class="selectable">';
+//                        html1 += '<td>' + (key + 1) + '</td>';
+//                        html1 += '<td>' + value.titles1 + ' ' + value.fname + ' ' + value.lname + '</td>';
+//                        html1 += '<td>' + value.gender1 + '</td>';
+//                        html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+//                        html1 += '<td>' + value.employeeType1 + '</td>';
+//                        html1 += '<td class = "center" >';
+//
+//                        html1 += '<button class="btn btn-default btn-xs edit btn_history"';
+//                        html1 += 'row-index="' + value.memberId + '"';
+//                        html1 += 'row-emploryee="' + value.employeeTypeId + '" >';
+//                        html1 += '<i class="fa fa fa-eye"></i>{{#i18n}}history{{/i18n}}';
+//                        html1 += '</button> ';
+//
+//                        html1 += '</td>';
+//                        html1 += '</tr>';
+//                    });
+//                    $("#listWelfare").html(html1);
+
+
+                    $('.btn_history').click(function() {
 
                         var memberId = $(this).attr('row-index');
                         var data = {"memberId": memberId};

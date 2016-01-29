@@ -17,52 +17,66 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">รายการขอรับสวัสดิการ</span>
-                        <div class="widget-buttons"> </div>
-                    </div>
-                    <div class="widget-body">
-                        <div class="pull-right">
+                    <div class="widget-header  with-footer"> 
+                        <span class="widget-caption">
+                            รายการขอรับสวัสดิการ
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/kmutnb-welfare
+
+                        </span>
+
+<<<<<<< HEAD
+                        <div class="widget-buttons"> 
+=======
+
+>>>>>>> origin/kmutnb-welfare
 
 
                         </div>
-                        <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
-                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+
+                    </div>
+                    <div class="widget-body">
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <label class="col-lg-4 control-label">
+                                    <select id="employeeType" class="form-control" >
+                                        <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
+                                        <!--                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}-->
+                                    </select>
+
+                                </label>
+
+                                <label class="col-lg-4 control-label">
+                                    <select id="faculty" class="form-control" >
+                                        <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
+                                        <!--                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}-->
+
+                                    </select>
+                                </label>
+                                <label class="col-lg-4 control-label">
+                                    <select id="department" class="form-control" >
+                                        <option value="" selected="">ค้นหาจากภาควิชา</option>
+                                    </select>
+                                </label>
 
 
 
-                            <label class="col-lg-4 control-label">
-                                <select id="employeeType" class="form-control" >
-                                    <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
-                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}
-                                </select>
-
-                            </label>
-
-                            <label class="col-lg-4 control-label">
-                                <select id="faculty" class="form-control" >
-                                    <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
-                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}
-
-                                </select>
-                            </label>
-                            <label class="col-lg-4 control-label">
-                                <select id="department" class="form-control" >
-                                    <option value="" selected="">ค้นหาจากภาควิชา</option>
-                                </select>
-                            </label>
-
-
-
-
-                            <div class="col-lg-4 control-label">
-                                <select id="nameAndLast" class="form-control">
-                                    <option value="" selected="" >เลือก</option>
-                                    <option value="nameAndLast" >ค้นหาด้วย ชื่อ-นามสกุล</option>
-                                    <option value="idCard" >ค้นหาด้วย รหัสบัตรประชาชน 13 หลัก</option>
-                                </select>
-                                <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                             </div>
+<<<<<<< HEAD
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                
+                            
+                            <div class="pull-right">
+                                <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ส่งออก Excel</a>
+                                <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ส่งออก PDF</a>
+                                
+=======
 
                             <div id="showInputSearch" style="display: none;">
                                 <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
@@ -74,13 +88,19 @@
                                     <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                                 </label>
                             </div>
+>>>>>>> origin/kmutnb-welfare
 
+                            </div>
                         </div>
 
+<<<<<<< HEAD
+                        </div>
+=======
 
+>>>>>>> origin/kmutnb-welfare
                         <div class="flip-scroll">
 
-                            <table class="table table-hover table-striped table-bordered table-condensed">
+                            <table id="table" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th class="text-center">{{#i18n}}number{{/i18n}}</th>
@@ -89,13 +109,12 @@
                                         <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}welfare.name{{/i18n}}</th>
                                         <th class="text-center">{{#i18n}}manage{{/i18n}}</th>
 
                                     </tr>
                                 </thead>
                                 <tbody id="listWelfare">
-
+                                    <tr><td colspan="6" class="text-center">- กำลังโหลดข้อมูล -</td></tr>
 
                                 </tbody>
 
@@ -153,51 +172,53 @@
 <!--End Large Modal Templates-->
 <div style="display: none" id="printPdf"> </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         getSearch();
     });
-    $(".reportCsv").click(function () {
-        var id = $(this).attr("row-index");
-        window.open('{{_context_path}}/api/welfare/reports/approve');
-    });
-    $("#typeStatus").change(function () {
-        getSearch();
-    });
-
-    $("#employeeType").change(function () {
-        getSearch();
-    });
-    $("#department").change(function () {
-        getSearch();
-    })
-
-    $("#nameAndLast").change(function () {
-        if ($("#nameAndLast").val() == "nameAndLast") {
-            $("#showInputSearch").show();
-        } else {
-            $("#showInputSearch").hide();
-        }
-    });
-    $("#btnSearch").click(function () {
-        getSearch();
-    })
-    $("#faculty").change(function () {
-        var faculty = $("#faculty").val();
-        var data = {"parentId": faculty};
-        sendData('{{_context_path}}/api/taxonomy/taxonomy/getParentId', data,
-                function (result) {
-                    var html2 = "";
-                    $.each(result.lists, function (key, value) {
-                        html2 += '<option value=' + value.id + '>' + value.value1 + '</option>';
-                    });
-                    $("#department").html(html2);
-                });
-    });
+//    $(".reportCsv").click(function() {
+//        var id = $(this).attr("row-index");
+//        window.open('{{_context_path}}/api/welfare/reports/approve');
+//    });
+//    $("#typeStatus").change(function() {
+//        getSearch();
+//    });
+//
+//    $("#employeeType").change(function() {
+//        getSearch();
+//    });
+//    $("#department").change(function() {
+//        getSearch();
+//    })
+//
+//    $("#nameAndLast").change(function() {
+//        if ($("#nameAndLast").val() == "nameAndLast") {
+//            $("#showInputSearch").show();
+//        } else {
+//            $("#showInputSearch").hide();
+//        }
+//    });
+//    $("#btnSearch").click(function() {
+//        getSearch();
+//    })
+//    $("#faculty").change(function() {
+//        var faculty = $("#faculty").val();
+//        var data = {"parentId": faculty};
+//        sendData('{{_context_path}}/api/taxonomy/taxonomy/getParentId', data,
+//                function(result) {
+//                    var html2 = "";
+//                    $.each(result.lists, function(key, value) {
+//                        html2 += '<option value=' + value.id + '>' + value.value1 + '</option>';
+//                    });
+//                    $("#department").html(html2);
+//                });
+//    });
     function getSearch() {
-
+        var department1 = {};
+        var faculty1 = {};
+        var employeeType1 = {};
         var faculty = $("#faculty").val();
         var employeeType = $("#employeeType").val();
-        var searchName = $("#searchName").val();
+        var searchName = null;
         var department = $("#department").val();
         var data = {};
 
@@ -207,8 +228,91 @@
         data['department'] = department;
         var jdata = {};
         jdata['data'] = data;
+
+
         sendData('{{_context_path}}/api/welfare/history/check/status', jsonEncode(jdata),
                 //sendData('{{_context_path}}/api/welfare/history/check/search', jsonEncode(jdata),
+<<<<<<< HEAD
+                        function(result) {
+                            console.log(result);
+                            $.each(result["history"], function(key, value) {
+                                department1[value["department1"]] = value["department1"];
+                                faculty1[value["faculty1"]] = value["faculty1"];
+                                employeeType1[value["employeeType1"]] = value["employeeType1"];
+                                // console.log(value["certTypeName"]);
+                            });
+
+
+
+
+                            var t = $("#table").DataTable({
+                                "destroy": true,
+                                "data": result["history"],
+                                "order": [0, 'asc'],
+                                "iDisplayLength": 50,
+                                "columnDefs": [
+                                    {
+                                        "targets": 0,
+                                        "searchable": false,
+                                        "orderable": false,
+                                        "data": "employeeTypeId",
+                                        "sClass": "text-center col-md-1"
+                                    }, {
+                                        "targets": 1,
+                                        "data": "fname",
+                                        "sClass": "text-left col-md-2",
+                                        "render": function(data, key, full) {
+                                            return full["title"] + "&nbsp;" + full["fname"] + "&nbsp;&nbsp;" + full["lname"];
+                                        }
+                                    }, {
+                                        "targets": 2,
+                                        "data": "gender1",
+                                        "sClass": "text-center col-md-1"
+
+                                    }, {
+                                        "targets": 3,
+                                        "data": "fname",
+                                        "sClass": "text-left col-md-2",
+                                        "render": function(data, key, full) {
+                                            return full["faculty1"] + '/' + full["department1"];
+                                        }
+                                    }, {
+                                        "targets": 4,
+                                        "data": "employeeType1",
+                                        "sClass": "text-left col-md-2"
+
+                                    }, {
+                                        "targets": 5,
+                                        "data": "fname",
+                                        "sClass": "text-center col-md-1",
+                                        "render": function(data, key, full) {
+                                            html1 = '<button class="btn_history btn btn-info btn-xs edit"';
+                                            html1 += 'data-toggle="modal"';
+                                            html1 += 'data-target=".checkHistory"';
+                                            html1 += 'data-whatever="@fat"';
+                                            html1 += 'row-index="' + full["detailsId"] + '"';
+                                            html1 += 'row-member="' + full["memberId"] + '"';
+                                            html1 += 'row-welfareId="' + full["welfareId"] + '" >';
+                                            html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
+                                            html1 += '</button> ';
+                                            return html1;
+                                        }
+
+
+                                    }
+                                ]
+                            });
+                            t.on('order.dt search.dt', function() {
+                                t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(cell, i) {
+                                    cell.innerHTML = i + 1;
+                                });
+                            }).draw();
+
+
+                            var search = '<option value="" selected="selected">แสดงภาควิชาทั้งหมด</option>';
+                            $.each(department1, function(key, value) {
+                                search += '<option value="' + value + '">' + value + '</option>';
+=======
                         function (result) {
 
                             var html1 = "";
@@ -235,8 +339,55 @@
 
                                 html1 += '</td>';
                                 html1 += '</tr>';
+>>>>>>> origin/kmutnb-welfare
                             });
-                            $("#listWelfare").html(html1);
+                            $("#department").html(search).select().change(function() {
+                                t.columns(3).search(this.value).draw();
+                            });
+
+                            var search = '<option value="" selected="selected">แสดงสังกัด/คณะ ทั้งหมด</option>';
+                            $.each(faculty1, function(key, value) {
+                                search += '<option value="' + value + '">' + value + '</option>';
+                            });
+                            $("#faculty").html(search).select().change(function() {
+                                t.columns(3).search(this.value).draw();
+                            });
+
+                            var search = '<option value="" selected="selected">แสดงประเภทพนักงานทั้งหมด</option>';
+                            $.each(employeeType1, function(key, value) {
+                                search += '<option value="' + value + '">' + value + '</option>';
+                            });
+                            $("#employeeType").html(search).select().change(function() {
+                                t.columns(4).search(this.value).draw();
+                            });
+
+
+//                            var html1 = "";
+//                            $.each(result.history, function (key, value) {
+//
+//                                html1 += '<tr class="selectable">';
+//                                html1 += '<td>' + (key + 1) + '</td>';
+//                                html1 += '<td>' + value.title + ' ' + value.fname + ' ' + value.lname + '</td>';
+//                                html1 += '<td>' + value.gender1 + '</td>';
+//                                html1 += '<td>' + value.department1 + '  ' + value.faculty1 + '</td>';
+//                                html1 += '<td>' + value.employeeType1 + '</td>';
+//                                html1 += '<td>' + value.name + '</td>';
+//                                html1 += '<td class = "center" >';
+//
+//                                html1 += '<button class="btn_history btn btn-info btn-xs edit"';
+//                                html1 += 'data-toggle="modal"';
+//                                html1 += 'data-target=".checkHistory"';
+//                                html1 += 'data-whatever="@fat"';
+//                                html1 += 'row-index="' + value.detailsId + '"';
+//                                html1 += 'row-member="' + value.memberId + '"';
+//                                html1 += 'row-welfareId="' + value.welfareId + '" >';
+//                                html1 += '<i class = "fa fa fa-eye"></i>รายละเอียด';
+//                                html1 += '</button> ';
+//
+//                                html1 += '</td>';
+//                                html1 += '</tr>';
+//                            });
+//                            $("#listWelfare").html(html1);
 //                            $('.btn_history_N').click(function () {
 //                                var data = {};
 //                                data['historyId'] = $(this).attr('row-index');
@@ -311,7 +462,7 @@
 //
 //                            });
 
-                            $('.btn_history').click(function () {
+                            $('.btn_history').click(function() {
 
                                 var data = {};
                                 //data['detailsId'] = $(this).attr('row-index');
@@ -320,9 +471,9 @@
                                 var jdata = {};
                                 jdata['data'] = data;
                                 sendData('{{_context_path}}/api/welfare/welfare/by/welfare', jsonEncode(jdata),
-                                        function (result) {
+                                        function(result) {
                                             var html = "";
-                                            $.each(result.welfare, function (k, v) {
+                                            $.each(result.welfare, function(k, v) {
 
                                                 html += '<tr><td> ' + (k + 1) + ' </td>';
                                                 html += '<td>' + v.name + ' / ' + v.description + '</td>';
@@ -349,7 +500,7 @@
 <script type="text/javascript">
 
     sendData('{{_context_path}}/api/welfare/history/check/approve', null,
-            function (result) {
+            function(result) {
 
                 var html1 = "";
                 html1 += ' <tr>';
@@ -364,7 +515,7 @@
                 html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">สถานะ</th>';
                 html1 += '<th style=" font-size:  5px; color: #b3b2b2;  text-align: center;   vertical-align: middle;">วันที่ปรับปรุง</th>'
                 html1 += '</tr>';
-                $.each(result.history, function (key, value) {
+                $.each(result.history, function(key, value) {
 
                     html1 += '<tr class="selectable">';
                     html1 += '<td width="1%" style=" font-size: 5px; color: #303030;  text-align: left; font-family: Arial, Helvetica, sans-serif;  vertical-align: middle; padding: 0 1px 1px 1px;">' + (key + 1) + '</td>';
