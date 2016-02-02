@@ -37,7 +37,7 @@
                                                         {{/parent}}
                                                     </select>
                                                 </div>-->
-                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+<!--                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                             <label class="col-lg-2 control-label">
                                 <select id="filterCode" class="form-control">
                                     <option value="" selected="" disabled="">เลือก</option>
@@ -46,10 +46,10 @@
                                     <option value="memberActive" >สถานะพนักงาน</option>
 
 
-                                    <!-- … -->
+                                     … 
                                 </select>
-                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">-->
-                                <!--<input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >-->  
+                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">
+                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >  
                                 <p id="demo" style="color:#d14"></p>
                             </label>
                             <label class="col-lg-2 control-label">
@@ -70,7 +70,7 @@
                             <div class="col-lg-2">
                                 <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="pull-right">
                             <label>
                                 <button class="btn btn-primary" 
@@ -100,7 +100,7 @@
                         </div>
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="rows">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
+                            <table id="table" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
@@ -116,36 +116,8 @@
                                                                                 <th class="center">{{#i18n}}delete{{/i18n}}</th>-->
                                     </tr>
                                 </thead>
-                                <tbody id="title">
-                                    {{#lists}}  
-                                    <tr class="selectable">
-                                        <td>{{rowNo}}</td>
-                                        <td>{{idCard}}</td>
-                                        <td>{{titleName}} {{fname}} {{lname}}</td>
-                                        <td>{{department}} {{faculty}}</td>
-                                        <!--                                        <td>{{workStartDate}}</td>-->
-                                        <td>{{hospital}}</td>
-                                        <td>{{issuedDate}}</td>
-                                        <td>{{expireDate}}</td>
-                                        <td>{{dateCreated}}</td>
-                                        <td class="center">
-                                            <button class="btn btn-info btn-xs" 
-                                                    data-id="content-body"
-                                                    data-api="{{_context_path}}/api/insurance/view/sso/user/lists"
-                                                    data-object="memberId"
-                                                    data-param="{{memberId}}"
-                                                    onclick="btnHTML(this)">
-                                                <i class="fa fa-plus"></i>{{#i18n}}details{{/i18n}}</button>
-                                        </td>
-                                        <!--     
-                                                                          <td class="center">
-                                                                              <button class='btn btn-info btn-xs delete' value='{{id}}'>
-                                                                                  <i class="fa fa-edit"></i>
-                                                                                  {{#i18n}}delete{{/i18n}}
-                                                                              </button>
-                                                                          </td>-->
-                                    </tr>
-                                    {{/lists}}
+                                <tbody>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -290,11 +262,11 @@
             });
         });
 
-        $("#btnSearch").click(function () {
-            var searchName = $("#searchName").val();
-            var filterCode = $("#filterCode").val();
-            var filtervalue = $("#filtervalue").val();
-            var filterdepartment = $("#filterdepartment").val();
+      
+            var searchName = "";//$("#searchName").val();
+            var filterCode = "";//$("#filterCode").val();
+            var filtervalue = "";//$("#filtervalue").val();
+            var filterdepartment = "";//$("#filterdepartment").val();
             if (searchName) {
                 if (searchName == "") {
                     $("#demo").html("กรุณากรอกข้อมูลค้นหา");
@@ -323,7 +295,7 @@
                 };
                 var html;
                 var jdata = {};
-                jdata['searchName'] = data;
+                jdata['searchName'] =data;
                 $.ajax({
                     url: '{{_context_path}}/api/insurance/sso/search/sso',
                     data: jsonEncode(jdata),
@@ -332,41 +304,98 @@
                         
                         var data = result["searchName"];
                         console.log(data);
-                        if (data != "") {
-                            $.each(data, function (key, value) {
-                                html += "<tr class='selectable'>"
-                                        + "<td>" + value.rowNo + "</td>"
-                                        + "<td>" + value.idCard + "</td>"
-                                        + "<td><div id='title'></div>" + value.titleName + " " + value.fname + " " + value.lname + "</td>"
-                                        + "<td>" + value.department + " " + value.faculty + "</td>"
-                                        + "<td>" + value.hospital + "</td>"
-                                        + "<td>" + value.issuedDate + "</td>"
-                                        + "<td>" + value.expireDate + "</td>"
-                                        + "<td>" + value.dateCreated + "</td>"
-                                        + "<td class='center'>"
-                                        + "<button class='btn btn-info btn-xs' data-id='content-body' "
-                                        + "data-api='{{_context_path}}/api/insurance/view/sso/user/lists' "
-                                        + "data-object='memberId'"
-                                        + "data-param='" + value.memberId + "' "
-                                        + "onclick='btnHTML(this)'> "
-                                        + "<i class='fa fa-plus'></i>{{#i18n}}details{{/i18n}}</button> "
-                                        + "</td></tr>";
+                        
+                            
+                            var t = $("#table").DataTable({
+                                    "destroy": true,
+                                    "data": data,
+                                    "order": [0, 'asc'],
+                                    "iDisplayLength": 50,
+                                    "columnDefs": [
+                                        {
+                                            "targets": 0,
+                                            "searchable": false,
+                                            "orderable": true,
+                                            "data": "idCard",
+                                            "sClass": "text-center col-md-1"
+                                        }, {
+                                            "targets": 1,
+                                            "data": "idCard",
+                                            "sClass": "text-left col-md-1"
+                                        }, {
+                                            "targets": 2,
+                                            "data": "idCard",
+                                            "sClass": "text-left col-md-1",
+                                            "render": function(data, key, full) {
+                                                return full["titleName"]+'&nbsp;'+full["fname"] + '&nbsp;&nbsp;&nbsp;' + full["lname"];
+                                            }
+                                        }, {
+                                            "targets": 3,
+                                            "data": "faculty",
+                                            "sClass": "text-left col-md-1"
+                                        }, {
+                                            "targets": 4,
+                                            "data": "hospital",
+                                            "sClass": "text-left col-md-1"
+                                        }, {
+                                            "targets": 5,
+                                            "data": "issuedDate",
+                                            "sClass": "text-left col-md-1"
+                                        }, {
+                                            "targets": 6,
+                                            "data": "expireDate",
+                                            "sClass": "text-center col-md-1"
+                                            
 
+                                        }, {
+                                            "targets": 7,
+                                            "data": "dateCreated",
+                                            "sClass": "text-left col-md-1"
+                                        }, {
+                                            "targets": 8,
+                                            "sClass": "text-left col-md-1",
+                                            "render": function(data, key, full) {
+                                                return "";
+                                            }
+                                        }
+                                    ]
+                                });
+                            
+                                t.on('order.dt search.dt', function() {
+                                    t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(cell, i) {
+                                        cell.innerHTML = i + 1;
+                                    });
+                                }).draw();
+//                            $.each(data, function (key, value) {
+//                                html += "<tr class='selectable'>"
+//                                        + "<td>" + value.rowNo + "</td>"
+//                                        + "<td>" + value.idCard + "</td>"
+//                                        + "<td><div id='title'></div>" + value.titleName + " " + value.fname + " " + value.lname + "</td>"
+//                                        + "<td>" + value.department + " " + value.faculty + "</td>"
+//                                        + "<td>" + value.hospital + "</td>"
+//                                        + "<td>" + value.issuedDate + "</td>"
+//                                        + "<td>" + value.expireDate + "</td>"
+//                                        + "<td>" + value.dateCreated + "</td>"
+//                                        + "<td class='center'>"
+//                                        + "<button class='btn btn-info btn-xs' data-id='content-body' "
+//                                        + "data-api='{{_context_path}}/api/insurance/view/sso/user/lists' "
+//                                        + "data-object='memberId'"
+//                                        + "data-param='" + value.memberId + "' "
+//                                        + "onclick='btnHTML(this)'> "
+//                                        + "<i class='fa fa-plus'></i>{{#i18n}}details{{/i18n}}</button> "
+//                                        + "</td></tr>";
+//
+//
+//                            });
 
-                            });
-
-                        }
-                        else {
-                            html = "<tr class='selectable'><td>ไม่พบข้อมูล</td>";
-                        }
-                        $('#title').html(html);
+                       
+                        //$('#title').html(html);
                     }
                 });
 
 
             }
 
-        });
 
         var myDropzone = new Dropzone("#frm_upload", {
             url: "{{_context_path}}/api/insurance/upload/sso",
