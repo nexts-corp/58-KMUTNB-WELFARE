@@ -28,30 +28,37 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}medicalfeelist{{/i18n}} :{{#i18n}}budget{{/i18n}} {{#date}}{{dateStart}}{{/date}}</span>
+                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}medicalfeelist{{/i18n}} : {{#i18n}}budget{{/i18n}} {{#date}}{{dateStart}}{{/date}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
                     <div class="widget-body">
-                        <div class="pull-right">
-                            <label class="col-lg-12  control-label">
-                                <!--<div class="pull-right">-->
-                                <button type="button" class="btn btn-success"
-                                        id="reportCsv"
-                                        data-whatever="">
-                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                                </button>
-                                <button class="btn btn-primary"
-                                        data-id="content-body"
-                                        data-api="{{_context_path}}/api/medical/view/medicalFee/add"
+                        <div class="panel panel-default">
+                            <div class="panel-body">
 
-                                        onclick="btnHTML(this)">
-                                    <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
-                                </button>
-                            </label>
-                            <!--</div>-->
+
+                                <div class="pull-right">
+                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                                    <!--<div class="pull-right">-->
+                                    <button type="button" class="btn btn-success"
+                                            id="reportCsv"
+                                            data-whatever="">
+                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
+                                    </button>
+                                    <button class="btn btn-primary"
+                                            data-id="content-body"
+                                            data-api="{{_context_path}}/api/medical/view/medicalFee/add"
+
+                                            onclick="btnHTML(this)">
+                                        <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}} 
+                                    </button>
+                                </div>
+                            </div>
+
+
                         </div>
                         <div class="col-lg-10 col-md-10 col-xs-10 col-sm-9">
-                           <label class="col-lg-2 control-label">
+                            <label class="col-lg-2 control-label">
                                 <select id="filterfaculty" class="form-control">
                                     <option value="" selected="" disabled="">เลือกคณะ</option>
                                     {{#faculty}}
@@ -120,9 +127,6 @@
                                         <th>{{#i18n}}medicalfeeamount{{/i18n}}</th>
                                         <th>{{#i18n}}amountbalance{{/i18n}}</th>
                                         <th>{{#i18n}}facultyId{{/i18n}}</th>
-
-
-
                                         <th class="center">{{#i18n}}manage{{/i18n}}</th>
                                     </tr>
                                 </thead>
@@ -165,10 +169,10 @@
     <!-- /Page Body -->
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        
+    $(document).ready(function() {
 
-        $("#filterCode").change(function () {
+
+        $("#filterCode").change(function() {
             var pCode = $("#filterCode").val();
             var data;
             if (pCode == "faculty") {
@@ -190,7 +194,7 @@
                     html = '<option value="">โปรดเลือก</option>';
 
                 } else {
-                    $.each(data, function (key, value) {
+                    $.each(data, function(key, value) {
                         html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
 
                     });
@@ -208,19 +212,19 @@
 
 
         });
-        $("#filtervalue").change(function () {
+        $("#filtervalue").change(function() {
             var id = $("#filtervalue").val();
             var pCode = $("#filterCode").val();
             $.ajax({
                 url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
                 data: {parentId: id},
-                success: function (result) {
+                success: function(result) {
                     var data = result["lists"];
                     var html;
                     if (data == "") {
                         html = '<option value="">สังกัด</option>';
                     } else {
-                        $.each(data, function (key, value) {
+                        $.each(data, function(key, value) {
 
                             html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
                         });
@@ -239,7 +243,7 @@
             });
         });
 
-        $("#btnSearch").click(function () {
+        $("#btnSearch").click(function() {
             var searchName = $("#searchName").val();
             var filterCode = $("#filterCode").val();
             var filtervalue = $("#filtervalue").val();
@@ -267,10 +271,10 @@
                         url: '{{_context_path}}/api/medical/medicalfee/search',
                         data: jsonEncode(jdata),
                         type: 'post',
-                        success: function (result) {
+                        success: function(result) {
                             var data = result["search"]["lists"];
                             if (data != "") {
-                                $.each(data, function (key, value) {
+                                $.each(data, function(key, value) {
                                     html += "<tr class='selectable'><td>" + value.idCard + "</td>"
                                             + "<td><div id='title'></div>" + value.title + " " + value.fname + " " + value.lname + "</td>"
                                             + "<td>" + value.payment + "</td>"
@@ -310,10 +314,10 @@
                     url: '{{_context_path}}/api/medical/medicalfee/search',
                     data: jsonEncode(jdata),
                     type: 'post',
-                    success: function (result) {
+                    success: function(result) {
                         var data = result["search"]["lists"];
                         if (data != "") {
-                            $.each(data, function (key, value) {
+                            $.each(data, function(key, value) {
                                 html += "<tr class='selectable'><td>" + value.idCard + "</td>"
                                         + "<td><div id='title'></div>" + value.title + " " + value.fname + " " + value.lname + "</td>"
                                         + "<td>" + value.payment + "</td>"
@@ -342,7 +346,7 @@
 
         });
 
-        $("#reportCsv").click(function () {
+        $("#reportCsv").click(function() {
             window.open('{{_context_path}}/api/medical/reports/lists');
 
         });
