@@ -38,9 +38,19 @@ interface IReportService {
  /**
      * @name reportCsvWelfare
      * @uri /csv/welfare
-     * @return html lists
+     * @return string lists
      * @description ออก csv ว่าสวัสดิการนี้ ใช้ไปเท่าไร ใครใช้บ้าง
      */
  public function reportCsvWelfare();
+
+
+ /**
+  * @name reportIndividualList
+  * @uri /report/Individual
+  * @param string data
+  * @return file lists
+  * @description เมนู สวัสดิการรายบุคคล
+  */
+ public function reportIndividualList($data);
  
 }

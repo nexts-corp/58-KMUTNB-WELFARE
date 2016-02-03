@@ -36,7 +36,8 @@
                             <button type="button" class="btn btn-warning" onclick=" JsPrint('DataPanel');">
                                 <i class="fa fa-print"></i>PRINT
                             </button>
-                            <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ส่งออก Excel</a>
+                            <a id="export_xls"  style="display:none;"></a>
+                            <a class="btn btn-success" href="#" role="button" onclick="tableToExcel('example', 'BudgetYear','ข้อมูลปีงบประมาณ.xls')"><i class="fa fa-file-excel-o"></i> ส่งออก Excel</a>
                                 <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ส่งออก PDF</a>
 
                         </div>
@@ -80,7 +81,7 @@
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
+                            <table id="example" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th>{{#i18n}}number{{/i18n}}</th>
@@ -116,12 +117,11 @@
     $(document).ready(function () {
         getWelfare();
     })
-    $(".reportCsv").click(function () {
-       
-        window.open('{{_context_path}}/api/welfare/reports/csv/welfare');
-
-
-    });
+//    $(".reportCsv").click(function () {
+//
+//        window.open('{{_context_path}}/api/welfare/reports/csv/welfare');
+//
+//    });
     $('#btnSearch').click(function () {
         getWelfare();
     })

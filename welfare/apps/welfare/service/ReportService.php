@@ -2,6 +2,10 @@
 
 namespace apps\welfare\service;
 
+use DateTime;
+use PHPExcel;
+use PHPExcel_IOFactory;
+use PHPExcel_Worksheet_PageSetup;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
@@ -13,18 +17,21 @@ use apps\welfare\service\WelfareService;
 use apps\welfare\entity\Conditions;
 use apps\welfare\service\HistoryService;
 
-class ReportService extends CServiceBase implements IReportService {
+class ReportService extends CServiceBase implements IReportService
+{
 
     public $datacontext;
     public $taxonomy;
 
-    function __construct() {
+    function __construct()
+    {
         $this->datacontext = new CDataContext("default");
         $this->taxonomy = new \apps\taxonomy\service\TaxonomyService();
         $this->common = new CommonService();
     }
 
-    public function reportList($detailsId) {
+    public function reportList($detailsId)
+    {
 
 
         $conditions = new Conditions();
@@ -63,7 +70,8 @@ class ReportService extends CServiceBase implements IReportService {
         exit();
     }
 
-    public function reportApprove() {
+    public function reportApprove()
+    {
 
         $daoCheck = new HistoryService();
         $data = "";
@@ -104,8 +112,12 @@ class ReportService extends CServiceBase implements IReportService {
         exit();
     }
 
-    public function reportRight() {
 
+
+    // สวัสดิการรายบุคคล เฉพาะคน
+    public function reportRight()
+    {
+        // สวัสดิการรายบุคคล
         $memberId = $this->getRequest()->memberId;
         $mb = new \apps\member\service\MemberService();
         $member = $mb->find("memberId", $memberId)[0];
@@ -130,8 +142,8 @@ class ReportService extends CServiceBase implements IReportService {
             $dataCondition = $this->datacontext->getObject($condition);
 
             $query = "SELECT * "
-                    . "FROM v_fullmember "
-                    . "where ";
+                . "FROM v_fullmember "
+                . "where ";
             $field = array();
             foreach ($dataCondition as $key => $value) {
                 $index = 0;
@@ -193,22 +205,22 @@ class ReportService extends CServiceBase implements IReportService {
         }
 
         $sqlDetails = "SELECT wfdt.detailsId as detailsId,wfdt.quantity,wfdt.returnTypeId,wfdt.description as dcpDetails , "
-                . "wfdt.welfareId,  "
-                . "rt.value1 As returntType,rt.id,"
-                . "wf.name,wf.statusActive,wf.description  "
-                . " FROM  welfaredetails wfdt "
-                . "Left JOIN  welfare wf "
-                . "on wfdt.welfareId = wf.welfareId "
-                . "Left JOIN taxonomy rt  "
-                . "on wfdt.returnTypeId = rt.id "
-                . "where detailsId in ( " . $id . " )";
+            . "wfdt.welfareId,  "
+            . "rt.value1 As returntType,rt.id,"
+            . "wf.name,wf.statusActive,wf.description  "
+            . " FROM  welfaredetails wfdt "
+            . "Left JOIN  welfare wf "
+            . "on wfdt.welfareId = wf.welfareId "
+            . "Left JOIN taxonomy rt  "
+            . "on wfdt.returnTypeId = rt.id "
+            . "where detailsId in ( " . $id . " )";
 
 
         $objDetailsId = $this->datacontext->pdoQuery($sqlDetails);
 
 
         $sqlHistory = "SELECT htr.historyId,htr.detailsId,htr.statusApprove "
-                . "From welfarehistory htr where detailsId in (" . $id . ") and memberId=:memberId Order By htr.historyId desc ";
+            . "From welfarehistory htr where detailsId in (" . $id . ") and memberId=:memberId Order By htr.historyId desc ";
 
         $param1 = array("memberId" => $memberId);
 
@@ -216,68 +228,186 @@ class ReportService extends CServiceBase implements IReportService {
 
         if (!empty($objHistory)) {
             foreach ($objHistory as $key => $value) {
-                if($value["statusApprove"]=="Y"){
+                if ($value["statusApprove"] == "Y") {
                     $objDetailsId[$key]['statusApprove'] = "อนุมัติแล้ว";
-                }else{
+                } else {
                     $objDetailsId[$key]['statusApprove'] = "รอดำเนินการ";
                 }
-                
+
                 $objDetailsId[$key]['historyId'] = $value["historyId"];
             }
         }
 
-       
 
+//        $f = fopen('php://memory', 'w');
+//
+//        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานบุคลากร" . ",,\r\n"));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "คำนำหน้า" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อ" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "นามสกุล" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "หน่วยงานที่สังกัด" . "\"\r\n"));
+//
+//
+//        fputs($f, iconv("UTF-8", "windows-874", "\"'" . $member->idCard . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->titles1 . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->fname . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->lname . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->department1 . "" . $member->faculty1 . "\"\r\n"));
+//
+//        fputs($f, iconv("UTF-8", "windows-874", " ,," . "" . ",,\r\n"));
+//        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานการใช้สวัสดิการ" . ",,\r\n"));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อสวัสดิการ" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รายละเอียดเงื่อนไข" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวน" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รายการใช้สวัสดิการ" . "\"\r\n"));
+//
+//        foreach ($objDetailsId as $key => $value) {
+//            fputs($f, iconv("UTF-8", "windows-874", "\"'" . $value['name'] . "" . $value['description'] . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value['dcpDetails'] . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value['quantity'] . "" . $value['returntType'] . "\","));
+//            //fputs($f, iconv("UTF-8", "windows-874", "\"" . $value['statusApprove'] . "\"\r\n"));
+//        }
+//
+//        // $newFields = array(
+//        //   array($value->idCard, utf8_encode($value->fname), $value->lname));
+//        // fputcsv($f, $objMember);
+//
+//        fseek($f, 0);
+//        header('Content-Type: application/csv; charset=windows-874');
+//        header('Content-Disposition: attachment; filename="report_right.csv";');
+//        fpassthru($f);
+//        exit();
 
+        $center = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+        );
 
+        $topLeft = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
 
+        $topCenter = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+        $underline = array(
+            'font' => array(
+                'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
+            )
+        );
+        $border = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
 
-        $f = fopen('php://memory', 'w');
+        $objPHPExcel = new \PHPExcel();
+        $objWorkSheet = $objPHPExcel->createSheet(0);
+        $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+        $objWorkSheet = $objPHPExcel->getActiveSheet();
 
-        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานบุคลากร" . ",,\r\n"));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รหัสบัตรประชาชน" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "คำนำหน้า" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อ" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "นามสกุล" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "หน่วยงานที่สังกัด" . "\"\r\n"));
+        $title = "Sheet 1";
+        $objWorkSheet->setTitle($title);
 
+        $row = 1;
+        $objWorkSheet->mergeCells('A1:E2')
+            ->setCellValueByColumnAndRow(0, $row, "สวัสดิการรายบุคคล")
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
 
-        fputs($f, iconv("UTF-8", "windows-874", "\"'" . $member->idCard . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->titles1 . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->fname . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->lname . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . $member->department1 . "" . $member->faculty1 . "\"\r\n"));
+        $row = 3;
+        $objWorkSheet->mergeCells('A3:C3')
+            ->setCellValueByColumnAndRow(0, $row, "ชื่อ-นามสกุล : ".$member->fname." ".$member->lname)
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft);
 
-        fputs($f, iconv("UTF-8", "windows-874", " ,," . "" . ",,\r\n"));
-        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานการใช้สวัสดิการ" . ",,\r\n"));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อสวัสดิการ" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รายละเอียดเงื่อนไข" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวน" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "รายการใช้สวัสดิการ" . "\"\r\n"));
+        $objWorkSheet->mergeCells('D3:E3')
+            ->setCellValueByColumnAndRow(3, $row, "เพศ : ".$member->gender1)
+            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topLeft);
 
-        foreach ($objDetailsId as $key => $value) {
-            fputs($f, iconv("UTF-8", "windows-874", "\"'" . $value['name'] . "" . $value['description'] . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value['dcpDetails'] . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value['quantity'] . "" . $value['returntType'] . "\","));
-            //fputs($f, iconv("UTF-8", "windows-874", "\"" . $value['statusApprove'] . "\"\r\n"));
+        $row = 4;
+        $objWorkSheet->mergeCells('A4:C4')
+            ->setCellValueByColumnAndRow(0, $row, "สังกัด : " . $member->department1 . " " . $member->faculty1)
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft);
+
+        $objWorkSheet->mergeCells('D4:E4')
+            ->setCellValueByColumnAndRow(3, $row, "ประเภทพนักงาน : ".$member->employeeType1)
+            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topLeft);
+
+        $columnT = ["ลำดับ", "ชื่อสวัสดิการ", "รายละเอียดเงื่อนไข", "จำนวน", "  รายการใช้สวัสดิการ"];
+
+        $row = 5;
+        foreach ($columnT as $col => $val) {
+            if ($col == 0) $width = 8;
+            else if ($col == 1) $width = 30;
+            else if ($col == 2) $width = 40;
+            else if ($col == 3) $width = 20;
+            else if ($col == 4) $width = 30;
+
+            $objWorkSheet->getColumnDimensionByColumn($col)->setWidth($width);
+            $objWorkSheet->setCellValueByColumnAndRow($col, $row, $val)->getStyleByColumnAndRow($col, $row)->getAlignment()->applyFromArray($center);
         }
 
-        // $newFields = array(
-        //   array($value->idCard, utf8_encode($value->fname), $value->lname));
-        // fputcsv($f, $objMember);
+        $row = 6;
 
-        fseek($f, 0);
-        header('Content-Type: application/csv; charset=windows-874');
-        header('Content-Disposition: attachment; filename="report_right.csv";');
-        fpassthru($f);
-        exit();
+        foreach ($objDetailsId as $key => $val) {
+
+//            $objWorkSheet->setCellValueByColumnAndRow(0, $row, $key + 1)
+//                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+//
+//            $objWorkSheet->setCellValueByColumnAndRow(1, $row, $val->name)
+//                ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+//
+//            $date = strtotime($val->dateStart);
+//            $date = DateTime::createFromFormat("Y-m-d", $val->dateStart);
+//            $conV = $date->format("d") . "-" . $date->format("m") . "-" . ($date->format("Y") + 543);
+//
+//            $objWorkSheet->setCellValueByColumnAndRow(2, $row, $conV)
+//                ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+//
+//            $date = strtotime($val->dateEnd);
+//            $date = DateTime::createFromFormat("Y-m-d", $val->dateStart);
+//            $conV = $date->format("d") . "-" . $date->format("m") . "-" . ($date->format("Y") + 543);
+//
+//            $objWorkSheet->setCellValueByColumnAndRow(3, $row, $conV)
+//                ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+//
+//            $objWorkSheet->setCellValueByColumnAndRow(4, $row, $val->resetTime)
+//                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+//
+//            $row++;
+        }
+
+
+        $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+//      $objWorkSheet->getStyle('A1:E4')->applyFromArray($border);
+
+
+        //create excel file
+        ob_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=สวัสดิการรายบุคคล.xls");
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+
+        ob_end_flush();
+
+
+        return $objDetailsId;
     }
 
-    public function reportCsvWelfare() {
-        
-          $where = "select w.welfareId,
+    //รายการข้อมุลสวัสดิการ
+    public function reportCsvWelfare()
+    {
+
+        $where = "select w.welfareId,
                 count(cm.countMember) as countMember,
-                cu.countUse from welfare w 
+                cu.countUse from welfare w
                 join (
                 select
                 welfareId,
@@ -292,9 +422,9 @@ class ReportService extends CServiceBase implements IReportService {
                 ) cu on w.welfareId = cu.welfareId
                 group by w.welfareId,w.name";
         $obj = $this->datacontext->pdoQuery($where);
-        
+
         $dao = new WelfareService();
-        
+
         $count = array();
         $welfare = new \apps\welfare\entity\Welfare();
         $welfare->statusActive = "Y";
@@ -315,8 +445,6 @@ class ReportService extends CServiceBase implements IReportService {
             }
         }
 
-
-
         foreach ($wf as $key => $value) {
 
             if ($value->resetTime == "12") {
@@ -332,10 +460,10 @@ class ReportService extends CServiceBase implements IReportService {
                     $wf[$key]->totals = $value1;
                 }
             }
-            
+
             $wf[$key]->dateStart = date_format($value->dateStart, "Y-m-d");
-            if($value->dateEnd!=""){
-            $wf[$key]->dateEnd = date_format($value->dateEnd, "Y-m-d");
+            if ($value->dateEnd != "") {
+                $wf[$key]->dateEnd = date_format($value->dateEnd, "Y-m-d");
             }
             $wf[$key]->countMember = "";
             $wf[$key]->countUse = "";
@@ -348,41 +476,261 @@ class ReportService extends CServiceBase implements IReportService {
                 }
             }
         }
-        
-         $f = fopen('php://memory', 'w');
 
-        fputs($f, iconv("UTF-8", "windows-874", " ,," . "" . ",,\r\n"));
-        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานการใช้สวัสดิการ" . ",,\r\n"));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อสวัสดิการ" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "วันที่เริ่ม" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "วันที่สิ้นสุด" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "สิทธิ์สวัสดิการ" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวนผู้ได้รับสิทธิ์" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวนผู้ใช้สินทธิ์" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ใช้แล้วจำนวน" . "\","));
-        fputs($f, iconv("UTF-8", "windows-874", "\"" . "สิทธิ์สวัสดิการ" . "\"\r\n"));
-        
-        foreach ($wf as $key => $value) {
-          
-            fputs($f, iconv("UTF-8", "windows-874", "\"'" . $value->name . "" . $value->description . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->dateStart . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->dateEnd . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->resetTime . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->totals . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->countMember . "\","));
-            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->countUse . "\"\r\n"));
+//         $f = fopen('php://memory', 'w');
+//
+//        fputs($f, iconv("UTF-8", "windows-874", " ,," . "" . ",,\r\n"));
+//        fputs($f, iconv("UTF-8", "windows-874", " ,," . "รายงานการใช้สวัสดิการ" . ",,\r\n"));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ชื่อสวัสดิการ" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "วันที่เริ่ม" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "วันที่สิ้นสุด" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "สิทธิ์สวัสดิการ" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวนผู้ได้รับสิทธิ์" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "จำนวนผู้ใช้สินทธิ์" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "ใช้แล้วจำนวน" . "\","));
+//        fputs($f, iconv("UTF-8", "windows-874", "\"" . "สิทธิ์สวัสดิการ" . "\"\r\n"));
+//
+//        foreach ($wf as $key => $value) {
+//
+//            fputs($f, iconv("UTF-8", "windows-874", "\"'" . $value->name . "" . $value->description . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->dateStart . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->dateEnd . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->resetTime . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->totals . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->countMember . "\","));
+//            fputs($f, iconv("UTF-8", "windows-874", "\"" . $value->countUse . "\"\r\n"));
+//        }
+//
+//        // $newFields = array(
+//        //   array($value->idCard, utf8_encode($value->fname), $value->lname));
+//        // fputcsv($f, $objMember);
+//
+//        fseek($f, 0);
+//        header('Content-Type: application/csv; charset=windows-874');
+//        header('Content-Disposition: attachment; filename="report_welfare.csv";');
+//        fpassthru($f);
+//        exit();
+
+//        print_r($obj);
+
+        $center = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+        );
+
+        $topLeft = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+
+        $topCenter = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+        $underline = array(
+            'font' => array(
+                'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
+            )
+        );
+        $border = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
+
+        $objPHPExcel = new \PHPExcel();
+        $objWorkSheet = $objPHPExcel->createSheet(0);
+        $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+        $objWorkSheet = $objPHPExcel->getActiveSheet();
+
+        $title = "Sheet 1";
+        $objWorkSheet->setTitle($title);
+
+        $row = 1;
+        $objWorkSheet->mergeCells('A1:E2')
+            ->setCellValueByColumnAndRow(0, $row, "รายการข้อมูลสวัสดิการ")
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
+
+        $row = 3;
+        $objWorkSheet->mergeCells('A3:E3')
+            ->setCellValueByColumnAndRow(0, $row, "วันที่เริ่มใช้งาน : " . "01-10-2542")
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft);
+
+        $row = 4;
+        $objWorkSheet->mergeCells('A4:E4')
+            ->setCellValueByColumnAndRow(0, $row, "วันที่สิ้นสุดการใช้งาน : " . "10-09-2563")
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft);
+
+        $columnT = ["ลำดับ", "ชื่อสวัสดิการ", "วันที่เริ่มใช้", "	วันที่สิ้นสุดการใช้", "ให้สิทธิ์สวัสดิการ"];
+
+        $row = 5;
+        foreach ($columnT as $col => $val) {
+            if ($col == 0) $width = 8;
+            else if ($col == 1) $width = 40;
+            else if ($col == 2) $width = 20;
+            else if ($col == 3) $width = 20;
+            else if ($col == 3) $width = 20;
+
+            $objWorkSheet->getColumnDimensionByColumn($col)->setWidth($width);
+            $objWorkSheet->setCellValueByColumnAndRow($col, $row, $val)->getStyleByColumnAndRow($col, $row)->getAlignment()->applyFromArray($center);
         }
 
-        // $newFields = array(
-        //   array($value->idCard, utf8_encode($value->fname), $value->lname));
-        // fputcsv($f, $objMember);
+        $row = 6;
 
-        fseek($f, 0);
-        header('Content-Type: application/csv; charset=windows-874');
-        header('Content-Disposition: attachment; filename="report_welfare.csv";');
-        fpassthru($f);
-        exit();
-        
+        foreach ($wf as $key => $val) {
+
+            $objWorkSheet->setCellValueByColumnAndRow(0, $row, $key + 1)
+                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+            $objWorkSheet->setCellValueByColumnAndRow(1, $row, $val->name)
+                ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+            $date = strtotime($val->dateStart);
+            $date = DateTime::createFromFormat("Y-m-d", $val->dateStart);
+            $conV = $date->format("d") . "-" . $date->format("m") . "-" . ($date->format("Y") + 543);
+
+            $objWorkSheet->setCellValueByColumnAndRow(2, $row, $conV)
+                ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+            $date = strtotime($val->dateEnd);
+            $date = DateTime::createFromFormat("Y-m-d", $val->dateStart);
+            $conV = $date->format("d") . "-" . $date->format("m") . "-" . ($date->format("Y") + 543);
+
+            $objWorkSheet->setCellValueByColumnAndRow(3, $row, $conV)
+                ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+            $objWorkSheet->setCellValueByColumnAndRow(4, $row, $val->resetTime)
+                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+            $row++;
+        }
+
+        $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+//      $objWorkSheet->getStyle('A1:E4')->applyFromArray($border);
+
+        //create excel file
+        ob_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=รายการข้อมูลสวัสดิการ.xls");
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+
+        ob_end_flush();
+
+        exit;
+
     }
 
+    //สวัสดิการรายบุคคล ส่วนของรายชื่อทั้งหมด
+    public function reportIndividualList($data)
+    {
+
+
+        return $data;
+
+        if($exportType == "excel"){
+
+            $center = array(
+                'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+            );
+
+            $topLeft = array(
+                'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+            );
+
+            $topCenter = array(
+                'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+            );
+            $underline = array(
+                'font' => array(
+                    'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
+                )
+            );
+            $border = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => \PHPExcel_Style_Border::BORDER_THIN
+                    )
+                )
+            );
+
+            $objPHPExcel = new \PHPExcel();
+            $objWorkSheet = $objPHPExcel->createSheet(0);
+            $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+            $objWorkSheet = $objPHPExcel->getActiveSheet();
+
+            $title = "Sheet 1";
+            $objWorkSheet->setTitle($title);
+
+            $row = 1;
+            $objWorkSheet->mergeCells('A1:E2')
+                ->setCellValueByColumnAndRow(0, $row, "รายการสวัสดิการรายบุคคล")
+                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
+
+            $columnT = ["ลำดับ", "ชื่อ-นามสกุล", "เพศ", "	สังกัด", "ประเภทพนักงาน"];
+
+            $row = 3;
+            foreach ($columnT as $col => $val) {
+                if ($col == 0) $width = 8;
+                else if ($col == 1) $width = 30;
+                else if ($col == 2) $width = 10;
+                else if ($col == 3) $width = 30;
+                else if ($col == 3) $width = 30;
+
+                $objWorkSheet->getColumnDimensionByColumn($col)->setWidth($width);
+                $objWorkSheet->setCellValueByColumnAndRow($col, $row, $val)->getStyleByColumnAndRow($col, $row)->getAlignment()->applyFromArray($center);
+            }
+
+            $row = 4;
+
+            foreach ($data as $key => $val) {
+
+                $objWorkSheet->setCellValueByColumnAndRow(0, $row, $key + 1)
+                    ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                $objWorkSheet->setCellValueByColumnAndRow(1, $row, "ชื่อ")
+                    ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+
+                $objWorkSheet->setCellValueByColumnAndRow(2, $row, "เพศ")
+                    ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+
+                $objWorkSheet->setCellValueByColumnAndRow(3, $row, "สังกัด")
+                    ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                $objWorkSheet->setCellValueByColumnAndRow(4, $row, "ประเภทพนักงาน")
+                    ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                $row++;
+
+            }
+
+            $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+//          $objWorkSheet->getStyle('A1:E4')->applyFromArray($border);
+
+            //create excel file
+            ob_clean();
+
+            header('Content-Type: application/vnd.ms-excel');
+            header("Content-Disposition: attachment;filename=รายการสวัสดิการรายบุคคล.xls");
+
+            $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+            $objWriter->save('php://output');
+
+            ob_end_flush();
+            readfile('รายการสวัสดิการรายบุคคล.xls');
+            exit;
+        }else{
+
+        }
+
+    }
 }
