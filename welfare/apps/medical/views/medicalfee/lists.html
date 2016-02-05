@@ -37,14 +37,15 @@
 
 
                                 <div class="pull-right">
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                                    <a id="export_xls"  style="display:none;"></a>
+                                    <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'รายชื่อผู้เบิกค่ารักษาพยาบาล','รายชื่อผู้เบิกค่ารักษาพยาบาล.xls')" role="button"><i class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                    <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
                                     <!--<div class="pull-right">-->
-                                    <button type="button" class="btn btn-success"
-                                            id="reportCsv"
-                                            data-whatever="">
-                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                                    </button>
+                                    <!--<button type="button" class="btn btn-success"-->
+                                            <!--id="reportCsv"-->
+                                            <!--data-whatever="">-->
+                                        <!--<i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV-->
+                                    <!--</button>-->
                                     <button class="btn btn-primary"
                                             data-id="content-body"
                                             data-api="{{_context_path}}/api/medical/view/medicalFee/add"
@@ -119,7 +120,7 @@
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
-                            <table class="table table-hover table-striped table-bordered table-condensed" id="show">
+                            <table class="table table-hover table-striped table-bordered table-condensed" id="table">
                                 <thead>
                                     <tr>
                                         <th>{{#i18n}}IdCard{{/i18n}}</th>
@@ -171,6 +172,17 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
+        $("#pdfBtn").unbind('click').click(function () {
+
+            var html = $("#table").html();
+            var filename = "report_welfare";
+            var title = "รายชื่อผู้เบิกค่ารักษาพยาบาล";
+            var data = {"html": html, "filename": filename, "title": title};
+            sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                    function (result) {
+                        window.open("{{_context_path}}/" + result["file"], '_blank');
+                    });
+        });
 
         $("#filterCode").change(function() {
             var pCode = $("#filterCode").val();

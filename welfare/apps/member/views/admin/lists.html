@@ -59,13 +59,14 @@
                         <div class="panel panel-default ">
                             <div class="panel-body ">
                                 <div class="pull-right">
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
-                                    <button type="button" class="btn btn-success"
-                                            id="reportCsv"
-                                            data-whatever="">
-                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                                    </button>
+                                    <a id="export_xls"  style="display:none;"></a>
+                                    <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'รายชื่อสมาชิก','รายชื่อสมาชิก.xls')" role="button"><i class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                    <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                                    <!--<button type="button" class="btn btn-success"-->
+                                            <!--id="reportCsv"-->
+                                            <!--data-whatever="">-->
+                                        <!--<i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV-->
+                                    <!--</button>-->
 
                                     <button type="button" class="btn btn-maroon" 
                                             data-toggle="modal" 
@@ -154,10 +155,18 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $("#reportCsv").click(function() {
-            window.open('{{_context_path}}/api/member/reports/lists');
+        $("#pdfBtn").unbind('click').click(function () {
 
+            var html = $("#table").html();
+            var filename = "report_welfare";
+            var title = "รายชื่อสมาชิก";
+            var data = {"html": html, "filename": filename, "title": title};
+            sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                    function (result) {
+                        window.open("{{_context_path}}/" + result["file"], '_blank');
+                    });
         });
+
         getSearch();
 
         $("#filterfaculty").change(function() {

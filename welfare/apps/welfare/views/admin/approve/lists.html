@@ -63,10 +63,10 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-
+                                <a id="export_xls"  style="display:none;"></a>
                                 <div class="pull-right">
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ส่งออก Excel</a>
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ส่งออก PDF</a>
+                                    <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'รายการขอรับสวัสดิการ','รายการขอรับสวัสดิการ.xls')" role="button"><i class="fa fa-file-excel-o"></i> ส่งออก Excel</a>
+                                    <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i class="fa fa-file-pdf-o"></i> ส่งออก PDF</a>
 
 
                                     <div id="showInputSearch" style="display: none;">
@@ -163,6 +163,19 @@
     <script>
         $(document).ready(function() {
             getSearch();
+
+            $("#pdfBtn").unbind('click').click(function () {
+
+                var html = $("#table").html();
+                var filename = "report_welfare";
+                var title = "รายการขอรับสวัสดิการ";
+                var data = {"html": html, "filename": filename, "title": title};
+                sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                        function (result) {
+                            window.open("{{_context_path}}/" + result["file"], '_blank');
+                        });
+            });
+
         });
         //    $(".reportCsv").click(function() {
         //        var id = $(this).attr("row-index");

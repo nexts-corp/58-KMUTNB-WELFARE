@@ -106,8 +106,8 @@
         $("#pdfBtn").unbind('click').click(function () {
 
             var html = $("#table").html();
-            var filename = "WelfarePersonal";
-            var title = "WelfarePersonal";
+            var filename = "report_welfare";
+            var title = "สวัสดิการรายบุคคล";
             var data = {"html": html, "filename": filename, "title": title};
             sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
                     function (result) {
