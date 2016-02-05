@@ -17,8 +17,9 @@
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="widget">
-                    <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}welfare.bymember{{/i18n}}</span>
-                        <div class="widget-buttons"> </div>
+                    <div class="widget-header  with-footer"><span class="widget-caption">{{#i18n}}welfare.bymember{{/i18n}}</span>
+
+                        <div class="widget-buttons"></div>
                     </div>
                     <div class="widget-body">
                         <div class="pull-right">
@@ -27,26 +28,25 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <label class="col-lg-4 control-label">
-                                    <select id="employeeType" class="form-control" >
-                                        <option value="" selected="" >ค้นหาจากตำแหน่งงาน</option>
+                                    <select id="employeeType" class="form-control">
+                                        <option value="" selected="">ค้นหาจากตำแหน่งงาน</option>
                                         <!--                                    {{#employeeType}}<option value="{{id}}">{{value1}}</option>{{/employeeType}}-->
                                     </select>
 
                                 </label>
 
                                 <label class="col-lg-4 control-label">
-                                    <select id="faculty" class="form-control" >
-                                        <option value="" selected="">ค้นหาจากสังกัด / คณะ </option>
+                                    <select id="faculty" class="form-control">
+                                        <option value="" selected="">ค้นหาจากสังกัด / คณะ</option>
                                         <!--                                    {{#faculty}}<option value="{{id}}">{{value1}}</option>{{/faculty}}-->
 
                                     </select>
                                 </label>
                                 <label class="col-lg-4 control-label">
-                                    <select id="department" class="form-control" >
+                                    <select id="department" class="form-control">
                                         <option value="" selected="">ค้นหาจากภาควิชา</option>
                                     </select>
                                 </label>
-
 
 
                             </div>
@@ -54,10 +54,12 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-
+                                <a id="export_xls"  style="display:none;"></a>
                                 <div class="pull-right">
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
-                                    <a class="btn btn-success" href="#" role="button"><i class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                                    <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'สวัสดิการรายบุคคล','รายชื่อสวัสดิการรายบุคคล.xls')" role="button"><i
+                                            class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                    <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i
+                                            class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
                                 </div>
                             </div>
                         </div>
@@ -65,22 +67,20 @@
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
 
-                            <table id="table" class="table table-hover table-striped table-bordered table-condensed" id="showTable">
+                            <table id="table" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
-                                    <tr>
-                                        <th class="text-center">{{#i18n}}number{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
+                                <tr>
+                                    <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}fnamelname{{/i18n}}</th>
 
-                                        <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
-                                        <th class="text-center">{{#i18n}}conditions.rightConditions{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}gender{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}academy{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}employeeType{{/i18n}}</th>
+                                    <th class="text-center">{{#i18n}}conditions.rightConditions{{/i18n}}</th>
 
-                                    </tr>
+                                </tr>
                                 </thead>
                                 <tbody id="listWelfare">
-
-
 
 
                                 </tbody>
@@ -99,42 +99,56 @@
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         getSearch();
+
+
+        $("#pdfBtn").unbind('click').click(function () {
+
+            var html = $("#table").html();
+            var filename = "WelfarePersonal";
+            var title = "WelfarePersonal";
+            var data = {"html": html, "filename": filename, "title": title};
+            sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                    function (result) {
+                        window.open("{{_context_path}}/" + result["file"], '_blank');
+                    });
+        });
+
     });
 
 
-    $("#nameAndLast").change(function() {
+    $("#nameAndLast").change(function () {
         if ($("#nameAndLast").val() == "nameAndLast") {
             $("#showInputSearch").show();
         } else {
             $("#showInputSearch").hide();
         }
     });
-    $("#employeeType").change(function() {
+    $("#employeeType").change(function () {
         getSearch();
     });
-    $("#department").change(function() {
+    $("#department").change(function () {
         getSearch();
     })
 
-    $("#gender").change(function() {
+    $("#gender").change(function () {
         getSearch();
     });
 
-    $("#faculty").change(function() {
+    $("#faculty").change(function () {
         var faculty = $("#faculty").val();
         var data = {"parentId": faculty};
         sendData('{{_context_path}}/api/taxonomy/taxonomy/getParentId', data,
-                function(result) {
+                function (result) {
                     var html2 = "";
-                    $.each(result.lists, function(key, value) {
+                    $.each(result.lists, function (key, value) {
                         html2 += '<option value=' + value.id + '>' + value.value1 + '</option>';
                     });
                     $("#department").html(html2);
                 });
     });
-    $("#btnSearch").click(function() {
+    $("#btnSearch").click(function () {
         getSearch();
     })
     function getSearch() {
@@ -164,10 +178,10 @@
         var jdata = {};
         jdata['data'] = data;
         sendData('{{_context_path}}/api/welfare/welfare/right/member', jsonEncode(jdata),
-                function(result) {
+                function (result) {
 
 
-                    $.each(result["member"], function(key, value) {
+                    $.each(result["member"], function (key, value) {
                         department1[value["department1"]] = value["department1"];
                         faculty1[value["faculty1"]] = value["faculty1"];
                         employeeType1[value["employeeType1"]] = value["employeeType1"];
@@ -191,7 +205,7 @@
                                 "targets": 1,
                                 "data": "fname",
                                 "sClass": "text-left col-md-2",
-                                "render": function(data, key, full) {
+                                "render": function (data, key, full) {
                                     return full["titleName1"] + "&nbsp;" + full["fname"] + "&nbsp;&nbsp;" + full["lname"];
                                 }
                             }, {
@@ -203,7 +217,7 @@
                                 "targets": 3,
                                 "data": "fname",
                                 "sClass": "text-left col-md-2",
-                                "render": function(data, key, full) {
+                                "render": function (data, key, full) {
                                     return full["faculty1"] + '/' + full["department1"];
                                 }
                             }, {
@@ -215,7 +229,7 @@
                                 "targets": 5,
                                 "data": "fname",
                                 "sClass": "text-center col-md-1",
-                                "render": function(data, key, full) {
+                                "render": function (data, key, full) {
                                     html1 = '<button class="btn btn-default btn-xs edit btn_history"';
                                     html1 += 'row-index="' + full["memberId"] + '"';
                                     html1 += 'row-emploryee="' + full["employeeTypeId"] + '" >';
@@ -228,33 +242,33 @@
                             }
                         ]
                     });
-                    t.on('order.dt search.dt', function() {
-                        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(cell, i) {
+                    t.on('order.dt search.dt', function () {
+                        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
                             cell.innerHTML = i + 1;
                         });
                     }).draw();
 
                     var search = '<option value="" selected="selected">แสดงภาควิชาทั้งหมด</option>';
-                    $.each(department1, function(key, value) {
+                    $.each(department1, function (key, value) {
                         search += '<option value="' + value + '">' + value + '</option>';
                     });
-                    $("#department").html(search).select().change(function() {
+                    $("#department").html(search).select().change(function () {
                         t.columns(3).search(this.value).draw();
                     });
 
                     var search = '<option value="" selected="selected">แสดงสังกัด/คณะ ทั้งหมด</option>';
-                    $.each(faculty1, function(key, value) {
+                    $.each(faculty1, function (key, value) {
                         search += '<option value="' + value + '">' + value + '</option>';
                     });
-                    $("#faculty").html(search).select().change(function() {
+                    $("#faculty").html(search).select().change(function () {
                         t.columns(3).search(this.value).draw();
                     });
 
                     var search = '<option value="" selected="selected">แสดงประเภทพนักงานทั้งหมด</option>';
-                    $.each(employeeType1, function(key, value) {
+                    $.each(employeeType1, function (key, value) {
                         search += '<option value="' + value + '">' + value + '</option>';
                     });
-                    $("#employeeType").html(search).select().change(function() {
+                    $("#employeeType").html(search).select().change(function () {
                         t.columns(4).search(this.value).draw();
                     });
 //                    var html1 = "";
@@ -280,7 +294,7 @@
 //                    $("#listWelfare").html(html1);
 
 
-                    $('.btn_history').click(function() {
+                    $('.btn_history').click(function () {
 
                         var memberId = $(this).attr('row-index');
                         var data = {"memberId": memberId};
