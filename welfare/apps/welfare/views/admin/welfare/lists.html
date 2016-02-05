@@ -118,7 +118,7 @@
 
             var html = $("#table").html();
             var filename = "report_welfare";
-            var title = "รายการขอรับสวัสดิการ";
+            var title = "รายการข้อมูลสวัสดิการ";
             var data = {"html": html, "filename": filename, "title": title};
             sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
                     function (result) {
