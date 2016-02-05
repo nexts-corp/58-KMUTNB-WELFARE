@@ -8,11 +8,14 @@
         }
     ],
     "require": {
-        "doctrine/orm": "2.4.7",
-        "isoft/mssql-bundle": "master-dev",
-        "mustache/mustache": "~2.5",
+        "doctrine/orm": "v2.4.7",
+        "isoft/mssql-bundle": "dev-master",
+        "mustache/mustache": "v2.5.0",
         "apache/log4php": "2.3.0",
-        "firebase/php-jwt": "v3.0.0",
-        "bpg/cde": "3.5.3.x-dev"
+        "bpg/cde": "3.5.8.1-dev",
+        "phpexcel/phpexcel": "v1.7.7",
+        "phpoffice/phpexcel": "1.8.0",
+        "mpdf/mpdf": "v5.7.4",
+        "alchemy-fr/tcpdf-clone": "6.0.039"
     }
 }
