@@ -37,43 +37,46 @@
                                                         {{/parent}}
                                                     </select>
                                                 </div>-->
-<!--                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                            <label class="col-lg-2 control-label">
-                                <select id="filterCode" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
-                                    <option value="faculty">คณะ</option>
-                                    <option value="employeeType" >ประเภทพนักงาน</option>
-                                    <option value="memberActive" >สถานะพนักงาน</option>
+                        <!--                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                                    <label class="col-lg-2 control-label">
+                                                        <select id="filterCode" class="form-control">
+                                                            <option value="" selected="" disabled="">เลือก</option>
+                                                            <option value="faculty">คณะ</option>
+                                                            <option value="employeeType" >ประเภทพนักงาน</option>
+                                                            <option value="memberActive" >สถานะพนักงาน</option>
+                        
+                        
+                                                             … 
+                                                        </select>
+                                                        <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">
+                                                        <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >  
+                                                        <p id="demo" style="color:#d14"></p>
+                                                    </label>
+                                                    <label class="col-lg-2 control-label">
+                                                        <select id="filtervalue" class="form-control">
+                                                            <option value="" selected="" disabled="">เลือก</option>
+                                                        </select>
+                        
+                                                    </label>
+                                                    <label class="col-lg-3 control-label">
+                                                        <select id="filterdepartment" class="form-control">
+                                                            <option value="" selected="" disabled="">เลือก</option>
+                                                        </select>
+                                                        <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" value = "{{searchvalue}}">
+                                                        <p id="demo" style="color:#d14"></p>
+                                                    </label>
+                        
+                        
+                                                    <div class="col-lg-2">
+                                                        <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
+                                                    </div>
+                                                </div>-->
+                        <div class="panel-body">
 
+                            <a id="export_xls"  style="display:none;"></a>
 
-                                     … 
-                                </select>
-                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" list="filterCode">
-                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" >  
-                                <p id="demo" style="color:#d14"></p>
-                            </label>
-                            <label class="col-lg-2 control-label">
-                                <select id="filtervalue" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
-                                </select>
-
-                            </label>
-                            <label class="col-lg-3 control-label">
-                                <select id="filterdepartment" class="form-control">
-                                    <option value="" selected="" disabled="">เลือก</option>
-                                </select>
-                                <input type="text" class="form-control" name="searchName" id="searchName" placeholder="ค้นหา" value = "{{searchvalue}}">
-                                <p id="demo" style="color:#d14"></p>
-                            </label>
-
-
-                            <div class="col-lg-2">
-                                <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
-                            </div>
-                        </div>-->
-                        <div class="pull-right">
-                            <label>
-                                <button class="btn btn-primary" 
+                            <div class="pull-right">
+                               <button class="btn btn-primary" 
                                         data-id="content-body"
                                         data-api="{{_context_path}}/api/insurance/view/sso/admin/add"
                                         onclick="btnHTML(this)">
@@ -90,14 +93,13 @@
                                         <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
                                     </a>
                                 </button>
-                                <button type="button" class="btn btn-success"
-                                        id="reportCsv"
-                                        data-whatever="">
-                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                                </button> 
-                            </label>
-
+                                <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'ข้อมูลประกันสังคม', 'ข้อมูลประกันสังคม.xls')" role="button"><i
+                                        class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i
+                                        class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                            </div>
                         </div>
+                        
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="rows">
                             <table id="table" class="table table-hover table-striped table-bordered table-condensed">
@@ -117,7 +119,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -178,7 +180,7 @@
                         data-id="content-body"
                         data-api="{{_context_path}}/api/insurance/view/sso/admin/lists"
                         onclick="setTimeout(
-                                        function () {
+                                        function() {
                                             btnHTML(this)
                                         }, 1000)">
                     {{#i18n}}button.close{{/i18n}}</button>
@@ -188,10 +190,21 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
+        $("#pdfBtn").unbind('click').click(function () {
+
+            var html = $("#table").html();
+            var filename = "reportwelfare";
+            var title = "ข้อมูลประกันสังคม";
+            var data = {"html": html, "filename": filename, "title": title};
+            sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                    function (result) {
+                        window.open("{{_context_path}}/" + result["file"], '_blank');
+                    });
+        });
         $("#filterdepartment").hide();
 
-        $("#filterCode").change(function () {
+        $("#filterCode").change(function() {
             var pCode = $("#filterCode").val();
             var data;
             if (pCode == "faculty") {
@@ -215,7 +228,7 @@
                     html = '<option value="">โปรดเลือก</option>';
 
                 } else {
-                    $.each(data, function (key, value) {
+                    $.each(data, function(key, value) {
                         html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
 
                     });
@@ -228,7 +241,7 @@
 
 
         });
-        $("#filtervalue").change(function () {
+        $("#filtervalue").change(function() {
 
             var id = $("#filtervalue").val();
             var pCode = $("#filterCode").val();
@@ -236,13 +249,13 @@
             $.ajax({
                 url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
                 data: {parentId: id},
-                success: function (result) {
+                success: function(result) {
                     var data = result["lists"];
                     var html;
                     if (data == "") {
                         html = '<option value="">สังกัด</option>';
                     } else {
-                        $.each(data, function (key, value) {
+                        $.each(data, function(key, value) {
 
                             html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
                         });
@@ -262,110 +275,110 @@
             });
         });
 
-      
-            var searchName = "";//$("#searchName").val();
-            var filterCode = "";//$("#filterCode").val();
-            var filtervalue = "";//$("#filtervalue").val();
-            var filterdepartment = "";//$("#filterdepartment").val();
-            if (searchName) {
-                if (searchName == "") {
-                    $("#demo").html("กรุณากรอกข้อมูลค้นหา");
-                } else {
-                    var data = {"searchName": searchName};
-                }
-                getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', data);
+
+        var searchName = "";//$("#searchName").val();
+        var filterCode = "";//$("#filterCode").val();
+        var filtervalue = "";//$("#filtervalue").val();
+        var filterdepartment = "";//$("#filterdepartment").val();
+        if (searchName) {
+            if (searchName == "") {
+                $("#demo").html("กรุณากรอกข้อมูลค้นหา");
+            } else {
+                var data = {"searchName": searchName};
             }
-            else if (filterdepartment) {
-                if (filterdepartment != "") {
+            getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', data);
+        }
+        else if (filterdepartment) {
+            if (filterdepartment != "") {
 
-                    var filterCode = 'department';
-                    var data = {
-                        "filterCode": filterCode,
-                        "filtervalue": filterdepartment
-                    };
-                }
-
-
-
-            }
-            else {
+                var filterCode = 'department';
                 var data = {
                     "filterCode": filterCode,
-                    "filtervalue": filtervalue
+                    "filtervalue": filterdepartment
                 };
-                var html;
-                var jdata = {};
-                jdata['searchName'] =data;
-                $.ajax({
-                    url: '{{_context_path}}/api/insurance/sso/search/sso',
-                    data: jsonEncode(jdata),
-                    type: 'post',
-                    success: function (result) {
-                        
-                        var data = result["searchName"];
-                        console.log(data);
-                        
-                            
-                            var t = $("#table").DataTable({
-                                    "destroy": true,
-                                    "data": data,
-                                    "order": [0, 'asc'],
-                                    "iDisplayLength": 50,
-                                    "columnDefs": [
-                                        {
-                                            "targets": 0,
-                                            "searchable": false,
-                                            "orderable": true,
-                                            "data": "idCard",
-                                            "sClass": "text-center col-md-1"
-                                        }, {
-                                            "targets": 1,
-                                            "data": "idCard",
-                                            "sClass": "text-left col-md-1"
-                                        }, {
-                                            "targets": 2,
-                                            "data": "idCard",
-                                            "sClass": "text-left col-md-1",
-                                            "render": function(data, key, full) {
-                                                return full["titleName"]+'&nbsp;'+full["fname"] + '&nbsp;&nbsp;&nbsp;' + full["lname"];
-                                            }
-                                        }, {
-                                            "targets": 3,
-                                            "data": "faculty",
-                                            "sClass": "text-left col-md-1"
-                                        }, {
-                                            "targets": 4,
-                                            "data": "hospital",
-                                            "sClass": "text-left col-md-1"
-                                        }, {
-                                            "targets": 5,
-                                            "data": "issuedDate",
-                                            "sClass": "text-left col-md-1"
-                                        }, {
-                                            "targets": 6,
-                                            "data": "expireDate",
-                                            "sClass": "text-center col-md-1"
-                                            
+            }
 
-                                        }, {
-                                            "targets": 7,
-                                            "data": "dateCreated",
-                                            "sClass": "text-left col-md-1"
-                                        }, {
-                                            "targets": 8,
-                                            "sClass": "text-left col-md-1",
-                                            "render": function(data, key, full) {
-                                                return "";
-                                            }
-                                        }
-                                    ]
-                                });
-                            
-                                t.on('order.dt search.dt', function() {
-                                    t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(cell, i) {
-                                        cell.innerHTML = i + 1;
-                                    });
-                                }).draw();
+
+
+        }
+        else {
+            var data = {
+                "filterCode": filterCode,
+                "filtervalue": filtervalue
+            };
+            var html;
+            var jdata = {};
+            jdata['searchName'] = data;
+            $.ajax({
+                url: '{{_context_path}}/api/insurance/sso/search/sso',
+                data: jsonEncode(jdata),
+                type: 'post',
+                success: function(result) {
+
+                    var data = result["searchName"];
+                    console.log(data);
+
+
+                    var t = $("#table").DataTable({
+                        "destroy": true,
+                        "data": data,
+                        "order": [0, 'asc'],
+                        "iDisplayLength": 50,
+                        "columnDefs": [
+                            {
+                                "targets": 0,
+                                "searchable": false,
+                                "orderable": true,
+                                "data": "idCard",
+                                "sClass": "text-center col-md-1"
+                            }, {
+                                "targets": 1,
+                                "data": "idCard",
+                                "sClass": "text-left col-md-1"
+                            }, {
+                                "targets": 2,
+                                "data": "idCard",
+                                "sClass": "text-left col-md-1",
+                                "render": function(data, key, full) {
+                                    return full["titleName"] + '&nbsp;' + full["fname"] + '&nbsp;&nbsp;&nbsp;' + full["lname"];
+                                }
+                            }, {
+                                "targets": 3,
+                                "data": "faculty",
+                                "sClass": "text-left col-md-1"
+                            }, {
+                                "targets": 4,
+                                "data": "hospital",
+                                "sClass": "text-left col-md-1"
+                            }, {
+                                "targets": 5,
+                                "data": "issuedDate",
+                                "sClass": "text-left col-md-1"
+                            }, {
+                                "targets": 6,
+                                "data": "expireDate",
+                                "sClass": "text-center col-md-1"
+
+
+                            }, {
+                                "targets": 7,
+                                "data": "dateCreated",
+                                "sClass": "text-left col-md-1"
+                            }, {
+                                "targets": 8,
+                                "sClass": "text-left col-md-1",
+                                "render": function(data, key, full) {
+                                    return "";
+                                }
+                            }
+                        ]
+                    });
+
+                    t.on('order.dt search.dt', function() {
+                        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function(cell, i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    }).draw();
 //                            $.each(data, function (key, value) {
 //                                html += "<tr class='selectable'>"
 //                                        + "<td>" + value.rowNo + "</td>"
@@ -388,13 +401,13 @@
 //
 //                            });
 
-                       
-                        //$('#title').html(html);
-                    }
-                });
+
+                    //$('#title').html(html);
+                }
+            });
 
 
-            }
+        }
 
 
         var myDropzone = new Dropzone("#frm_upload", {
@@ -405,21 +418,21 @@
             paramName: "file",
             acceptedFiles: '.csv',
             maxFiles: 1,
-            init: function () {
-                $("#btn_upload").click(function () {
+            init: function() {
+                $("#btn_upload").click(function() {
                     myDropzone.processQueue();
                 });
             },
-            sending: function (file, xhr, formData) {
+            sending: function(file, xhr, formData) {
 //                var memberId = '{{#datas}}{{memberId}}{{/datas}}';
 //                formData.append('memberId', memberId);
             },
-            success: function (file, txt) {
+            success: function(file, txt) {
                 if (txt.sso == true) {
                     $("#uploadModal").modal('hide');
                     myDropzone.removeFile(file);
                     Notify('บันทึกข้อมูลเรียบร้อย', 'top-right', '4000', 'success', 'fa-check', true);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         getHTML('content-body', '{{_context_path}}/api/insurance/view/sso/admin/lists', null);
                     }, 5000);
 
@@ -429,7 +442,7 @@
                     $("#uploadModal").modal('hide');
                     var error = txt.sso;
                     var html = "";
-                    $.each(error, function (k, v) {
+                    $.each(error, function(k, v) {
                         html += '<tr>'
                                 + '<td>' + (k + 1) + '</td>'
                                 + '<td>' + v.idCard + '</td>'
@@ -447,7 +460,7 @@
             }
         });
 
-        $("#reportCsv").click(function () {
+        $("#reportCsv").click(function() {
             window.open('{{_context_path}}/api/insurance/reports/lists');
 
         });

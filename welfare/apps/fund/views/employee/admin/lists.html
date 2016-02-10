@@ -30,6 +30,30 @@
                                                             onclick="btnHTML(this)">
                                                         <i class="fa fa-plus"></i>{{#i18n}}button.add{{/i18n}}</button> 
                                                 </div>-->
+                        
+                        <div class="panel-body">
+                                
+                                <a id="export_xls"  style="display:none;"></a>
+                                
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-primary" 
+                                        data-toggle="modal" 
+                                        data-target="#uploadModal" 
+                                        data-whatever="@fat">
+                                    <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
+                                </button>
+                                <button type="button" class="btn btn-yellow">
+                                    <a href= "{{_context_path}}/apps/fund/excel/employeeUniversity.xlsx">
+                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
+                                    </a>
+                                </button>
+                                    <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'กองทุนสำรองเลี้ยงชีพ', 'กองทุนสำรองเลี้ยงชีพ.xls')" role="button"><i
+                                            class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                    <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i
+                                            class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                                </div>
+                            </div>
+                        
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                             <label class="col-lg-2 control-label">
                                 <select id="filterCode" class="form-control">
@@ -64,26 +88,11 @@
                                 <button id="btnSearch" name="bn" class="btn btn-default"  type="button"> <i class="fa fa-search"></i>ค้นหา</button>
                             </div>
                         </div>
-                        <div class="pull-right">
-                            <label>
-                                <button type="button" class="btn btn-primary" 
-                                        data-toggle="modal" 
-                                        data-target="#uploadModal" 
-                                        data-whatever="@fat">
-                                    <i class="glyphicon glyphicon-upload"></i>{{#i18n}}button.upload{{/i18n}} CSV
-                                </button>
-                                <button type="button" class="btn btn-yellow">
-                                    <a href= "{{_context_path}}/apps/fund/excel/employeeUniversity.xlsx">
-                                        <i class="fa fa-file-excel-o"></i>{{#i18n}}button.download{{/i18n}}ฟอร์ม CSV
-                                    </a>
-                                </button>
-                            </label>
-                        </div>
 
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="rows">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
+                            <table id="table" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th class="center">{{#i18n}}rowNo{{/i18n}}</th>
@@ -198,6 +207,17 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#pdfBtn").unbind('click').click(function () {
+
+            var html = $("#table").html();
+            var filename = "reportwelfare";
+            var title = "กองทุนสำรองเลี้ยงชีพ";
+            var data = {"html": html, "filename": filename, "title": title};
+            sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                    function (result) {
+                        window.open("{{_context_path}}/" + result["file"], '_blank');
+                    });
+        });
         $("#filterdepartment").hide();
 
         $("#filterCode").change(function () {

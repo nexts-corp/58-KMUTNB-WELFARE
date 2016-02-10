@@ -1,6 +1,10 @@
 $.extend(true, $.fn.dataTable.defaults, {
     "destroy": true,                 
     "iDisplayLength": 50,
+    aLengthMenu: [
+        [10, 50, 100, 200, -1],
+        [10, 50, 100, 200, "All"]
+    ],
     "oLanguage": {
         "sInfo": "<span style='font-size: 120%;'>รายการที่ _START_ ถึง _END_ จาก <span style='color: blue;'>_TOTAL_</span> รายการ</span>",
         "sInfoEmpty": "",

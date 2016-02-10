@@ -31,8 +31,23 @@
                     <div class="widget-header  with-footer"> <span class="widget-caption">{{#i18n}}retirelist{{/i18n}}</span>
                         <div class="widget-buttons"> </div>
                     </div>
+                    
+                    
                     <div class="widget-body">
 
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <a id="export_xls"  style="display:none;"></a>
+                                <div class="pull-right">
+                                    <a class="btn btn-success" href="#" onclick="tableToExcel('table', 'รายชื่อผู้เกษียนอายุ', 'รายชื่อผู้เกษียนอายุ.xls')" role="button"><i
+                                            class="fa fa-file-excel-o"></i> ออกรายงาน Excel</a>
+                                    <a class="btn btn-success" href="#" id="pdfBtn" role="button"><i
+                                            class="fa fa-file-pdf-o"></i> ออกรายงาน PDF</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-10 col-md-10 col-xs-10 col-sm-9">
                             <label class="col-lg-2 control-label">
                                 <select id="filterCode" class="form-control">
@@ -74,7 +89,7 @@
                         </div>
 
 
-
+                        
 
                         <div class="pull-left">
                             <label class="col-lg-12  control-label">
@@ -83,19 +98,11 @@
 
                             </label>
                         </div>
-                        <div class="pull-right">
-                            <label class="col-lg-12  control-label">
-                                <button type="button" class="btn btn-success"
-                                        id="reportCsv"
-                                        data-whatever="">
-                                    <i class="fa fa-file-excel-o"></i>{{#i18n}}button.export{{/i18n}} CSV
-                                </button>
-                            </label>
-                        </div>
+
 
                         <hr style="border-top: 1px solid rgba(229, 229, 229, 0);">
                         <div class="flip-scroll">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
+                            <table id="table" class="table table-hover table-striped table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th>{{#i18n}}listmember{{/i18n}}</th>
@@ -133,11 +140,22 @@
     <!-- /Page Body -->
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
+        $("#pdfBtn").unbind('click').click(function () {
+
+            var html = $("#table").html();
+            var filename = "reportwelfare";
+            var title = "รายชื่อผู้เกษียนอายุ";
+            var data = {"html": html, "filename": filename, "title": title};
+            sendData('{{_context_path}}/api/common/commonReport/rptPdf', data,
+                    function (result) {
+                        window.open("{{_context_path}}/" + result["file"], '_blank');
+                    });
+        });
         $("#filterdepartment").hide();
 
-        $("#filterCode").change(function () {
+        $("#filterCode").change(function() {
             var pCode = $("#filterCode").val();
             var data;
             if (pCode == "faculty") {
@@ -168,7 +186,7 @@
                     html = '<option value="">โปรดเลือก</option>';
 
                 } else {
-                    $.each(data, function (key, value) {
+                    $.each(data, function(key, value) {
                         html += "<option value='" + value.id + "'>" + value.value1 + " , " + value.value2 + " </option>";
 
                     });
@@ -181,19 +199,19 @@
 
 
         });
-        $("#filtervalue").change(function () {
+        $("#filtervalue").change(function() {
             var id = $("#filtervalue").val();
             var pCode = $("#filterCode").val();
             $.ajax({
                 url: '{{_context_path}}/api/taxonomy/taxonomy/getParentId',
                 data: {parentId: id},
-                success: function (result) {
+                success: function(result) {
                     var data = result["lists"];
                     var html;
                     if (data == "") {
                         html = '<option value="">สังกัด</option>';
                     } else {
-                        $.each(data, function (key, value) {
+                        $.each(data, function(key, value) {
 
                             html += "<option value='" + value.id + "'>" + value.value1 + "</option>";
                         });
@@ -212,7 +230,7 @@
             });
         });
 
-        $("#btnSearch").click(function () {
+        $("#btnSearch").click(function() {
             var searchName = $("#searchName").val();
             var retire = $("#retireYear").val();
             var filterCode = $("#filterCode").val();
@@ -300,14 +318,14 @@
             }
 //            getHTML('content-body', '{{_context_path}}/api/retire/view/retire/lists', data);
             sendData('{{_context_path}}/api/retire/view/retire/lists', data,
-                    function (result) {
+                    function(result) {
                         var body = "";
-                         var re = result.viewList;
+                        var re = result.viewList;
                         if (re.member != "") {
 //                            console.log(result.viewList);
                             var re = result.viewList;
                             var tot = re.total;
-                            $.each(re.member, function (k, v) {
+                            $.each(re.member, function(k, v) {
                                 body += "<tr>" +
                                         "<td>" + v.titleName + " " + v.fname + " " + v.lname + "</td>" +
                                         "<td>" + v.department1 + " " + v.faculty1 + "</td>" +
@@ -327,7 +345,7 @@
 
 //            getHTML('content-body', '{{_context_path}}/api/retire/view/retire/lists', {retire: result.preview});
         });
-        $("#reportCsv").click(function () {
+        $("#reportCsv").click(function() {
             window.open('{{_context_path}}/api/retire/reports/lists');
 
         });
